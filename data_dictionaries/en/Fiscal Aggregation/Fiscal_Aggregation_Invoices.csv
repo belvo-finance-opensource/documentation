@@ -1,0 +1,302 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+[].id,"Belvo's unique identifier for the current item.
+",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+[].link,The `link.id` the data belongs to.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
+[].collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+[].created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+[].invoice_identification,The fiscal institution's unique ID for the invoice.,A1A1A1A1-2B2B-3C33-D44D-555555E55EE,string,,Yes,Yes,,
+[].invoice_date,"The date of the invoice, in `YYYY-MM-DD` format.",2019-12-01,string,,Yes,Yes,,
+[].status,"The status of the invoice. Can be either *Vigente* (valid) or *Cancelado*
+(cancelled).
+",Vigente,string,,Yes,Yes,,
+[].invoice_type,"The fiscal institution's classification of the invoice.
+
+For Mexico's SAT, we return one of the following values:
+
+  - `Egreso`
+  - `Ingreso`
+  - `Nómina`
+  - `Pago`
+  - `Traslado`
+",Ingreso,string,,Yes,Yes,"Egreso, Ingreso, Nómina, Pago, Traslado",
+[].type,"The direction of the invoice (from the perspective of the Link owner).
+- `OUTFLOW` indicates a sent invoice.
+- `INFLOW` indicates a received invoice.
+",INFLOW,string,,Yes,Yes,"OUTFLOW, INFLOW, None",
+[].sender_id,The fiscal ID of the invoice sender,AAA111111AA11,string,,Yes,Yes,,
+[].sender_name,The name of the invoice sender.,ACME CORP,string,,Yes,Yes,,
+[].sender_tax_fraud_status,"Indicates whether or not the sender is on SAT's tax fraud list for having submitted incorrect data, having outstanding payments, or having conducted business that is in violation of the fiscal institution's regulations.<br><br>
+
+SAT updates the tax fraud list every three months. <br><br>
+
+For more information regarding the reason's a taxpayer can be put on the tax fraud list, please see [Article 69](http://omawww.sat.gob.mx/cifras_sat/Paginas/datos/vinculo.html?page=ListCompleta69.html) and [Article 69-B](http://omawww.sat.gob.mx/cifras_sat/Paginas/datos/vinculo.html?page=ListCompleta69B.html) of Mexico's Código Fiscal de la Federación.
+<br><br>
+
+Possible statuses are:
+
+- `INVESTIGATING` <br>
+The fiscal institution has identified irregularities and open an investigation regarding the taxpayer.
+<br>
+- `DISMISSED` <br>
+The fiscal institution has investigated the taxpayer and declared them innocent.
+<br>
+- `CONFIRMED` <br>
+The fiscal institution has confirmed that the taxpayer is guilty.
+<br>
+- `OVERTURNED` <br>
+The fiscal institution has reassessed a previously confirmed taxpayer and, based on new evidence, has taken the taxpayer off the tax fraud list.
+<br>
+- `NO_TAX_FRAUD_STATUS` <br>
+The receiver or sender is not found in the list (in other words, they are complying with the fiscal institution's regulations).
+",NO_TAX_FRAUD_STATUS,string,,No,Yes,,
+[].receiver_id,The fiscal ID of the invoice receiver.,BBB222222BB22,string,,Yes,Yes,,
+[].receiver_name,The name of the invoice receiver.,BELVO CORP,string,,Yes,Yes,,
+[].receiver_tax_fraud_status,"Indicates whether or not the receiver is on SAT's tax fraud list for having submitted incorrect data, having outstanding payments, or having conducted business that is in violation of the fiscal institution's regulations.<br><br>
+
+SAT updates the tax fraud list every three months. <br><br>
+
+For more information regarding the reason's a taxpayer can be put on the tax fraud list, please see [Article 69](http://omawww.sat.gob.mx/cifras_sat/Paginas/datos/vinculo.html?page=ListCompleta69.html) and [Article 69-B](http://omawww.sat.gob.mx/cifras_sat/Paginas/datos/vinculo.html?page=ListCompleta69B.html) of Mexico's Código Fiscal de la Federación.
+<br><br>
+
+Possible statuses are:
+
+- `INVESTIGATING` <br>
+The fiscal institution has identified irregularities and open an investigation regarding the taxpayer.
+<br>
+- `DISMISSED` <br>
+The fiscal institution has investigated the taxpayer and declared them innocent.
+<br>
+- `CONFIRMED` <br>
+The fiscal institution has confirmed that the taxpayer is guilty.
+<br>
+- `OVERTURNED` <br>
+The fiscal institution has reassessed a previously confirmed taxpayer and, based on new evidence, has taken the taxpayer off the tax fraud list.
+<br>
+- `NO_TAX_FRAUD_STATUS` <br>
+The receiver or sender is not found in the list (in other words, they are complying with the fiscal institution's regulations).
+",NO_TAX_FRAUD_STATUS,string,,No,Yes,,
+[].cancelation_status,"If the invoice is cancelled, this field indicates the status of the cancellation.
+",,string,,Yes,Yes,,
+[].cancelation_update_date,"The date of the invoice cancelation, in `YYYY-MM-DD` format.
+",2019-12-02,string,date,Yes,Yes,,
+[].certification_date,"The date of the fiscal certification, in `YYYY-MM-DD` format.
+",2019-12-01,string,date,Yes,Yes,,
+[].certification_authority,"The fiscal ID of the certification provider.
+",CCC333333CC33,string,,Yes,Yes,,
+[].payment_type,"The payment type code used for this invoice, as defined by the country legal entity.
+
+- 🇲🇽 Mexico [SAT catalog reference article](https://developers.belvo.com/docs/sat-catalogs#payment-type)
+",99,string,,Yes,Yes,,
+[].payment_type_description,"*This field has been deprecated. For more information regarding Belvo and deprecation, see our [Deprecated fields](https://developers.belvo.com/reference/using-the-api-reference#%EF%B8%8F-deprecated-fields) explanation.*
+",,string,,Yes,Yes,,
+[].payment_method,"The payment method code used for this invoice, as defined by the legal entity of the country.
+
+- 🇲🇽 Mexico [SAT catalog reference article](https://developers.belvo.com/docs/sat-catalogs#payment-method). For Mexico, we return `PUE`, `PPD`, or `null`.
+",PUE,string,,No,Yes,"PUE, PPD, None",
+[].payment_method_description,"*This field has been deprecated. For more information regarding Belvo and deprecation, see our [Deprecated fields](https://developers.belvo.com/reference/using-the-api-reference#%EF%B8%8F-deprecated-fields) explanation.*
+
+*The description of the payment method used for this invoice.*
+",,string,,No,Yes,,
+[].usage,"The invoice's usage code, as defined by the legal entity of the country. 
+
+- 🇲🇽 Mexico [SAT catalog reference article](https://developers.belvo.com/docs/sat-catalogs#usage)
+",P01,string,,No,Yes,,
+[].version,"The CFDI version of the invoice.
+",3.3,string,,No,Yes,,
+[].place_of_issue,"The postcode of where the invoice was issued.
+",01165,string,,No,Yes,,
+[].invoice_details,"A list of descriptions for each item (purchased product or service provided) in the invoice.
+",,array,,Yes,No,,
+[].invoice_details[].description,"The description of the invoice item (an invoice can have one or more items).
+",December 2019 accounting fees,string,,Yes,Yes,,
+[].invoice_details[].product_identification,"The identification code of the product or the service, as defined by the legal entity in the country.
+- 🇲🇽 [Mexico](http://200.57.3.89/Pys/catPyS.aspx)
+",84101600,string,,Yes,Yes,,
+[].invoice_details[].quantity,The quantity of this invoice item.,10,number,float,Yes,Yes,,
+[].invoice_details[].unit_code,"The unit of measure, as defined by the legal entity in the country. 
+- 🇲🇽 Mexico [SAT catalog reference](https://developers.belvo.com/docs/sat-catalogs#unit-code)
+",E48,string,,Yes,Yes,,
+[].invoice_details[].unit_description,"The description of the item, as defined by the legal entity in the country.
+- 🇲🇽 Mexico [SAT catalog reference](https://developers.belvo.com/docs/sat-catalogs#unit-code)
+",Unidad de servicio,string,,Yes,Yes,,
+[].invoice_details[].unit_amount,The price of one a singular item.,200,number,float,Yes,Yes,,
+[].invoice_details[].tax_type,"The item's tax type.
+",,string,,No,Yes,,
+[].invoice_details[].pre_tax_amount,"The total price for this item before tax is applied (`quantity` x
+`unit_amount`).
+",400,number,float,Yes,Yes,,
+[].invoice_details[].tax_percentage,The tax percentage to apply.,16,number,float,Yes,Yes,,
+[].invoice_details[].tax_amount,"The amount of tax for this invoice item (`pre_tax_amount` x
+`tax_percentage`).
+",64,number,float,Yes,Yes,,
+[].invoice_details[].total_amount,The total price for this invoice item (`pre_tax_amount` + `tax_amount`).,464,number,float,Yes,Yes,,
+[].invoice_details[].retained_taxes,The retained tax on the invoice item.,,array,,No,No,,
+[].invoice_details[].retained_taxes[].collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+[].invoice_details[].retained_taxes[].tax_type,"The item's tax type.
+",,string,,No,Yes,,
+[].invoice_details[].retained_taxes[].tax,"The type of retained tax (for example, ISR, IVA or IEPS).",ISR,string,,Yes,Yes,,
+[].invoice_details[].retained_taxes[].tax_percentage,The percentage of tax retained.,10,number,float,Yes,Yes,,
+[].invoice_details[].retained_taxes[].retained_tax_amount,The amount of retained tax.,209.79,number,float,Yes,Yes,,
+[].invoice_details[].collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+[].currency,"The currency of the invoice. For example:
+ 
+ - 🇧🇷 BRL (Brazilian Real)
+ - 🇨🇴 COP (Colombian Peso)
+ - 🇲🇽 MXN (Mexican Peso)
+ - 🇺🇸 USD (United States Dollar)
+",MXN,string,,Yes,Yes,,
+[].subtotal_amount,"The pretax amount of this invoice (sum of each item's `pre_tax_amount`).
+",400,number,float,Yes,Yes,,
+[].exchange_rate,"The exchange rate used in this invoice for the currency.
+",0.052,number,float,Yes,Yes,,
+[].tax_amount,"The amount of tax for this invoice (sum of each item's `tax_amount`).
+",64,number,float,Yes,Yes,,
+[].discount_amount,"The total amount discounted in this invoice.
+",10,number,float,Yes,Yes,,
+[].total_amount,"The total amount of the invoice (`subtotal_amount` + `tax_amount` - `discount_amount`)
+",454,number,float,Yes,Yes,,
+[].payments,"A list detailing all the invoice payments.
+",,array,,Yes,No,,
+[].payments[].date,"ISO-8601 timestamp when the payment was made.
+",2020-03-17T12:00:00.000Z,string,date-time,Yes,Yes,,
+[].payments[].payment_type,"Payment type code used for this invoice, as defined by the country's legal entity.
+
+- 🇲🇽 Mexico [SAT catalog reference article](https://developers.belvo.com/docs/sat-catalogs#payment-type)
+",03,string,,Yes,Yes,,
+[].payments[].currency,"The currency of the payment. For example:
+
+- 🇧🇷 BRL (Brazilian Real)
+- 🇨🇴 COP (Colombian Peso)
+- 🇲🇽 MXN (Mexican Peso)
+
+Please note that other currencies other than in the list above may be returned.
+",BRL,string,,Yes,Yes,,
+[].payments[].exchange_rate,"The `currency` to MXN currency exchange rate when the payment was made.
+",3.75,string,,Yes,Yes,,
+[].payments[].amount,"The invoice amount, in the currency of the original invoice.
+",8000.5,number,float,Yes,Yes,,
+[].payments[].operation_number,"The fiscal institution's internal identifier for the operation.
+",831840,string,,Yes,Yes,,
+[].payments[].beneficiary_rfc,"The fiscal ID of the payment beneficiary.
+",BNM840515VB1,string,,No,Yes,,
+[].payments[].beneficiary_account_number,"The bank account number of the payment beneficiary.
+",12343453245633,string,,Yes,Yes,,
+[].payments[].payer_rfc,"The fiscal ID of the payment issuer.
+",BKJM840515VB1,string,,Yes,Yes,,
+[].payments[].payer_account_number,"The bank account number of the payment issuer.
+",13343663245699,string,,Yes,Yes,,
+[].payments[].payer_bank_name,"The banking institution that was used by the payment issuer.
+",CITI BANAMEX,string,,Yes,Yes,,
+[].payments[].related_documents,"A list of all the related deferred invoices affected by the payment.
+",,array,,Yes,No,,
+[].payments[].related_documents[].invoice_identification,"The fiscal institution's unique ID for the related deferred invoice.
+",7EE015F3-6311-11EA-B02A-00155D014007,string,,Yes,Yes,,
+[].payments[].related_documents[].currency,"The currency of the related invoice. For example:
+    
+- 🇧🇷 BRL (Brazilian Real)
+- 🇨🇴 COP (Colombian Peso)
+- 🇲🇽 MXN (Mexican Peso)
+  
+  Please note that other currencies other than in the list above may be returned.
+",MXN,string,,Yes,Yes,,
+[].payments[].related_documents[].payment_method,"The payment method of the related invoice.
+",PPD,string,,Yes,Yes,,
+[].payments[].related_documents[].partiality_number,"The payment installment number.
+",1,integer,int32,No,No,,
+[].payments[].related_documents[].previous_balance,"The invoice amount before the payment.
+",18877.84,number,float,Yes,Yes,,
+[].payments[].related_documents[].amount_paid,"The amount paid in this installment.
+",8000,number,float,Yes,Yes,,
+[].payments[].related_documents[].outstanding_balance,"The amount remaining to be paid.
+",10877.84,number,float,Yes,Yes,,
+[].payroll,"Details regarding the payroll payment. Only applicable for payroll invoices.
+",,object,,Yes,Yes,,
+[].payroll.days,"The number of days covered by the payment.
+",30,integer,int32,Yes,Yes,,
+[].payroll.type,"The payroll type, as defined by the legal entity of the country.
+
+- 🇲🇽 Mexico [SAT catalog reference article](https://developers.belvo.com/docs/sat-catalogs#payroll-type)
+",O,string,,Yes,Yes,,
+[].payroll.amount,"The total amount of the payroll payment.
+",20400.1,number,float,Yes,No,,
+[].payroll.version,"The version of the payroll object.
+",1.2,string,,Yes,No,,
+[].payroll.date_from,"The start date of the payment period, in `YYYY-MM-DD` format.
+",2018-07-01,string,date,Yes,Yes,,
+[].payroll.date_to,"The end date of the payment period, in `YYYY-MM-DD` format.
+",2018-07-31,string,date,Yes,Yes,,
+[].payroll.collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+[].payroll.payment_date,"The payment date, in `YYYY-MM-DD` format.
+",2018-07-16,string,date,Yes,No,,
+[].payroll.periodicity,"How often the payroll payment is made.
+
+For Mexico's SAT, we return one of the following values:
+
+  - `DAILY`
+  - `WEEKLY`
+  - `TENTH_DAY`
+  - `FOURTEENTH_DAY`
+  - `FIFTEENTH_DAY`
+  - `MONTHLY`
+  - `BIMONTHLY`
+  - `PER_TASK`
+  - `COMMISSION`
+  - `ONE_OFF`
+  - `OTHER_PERIODICITY`
+",MONTHLY,string,,No,Yes,"DAILY, WEEKLY, TENTH_DAY, FOURTEENTH_DAY, FIFTEENTH_DAY, MONTHLY, BIMONTHLY, PER_TASK, COMMISSION, ONE_OFF, OTHER_PERIODICITY, null",
+[].payroll.earnings_breakdown,"A breakdown of the earnings for the payroll payment.
+",,array,,No,Yes,,
+[].payroll.earnings_breakdown[].type,"The type of income. For a full list of possible values, please see the <a href=""https://developers.belvo.com/docs/sat-catalogs#payroll-earnings-breakdown-type"" target=""_blank"">payroll earnings breakdown type table</a>.
+",CHRISTMAS_BONUS,string,,No,Yes,,
+[].payroll.earnings_breakdown[].taxable_amount,"The amount of the income that is taxable.
+",1505,number,float,No,No,,
+[].payroll.earnings_breakdown[].vat_free_amount,"The amount of the income that is not subject to VAT.
+",0,number,float,No,No,,
+[].payroll.tax_deductions,"A breakdown of the tax deductions on the payroll payment.
+",,array,,No,Yes,,
+[].payroll.tax_deductions[].type,"The type of tax deduction. For a full list of possible values, please see the <a href=""https://developers.belvo.com/docs/sat-catalogs#payroll-tax-deductions-type"" target=""_blank"">payroll tax deductions type table</a>.
+",UNION_FEES,string,,No,Yes,,
+[].payroll.tax_deductions[].amount,"The amount of the tax deduction.
+",1505,number,float,No,No,,
+[].payroll.other_payments,"A breakdown of other payments for the payroll.
+",,array,,No,Yes,,
+[].payroll.other_payments[].type,"The type of other payment. For a full list of possible values, please see the <a href=""https://developers.belvo.com/docs/sat-catalogs#payroll-other-payments-type"" target=""_blank"">payroll other payments type table</a>.
+",EMPLOYMENT_SUBSIDY,string,,No,Yes,,
+[].payroll.other_payments[].amount,"The amount of the other payment.
+",1505,number,float,No,No,,
+[].folio,"The internal control number that the taxpayer assigns to the invoice.
+",26,string,,No,Yes,,
+[].xml,"XML of the invoice document.
+",,string,,No,Yes,,
+[].warnings,"Object containing information about any warnings related to this invoice.
+",,object,,No,Yes,,
+[].warnings.code,"The warning code. Can be one of:
+
+  - `sat_xml_limit_reached`
+  - `sat_service_unavailable`
+  - `null`
+",sat_xml_limit_reached,string,,Yes,Yes,,
+[].warnings.message,"The description of the warning.
+
+The message will depend on the warning code:
+
+`sat_xml_limit_reached`<br>
+The daily limit for XML downloads set by SAT was reached so this invoice might be missing data. Please check https://tinyurl.com/yydzhy5d for more information on this error.
+
+`sat_service_unavailable` <br>
+Downloading invoices details is not available. The SAT portal raised a 503 error.
+","The daily limit for XML downloads set by SAT was reached so this invoice
+might be missing data. Please check https://tinyurl.com/yydzhy5d for more
+information on this error.
+",string,,Yes,Yes,,
+[].sender_blacklist_status,"*This field has been deprecated. For more information regarding Belvo and deprecation, see our [Deprecated fields](https://developers.belvo.com/reference/using-the-api-reference#%EF%B8%8F-deprecated-fields) explanation.*
+Please use `sender_tax_fraud_status` instead.
+",,string,,No,Yes,,
+[].receiver_blacklist_status,"*This field has been deprecated. For more information regarding Belvo and deprecation, see our [Deprecated fields](https://developers.belvo.com/reference/using-the-api-reference#%EF%B8%8F-deprecated-fields) explanation.*
+Please use `receiver_tax_fraud_status` instead.
+",,string,,No,Yes,,

@@ -1,0 +1,54 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+[].id,"Belvo's unique identifier for the current item.
+",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+[].link,The `link.id` the data belongs to.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
+[].collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+[].created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+[].invoice_identification,"The fiscal institution's unique ID for the invoice that the tax retention relates to.
+",def404af-5eef-4112-aa99-d1ec8493b89a,string,uuid,Yes,Yes,,
+[].version,"The CFDI version of the tax retentions.
+",1.0,string,,Yes,Yes,,
+[].code,"The tax retention code. For more information, see our [SAT Catalogs DevPortal article](https://developers.belvo.com/docs/sat-catalogs#retention-code).
+",25,integer,int32,Yes,Yes,,
+[].issued_at,"The ISO-8601 timestamp of when the tax retention was issued.
+",2019-01-03T21:10:40.000Z,string,date-time,Yes,Yes,,
+[].certified_at,"The ISO-8601 timestamp of when the tax retention was certified.
+",2019-01-03T21:10:41.000Z,string,date-time,Yes,Yes,,
+[].cancelled_at,"The ISO-8601 timestamp of when the tax retention was canceled (if applicable).
+",,string,date-time,Yes,Yes,,
+[].sender_id,"The fiscal ID of the invoice sender.
+",JKUF980404P0,string,,Yes,Yes,,
+[].sender_name,"The name of the invoice sender.
+",Roberto Nunez Batman,string,,Yes,Yes,,
+[].receiver_nationality,"Whether the invoice receiver is a Mexican national or not. If the receiver is not considered a Mexican national, the retained taxes can be calculated differently. Possible values:
+  - `NATIONAL`
+  - `FOREIGN`
+",NATIONAL,string,,Yes,Yes,"NATIONAL, FOREIGN",
+[].receiver_id,"The fiscal ID of the invoice receiver.
+",GYGK3207809L1,string,,Yes,Yes,,
+[].receiver_name,"The name of the invoice receiver.
+",ACME LTD,string,,Yes,Yes,,
+[].total_invoice_amount,"The total amount of the invoice that the tax retention relates to.
+",53249.8,number,float,Yes,Yes,,
+[].total_exempt_amount,"Total amount that is exempt from taxation.
+",1000.8,number,float,Yes,Yes,,
+[].total_retained_amount,"Total tax retained.
+",1550.7,number,float,Yes,Yes,,
+[].total_taxable_amount,"The total amount that can be taxed. Calculated as `total_invoice_amount` - `total_exempt_amount`.
+",43249,number,float,Yes,Yes,,
+[].retention_breakdown,"A breakdown of the retained taxes.
+",,array,,Yes,Yes,,
+[].retention_breakdown[].base_amount,"The base amount that was used to calculate the tax retention.
+",0.03,number,float,Yes,Yes,,
+[].retention_breakdown[].tax_type,"Optional attribute to indicate the type of tax withheld for the period or year according to the [SAT catalog](https://developers.belvo.com/docs/sat-catalogs#retention-code).
+",01,string,,Yes,Yes,,
+[].retention_breakdown[].retained_amount,"The amount retained.
+",0,number,float,Yes,Yes,,
+[].retention_breakdown[].payment_status,"Indicates whether or not the tax has been paid or not. Can be either:
+  - `PAID`
+  - `PROVISIONED`
+",PAID,string,,Yes,Yes,"PAID, PROVISIONED",
+[].xml,"The tax retention document in XML form.
+",=XML-STRING=,string,,Yes,Yes,,

@@ -1,0 +1,123 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+[].id,"Belvo's unique identifier for the current item.
+",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+[].link,The `link.id` the data belongs to.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
+[].collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+[].created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+[].entity_details,Details regarding the fiscal entity's (key dates and identification information).,,object,,No,No,,
+[].entity_details.incorporation_date,"The date that the fiscal entity was incorporated, in `YYYY-MM-DD` format.",24-09-2010,string,date,Yes,No,,
+[].entity_details.start_date,"The date that the fiscal entity started operating, in `YYYY-MM-DD` format.",24-09-2010,string,date,Yes,No,,
+[].entity_details.end_date,"The date that the fiscal entity ceased operations, in `YYYY-MM-DD` format. If the entity is still operating, this field will return `null`",,string,date,Yes,Yes,,
+[].entity_details.document_id_type,"The type of document ID that the fiscal entity has. For Chile, this will be the `RUT`.",RUT,string,,Yes,No,,
+[].entity_details.document_id_number,The document ID number of the fiscal entity.,197476427-K,string,,Yes,No,,
+[].entity_details.name,The name of the fiscal entity.,Empresa de Prueba,string,,Yes,No,,
+[].addresses,An array of addresses for the fiscal entity.,,array,,No,No,,
+[].addresses[].type,"The type of address. Can be either:
+
+  - `PRIMARY` (*domicilio*)
+  - `SECONDARY` (*sucursal*)
+  - `MAILING_ADDRESS` (*DOM. POSTAL*)
+  - `NOTIFICATION_ADDRESS` (*DOM. URBANO_VALIDO_NOTIFICACIONES*)
+",PRIMARY,string,,Yes,No,"PRIMARY, SECONDARY, MAILING_ADDRESS, NOTIFICATION_ADDRESS",
+[].addresses[].date,"The date that the address was added to the fiscal entity's records, in `YYYY-MM-DD` format.",24-09-2010,string,date,Yes,No,,
+[].addresses[].address,The address of the fiscal entity.,Calle Falsa 123,string,,Yes,No,,
+[].emails,An array of email addresses for the fiscal entity.,,array,,No,No,,
+[].emails[].type,"The type of email. Can be either:
+
+- `CONTACT` (*Correo electrónico de contacto*)
+- `NOTIFICATION` (*Correo electrónico para notificaciones*)
+- `OTHER`.
+",CONTACT,string,,Yes,No,"CONTACT, NOTIFICATION, OTHER",
+[].emails[].email,The email address of the fiscal entity.,mi-email@empresa.cl,string,email,Yes,No,,
+[].phone_numbers,An array of phone numbers for the fiscal entity.,,array,,No,No,,
+[].phone_numbers[].type,"The type of phone number. Can be either:
+  
+  - `LANDLINE`
+  - `MOBILE`
+  - `OTHER`
+",LANDLINE,string,,Yes,Yes,"LANDLINE, MOBILE, OTHER, null",
+[].phone_numbers[].number,The phone number of the fiscal entity.,123456789,string,,Yes,No,,
+[].economic_activities,An array of economic activities for the fiscal entity.,,array,,No,No,,
+[].economic_activities[].type,"The overall economic activity type, according to Servicio de Impuestos Internos (SII).",ASESORIA EN INGENIERIA,string,,Yes,No,,
+[].economic_activities[].activity,"The specific economic activity, according to Servicio de Impuestos Internos (SII).",ACTIVIDADES DE CONSULTORIA DE GESTION,string,,Yes,No,,
+[].economic_activities[].code,"The economic activity code, according to Servicio de Impuestos Internos (SII).",702000,string,,Yes,No,,
+[].economic_activities[].tax_category,"The tax category of the economic activity, according to Servicio de Impuestos Internos (SII).",1,integer,,Yes,No,,
+[].economic_activities[].vat_affected,Indicates whether the economic activity is VAT-affected.,True,boolean,,Yes,No,,
+[].economic_activities[].start_date,"The date that the fiscal entity started this economic activity, in `YYYY-MM-DD` format.",24-09-2010,string,date,Yes,No,,
+[].legal_representative,An array of legal representatives for the fiscal entity.,,array,,No,No,,
+[].legal_representative[].is_current,Indicates whether the legal representative is the current legal representative of the fiscal entity.,True,boolean,,Yes,No,,
+[].legal_representative[].name,The name of the legal representative.,Juan Perez,string,,Yes,No,,
+[].legal_representative[].document_id_type,"The type of document ID of the legal representative. For Chile, this will be always set to `RUT`.",RUT,string,,Yes,No,RUT,
+[].legal_representative[].document_id_number,"The document ID number of the legal representative. For Chile, this will be the RUT number.",12345678-9,string,,Yes,No,,
+[].legal_representative[].start_date,"The date that the legal representative started representing the fiscal entity, in `YYYY-MM-DD` format.",24-09-2010,string,date,Yes,No,,
+[].legal_representative[].end_date,"The date that the legal representative ceased representing the fiscal entity, in `YYYY-MM-DD` format. If the legal representative is still representing the fiscal entity, this field will return `null`.",,string,date,No,Yes,,
+[].equity_holders,An array of equity holders for the fiscal entity.,,array,,No,No,,
+[].equity_holders[].is_current,Indicates whether the equity holder is currently active.,True,boolean,,Yes,No,,
+[].equity_holders[].name,The name of the equity holder.,Juan Perez,string,,Yes,No,,
+[].equity_holders[].document_id_type,"The type of document ID of the equity holder. For Chile, this will be always set to `RUT`.",RUT,string,,Yes,No,RUT,
+[].equity_holders[].document_id_number,"The document ID number of the equity holder. For Chile, this will be the RUT number.",12345678-9,string,,Yes,No,,
+[].equity_holders[].inactive,Indicates whether the equity holder is currently inactive.,False,boolean,,Yes,No,,
+[].equity_holders[].start_date,"The date that the equity holder started holding equity in the fiscal entity, in `YYYY-MM-DD` format.",24-09-2010,string,date,Yes,No,,
+[].equity_holders[].end_date,"The date that the equity holder ceased holding equity in the fiscal entity, in `YYYY-MM-DD` format. If the equity holder is still holding equity in the fiscal entity, this field will return `null`.",,string,date,No,Yes,,
+[].equity_holders[].capital_contributed,The amount of capital contributed by the equity holder.,1000000,number,,Yes,No,,
+[].equity_holders[].capital_contribution_outstanding,The amount of capital contribution outstanding by the equity holder.,3750,number,,Yes,No,,
+[].equity_holders[].ownership_share,The percentage of ownership share of the equity holder.,25.25,number,,Yes,No,,
+[].equity_holders[].profit_share,The percentage of profit share of the equity holder.,31.25,number,,Yes,No,,
+[].company_partnership_stakes,An array of company partnership stakes for the fiscal entity.,,array,,No,No,,
+[].company_partnership_stakes[].name,The name of the entity that this fiscal entity.,Empresa de Prueba,string,,Yes,No,,
+[].company_partnership_stakes[].document_id_type,"The type of document ID of the business. For Chile, this will be always set to `RUT`.",RUT,string,,Yes,No,RUT,
+[].company_partnership_stakes[].document_id_number,"The document ID number of the business. For Chile, this will be the RUT number.",12345678-9,string,,Yes,No,,
+[].company_partnership_stakes[].inactive,Indicates whether the business is currently active.,False,boolean,,Yes,No,,
+[].company_partnership_stakes[].start_date,"The date that the company started holding equity in the fiscal entity, in `YYYY-MM-DD` format.",24-09-2010,string,date,Yes,No,,
+[].company_partnership_stakes[].end_date,"The date that the company holder ceased holding equity in the fiscal entity, in `YYYY-MM-DD` format. If the equity holder is still holding equity in the fiscal entity, this field will return `null`.",,string,date,No,Yes,,
+[].company_partnership_stakes[].capital_contributed,The amount of capital contributed by the company.,1000000.02,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+[].company_partnership_stakes[].capital_contribution_outstanding,The amount of capital contribution outstanding by the company.,3750.02,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+[].company_partnership_stakes[].ownership_share,The percentage of ownership share of the company.,25.25,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+[].company_partnership_stakes[].profit_share,The percentage of profit share of the company.,31.25,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+[].regimes,A list of tax regimes for the fiscal entity.,,array,,No,Yes,,
+[].regimes[].type,"The tax regime type, as defined by the Servicio de Impuestos Internos (SII).",MICRO EMPRESA,string,,Yes,No,,
+[].regimes[].start_date,"The date that the fiscal entity started this tax regime, in `YYYY-MM-DD` format.",2023-01-01,string,date,Yes,No,,
+[].authorized_tax_documents,A list of authorized tax documents for the fiscal entity.,,array,,No,Yes,,
+[].authorized_tax_documents[].type,"The type of authorized tax document, as defined by the Servicio de Impuestos Internos (SII).
+",CONTABILIDAD EN HOJAS SUELTAS CON NRO.UN,string,,Yes,No,,
+[].authorized_tax_documents[].document_limit,"The maximum number of documents that can be issued under this authorization.
+",2000,integer,,Yes,No,,
+[].authorized_tax_documents[].authorization_date,"The date that the tax document and limit were established, in `YYYY-MM-DD` format.
+",2010-18-11,string,date,Yes,No,,
+[].property_tax_liabilities,A list of tax liabilities of a property that the entity is associated with.,,array,,No,Yes,,
+[].property_tax_liabilities[].property_id,"The unique identifier of the property, according to the Servicio de Impuestos Internos (SII).
+",12345,string,,Yes,No,,
+[].property_tax_liabilities[].district,"The district where the property is located.
+",NUNAO,string,,Yes,No,,
+[].property_tax_liabilities[].address,"The address of the property.
+",123 Example Street,string,,Yes,No,,
+[].property_tax_liabilities[].type,"The type of property associated with the tax liability.
+",HABITACIONAL,string,,Yes,No,,
+[].property_tax_liabilities[].overdue_tax_payments,"A list of overdue tax payments for the property.
+",,array,,Yes,No,,
+[].property_tax_liabilities[].overdue_tax_payments[].year,"The year for which the tax payment is overdue.
+",2023,integer,,Yes,No,,
+[].property_tax_liabilities[].overdue_tax_payments[].installment,"The instalment number of the overdue tax payment.
+",1,integer,,Yes,No,,
+[].property_tax_liabilities[].overdue_tax_payments[].due_date,"The due date of the overdue tax payment, in `YYYY-MM-DD` format.
+",2023-04-30,string,date,Yes,No,,
+[].property_tax_liabilities[].overdue_tax_payments[].amount_due,"The amount due for the overdue tax payment.
+",19.864,number,float,Yes,No,,
+[].property_tax_liabilities[].scheduled_tax_payments,"A list of scheduled tax payments for the property.
+",,array,,Yes,No,,
+[].property_tax_liabilities[].scheduled_tax_payments[].year,"The year for which the tax payment is scheduled.
+",2023,integer,,Yes,No,,
+[].property_tax_liabilities[].scheduled_tax_payments[].installment,"The instalment number of the scheduled tax payment.
+",1,integer,,Yes,No,,
+[].property_tax_liabilities[].scheduled_tax_payments[].due_date,"The due date of the scheduled tax payment, in `YYYY-MM-DD` format.
+",2023-04-30,string,date,Yes,No,,
+[].property_tax_liabilities[].scheduled_tax_payments[].amount_due,"The amount due for the scheduled tax payment.
+",19.864,number,float,Yes,No,,
+[].fiscal_office,"Details regarding fiscal office where the fiscal entity is registered.
+",,object,,No,No,,
+[].fiscal_office.name,"The name of the fiscal office where the fiscal entity is registered.
+",VIÑA DEL MAR,string,,Yes,No,,
+[].fiscal_office.address,"The address of the fiscal office where the fiscal entity is registered.
+","ARLEGUI 525, VIÑA DEL MAR",string,,Yes,No,,
