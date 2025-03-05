@@ -1,0 +1,97 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+[].id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+[].link,El `link.id` al que pertenecen los datos.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
+[].collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+[].created_at,La marca de tiempo ISO-8601 de cuando se creó el punto de datos en la base de datos de Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+[].entity_details,Detalles sobre la entidad fiscal (fechas clave e información de identificación).,,object,,No,No,,
+[].entity_details.incorporation_date,"La fecha en que se constituyó la entidad fiscal, en formato `YYYY-MM-DD`.",24-09-2010,string,date,Yes,No,,
+[].entity_details.start_date,"La fecha en que la entidad fiscal comenzó a operar, en formato `YYYY-MM-DD`.",24-09-2010,string,date,Yes,No,,
+[].entity_details.end_date,"La fecha en que la entidad fiscal cesó sus operaciones, en formato `YYYY-MM-DD`. Si la entidad aún está operando, este campo devolverá `null`.",,string,date,Yes,Yes,,
+[].entity_details.document_id_type,"El tipo de ID de documento que tiene la entidad fiscal. Para Chile, esto será el `RUT`.",RUT,string,,Yes,No,,
+[].entity_details.document_id_number,El número de identificación del documento de la entidad fiscal.,197476427-K,string,,Yes,No,,
+[].entity_details.name,El nombre de la entidad fiscal.,Empresa de Prueba,string,,Yes,No,,
+[].addresses,Una matriz de direcciones para la entidad fiscal.,,array,,No,No,,
+[].addresses[].type,"El tipo de dirección. Puede ser:
+
+  - `PRIMARY` (*domicilio*)
+  - `SECONDARY` (*sucursal*)
+  - `MAILING_ADDRESS` (*DOM. POSTAL*)
+  - `NOTIFICATION_ADDRESS` (*DOM. URBANO_VALIDO_NOTIFICACIONES*)",PRIMARY,string,,Yes,No,"PRIMARY, SECONDARY, MAILING_ADDRESS, NOTIFICATION_ADDRESS",
+[].addresses[].date,"La fecha en que la dirección fue añadida a los registros de la entidad fiscal, en formato `YYYY-MM-DD`.",24-09-2010,string,date,Yes,No,,
+[].addresses[].address,La dirección de la entidad fiscal.,Calle Falsa 123,string,,Yes,No,,
+[].emails,Una matriz de direcciones de correo electrónico para la entidad fiscal.,,array,,No,No,,
+[].emails[].type,"El tipo de correo electrónico. Puede ser:
+
+- `CONTACT` (*Correo electrónico de contacto*)
+- `NOTIFICATION` (*Correo electrónico para notificaciones*)
+- `OTHER`.",CONTACT,string,,Yes,No,"CONTACT, NOTIFICATION, OTHER",
+[].emails[].email,La dirección de correo electrónico de la entidad fiscal.,mi-email@empresa.cl,string,email,Yes,No,,
+[].phone_numbers,Un array de números de teléfono para la entidad fiscal.,,array,,No,No,,
+[].phone_numbers[].type,"El tipo de número de teléfono. Puede ser:
+
+  - `LANDLINE`
+  - `MOBILE`
+  - `OTHER`",LANDLINE,string,,Yes,Yes,"LANDLINE, MOBILE, OTHER, null",
+[].phone_numbers[].number,El número de teléfono de la entidad fiscal.,123456789,string,,Yes,No,,
+[].economic_activities,Un conjunto de actividades económicas para la entidad fiscal.,,array,,No,No,,
+[].economic_activities[].type,"El tipo de actividad económica general, según el Servicio de Impuestos Internos (SII).",ASESORIA EN INGENIERIA,string,,Yes,No,,
+[].economic_activities[].activity,"La actividad económica específica, según el Servicio de Impuestos Internos (SII).",ACTIVIDADES DE CONSULTORIA DE GESTION,string,,Yes,No,,
+[].economic_activities[].code,"El código de actividad económica, según el Servicio de Impuestos Internos (SII).",702000,string,,Yes,No,,
+[].economic_activities[].tax_category,"La categoría tributaria de la actividad económica, según el Servicio de Impuestos Internos (SII).",1,integer,,Yes,No,,
+[].economic_activities[].vat_affected,Indica si la actividad económica está afectada por el IVA.,True,boolean,,Yes,No,,
+[].economic_activities[].start_date,"La fecha en que la entidad fiscal comenzó esta actividad económica, en formato `YYYY-MM-DD`.",24-09-2010,string,date,Yes,No,,
+[].legal_representative,Un array de representantes legales para la entidad fiscal.,,array,,No,No,,
+[].legal_representative[].is_current,Indica si el representante legal es el representante legal actual de la entidad fiscal.,True,boolean,,Yes,No,,
+[].legal_representative[].name,El nombre del representante legal.,Juan Perez,string,,Yes,No,,
+[].legal_representative[].document_id_type,"El tipo de identificación del documento del representante legal. Para Chile, esto siempre se establecerá como `RUT`.",RUT,string,,Yes,No,RUT,
+[].legal_representative[].document_id_number,"El número de identificación del documento del representante legal. Para Chile, este será el número RUT.",12345678-9,string,,Yes,No,,
+[].legal_representative[].start_date,"La fecha en que el representante legal comenzó a representar a la entidad fiscal, en formato `YYYY-MM-DD`.",24-09-2010,string,date,Yes,No,,
+[].legal_representative[].end_date,"La fecha en que el representante legal dejó de representar a la entidad fiscal, en formato `YYYY-MM-DD`. Si el representante legal aún representa a la entidad fiscal, este campo devolverá `null`.",,string,date,No,Yes,,
+[].equity_holders,Un array de titulares de acciones para la entidad fiscal.,,array,,No,No,,
+[].equity_holders[].is_current,Indica si el titular de la equidad está actualmente activo.,True,boolean,,Yes,No,,
+[].equity_holders[].name,El nombre del titular de la participación.,Juan Perez,string,,Yes,No,,
+[].equity_holders[].document_id_type,"El tipo de identificación del documento del titular de la equidad. Para Chile, esto siempre se establecerá en `RUT`.",RUT,string,,Yes,No,RUT,
+[].equity_holders[].document_id_number,"El número de identificación del documento del titular de acciones. Para Chile, este será el número RUT.",12345678-9,string,,Yes,No,,
+[].equity_holders[].inactive,Indica si el titular de la equidad está actualmente inactivo.,False,boolean,,Yes,No,,
+[].equity_holders[].start_date,"La fecha en que el titular de la equidad comenzó a poseer equidad en la entidad fiscal, en formato `YYYY-MM-DD`.",24-09-2010,string,date,Yes,No,,
+[].equity_holders[].end_date,"La fecha en que el titular de la participación dejó de tener participación en la entidad fiscal, en formato `YYYY-MM-DD`. Si el titular de la participación aún mantiene participación en la entidad fiscal, este campo devolverá `null`.",,string,date,No,Yes,,
+[].equity_holders[].capital_contributed,La cantidad de capital aportada por el titular de capital.,1000000,number,,Yes,No,,
+[].equity_holders[].capital_contribution_outstanding,El monto de la contribución de capital pendiente por parte del titular de capital.,3750,number,,Yes,No,,
+[].equity_holders[].ownership_share,El porcentaje de participación accionaria del titular de capital.,25.25,number,,Yes,No,,
+[].equity_holders[].profit_share,El porcentaje de participación en las ganancias del titular de acciones.,31.25,number,,Yes,No,,
+[].company_partnership_stakes,Una matriz de participaciones en asociaciones de la empresa para la entidad fiscal.,,array,,No,No,,
+[].company_partnership_stakes[].name,El nombre de la entidad que esta entidad fiscal.,Empresa de Prueba,string,,Yes,No,,
+[].company_partnership_stakes[].document_id_type,"El tipo de ID de documento del negocio. Para Chile, esto siempre se establecerá en `RUT`.",RUT,string,,Yes,No,RUT,
+[].company_partnership_stakes[].document_id_number,"El número de identificación del documento de la empresa. Para Chile, este será el número RUT.",12345678-9,string,,Yes,No,,
+[].company_partnership_stakes[].inactive,Indica si el negocio está actualmente activo.,False,boolean,,Yes,No,,
+[].company_partnership_stakes[].start_date,"La fecha en que la empresa comenzó a tener participación en la entidad fiscal, en formato `YYYY-MM-DD`.",24-09-2010,string,date,Yes,No,,
+[].company_partnership_stakes[].end_date,"La fecha en que el titular de la empresa dejó de poseer acciones en la entidad fiscal, en formato `YYYY-MM-DD`. Si el titular de las acciones aún posee acciones en la entidad fiscal, este campo devolverá `null`.",,string,date,No,Yes,,
+[].company_partnership_stakes[].capital_contributed,La cantidad de capital aportado por la empresa.,1000000.02,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+[].company_partnership_stakes[].capital_contribution_outstanding,El monto de la contribución de capital pendiente por la empresa.,3750.02,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+[].company_partnership_stakes[].ownership_share,El porcentaje de participación accionaria de la empresa.,25.25,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+[].company_partnership_stakes[].profit_share,El porcentaje de participación en las ganancias de la empresa.,31.25,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+[].regimes,Una lista de regímenes fiscales para la entidad fiscal.,,array,,No,Yes,,
+[].regimes[].type,"El tipo de régimen tributario, según lo definido por el Servicio de Impuestos Internos (SII).",MICRO EMPRESA,string,,Yes,No,,
+[].regimes[].start_date,"La fecha en que la entidad fiscal comenzó este régimen fiscal, en formato `YYYY-MM-DD`.",2023-01-01,string,date,Yes,No,,
+[].authorized_tax_documents,Una lista de documentos fiscales autorizados para la entidad fiscal.,,array,,No,Yes,,
+[].authorized_tax_documents[].type,"El tipo de documento tributario autorizado, según lo definido por el Servicio de Impuestos Internos (SII).",CONTABILIDAD EN HOJAS SUELTAS CON NRO.UN,string,,Yes,No,,
+[].authorized_tax_documents[].document_limit,El número máximo de documentos que se pueden emitir bajo esta autorización.,2000,integer,,Yes,No,,
+[].authorized_tax_documents[].authorization_date,"La fecha en que se establecieron el documento fiscal y el límite, en formato `YYYY-MM-DD`.",2010-18-11,string,date,Yes,No,,
+[].property_tax_liabilities,Una lista de las obligaciones fiscales de una propiedad con las que la entidad está asociada.,,array,,No,Yes,,
+[].property_tax_liabilities[].property_id,"El identificador único de la propiedad, según el Servicio de Impuestos Internos (SII).",12345,string,,Yes,No,,
+[].property_tax_liabilities[].district,El distrito donde se encuentra la propiedad.,NUNAO,string,,Yes,No,,
+[].property_tax_liabilities[].address,La dirección de la propiedad.,123 Example Street,string,,Yes,No,,
+[].property_tax_liabilities[].type,El tipo de propiedad asociado con la responsabilidad fiscal.,HABITACIONAL,string,,Yes,No,,
+[].property_tax_liabilities[].overdue_tax_payments,Una lista de pagos de impuestos atrasados para la propiedad.,,array,,Yes,No,,
+[].property_tax_liabilities[].overdue_tax_payments[].year,El año para el cual el pago de impuestos está atrasado.,2023,integer,,Yes,No,,
+[].property_tax_liabilities[].overdue_tax_payments[].installment,El número de cuota del pago de impuestos atrasado.,1,integer,,Yes,No,,
+[].property_tax_liabilities[].overdue_tax_payments[].due_date,"La fecha de vencimiento del pago de impuestos atrasados, en formato `YYYY-MM-DD`.",2023-04-30,string,date,Yes,No,,
+[].property_tax_liabilities[].overdue_tax_payments[].amount_due,El monto adeudado por el pago de impuestos atrasado.,19.864,number,float,Yes,No,,
+[].property_tax_liabilities[].scheduled_tax_payments,Una lista de pagos de impuestos programados para la propiedad.,,array,,Yes,No,,
+[].property_tax_liabilities[].scheduled_tax_payments[].year,El año para el cual está programado el pago de impuestos.,2023,integer,,Yes,No,,
+[].property_tax_liabilities[].scheduled_tax_payments[].installment,El número de cuota del pago de impuestos programado.,1,integer,,Yes,No,,
+[].property_tax_liabilities[].scheduled_tax_payments[].due_date,"La fecha de vencimiento del pago de impuestos programado, en formato `YYYY-MM-DD`.",2023-04-30,string,date,Yes,No,,
+[].property_tax_liabilities[].scheduled_tax_payments[].amount_due,El monto adeudado para el pago programado de impuestos.,19.864,number,float,Yes,No,,
+[].fiscal_office,Detalles sobre la oficina fiscal donde está registrada la entidad fiscal.,,object,,No,No,,
+[].fiscal_office.name,El nombre de la oficina fiscal donde está registrado el ente fiscal.,VIÑA DEL MAR,string,,Yes,No,,
+[].fiscal_office.address,La dirección de la oficina fiscal donde está registrado el ente fiscal.,"ARLEGUI 525, VIÑA DEL MAR",string,,Yes,No,,

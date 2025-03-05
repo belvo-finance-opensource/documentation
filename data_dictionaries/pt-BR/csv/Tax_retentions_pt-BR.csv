@@ -1,0 +1,30 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+[].id,Identificador único da Belvo para o item atual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+[].link,O `link.id` ao qual os dados pertencem.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
+[].collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+[].created_at,O carimbo de data e hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+[].invoice_identification,O ID único da instituição fiscal para a fatura à qual a retenção de imposto se refere.,def404af-5eef-4112-aa99-d1ec8493b89a,string,uuid,Yes,Yes,,
+[].version,A versão CFDI das retenções de impostos.,1.0,string,,Yes,Yes,,
+[].code,"O código de retenção de impostos. Para mais informações, consulte nosso [artigo no DevPortal sobre Catálogos SAT](https://developers.belvo.com/docs/sat-catalogs#retention-code).",25,integer,int32,Yes,Yes,,
+[].issued_at,O carimbo de data/hora ISO-8601 de quando a retenção de imposto foi emitida.,2019-01-03T21:10:40.000Z,string,date-time,Yes,Yes,,
+[].certified_at,O carimbo de data/hora ISO-8601 de quando a retenção de imposto foi certificada.,2019-01-03T21:10:41.000Z,string,date-time,Yes,Yes,,
+[].cancelled_at,O carimbo de data/hora ISO-8601 de quando a retenção de imposto foi cancelada (se aplicável).,,string,date-time,Yes,Yes,,
+[].sender_id,O ID fiscal do remetente da fatura.,JKUF980404P0,string,,Yes,Yes,,
+[].sender_name,O nome do remetente da fatura.,Roberto Nunez Batman,string,,Yes,Yes,,
+[].receiver_nationality,"Se o destinatário da fatura é um nacional mexicano ou não. Se o destinatário não for considerado um nacional mexicano, os impostos retidos podem ser calculados de forma diferente. Valores possíveis:
+  - `NATIONAL`
+  - `FOREIGN`",NATIONAL,string,,Yes,Yes,"NATIONAL, FOREIGN",
+[].receiver_id,O ID fiscal do destinatário da fatura.,GYGK3207809L1,string,,Yes,Yes,,
+[].receiver_name,O nome do destinatário da fatura.,ACME LTD,string,,Yes,Yes,,
+[].total_invoice_amount,O valor total da fatura ao qual a retenção de imposto se refere.,53249.8,number,float,Yes,Yes,,
+[].total_exempt_amount,Valor total isento de tributação.,1000.8,number,float,Yes,Yes,,
+[].total_retained_amount,Total de impostos retidos.,1550.7,number,float,Yes,Yes,,
+[].total_taxable_amount,O valor total que pode ser tributado. Calculado como `total_invoice_amount` - `total_exempt_amount`.,43249,number,float,Yes,Yes,,
+[].retention_breakdown,Uma análise detalhada dos impostos retidos.,,array,,Yes,Yes,,
+[].retention_breakdown[].base_amount,O valor base que foi utilizado para calcular a retenção de imposto.,0.03,number,float,Yes,Yes,,
+[].retention_breakdown[].tax_type,Atributo opcional para indicar o tipo de imposto retido para o período ou ano de acordo com o [catálogo SAT](https://developers.belvo.com/docs/sat-catalogs#retention-code).,01,string,,Yes,Yes,,
+[].retention_breakdown[].retained_amount,O valor retido.,0,number,float,Yes,Yes,,
+[].retention_breakdown[].payment_status,"Indica se o imposto foi pago ou não. Pode ser:
+  - `PAID`
+  - `PROVISIONED`",PAID,string,,Yes,Yes,"PAID, PROVISIONED",
+[].xml,O documento de retenção de impostos em formato XML.,=XML-STRING=,string,,Yes,Yes,,

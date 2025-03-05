@@ -1,0 +1,70 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+id,"Belvo's unique identifier for the current item.
+",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+institution,"Belvo's name for the institution.
+",erebor_mx_retail,string,,No,No,,
+access_mode,"The link type.
+For more information, see our [Links](https://developers.belvo.com/docs/links-and-institutions#links) article.
+We return one of the following enum values:
+  - `single`
+  - `recurrent`
+  - `null`
+",recurrent,string,,No,Yes,"single, recurrent, None",
+last_accessed_at,"The ISO-8601 timestamp of Belvo's most recent successful access to the institution for the given link.
+",2021-03-09T10:28:40.000Z,string,date-time,No,Yes,,
+created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+external_id,"An additional identifier for the link, provided by you, to store in the Belvo database. **Cannot** include any Personal Identifiable Information (PII). **Must** be at least three characters long.
+
+
+If we identify that the identifier contains PII, we will force a `null` value. For more information, see our [Link creation article](https://developers.belvo.com/docs/link-creation-best-practices#adding-your-own-identifier).
+",56ab5706-6e00-48a4-91c9-ca55968678d9,string,,No,No,,
+institution_user_id,"> 📘 Info
+>
+> Only applicable for links created **after 08-02-2022**.
+
+
+A unique 44-character string that can be used to identify a user at a given institution.
+
+
+📚 Check out our [Avoiding duplicated links](https://developers.belvo.com/docs/link-creation-best-practices#avoiding-duplicated-links) DevPortal article for more information and tips on how to use it.
+",sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=,string,,No,No,,[A-Za-z0-9\-=_]{44}
+status,"The current status of the link. For more information, see our [Link](https://developers.belvo.com/docs/links-and-institutions#links) article in the devportal.
+We return one of the following values:
+  - `valid`
+  - `invalid`
+  - `unconfirmed`
+  - `token_required`
+",valid,string,,No,No,"valid, invalid, unconfirmed, token_required",
+created_by,The unique ID for the user that created this item.,bcef7f35-67f2-4b19-b009-cb38795faf09,string,uuid,No,No,,
+refresh_rate,"The update refresh rate for the recurrent link. For more information, check out our [recurrent link documentation](https://developers.belvo.com/docs/links-and-institutions#recurrent-links) in our DevPortal.
+We return one of the following enum values:
+  - `6h`
+  - `12h`
+  - `24h`
+  - `7d` (default)
+  - `30d` (once a month)
+  - `null` (for single links)
+",7d,string,,No,Yes,"6h, 12h, 24h, 7d, 30d, None",
+credentials_storage,"Indicates whether or not to store credentials (and the duration for which to store the credentials).
+
+- For recurrent links, this is set to `store` by default (and cannot be changed). 
+- For single links, this is set to `365d` by default.
+
+Choose either:
+  - `store` to store credentials (until the link is deleted)
+  - `nostore` to not store credentials
+  -  Any value between `1d` and `365d` to indicate the number of days you want the credentials to be stored.
+
+ For more information, check out the <a href=""https://developers.belvo.com/docs/data-retention-controls#credentials_storage"" target=""_blank"">credentials_storage</a> section of our Data retention controls article.
+",27d,string,,No,No,,"^(store|nostore|\d{1,3}d)$"
+fetch_resources,"An array of resources that you will receive a historical update for.
+","[""ACCOUNTS"", ""TRANSACTIONS""]",array,,No,No,,
+stale_in,"Indicates how long any user-derived data should be stored in Belvo's database for the link (both single and recurrent). For example, if you send through `90d`, Belvo will remove any data from its database relating to the user after 90 days. For more information, check out the <a href=""https://developers.belvo.com/docs/data-retention-controls#stale_in"" target=""_blank"">stale_in</a> section of our Data retention controls article.
+
+> 📘 Info
+>
+> Belvo will only remove data for links that have not been updated in the period you provide in `stale_in`. Belvo will only remove data for links that have not been updated in the period you provide in `stale_in`.
+
+By default Belvo stores user data for 365 days, unless the link is deleted.
+",42d,string,,No,No,,"^\d{1,3}d$"

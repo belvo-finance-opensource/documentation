@@ -1,0 +1,12 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+[].id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+[].collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+[].created_at,La marca de tiempo ISO-8601 de cuando se creó el punto de datos en la base de datos de Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+[].informacion_general,"Información general sobre la declaración de impuestos (año, RFC, tipo de declaración, nombre de la persona/empresa, etc.).",,object,,Yes,Yes,,
+[].determinacion_isr,Información utilizada para calcular el impuesto sobre la renta provisional para el período.,,object,,Yes,Yes,,
+[].detalle_pago_isr,Información sobre los pagos provisionales mensuales para el impuesto sobre la renta.,,object,,Yes,Yes,,
+[].determinacion_iva,Información utilizada para calcular el impuesto provisional del IVA para el período.,,object,,Yes,Yes,,
+[].detalle_pago_iva,Información sobre los pagos provisionales mensuales para el impuesto al valor agregado (IVA).,,object,,Yes,Yes,,
+[].pdf,Declaración de impuestos en PDF como binario.,=PDF-STRING=,string,binary,Yes,Yes,,
+[].receipt_pdf,El recibo de acuse de recibo de la institución fiscal que confirma que han recibido la declaración de impuestos.,=PDF-STRING=,string,binary,No,Yes,,
+[].type,El tipo de declaración de impuestos. Puede ser mensual o anual.,monthly,string,,Yes,Yes,,
