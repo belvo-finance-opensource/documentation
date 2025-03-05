@@ -1,0 +1,89 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+id,Identificador único da Belvo para o item atual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
+link,O `link.id` ao qual os dados pertencem.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
+created_at,O carimbo de data e hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+income_streams,Um array de objetos de fluxo de renda enriquecidos.,,array,,Yes,No,,
+income_streams[].account_id,ID único para a conta bancária a ser verificada para fluxos de renda.,EBACA-89077589,string,,Yes,No,,
+income_streams[].income_type,"O tipo de renda usado nos cálculos.
+
+Retornamos um dos seguintes valores do enum:
+
+  - `SALARY`
+  - `GOVERNMENT`
+  - `INTEREST`
+  - `RENT`
+  - `RETIREMENT`
+  - `FREELANCE`
+  - `ALTERNATIVE_INCOME`
+  - `TRANSFER`
+  - `DEPOSIT`
+  - `UNKNOWN`",SALARY,string,,Yes,No,"SALARY, GOVERNMENT, INTEREST, RENT, RETIREMENT, FREELANCE, ALTERNATIVE_INCOME, TRANSFER, DEPOSIT, UNKNOWN",
+income_streams[].frequency,"Com que frequência a renda é recebida.
+
+Retornamos um dos seguintes valores do enum:
+
+- `MONTHLY` - Para transações que ocorrem uma vez por mês.
+- `FORTNIGHTLY` - Para transações que ocorrem uma vez a cada duas semanas.
+- `WEEKLY` - Para transações que ocorrem uma vez por semana.
+- `IRREGULAR` - Para transações que não ocorrem em um padrão de frequência definido.
+- `SINGLE` - Para transações que ocorrem apenas uma vez e não se repetem.",MONTHLY,string,,Yes,No,"MONTHLY, FORTNIGHTLY, WEEKLY, IRREGULAR, SINGLE",
+income_streams[].monthly_average,A quantidade média de renda recebida da fonte durante `periods_with_income`.,2500,number,float,Yes,No,,
+income_streams[].monthly_median,A quantidade mediana de renda recebida da fonte ao longo de um mês natural.,2200,number,float,No,No,,
+income_streams[].average_income_amount,O valor médio da transação de renda da fonte.,2500,number,float,Yes,No,,
+income_streams[].last_income_amount,O valor da renda mais recente recebida da fonte.,2500,number,float,Yes,No,,
+income_streams[].currency,"O código de moeda de três letras da receita. Por exemplo:
+
+  • 🇧🇷 BRL (Real Brasileiro)
+  • 🇨🇴 COP (Peso Colombiano)
+  • 🇲🇽 MXN (Peso Mexicano)",BRL,string,,Yes,No,,
+income_streams[].last_income_description,A descrição da receita mais recente do stream.,Salário,string,,Yes,No,,
+income_streams[].last_income_date,"A data em que a receita mais recente do stream foi recebida, no formato `YYYY-MM-DD`.",2023-02-09,string,date,Yes,No,,
+income_streams[].stability,"A estabilidade da renda com base em seu valor, com um intervalo de 0 a 1, onde 1 representa estabilidade perfeita.
+
+**Nota:** Para transações com `frequency`=`SINGLE`, este valor retorna `null`.",1,number,float,Yes,Yes,,
+income_streams[].regularity,"A regularidade da renda é baseada em sua frequência, com um intervalo de 0 a 1, onde 1 representa regularidade perfeita.
+
+**Nota:** Para transações com `frequency`=`SINGLE`, este valor retorna `null`.",1,number,float,Yes,Yes,,
+income_streams[].trend,"A tendência de renda durante um período de tempo é calculada entre a última renda e a primeira renda recebida, onde:
+  - um número float negativo significa que a tendência de renda está diminuindo durante o período de tempo.
+  - um número float positivo significa que a tendência de renda está aumentando durante o período de tempo.
+
+**Nota:** Para transações com `frequency`=`SINGLE`, este valor retorna `null`.",0,number,float,Yes,Yes,,
+income_streams[].lookback_periods,"Número de unidades de período (com base em *meses móveis*) usadas para gerar insights e cálculos.
+
+**Nota:** Um *mês móvel* é um período de 30 dias. Por exemplo, de 2023-01-15 a 2023-02-15.",9,integer,int32,Yes,No,,
+income_streams[].full_periods,"Número de unidades de período (baseado em *meses móveis*) com dados para realizar cálculos.
+
+**Nota:** Um *mês móvel* é um período de 30 dias. Por exemplo, de 2023-01-15 a 2023-02-15.",9,integer,int32,Yes,No,,
+income_streams[].periods_with_income,"Número de unidades de período (com base em *meses móveis*) com pelo menos uma receita disponível.
+
+**Nota:** Um *mês móvel* é um período de 30 dias. Por exemplo, de 2023-01-15 a 2023-02-15.",9,integer,int32,Yes,No,,
+income_streams[].number_of_incomes,Número de transações de renda durante os `lookback_periods`.,9,integer,int32,Yes,No,,
+income_streams[].confidence,"Nível de confiança da Belvo para rendas futuras.
+
+Retornamos um dos seguintes valores do enum:
+
+  - `HIGH`
+  - `MEDIUM`
+  - `LOW`",HIGH,string,,Yes,No,"HIGH, MEDIUM, LOW",
+income_source_type,"O tipo de fonte da qual geramos insights de renda.
+Retornamos um dos seguintes valores de enum:
+
+  - `BANK`",BANK,string,,Yes,No,BANK,
+first_transaction_date,"A data em que a primeira transação ocorreu, no formato `YYYY-MM-DD`.",2022-06-09,string,date,Yes,Yes,,
+last_transaction_date,"A data em que a última transação ocorreu, no formato `YYYY-MM-DD`.",2023-02-09,string,date,Yes,No,,
+best_working_day_to_charge,O melhor dia útil do mês para cobrar o usuário.,22,integer,int32,Yes,No,,
+good_working_days_to_charge,Dias úteis adicionais que foram identificados como bons dias para cobrar o usuário.,"[17, 7, 2]",array,,Yes,No,,
+number_of_income_streams,Número total de fontes de renda analisadas.,1,integer,int32,Yes,No,,
+monthly_average,Quantia média de renda recebida por mês em todas as contas para o usuário específico.,2500,number,float,Yes,No,,
+monthly_average_regular,"Valor médio da renda regular (com uma frequência de `MONTHLY`, `FORTNIGHTLY` ou `WEEKLY`) recebida por mês para o usuário específico.",2500,number,float,Yes,No,,
+monthly_average_irregular,Valor médio de renda irregular (com uma frequência de `SINGLE` ou `IRREGULAR`) recebido por mês para o usuário específico.,0,number,float,Yes,No,,
+monthly_average_low_confidence,Quantidade média de renda recebida por mês para o usuário específico com confiança `LOW`.,0,number,float,Yes,No,,
+monthly_average_medium_confidence,Valor médio de renda recebido por mês para o usuário específico com confiança `MEDIUM`.,0,number,float,Yes,No,,
+monthly_average_high_confidence,Quantia média de renda recebida por mês para o usuário específico com confiança `HIGH`.,2500,number,float,Yes,No,,
+total_income_amount,Valor total de toda a renda recebida para o usuário específico.,22500,number,float,Yes,No,,
+total_regular_income_amount,"Valor total da renda regular (com uma frequência de `MONTHLY`, `FORTNIGHTLY`, `WEEKLY`) para o usuário específico.",22500,number,float,Yes,No,,
+total_irregular_income_amount,Valor total da renda irregular (com uma frequência de `SINGLE` ou `IRREGULAR`) para o usuário específico.,0,number,float,No,No,,
+total_low_confidence,Quantidade total de renda para o usuário específico com confiança `LOW`.,0,number,float,Yes,No,,
+total_medium_confidence,Quantidade total de renda para o usuário específico com confiança `MEDIUM`.,0,number,float,Yes,No,,
+total_high_confidence,Montante total de renda para o usuário específico com confiança `HIGH`.,22500,number,float,Yes,No,,

@@ -1,0 +1,279 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+[].id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
+[].link,El `link.id` al que pertenecen los datos.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
+[].internal_identification,El identificador interno de la institución para el propietario.,7e5838e4,string,,Yes,Yes,,
+[].collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+[].created_at,La marca de tiempo ISO-8601 de cuando se creó el punto de datos en la base de datos de Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+[].display_name,"El nombre completo del individuo, tal como lo proporciona la institución.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",Jack Oswald White,string,,Yes,No,,"^[\w\W]{0,128}$"
+[].social_name,"El nombre social del individuo, tal como es generalmente aceptado por el país.",O Piadista,string,,Yes,Yes,,"^[\w\W]{0,128}$"
+[].birth_date,"La fecha de nacimiento del individuo, en formato `YYYY-MM-DD`.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",1988-07-15,string,date,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+[].marital_status,"El estado civil del individuo. Devolvemos uno de los siguientes valores:
+
+  - `SINGLE`
+  - `MARRIED`
+  - `WIDOWED`
+  - `SEPARATED`
+  - `DIVORCED`
+  - `CIVIL_UNION`
+  - `OTHER`",SINGLE,string,,Yes,Yes,"SINGLE, MARRIED, WIDOWED, SEPARATED, DIVORCED, CIVIL_UNION, OTHER",
+[].marital_status_additional_info,Información adicional sobre el estado civil del individuo.,It's complicated,string,,Yes,Yes,,"^[\w\W]{0,50}$"
+[].gender,"El género del individuo. Devolvemos uno de los siguientes valores:
+
+  - `FEMALE`
+  - `MALE`
+  - `OTHER`",FEMALE,string,,Yes,Yes,"FEMALE, MALE, OTHER",
+[].companies_id,"Las instituciones responsables de la creación y verificación del propietario.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",,array,,Yes,No,,
+[].is_local_resident,"Boolean para indicar si el individuo es residente local del país.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",True,boolean,,Yes,No,,
+[].document_id,"Información sobre el documento de identificación que el propietario proporcionó al banco.
+
+> **Non-nullable:** La red de finanzas abiertas de Brasil debe devolver un valor.",,object,,Yes,No,,
+[].document_id.document_type,"El tipo de documento que el propietario proporcionó a la institución para abrir la cuenta. Los tipos de documentos comunes son:
+
+🇧🇷 Brasil
+- `CPF` (*Cadastro de Pessoas Físicas*)
+- `CNPJ` (*Cadastro Nacional de Pessoas Jurídicas*)
+
+> **Non-nullable:** La red de finanzas abiertas de Brasil debe devolver un valor.",CPF,string,,Yes,No,,
+[].document_id.document_number,"El número de identificación del documento.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",235578435-S,string,,Yes,No,,
+[].additional_documents,"Información detallada sobre documentos adicionales proporcionados para verificar la identidad de las personas.
+
+> **Non-nullable:** La red de finanzas abiertas de Brasil debe devolver un valor.",,array,,Yes,No,,
+[].additional_documents[].type,"El tipo de documento de identificación. Devolvemos uno de los siguientes valores:
+
+  - `DRIVERS_LICENSE`
+  - `PASSPORT`
+  - `ID_CARD`
+  - `FISCAL_ID`
+  - `FOREIGNER_REGISTRATION_CARD`
+  - `OTHER`
+  - `null`",DRIVERS_LICENSE,string,,Yes,Yes,"DRIVERS_LICENSE, PASSPORT, ID_CARD, FISCAL_ID, FOREIGNER_REGISTRATION_CARD, OTHER, None",
+[].additional_documents[].type_additional_info,"Información adicional sobre el tipo de documento.
+
+> Nota: Para documentos de identificación empresarial, este campo debe devolver un valor de la red de finanzas abiertas de Brasil.",Learner's licence,string,,Yes,Yes,,"^[\w\W\s]{0,70}$"
+[].additional_documents[].number,"El número del documento de identificación.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",DL-7896829-7,string,,Yes,No,,"^[\w\W\s]{0,40}$"
+[].additional_documents[].check_digit,"El dígito de verificación del documento de identificación.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",7,string,,Yes,No,,"^[\w\W\s]{0,2}$"
+[].additional_documents[].issue_date,"La fecha en que se emitió el documento de identificación, en formato `YYYY-MM-DD`.",2019-01-01,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+[].additional_documents[].expiration_date,"La fecha de vencimiento del documento de identificación, en formato `YYYY-MM-DD`.",2019-01-01,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+[].additional_documents[].country_of_issuance,"El código de país de tres letras que emitió el documento (en formato ISO-3166 Alpha 3).
+
+Este campo debe ser devuelto cuando el `type` es `PASSPORT`.",CAN,string,,Yes,Yes,,^[\w]{3}$
+[].additional_documents[].additional_info,Información adicional sobre el documento de identificación.,The document has water damage,string,,Yes,Yes,,"^[\w\W\s]{0,100}$"
+[].nationalities,"Información detallada sobre las nacionalidades del individuo.
+
+Solo se requiere devolver cuando `is_local_resident` está configurado como `false`.",,array,,Yes,Yes,,
+[].nationalities[].info,La nacionalidad del individuo.,CAN,string,,Yes,Yes,,^\S[\s\S]*$
+[].nationalities[].documents,,,array,,Yes,No,,
+[].nationalities[].documents[].type,"El tipo de documento de identificación. Devolvemos uno de los siguientes valores:
+
+  - `DRIVERS_LICENSE`
+  - `PASSPORT`
+  - `ID_CARD`
+  - `FISCAL_ID`
+  - `FOREIGNER_REGISTRATION_CARD`
+  - `OTHER`
+  - `null`",DRIVERS_LICENSE,string,,Yes,Yes,"DRIVERS_LICENSE, PASSPORT, ID_CARD, FISCAL_ID, FOREIGNER_REGISTRATION_CARD, OTHER, None",
+[].nationalities[].documents[].number,"El número del documento de identificación.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",DL-7896829-7,string,,Yes,No,,"^[\w\W\s]{0,40}$"
+[].nationalities[].documents[].issue_date,"La fecha en que se emitió el documento de identificación, en formato `YYYY-MM-DD`.",2019-01-01,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+[].nationalities[].documents[].expiration_date,"La fecha de vencimiento del documento de identificación, en formato `YYYY-MM-DD`.",2019-01-01,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+[].nationalities[].documents[].country_of_issuance,"El código de país de tres letras que emitió el documento (en formato ISO-3166 Alpha 3).
+
+Este campo debe ser devuelto cuando el `type` es `PASSPORT`.",CAN,string,,Yes,Yes,,^[\w]{3}$
+[].nationalities[].documents[].additional_info,Información adicional sobre el documento de identificación.,The document has water damage,string,,Yes,Yes,,"^[\w\W\s]{0,100}$"
+[].email,"La dirección de correo electrónico registrada del propietario de la cuenta.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",johndoe@belvo.com,string,email,Yes,Yes,,
+[].emails,"Lista adicional de correos electrónicos proporcionada por el propietario.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",,array,,Yes,No,,
+[].emails[].is_main,"Boolean para indicar si este es el correo electrónico principal del usuario.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",True,boolean,,Yes,No,,
+[].emails[].email,"La dirección de correo electrónico del usuario.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",homen_morcego@gmail.com,string,,Yes,No,,"^[\w\W\s]{0,320}$"
+[].address,"La dirección registrada del propietario de la cuenta.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.","Carrer de la Llacuna, 162, 08018 Barcelona",string,,Yes,Yes,,
+[].addresses,"Información detallada sobre las direcciones del propietario.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",,array,,Yes,No,,
+[].addresses[].is_main,"Boolean para indicar si esta es la dirección principal del usuario.
+
+> **Non-nullable:** La red de finanzas abiertas de Brasil debe devolver un valor.",True,boolean,,Yes,No,,
+[].addresses[].address,"La dirección del usuario.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.","Av Naburo Ykesaki, 1270",string,,Yes,No,,"^[\w\W\s]{0,150}$"
+[].addresses[].additional_info,Información adicional sobre la dirección del usuario.,In between two palm trees,string,,Yes,Yes,,"^[\w\W\s]{0,150}$"
+[].addresses[].district_name,El distrito de la dirección.,CENTRO,string,,Yes,Yes,,"^[\w\W\s]{0,50}$"
+[].addresses[].town,"La ciudad del usuario.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",Brasilia,string,,Yes,No,,"^[\w\W\s]{0,50}$"
+[].addresses[].town_code,"El código de siete dígitos para la ciudad, si corresponde.
+
+Para Brasil, este es el código de ciudad del IBGE.",3550308,string,,Yes,Yes,,\d{7}$
+[].addresses[].state,El estado en el que se encuentra la dirección.,SP,string,,Yes,Yes,,"^[\w\W\s]{0,2}$"
+[].addresses[].postcode,"El código postal de la dirección.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",17500001,string,,Yes,No,,^\d{8}$
+[].addresses[].country_name,"El nombre del país.
+
+> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil.",Brasil,string,,Yes,No,,"^[\w\W\s]{0,80}$"
+[].addresses[].country_code,El código de país de tres letras (cumple con ISO-3166 Alpha 3).,BRA,string,,Yes,Yes,,^([A-Z]{3})$
+[].addresses[].latitude,La coordenada de latitud geográfica.,-23.5475000,string,,Yes,Yes,,"^-?\d{1,2}\.\d{1,9}$"
+[].addresses[].longitude,La coordenada de longitud geográfica.,-46.6361100,string,,Yes,Yes,,"^-?\d{1,3}\.\d{1,8}$"
+[].phone_number,"El número de teléfono registrado del propietario de la cuenta.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",+52-XXX-XXX-XXXX,string,,Yes,Yes,,
+[].phone_numbers,"Información detallada sobre los números de teléfono del propietario.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",,array,,Yes,No,,
+[].phone_numbers[].is_main,"Boolean para indicar si este es el número de teléfono principal del usuario.
+
+> **Non-nullable:** La red de finanzas abiertas de Brasil debe devolver un valor.",True,boolean,,Yes,No,,
+[].phone_numbers[].type,"El tipo de número de teléfono. Devolvemos uno de los siguientes valores:
+
+  - `LANDLINE`
+  - `MOBILE`
+  - `OTHER`
+  - `null`",MOBILE,string,,Yes,Yes,"LANDLINE, MOBILE, OTHER, None",
+[].phone_numbers[].additional_info,Información adicional sobre el número de teléfono.,This is their work mobile number.,string,,Yes,Yes,,"^[\w\W\s]{0,100}$"
+[].phone_numbers[].number,"El número de teléfono (sin incluir los códigos de país, área o extensión).
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",29875132,string,,Yes,No,,"^([0-9]{8,11})$"
+[].phone_numbers[].country_code,El código de marcación del país. Por ejemplo: `351` (sin `+`).,351,string,,Yes,Yes,,"^\d{1,4}$"
+[].phone_numbers[].area_code,El código de marcación de área.,21,string,,Yes,Yes,,"^\d{1,2}$"
+[].phone_numbers[].extension,El código de la extensión.,932,string,,Yes,Yes,,"^\d{1,5}$"
+[].filiations,"Información sobre cualquier relación familiar del individuo.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",,array,,Yes,No,,
+[].filiations[].type,"La relación familiar. Devolvemos uno de los siguientes valores:
+
+  - `MOTHER`
+  - `FATHER`
+  - `null`",MOTHER,string,,Yes,Yes,"MOTHER, FATHER, None",
+[].filiations[].civil_name,"El nombre completo de la persona.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",Bruce Wayne,string,,Yes,No,,"^[\w\W\s]{0,70}$"
+[].filiations[].social_name,El nombre social de la persona.,The Dark Knight,string,,Yes,Yes,,"^[\w\W\s]{0,70}$"
+[].financial_profile,Información sobre el perfil financiero del individuo.,,object,,Yes,Yes,,
+[].financial_profile.company_id,El identificador de la empresa donde está empleado el individuo.,50685362000135,string,,Yes,Yes,,^\d{14}$
+[].financial_profile.occuptation_code,"El área de empleo del individuo. Devolvemos uno de los siguientes valores:
+
+  - `BRAZIL_PUBLIC_OFFICE`
+  - `BRAZIL_OCCUPATION_CODE`
+  - `OTHER`
+  - `null`",BRAZIL_OCCUPATION_CODE,string,,No,Yes,"BRAZIL_PUBLIC_OFFICE, BRAZIL_OCCUPATION_CODE, OTHER, None",
+[].financial_profile.occupation_description,Información sobre la ocupación del individuo.,01,string,,Yes,Yes,,[\w\W\s]*
+[].financial_profile.informed_income,"Información sobre los ingresos reportados del individuo.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",,object,,Yes,No,,
+[].financial_profile.informed_income.frequency,"Indica con qué frecuencia el individuo recibe su salario. Devolvemos uno de los siguientes valores:
+
+  - `DAILY`
+  - `WEEKLY`
+  - `FORTNIGHTLY`
+  - `MONTHLY`
+  - `BIMONTHLY`
+  - `QUARTERLY`
+  - `BIANNUALLY`
+  - `ANNUALLY`
+  - `OTHERS`",MONTHLY,string,,Yes,Yes,"DAILY, WEEKLY, FORTNIGHTLY, MONTHLY, BIMONTHLY, QUARTERLY, BIANNUALLY, ANNUALLY, OTHERS",
+[].financial_profile.informed_income.amount,"El ingreso reportado que recibe el individuo.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",45391.89,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+[].financial_profile.informed_income.currency,"El código de moneda de tres letras (ISO-4217).
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",BRL,string,,Yes,No,,^[A-Z]{3}$
+[].financial_profile.informed_income.date,"Fecha en la que el individuo recibió su salario por última vez.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",2020-03-19,string,date,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+[].financial_profile.patrimony,Información sobre los activos reportados del individuo (si están disponibles).,,object,,Yes,Yes,,
+[].financial_profile.patrimony.amount,"Los activos reportados del individuo.
+
+> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil cuando el objeto `patrimony` está disponible.",45391.89,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+[].financial_profile.patrimony.currency,"El código de moneda de tres letras (ISO-4217).
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor cuando el objeto `patrimony` está disponible.",BRL,string,,Yes,No,,^[A-Z]{3}$
+[].financial_profile.patrimony.year,"El año al que se aplican los activos reportados.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor cuando el objeto `patrimony` está disponible.",2020,integer,int32,Yes,No,,
+[].financial_relation,"Detalles sobre cualquier relación adicional que la persona tenga con la institución (por ejemplo, otras cuentas o productos que tenga con la institución).",,object,,Yes,Yes,,
+[].financial_relation.start_date,"La marca de tiempo ISO-8601 cuando comenzó la relación financiera entre el individuo y la institución.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",2021-05-21T08:30:00Z,string,date-time,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
+[].financial_relation.product_services,"Una lista de productos que el individuo tiene con la institución.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",,array,,Yes,No,,
+[].financial_relation.product_services_additional_info,Información adicional sobre los productos que tiene la persona.,Joint account with Robin,string,,Yes,Yes,,^[\w\W]*$
+[].financial_relation.procurators,Información sobre cualquier individuo o empresa que pueda actuar en nombre del propietario.,,array,,Yes,No,,
+[].financial_relation.procurators[].type,"El tipo de representante que puede acceder y realizar cambios en la cuenta. Devolvemos uno de los siguientes valores:
+
+  - `LEGAL_REPRESENTATIVE`
+  - `ATTORNEY`
+  - `null`",LEGAL_REPRESENTATIVE,string,,Yes,Yes,"LEGAL_REPRESENTATIVE, ATTORNEY, None",
+[].financial_relation.procurators[].civil_name,"El nombre completo de los representantes.
+
+> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `procurators` está disponible.",Alfred Thaddeus Pennyworth,string,,Yes,No,,^[\w\W]*$
+[].financial_relation.procurators[].social_name,El nombre social de la persona.,Alfred Pennyworth,string,,Yes,Yes,,^[\w\W]*$
+[].financial_relation.procurators[].document_number,"El número de documento del representante.
+
+**Nota**: Para individuos, este es el número de CPF de Brasil. Para empresas, este es el número de CNPJ de Brasil.
+
+> **Non-nullable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `procurators` está disponible.",73677831148,string,,Yes,No,,^\d{11}$
+[].financial_relation.products,Detalles sobre cualquier producto adicional que la persona tenga con la institución.,,array,,Yes,No,,
+[].financial_relation.products[].type,"Los productos adicionales que el individuo tiene en la institución. Devolvemos uno de los siguientes valores:
+
+  - `SAVINGS_ACCOUNT`
+  - `CHECKING_ACCOUNT`
+  - `null`",SAVINGS_ACCOUNT,string,,Yes,Yes,"SAVINGS_ACCOUNT, CHECKING_ACCOUNT, None",
+[].financial_relation.products[].subtype,"El subtipo del producto que el individuo tiene en la institución.
+
+> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `products` está disponible.",CONJUNTA_SIMPLES,string,,Yes,Yes,,
+[].financial_relation.products[].agency,El código de sucursal donde se abrió el producto.,6272,string,,Yes,Yes,,"^\d{1,4}$"
+[].financial_relation.products[].clearing_code,"El código de compensación bancaria para el producto.
+
+> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `products` está disponible.",001,string,,Yes,No,,^\d{3}$
+[].financial_relation.products[].number,"El número de cuenta del producto.
+
+> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `procurators` está disponible.",24550245,string,,Yes,No,,"^\d{8,20}$"
+[].financial_relation.products[].check_digit,"El dígito de control del número del producto.
+
+> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `products` está disponible.",7,string,,Yes,No,,[\w\W\s]*
+[].financial_relation.salary_portability_requests,"Detalles sobre cualquier solicitud de portabilidad de salario que el individuo haya realizado con la institución.
+
+Una portabilidad de salario es una solicitud para transferir el salario del individuo desde la cuenta bancaria de 'nómina' de su empleador a otra cuenta bancaria.
+
+> 📘 
+>
+> Tenga en cuenta que la cuenta bancaria receptora no puede terminar una portabilidad de salario (o ser informada de que ha sido terminada). Solo el banco de nómina del empleador puede proporcionar esta información. Por lo tanto, las portabilidades enumeradas aquí pueden no estar actualizadas.",,array,,No,No,,
+[].financial_relation.salary_portability_requests[].employer_name,El nombre del empleador.,ACME Inc.,string,,No,No,,^(?!\s)[\w\W\s]*[^\s]$
+[].financial_relation.salary_portability_requests[].employer_id_number,El CPF o CNPJ del empleador.,12345678901,string,,No,No,,^\d{14}$|^\d{11}$
+[].financial_relation.salary_portability_requests[].employer_bank_id_number,El CNPJ del banco del empleador.,12345678901234,string,,No,No,,^\d{14}$
+[].financial_relation.salary_portability_requests[].employer_bank_code,El código ISPB (*Identificador de Sistema de Pagamentos Brasileiro*) del banco del empleador.,12345678,string,,No,No,,^[0-9]{8}$
+[].financial_relation.salary_portability_requests[].portability_approval_date,"La fecha en que se aprobó la solicitud de portabilidad, en formato `YYYY-MM-DD`.",2024-04-01,string,date,No,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+[].financial_relation.payroll_accounts,"Detalles sobre cualquier cuenta bancaria de nómina asociada con el individuo. Es decir, cada vez que el individuo tenga un nuevo empleador del cual reciba un salario, debe estar listado aquí.
+
+> 📘
+>
+> Los empleadores anteriores pueden no cerrar la cuenta de nómina del individuo. Por lo tanto, las cuentas de nómina listadas aquí pueden no estar actualizadas.",,array,,No,No,,
+[].financial_relation.payroll_accounts[].employer_name,El nombre del empleador.,ACME Inc.,string,,No,No,,^(?!\s)[\w\W\s]*[^\s]$
+[].financial_relation.payroll_accounts[].employer_id_number,El CPF o CNPJ del empleador.,12345678901,string,,No,No,,^\d{14}$|^\d{11}$
+[].financial_relation.payroll_accounts[].employer_bank_id_number,El CNPJ del banco del empleador.,12345678901234,string,,No,No,,^\d{14}$
+[].financial_relation.payroll_accounts[].employer_bank_code,El código ISPB (*Identificador de Sistema de Pagamentos Brasileiro*) del banco del empleador.,12345678,string,,No,No,,^[0-9]{8}$
+[].financial_relation.payroll_accounts[].account_opening_date,"La fecha en que se abrió la cuenta bancaria de salario, en formato `YYYY-MM-DD`.",2024-04-01,string,date,No,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$

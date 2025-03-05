@@ -1,0 +1,119 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+[].id,El identificador único creado por Belvo utilizado para referenciar la inversión actual.,5359ddc5-31fc-4346-934b-cc24630a8d06,string,uuid,No,No,,
+[].type,"El tipo de inversión: Puede ser
+
+  - `FIXED_INCOME_BANKING` (*Renda Fixa Bancária*)
+  - `FIXED_INCOME_CREDIT` (*Renda Fixa Crédito*)
+  - `VARIABLE_INCOME` (*Renda Variável*)
+  - `TREASURY_BOND` (*Tesouro Direto*)
+  - `INVESTMENT_FUND` (*Fundos de Investimento*)",FIXED_INCOME_BANKING,string,,No,No,,
+[].issuer_id_number,"El número de CNPJ de la institución emisora. Para los Fondos de Inversión, este es el CNPJ del fondo.
+
+> 🚧 No aplicable para inversiones en `TREASURY_BOND`.",10187609364567,string,,No,Yes,,^\d{14}$
+[].isin_number,El Número de Identificación de Valores Internacionales ISO-6166 (ISIN) para el instrumento financiero.,BRCST4CTF001,string,,No,Yes,,‘^[A-Z]{2}([A-Z0-9]){9}\d{1}$’
+[].currency,"El código de moneda de tres letras (ISO-4217) de la inversión. Por ejemplo, `BRL` para el Real Brasileño.",BRL,string,,No,No,,^[A-Z]{3}$
+[].product_name,"El nombre del producto de inversión.
+
+- Para `FIXED_INCOME_BANKING`, puede ser: CDB, RDB, LCI o LCA.
+- Para `FIXED_INCOME_CREDIT`, puede ser: DEBENTURES, CRI o CRA.
+- Para `INVESTMENT_FUND`, será el nombre del fondo. Por ejemplo: CONSTELLATION MASTER FIA
+- Para `TREASURY_BOND`, será el nombre del bono. Por ejemplo: Tesouro Selic 2025.
+- Para `VARIABLE_INCOME_INCOME`, será el nombre de la acción. Por ejemplo AAPL.",CONSTELLATION MASTER FIA,string,,No,No,,
+[].is_tax_exempt,"Indica si la inversión está exenta de impuestos.
+
+> 🚧 Solo aplicable para inversiones de tipo `FIXED_INCOME_CREDIT`.",False,boolean,,No,No,,
+[].clearing_code,"El código de compensación de la inversión.
+
+> 🚧 Solo aplicable para `FIXED_INCOME_BANKING` y `FIXED_INCOME_CREDIT`.",CDB421GPXXX,string,,No,Yes,,[\w\W-]*
+[].due_date,"La fecha de vencimiento del instrumento financiero.
+
+> 🚧 Solo aplicable para inversiones en `FIXED_INCOME_BANKING`, `FIXED_INCOME_CREDIT` y `TREASURY_BOND`.",2022-01-01,string,date,No,Yes,,
+[].issue_date,"La fecha en que se emitió el instrumento financiero.
+
+> 🚧 Solo aplicable para `FIXED_INCOME_BANKING` y `FIXED_INCOME_CREDIT`.",2021-01-01,string,date,No,Yes,,
+[].purchase_date,"La fecha en que se adquirió el instrumento financiero.
+
+> 🚧 Solo aplicable para inversiones en `FIXED_INCOME_BANKING`, `FIXED_INCOME_CREDIT` y `TREASURY_BOND`.",2021-01-01,string,date,No,Yes,,
+[].grace_period_date,"La fecha del período de gracia del instrumento financiero.
+
+> 🚧 Solo aplicable para `FIXED_INCOME_BANKING` y `FIXED_INCOME_CREDIT`.",2021-01-01,string,date,No,Yes,,
+[].issue_unit_price,"El precio unitario del instrumento financiero en el momento de la emisión.
+
+> 🚧 Solo aplicable para `FIXED_INCOME_BANKING` y `FIXED_INCOME_CREDIT`.",1000,number,float,No,Yes,,
+[].balance,"El saldo del instrumento de inversión, a partir de la `reference_date`.",,object,,No,No,,
+[].balance.reference_date,"La fecha y hora en que se calculó el saldo para el instrumento de inversión, en formato `YYYY-MM-DDTHH:MM:SSZ`.",2022-07-21T17:32:00Z,string,date-time,No,No,,
+[].balance.gross_value,El valor bruto del instrumento de inversión.,1000,number,float,No,No,,
+[].balance.blocked_amount,La cantidad del instrumento de inversión que está bloqueada o no disponible para transacciones.,100,number,float,No,No,,
+[].balance.quantity,"El número de unidades, cuotas o activos mantenidos en la fecha de referencia.",100,number,float,No,No,,"‘^-?\d{1,15}\.\d{2,8}$’"
+[].balance.gross_unit_price,El valor bruto unitario actual de la inversión en la fecha de referencia,10,number,float,No,Yes,,"‘^-?\d{1,15}\.\d{2,8}$’"
+[].balance.net_value,"El valor neto de la inversión después de deducciones por impuestos, tarifas y otros cargos, a la fecha de referencia.",900,number,float,No,Yes,,"‘^-?\d{1,15}\.\d{2,8}$’"
+[].balance.withheld_amount,La cantidad del instrumento de inversión que ha sido retenida o deducida del valor neto.,10,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
+[].balance.transaction_fee,Las tarifas e impuestos cobrados por la transacción.,5,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
+[].balance.purchase_unit_price,El precio unitario en el momento de la compra del valor o activo.,10,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
+[].balance.pre_fixed_rate,La tasa de remuneración prefijada para el producto de ingresos.,0.05,number,float,No,Yes,,‘^\d{1}\.\d{6}$’
+[].balance.post_fixed_rate,El porcentaje del indexador post-fijado para el producto de ingresos.,0.05,number,float,No,Yes,,‘^\d{1}\.\d{6}$’
+[].balance.penalty_fee,"La penalización (multa) por retrasos en los pagos, tal como se define en el contrato.",10,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
+[].balance.late_payment_fee,El interés cobrado por pagos atrasados.,10,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
+[].balance.closing_price,El precio de cierre de la inversión en la fecha de referencia.,10,number,float,No,Yes,,"‘^-?\d{1,15}\.\d{2,8}$’"
+[].balance.unit_price_factor,El factor utilizado para calcular el precio unitario.,1,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
+[].remuneration,Los detalles de la remuneración del instrumento de inversión.,,object,,No,No,,
+[].remuneration.pre_fixed_rate,"La tasa de interés fija definida en la emisión, expresada como un decimal (por ejemplo, `0.150000` representa el 15%).",0.05,number,float,No,Yes,,‘^\d{1}\.\d{6}$’
+[].remuneration.post_fixed_rate,"La tasa de interés post-fijada definida en la emisión, expresada como un decimal (por ejemplo, `0.150000` representa el 15%).",0.05,number,float,No,Yes,,‘^\d{1}\.\d{6}$’
+[].remuneration.rate_type,"El tipo de tasa de remuneración aplicada al instrumento financiero. Puede ser:
+  - `LINEAR`
+  - `EXPONENCIAL`",LINEAR,string,,No,Yes,,[\w\W-]*
+[].remuneration.rate_periodicity,"La frecuencia con la que se aplica la tasa de remuneración al instrumento financiero. Puede ser:
+  - `DIARIO`
+  - `MENSAL`
+  - `ANUAL`
+  - `SEMESTRAL`",MENSAL,string,,No,Yes,,
+[].remuneration.calculation_base,"Indica si el cálculo de la remuneración o de los intereses se basa en días hábiles (*dias úteis*) o días calendario (*dias corridos*).
+- `DIAS_UTEIS`
+  - `DIAS_CORRIDOS`",DIAS_CORRIDOS,string,,No,Yes,,[\w\W-]*
+[].remuneration.indexer,"El índice utilizado como referencia para calcular la rentabilidad o los rendimientos del instrumento financiero. Puede ser uno de los siguientes:
+  - `CDI` 
+  - `DI` 
+  - `TR` 
+  - `IPCA` 
+  - `IGP_M` 
+  - `IGP_DI` 
+  - `INPC` 
+  - `BCP` 
+  - `TLC` 
+  - `SELIC` 
+  - `PRE_FIXADO` 
+  - `OUTROS`",CDI,string,,No,Yes,,[\w\W-]*
+[].remuneration.indexer_additional_info,Información adicional sobre la tasa de `indexer`. Requerido cuando `indexer` está configurado en `OUTROS`.,IPCA + 5%,string,,No,Yes,,[\w\W-]*
+[].classification_details,"Los detalles de clasificación del instrumento de inversión.
+
+> 🚧 Solo aplicable para inversiones de tipo `INVESTMENT_FUND`.
+>
+> Este objeto solo es aplicable para inversiones de tipo `INVESTMENT_FUND`. Para todos los demás tipos de inversión, este objeto será `null`.",,object,,No,Yes,,
+[].classification_details.category,"La categoría del fondo de inversión, según los estándares de clasificación de ANBIMA. Puede ser una de las siguientes:
+  - `RENDA_FIXA`
+  - `ACOES`
+  - `MULTIMERCADO`
+  - `CAMBIAL`",ACOES,string,,No,Yes,,
+[].classification_details.class,"La clase dentro de la categoría del fondo de inversión, según los estándares de clasificación de ANBIMA.",Ações Livre,string,,No,Yes,,[\w\W\s]*
+[].classification_details.subclass,"La subclase del fondo de inversión, según los estándares de clasificación de ANBIMA.",Ações Livre,string,,No,Yes,,[\w\W\s]*
+[].voucher_payment_details,"Los detalles del pago del voucher (también conocido como pagos de cupón) del instrumento de inversión.
+
+> 🚧 Solo aplicable para inversiones de tipo `FIXED_INCOME_CREDIT` y `TREASURY_BOND`.
+>
+> Este objeto solo es aplicable para inversiones de tipo `FIXED_INCOME_CREDIT` y `TREASURY_BOND`. Para todos los demás tipos de inversión, este objeto será `null`.",,object,,No,No,,
+[].voucher_payment_details.is_voucher_payment,Indica si el instrumento financiero paga intereses periódicos (pagos de cupones).,True,boolean,,No,No,,
+[].voucher_payment_details.periodicity,"La frecuencia con la que se realizan los pagos del voucher. Requerido cuando `is_voucher_payment` está configurado como `true`. Puede ser uno de los siguientes:
+  - `MENSAL` 
+  - `TRIMESTRAL` 
+  - `SEMESTRAL` 
+  - `ANUAL` 
+  - `IRREGULAR` 
+  - `OUTROS`",MENSAL,string,,No,Yes,,
+[].voucher_payment_details.periodicity_additional_info,Información adicional sobre la periodicidad del pago del vale. Requerido cuando `periodicity` está configurado como `OUTROS`.,30/360,string,,No,Yes,,[\w\W\s]*
+[].debtor_details,"Los detalles del deudor del instrumento de inversión.
+
+> 🚧 Solo aplicable para inversiones de tipo `FIXED_INCOME_CREDIT`.
+>
+> Este objeto solo es aplicable para inversiones de tipo `FIXED_INCOME_CREDIT`. Para todos los demás tipos de inversión, este objeto será `null`.",,object,,No,Yes,,
+[].debtor_details.name,El nombre del deudor.,Roberto Marino,string,,No,No,,[\w\W\s]*
+[].debtor_details.id_document_number,El número del documento de identificación del deudor (CNPJ).,12345678901,string,,No,No,,‘^\d{14}$’

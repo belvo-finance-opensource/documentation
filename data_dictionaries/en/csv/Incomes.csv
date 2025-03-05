@@ -1,0 +1,127 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+id,"Belvo's unique identifier for the current item.
+",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
+link,The `link.id` the data belongs to.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
+created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+income_streams,An array of enriched income stream objects.,,array,,Yes,No,,
+income_streams[].account_id,Unique ID for the bank account to be verified for income streams.,EBACA-89077589,string,,Yes,No,,
+income_streams[].income_type,"The type of income used in the calculations.
+
+We return one of the following enum values:
+
+  - `SALARY`
+  - `GOVERNMENT`
+  - `INTEREST`
+  - `RENT`
+  - `RETIREMENT`
+  - `FREELANCE`
+  - `ALTERNATIVE_INCOME`
+  - `TRANSFER`
+  - `DEPOSIT`
+  - `UNKNOWN`
+",SALARY,string,,Yes,No,"SALARY, GOVERNMENT, INTEREST, RENT, RETIREMENT, FREELANCE, ALTERNATIVE_INCOME, TRANSFER, DEPOSIT, UNKNOWN",
+income_streams[].frequency,"How often the income is received.
+
+We return one of the following enum values:
+
+  - `MONTHLY` - For transactions that occur once per month.
+  - `FORTNIGHTLY` - For transactions that occur once every two weeks.
+  - `WEEKLY` - For transactions that occur once per week.
+  - `IRREGULAR` - For transactions that do not occur on a defined frequency pattern.
+  - `SINGLE` - For transactions that occur only once and do not repeat.
+",MONTHLY,string,,Yes,No,"MONTHLY, FORTNIGHTLY, WEEKLY, IRREGULAR, SINGLE",
+income_streams[].monthly_average,"The average amount of income received from the source over `periods_with_income`.
+",2500,number,float,Yes,No,,
+income_streams[].monthly_median,"The median amount of income received from the source over within a natural month.
+",2200,number,float,No,No,,
+income_streams[].average_income_amount,"The average income transaction amount from the source.
+",2500,number,float,Yes,No,,
+income_streams[].last_income_amount,"The amount of the most recent income received from the source.
+",2500,number,float,Yes,No,,
+income_streams[].currency,"The three-letter currency code of the income. For example:
+
+  • 🇧🇷 BRL (Brazilian Real)
+  • 🇨🇴 COP (Colombian Peso)
+  • 🇲🇽 MXN (Mexican Peso)
+  
+",BRL,string,,Yes,No,,
+income_streams[].last_income_description,"The description of the most recent income from the stream. 
+",Salário,string,,Yes,No,,
+income_streams[].last_income_date,"The date when the most recent income from the stream was received, in `YYYY-MM-DD` format.
+",2023-02-09,string,date,Yes,No,,
+income_streams[].stability,"The stability of the income based on its amount, with a range from 0 to 1, where 1 represents perfect stability.
+
+**Note:** For transactions with `frequency`=`SINGLE`, this value returns `null`.
+",1,number,float,Yes,Yes,,
+income_streams[].regularity,"The regularity of the income based in its frequency, with a range from 0 to 1, where 1 represents perfect regularity.
+
+**Note:** For transactions with `frequency`=`SINGLE`, this value returns `null`.
+",1,number,float,Yes,Yes,,
+income_streams[].trend,"The income trend during a period of time calculated between last income and first income received, where:
+  - a negative float means that the income trend is decreasing during the time period.
+  - a positive float means that the income trend is increasing during the time period.
+
+**Note:** For transactions with `frequency`=`SINGLE`, this value returns `null`.
+",0,number,float,Yes,Yes,,
+income_streams[].lookback_periods,"Number of period units (based on *rolling months*) used to generate insights and calculations.
+
+**Note:** A *rolling month* is a period of 30 days. For example, 2023-01-15 to 2023-02-15.
+",9,integer,int32,Yes,No,,
+income_streams[].full_periods,"Number of period units (based on *rolling months*) with data to perform calculations.
+
+**Note:** A *rolling month* is a period of 30 days. For example, 2023-01-15 to 2023-02-15.
+",9,integer,int32,Yes,No,,
+income_streams[].periods_with_income,"Number of period units (based on *rolling months*) with at least one income available.
+
+**Note:** A *rolling month* is a period of 30 days. For example, 2023-01-15 to 2023-02-15.
+",9,integer,int32,Yes,No,,
+income_streams[].number_of_incomes,"Number of income transactions over the `lookback_periods`.
+",9,integer,int32,Yes,No,,
+income_streams[].confidence,"Belvo's level of confidence for future incomes.
+
+We return one of the following enum values:
+
+  - `HIGH`
+  - `MEDIUM`
+  - `LOW`
+",HIGH,string,,Yes,No,"HIGH, MEDIUM, LOW",
+income_source_type,"The type of source we generate income insights from.
+We return one of the following enum values:
+
+  - `BANK`
+",BANK,string,,Yes,No,BANK,
+first_transaction_date,"The date when the first transaction occurred, in `YYYY-MM-DD` format.
+",2022-06-09,string,date,Yes,Yes,,
+last_transaction_date,"The date when when the last transaction occurred, in `YYYY-MM-DD` format.
+",2023-02-09,string,date,Yes,No,,
+best_working_day_to_charge,"The best working day of the month to charge the user.
+",22,integer,int32,Yes,No,,
+good_working_days_to_charge,"Additional working days that have been identified as good days to charge the user.
+","[17, 7, 2]",array,,Yes,No,,
+number_of_income_streams,"Number of total income streams analized.
+",1,integer,int32,Yes,No,,
+monthly_average,"Average amount of income received per month across all the accounts for the specific user.
+",2500,number,float,Yes,No,,
+monthly_average_regular,"Average amount of regular income (with a frequency of `MONTHLY`, `FORTNIGHTLY`, or `WEEKLY`) received per month for the specific user.
+",2500,number,float,Yes,No,,
+monthly_average_irregular,"Average amount of irregular income (with a frequency of `SINGLE` or `IRREGULAR`) received per month for the specific user.
+",0,number,float,Yes,No,,
+monthly_average_low_confidence,"Average amount of income received per month for the specific user with `LOW` confidence.
+",0,number,float,Yes,No,,
+monthly_average_medium_confidence,"Average amount of income received per month for the specific user with `MEDIUM` confidence.
+",0,number,float,Yes,No,,
+monthly_average_high_confidence,"Average amount of income received per month for the specific user with `HIGH` confidence.
+",2500,number,float,Yes,No,,
+total_income_amount,"Total amount of all income received for the specific user.
+",22500,number,float,Yes,No,,
+total_regular_income_amount,"Total amount of regular income (with a frequency of `MONTHLY`, `FORTNIGHTLY`, `WEEKLY`) for the specific user.
+",22500,number,float,Yes,No,,
+total_irregular_income_amount,"Total amount of irregular income (with a frequency of `SINGLE` or `IRREGULAR`) for the specific user.
+",0,number,float,No,No,,
+total_low_confidence,"Total amount of income for the specific user with `LOW` confidence.
+",0,number,float,Yes,No,,
+total_medium_confidence,"Total amount of income for the specific user with `MEDIUM` confidence.
+",0,number,float,Yes,No,,
+total_high_confidence,"Total amount of income for the specific user with `HIGH` confidence.
+",22500,number,float,Yes,No,,

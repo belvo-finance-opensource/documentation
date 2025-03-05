@@ -1,0 +1,190 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+[].id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+[].account,"Detalles sobre la cuenta.
+
+**Nota**: Para nuestro recurso de gastos recurrentes, esta cuenta se refiere a la cuenta que fue analizada para generar el informe de gastos recurrentes.",,object,,Yes,Yes,,
+[].account.id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+[].account.link,El `link.id` al que pertenecen los datos.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
+[].account.institution,Detalles sobre la institución.,,object,,No,No,,
+[].account.institution.name,"El nombre de la institución, según lo designado por Belvo.
+
+Por favor, consulta nuestro artículo [Institutions](https://developers.belvo.com/docs/institution) en el DevPortal para obtener una lista detallada de nombres de instituciones.",erebor_mx_retail,string,,No,No,,
+[].account.institution.type,"El tipo de institución. Devolvemos uno de los siguientes valores:
+
+  - `bank`
+  - `fiscal`
+  - `employment`",,string,,No,No,"bank, fiscal, employment",
+[].account.collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+[].account.created_at,La marca de tiempo ISO-8601 de cuando se creó el punto de datos en la base de datos de Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+[].account.category,"El tipo de cuenta.  
+Devolvemos uno de los siguientes valores del enum:  
+  - `CHECKING_ACCOUNT`
+  - `CREDIT_CARD`
+  - `INVESTMENT_ACCOUNT`
+  - `LOAN_ACCOUNT`
+  - `PENSION_FUND_ACCOUNT`
+  - `SAVINGS_ACCOUNT`
+  - `UNCATEGORIZED`
+  - `null`",CHECKING_ACCOUNT,string,,Yes,Yes,"CHECKING_ACCOUNT, CREDIT_CARD, INVESTMENT_ACCOUNT, LOAN_ACCOUNT, PENSION_FUND_ACCOUNT, SAVINGS_ACCOUNT, UNCATEGORIZED, None",
+[].account.balance_type,"Indica si esta cuenta es un `ASSET` o un `LIABILITY`. Puedes considerar el saldo de un `ASSET` como positivo, mientras que el saldo de un `LIABILITY` como negativo.",ASSET,string,,Yes,Yes,,
+[].account.type,"El tipo de cuenta, según lo designado por la institución.",Cuentas de efectivo,string,,Yes,Yes,,
+[].account.name,"El nombre de la cuenta, tal como lo proporciona la institución.",Cuenta Perfiles- M.N. - MXN-666,string,,Yes,Yes,,
+[].account.number,"El número de cuenta, según lo designado por la institución.",4057068115181,string,,Yes,Yes,,
+[].account.balance,Detalles sobre los saldos actual y disponible de la cuenta.,,object,,Yes,No,,
+[].account.balance.current,"El saldo actual se calcula de manera diferente según el tipo de cuenta.
+
+- **💰 Cuentas corrientes y de ahorro**:
+
+El saldo de la cuenta del usuario en el momento del timestamp `collected_at`.
+
+- **💳 Tarjetas de crédito**:
+
+La cantidad que el usuario ha gastado en el período de facturación actual de la tarjeta (consulta `credit_data.cutting_date` para obtener información sobre cuándo finaliza el período de facturación actual).
+
+- **🏡 Cuentas de préstamo**:
+
+La cantidad restante por pagar en el préstamo del usuario.",5874.13,number,float,Yes,Yes,,
+[].account.balance.available,"El saldo que el propietario de la cuenta puede utilizar.
+
+- **💰 Cuentas corrientes y de ahorro**:
+
+El saldo disponible puede ser diferente al saldo `current` debido a transacciones pendientes.
+
+- **💳 Tarjetas de crédito**:
+
+El monto de crédito que el usuario aún tiene disponible para el período actual. El saldo `available` puede ser diferente al saldo `current` debido a transacciones pendientes o cuotas futuras.
+
+- **🏡 Cuentas de préstamo**:
+
+El valor presente requerido para liquidar el préstamo, según lo proporcionado por la institución.
+
+**Nota:** Si la institución no proporciona este valor, devolvemos `null`.",5621.12,number,float,No,Yes,,
+[].account.currency,"La moneda de la cuenta. Por ejemplo:
+- 🇧🇷 BRL (Real Brasileño)
+- 🇨🇴 COP (Peso Colombiano)
+- 🇲🇽 MXN (Peso Mexicano)
+
+Tenga en cuenta que pueden devolverse otras monedas además de las enumeradas anteriormente.",MXN,string,,Yes,Yes,,
+[].account.public_identification_name,"El nombre público para el tipo de identificación. Por ejemplo: `""CLABE""`.
+
+ℹ️ Para cuentas de ahorro y cheques en 🇧🇷 Brasil, este campo será `AGENCY/ACCOUNT`.",CLABE,string,,Yes,Yes,,
+[].account.public_identification_value,"El valor para el `public_identification_name`.
+
+ℹ️ Para cuentas de ahorro y corrientes en 🇧🇷 Brasil, este campo será el número de agencia y cuenta bancaria, separados por una barra. Por ejemplo: `0444/45722-0`.",150194683119900273,string,,Yes,Yes,,
+[].account.last_accessed_at,La marca de tiempo ISO-8601 del acceso más reciente y exitoso de Belvo a la institución para el enlace dado.,2021-03-09T10:28:40.000Z,string,date-time,Yes,Yes,,
+[].account.credit_data,Las opciones de crédito asociadas con esta cuenta.,,object,,Yes,Yes,,
+[].account.credit_data.credit_limit,La cantidad máxima de crédito que el propietario puede recibir.,192000,number,float,Yes,Yes,,
+[].account.credit_data.collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+[].account.credit_data.cutting_date,"La fecha de cierre del período de crédito, en formato `YYYY-MM-DD`.",2019-12-11,string,,Yes,Yes,,
+[].account.credit_data.next_payment_date,"La fecha de vencimiento para el próximo pago, en formato `YYYY-MM-DD`.",2019-12-13,string,,Yes,No,,
+[].account.credit_data.minimum_payment,El monto mínimo a pagar en la `next_payment_date`.,2400.3,number,float,Yes,Yes,,
+[].account.credit_data.no_interest_payment,La cantidad mínima requerida para pagar y evitar generar intereses.,2690.83,number,float,Yes,Yes,,
+[].account.credit_data.interest_rate,La tasa de interés anualizada del crédito.,4,number,float,Yes,Yes,,
+[].account.credit_data.monthly_payment,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulta nuestra explicación de [Campos desaprobados](https://developers.belvo.com/reference/using-the-api-reference#%EF%B8%8F-deprecated-fields).*
+
+*El pago mensual recurrente, si corresponde.*",,number,,No,Yes,,
+[].account.credit_data.last_payment_date,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulta nuestra explicación de [Campos desaprobados](https://developers.belvo.com/reference/using-the-api-reference#%EF%B8%8F-deprecated-fields).*
+
+*La fecha en que se realizó el último pago de crédito, en formato `YYYY-MM-DD`.*",,string,,No,Yes,,
+[].account.credit_data.last_period_balance,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulta nuestra explicación de [Campos desaprobados](https://developers.belvo.com/reference/using-the-api-reference#%EF%B8%8F-deprecated-fields).*
+
+*El saldo restante después de la `last_payment_date`.*",,string,,No,Yes,,
+[].account.loan_data,Las opciones de préstamo asociadas con esta cuenta.,,object,,Yes,Yes,,
+[].account.loan_data.collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+[].account.loan_data.contract_amount,"El monto total inicial del préstamo, calculado por la institución, cuando se firmó el contrato. Este monto incluye el principal + intereses + impuestos + tarifas.",202000,number,float,No,Yes,,
+[].account.loan_data.principal,Monto total del préstamo (la cantidad que el usuario recibe).,192000,number,float,Yes,Yes,,
+[].account.loan_data.loan_type,"El tipo de préstamo, según la institución.",Consignado,string,,No,Yes,,
+[].account.loan_data.payment_day,El día del mes en el que el propietario necesita pagar el préstamo (`DD`).,27,string,,No,Yes,,
+[].account.loan_data.outstanding_principal,"Monto pendiente del préstamo, es decir, cuánto queda por pagar del principal (sin incluir intereses).",142023,number,float,No,Yes,,
+[].account.loan_data.outstanding_balance,"El monto restante a pagar en total, incluidos los intereses.",182000,number,float,Yes,Yes,,
+[].account.loan_data.monthly_payment,"El pago mensual recurrente, si corresponde.",1000,number,float,Yes,Yes,,
+[].account.loan_data.interest_rates,Desglose del interés aplicado al préstamo.,,array,,Yes,Yes,,
+[].account.loan_data.interest_rates[].name,El nombre del tipo de tasa de interés aplicada al préstamo.,jurosEfetivo,string,,Yes,Yes,,
+[].account.loan_data.interest_rates[].type,"El período en el que se aplica el interés al préstamo. Devolvemos uno de los siguientes valores:
+
+  - `MONTHLY`
+  - `YEARLY`",MONTHLY,string,,Yes,Yes,"MONTHLY, YEARLY",
+[].account.loan_data.interest_rates[].value,La tasa de interés (en porcentaje o valor monetario).,7.85,number,float,Yes,Yes,,
+[].account.loan_data.fees,Desglose de las tarifas aplicadas al préstamo.,,array,,No,Yes,,
+[].account.loan_data.fees[].type,"El tipo de tarifa. Devolvemos uno de los siguientes valores:
+
+  - `OPERATION_FEE`
+  - `INSURANCE_FEE`
+  - `OTHERS`",OPERATION_FEE,string,,Yes,No,"OPERATION_FEE, INSURANCE_FEE, OTHERS",
+[].account.loan_data.fees[].value,El valor total de la tarifa. Misma moneda del Préstamo.,5.6,number,float,Yes,No,,
+[].account.loan_data.number_of_installments_total,El número total de cuotas necesarias para pagar el préstamo.,60,integer,int32,No,Yes,,
+[].account.loan_data.number_of_installments_outstanding,El número de cuotas restantes por pagar.,48,integer,int32,No,Yes,,
+[].account.loan_data.contract_start_date,"La fecha en que se firmó el contrato de préstamo, en formato `YYYY-MM-DD`.",2020-03-01,string,,No,Yes,,
+[].account.loan_data.contract_end_date,"La fecha en la que se espera que el préstamo se complete, en formato `YYYY-MM-DD`.",2027-10-01,string,date,No,No,,
+[].account.loan_data.contract_number,"El número de contrato del préstamo, tal como lo proporciona la institución.",890ASLDJF87SD00,string,,No,Yes,,
+[].account.loan_data.credit_limit,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulta nuestra explicación de [Campos desaprobados](https://developers.belvo.com/reference/using-the-api-reference#%EF%B8%8F-deprecated-fields).*
+
+Por favor, consulta `principal` en su lugar.",,number,,No,Yes,,
+[].account.loan_data.last_period_balance,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulta nuestra explicación de [Campos desaprobados](https://developers.belvo.com/reference/using-the-api-reference#%EF%B8%8F-deprecated-fields).*
+
+Por favor, consulta `outstanding_balance` en su lugar.",,number,,No,Yes,,
+[].account.loan_data.interest_rate,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulta nuestra explicación de [Campos desaprobados](https://developers.belvo.com/reference/using-the-api-reference#%EF%B8%8F-deprecated-fields).*
+
+Por favor, consulta el objeto `interest_rates` en su lugar.",,number,,No,Yes,,
+[].account.loan_data.limit_day,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulte nuestra explicación de [Campos desaprobados](https://developers.belvo.com/reference/using-the-api-reference#%EF%B8%8F-deprecated-fields).*
+
+Consulte `payment_day` en su lugar.",,string,,No,Yes,,
+[].account.loan_data.cutting_day,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulta nuestra explicación de [Campos desaprobados](https://developers.belvo.com/reference/using-the-api-reference#%EF%B8%8F-deprecated-fields).*
+
+El día de cierre del mes para el préstamo.",,string,,No,Yes,,
+[].account.loan_data.cutting_date,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulta nuestra explicación de [Campos desaprobados](https://developers.belvo.com/reference/using-the-api-reference#%EF%B8%8F-deprecated-fields).*
+
+La fecha de cierre del período del préstamo, en formato `YYYY-MM-DD`.",,string,,No,Yes,,
+[].account.loan_data.last_payment_date,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulta nuestra explicación de [Campos desaprobados](https://developers.belvo.com/reference/using-the-api-reference#%EF%B8%8F-deprecated-fields).*
+
+La fecha en que se realizó el último pago del préstamo, en formato `YYYY-MM-DD`.",,string,,No,Yes,,
+[].account.loan_data.next_payment_date,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulte nuestra explicación de [Campos desaprobados](https://developers.belvo.com/reference/using-the-api-reference#%EF%B8%8F-deprecated-fields).*
+
+Por favor, utilice `payment_day` en su lugar, en formato `YYYY-MM-DD`.",,string,,No,Yes,,
+[].account.loan_data.no_interest_payment,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulte nuestra explicación de [Campos desaprobados](https://developers.belvo.com/reference/using-the-api-reference#%EF%B8%8F-deprecated-fields).*
+
+La cantidad mínima requerida para pagar y evitar generar intereses.",,number,,No,Yes,,
+[].account.funds_data,Uno o más fondos que contribuyen a la cuenta de pensión.,,array,,No,Yes,,
+[].account.funds_data[].collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+[].account.funds_data[].name,El nombre del fondo de pensiones.,FIX X,string,,No,Yes,,
+[].account.funds_data[].type,Tipo de fondo de pensiones.,CNPJ,string,,No,Yes,,
+[].account.funds_data[].public_identifications,Los IDs públicos del fondo.,,array,,No,Yes,,
+[].account.funds_data[].public_identifications[].name,El tipo de número de identificación para el fondo.,CNPJ,string,,Yes,No,,
+[].account.funds_data[].public_identifications[].value,El número de identificación del fondo.,05.954.445/0221-68,string,,Yes,Yes,,
+[].account.funds_data[].balance,El monto en el fondo.,88427.94,number,float,No,Yes,,
+[].account.funds_data[].percentage,"Cuánto contribuye este fondo, como porcentaje, al total de la cuenta de pensión.",100,number,float,No,Yes,,
+[].account.bank_product_id,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulta nuestra explicación de [Campos desaprobados](https://developers.belvo.com/reference/using-the-api-reference#%EF%B8%8F-deprecated-fields).*
+
+*El ID de producto de la institución para el tipo de cuenta.*",,string,,No,Yes,,
+[].account.internal_identification,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulta nuestra explicación de [Campos desaprobados](https://developers.belvo.com/reference/using-the-api-reference#%EF%B8%8F-deprecated-fields).*
+
+*La identificación interna de la institución para la cuenta.*",,string,,No,Yes,,
+[].name,"El nombre para el gasto recurrente.
+
+ℹ️ **Nota**: Esta información se toma de la sección de descripción de una transacción y luego se normaliza para proporcionarte un nombre fácil de leer. Por lo tanto, a veces el nombre reflejará el comerciante al que se realiza el pago (por ejemplo, Netflix.com), mientras que para otros gastos recurrentes, podría ser algo como ""Pago mensual a John"".",Netflix,string,,Yes,Yes,,
+[].transactions,"Un array de objetos de transacción minificados se utiliza para evaluar el gasto recurrente. Si no se encuentran transacciones, devolvemos un array vacío.",,array,,Yes,No,,
+[].transactions[].amount,El monto de la transacción.,2145.45,number,float,Yes,No,,
+[].transactions[].description,"La descripción de la transacción proporcionada por la institución. Por lo general, este es el texto que el usuario final vería en el estado de cuenta bancario. La descripción puede ser una cadena vacía.
+
+**Nota:** Para EYOD Risk Insights, la descripción es la que proporcionaste en la solicitud inicial.",Netflix.com/march,string,,Yes,Yes,,
+[].transactions[].value_date,"La fecha en que ocurrió la transacción, en formato `YYYY-MM-DD`.",2019-10-23,string,date,Yes,No,,
+[].frequency,"La frecuencia con la que ocurre este gasto recurrente.
+
+ℹ️ **Nota:** Belvo solo identifica frecuencias `MONTHLY`.",MONTHLY,string,,Yes,No,MONTHLY,
+[].average_transaction_amount,El monto promedio de la transacción del gasto recurrente.,32.9,number,float,Yes,No,,
+[].median_transaction_amount,El monto medio de la transacción del gasto recurrente.,32.9,number,float,Yes,No,,
+[].days_since_last_transaction,"Número de días desde que ocurrió el último gasto recurrente.
+
+Basado en la frecuencia, puedes inferir cuántos días faltan hasta que ocurra el próximo cargo.",5,integer,int32,Yes,No,,
+[].category,"La categoría de transacción para el gasto recurrente. Para más información sobre las categorías disponibles, por favor consulta nuestra [documentación de categorización de transacciones](https://developers.belvo.com/docs/banking#categorizing-transactions).
+
+- `Online Platforms & Leisure` (Netflix, Spotify, Membresías de gimnasio)
+- `Bills & Utilities` (electricidad, teléfono, internet)
+- `Credits & Loans` (adelantos en efectivo de tarjeta de crédito, préstamo estudiantil, arrendamiento de embarcaciones)
+- `Insurance` (seguro de hogar, automóvil, y salud & vida)
+- `Transport & Travel` (viaje en Uber, airbnb, estacionamiento)
+- `Taxes` (tarifa de servicio, donación, impuestos judiciales)",Online Platforms & Leisure,string,,Yes,No,"Bills & Utilities, Credits & Loans, Insurance, Online Platforms & Leisure, Transport & Travel, Taxes",
+[].payment_type,"El tipo de gasto recurrente. Devolvemos uno de los siguientes valores:
+
+  - `SUBSCRIPTION`
+  - `REGULAR`",SUBSCRIPTION,string,,Yes,Yes,"SUBSCRIPTION, REGULAR",
