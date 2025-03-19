@@ -4,10 +4,10 @@ Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
 [].collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
 [].created_at,La marca de tiempo ISO-8601 de cuando se creó el punto de datos en la base de datos de Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
 [].personal_data,,,object,,No,No,,
-[].personal_data.name,El nombre completo del individuo.,Cabezas Pérez Martín Vicente ,string,,No,No,,
+[].personal_data.full_name,El nombre completo del individuo.,Cabezas Pérez Martín Vicente ,string,,No,No,,
 [].personal_data.document_id_type,"El tipo de identificación de documento del individuo. Para Chile, esto siempre se establecerá en `RUT`.",RUT,string,,No,No,RUT,
 [].personal_data.document_id_number,"El número de identificación del documento del individuo. Para Chile, este será el número RUT.",12345678-9,string,,No,No,,
-[].debt_data_last_updated,"La fecha en que se actualizaron por última vez los datos de la deuda, en formato `YYYY-MM-DD`.",2023-07-02,string,date,No,No,,
+[].debt_data_last_update,"La fecha en que se actualizaron por última vez los datos de la deuda, en formato `YYYY-MM-DD`.",2023-07-02,string,date,No,No,,
 [].currency,"La moneda de las deudas. Para Chile, esto será el `CLP`.",CLP,string,,No,No,,^[A-Z]{3}$
 [].total,"El monto total de la deuda, incluyendo deudas actuales, morosas, gravemente morosas y en incumplimiento.",6506000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
 [].current,La cantidad de deuda que actualmente está pendiente pero no vencida.,5350000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"

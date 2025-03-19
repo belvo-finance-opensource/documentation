@@ -4,10 +4,10 @@ Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
 [].collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
 [].created_at,O carimbo de data e hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
 [].personal_data,,,object,,No,No,,
-[].personal_data.name,O nome completo do indivíduo.,Cabezas Pérez Martín Vicente ,string,,No,No,,
+[].personal_data.full_name,O nome completo do indivíduo.,Cabezas Pérez Martín Vicente ,string,,No,No,,
 [].personal_data.document_id_type,"O tipo de ID de documento do indivíduo. Para o Chile, isso será sempre definido como `RUT`.",RUT,string,,No,No,RUT,
 [].personal_data.document_id_number,"O número de identificação do documento do indivíduo. Para o Chile, este será o número RUT.",12345678-9,string,,No,No,,
-[].debt_data_last_updated,"A data em que os dados da dívida foram atualizados pela última vez, no formato `YYYY-MM-DD`.",2023-07-02,string,date,No,No,,
+[].debt_data_last_update,"A data em que os dados da dívida foram atualizados pela última vez, no formato `YYYY-MM-DD`.",2023-07-02,string,date,No,No,,
 [].currency,"A moeda das dívidas. Para o Chile, será o `CLP`.",CLP,string,,No,No,,^[A-Z]{3}$
 [].total,"O valor total da dívida, incluindo dívidas atuais, inadimplentes, gravemente inadimplentes e inadimplidas.",6506000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
 [].current,"O montante da dívida que está atualmente em aberto, mas não vencida.",5350000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
