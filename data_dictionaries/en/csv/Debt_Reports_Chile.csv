@@ -7,10 +7,10 @@ Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
 [].created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
 ",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
 [].personal_data,,,object,,No,No,,
-[].personal_data.name,The full name of the individual.,Cabezas Pérez Martín Vicente ,string,,No,No,,
+[].personal_data.full_name,The full name of the individual.,Cabezas Pérez Martín Vicente ,string,,No,No,,
 [].personal_data.document_id_type,"The type of document ID of the individual. For Chile, this will be always set to `RUT`.",RUT,string,,No,No,RUT,
 [].personal_data.document_id_number,"The document ID number of the individual. For Chile, this will be the RUT number.",12345678-9,string,,No,No,,
-[].debt_data_last_updated,"The date when the debt data was last updated, in `YYYY-MM-DD` format.",2023-07-02,string,date,No,No,,
+[].debt_data_last_update,"The date when the debt data was last updated, in `YYYY-MM-DD` format.",2023-07-02,string,date,No,No,,
 [].currency,"The currency of the debts. For Chile, this will be the `CLP`.",CLP,string,,No,No,,^[A-Z]{3}$
 [].total,"The total amount of debt including current, delinquent, severely delinquent, and defaulted debts.",6506000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
 [].current,The amount of debt that is currently outstanding but not past due.,5350000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
