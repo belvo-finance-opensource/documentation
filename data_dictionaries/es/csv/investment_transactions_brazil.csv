@@ -1,0 +1,192 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+link,El `link.id` al que pertenecen los datos.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
+collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+created_at,La marca de tiempo ISO-8601 de cuando se creó el punto de datos en la base de datos de Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+investment,,,object,,No,No,,
+investment.id,El identificador único creado por Belvo utilizado para referenciar la inversión actual.,5359ddc5-31fc-4346-934b-cc24630a8d06,string,uuid,No,No,,
+investment.type,"El tipo de inversión: Puede ser
+
+  - `FIXED_INCOME_BANKING` (*Renda Fixa Bancária*)
+  - `FIXED_INCOME_CREDIT` (*Renda Fixa Crédito*)
+  - `VARIABLE_INCOME` (*Renda Variável*)
+  - `TREASURY_BOND` (*Tesouro Direto*)
+  - `INVESTMENT_FUND` (*Fundos de Investimento*)",FIXED_INCOME_BANKING,string,,No,No,,
+investment.issuer_id_number,"El número de CNPJ de la institución emisora. Para los Fondos de Inversión, este es el CNPJ del fondo.
+
+> 🚧 No aplicable para inversiones en `TREASURY_BOND`.",10187609364567,string,,No,Yes,,^\d{14}$
+investment.isin_number,El Número de Identificación de Valores Internacionales ISO-6166 (ISIN) para el instrumento financiero.,BRCST4CTF001,string,,No,Yes,,‘^[A-Z]{2}([A-Z0-9]){9}\d{1}$’
+investment.currency,"El código de moneda de tres letras (ISO-4217) de la inversión. Por ejemplo, `BRL` para el Real Brasileño.",BRL,string,,No,No,,^[A-Z]{3}$
+investment.product_name,"El nombre del producto de inversión.
+
+- Para `FIXED_INCOME_BANKING`, puede ser: CDB, RDB, LCI o LCA.
+- Para `FIXED_INCOME_CREDIT`, puede ser: DEBENTURES, CRI o CRA.
+- Para `INVESTMENT_FUND`, será el nombre del fondo. Por ejemplo: CONSTELLATION MASTER FIA
+- Para `TREASURY_BOND`, será el nombre del bono. Por ejemplo: Tesouro Selic 2025.
+- Para `VARIABLE_INCOME_INCOME`, será el nombre de la acción. Por ejemplo AAPL.",CONSTELLATION MASTER FIA,string,,No,No,,
+investment.is_tax_exempt,"Indica si la inversión está exenta de impuestos.
+
+> 🚧 Solo aplicable para inversiones de tipo `FIXED_INCOME_CREDIT`.",False,boolean,,No,No,,
+investment.clearing_code,"El código de compensación de la inversión.
+
+> 🚧 Solo aplicable para `FIXED_INCOME_BANKING` y `FIXED_INCOME_CREDIT`.",CDB421GPXXX,string,,No,Yes,,[\w\W-]*
+investment.due_date,"La fecha de vencimiento del instrumento financiero.
+
+> 🚧 Solo aplicable para inversiones en `FIXED_INCOME_BANKING`, `FIXED_INCOME_CREDIT` y `TREASURY_BOND`.",2022-01-01,string,date,No,Yes,,
+investment.issue_date,"La fecha en que se emitió el instrumento financiero.
+
+> 🚧 Solo aplicable para `FIXED_INCOME_BANKING` y `FIXED_INCOME_CREDIT`.",2021-01-01,string,date,No,Yes,,
+investment.purchase_date,"La fecha en que se adquirió el instrumento financiero.
+
+> 🚧 Solo aplicable para inversiones en `FIXED_INCOME_BANKING`, `FIXED_INCOME_CREDIT` y `TREASURY_BOND`.",2021-01-01,string,date,No,Yes,,
+investment.grace_period_date,"La fecha del período de gracia del instrumento financiero.
+
+> 🚧 Solo aplicable para `FIXED_INCOME_BANKING` y `FIXED_INCOME_CREDIT`.",2021-01-01,string,date,No,Yes,,
+investment.issue_unit_price,"El precio unitario del instrumento financiero en el momento de la emisión.
+
+> 🚧 Solo aplicable para `FIXED_INCOME_BANKING` y `FIXED_INCOME_CREDIT`.",1000,number,float,No,Yes,,
+investment.balance,"El saldo del instrumento de inversión, a partir de la `reference_date`.",,object,,No,No,,
+investment.balance.reference_date,"La fecha y hora en que se calculó el saldo para el instrumento de inversión, en formato `YYYY-MM-DDTHH:MM:SSZ`.",2022-07-21T17:32:00Z,string,date-time,No,No,,
+investment.balance.gross_value,El valor bruto del instrumento de inversión.,1000,number,float,No,No,,
+investment.balance.blocked_amount,La cantidad del instrumento de inversión que está bloqueada o no disponible para transacciones.,100,number,float,No,No,,
+investment.balance.quantity,"El número de unidades, cuotas o activos mantenidos en la fecha de referencia.",100,number,float,No,No,,"‘^-?\d{1,15}\.\d{2,8}$’"
+investment.balance.gross_unit_price,El valor bruto unitario actual de la inversión en la fecha de referencia,10,number,float,No,Yes,,"‘^-?\d{1,15}\.\d{2,8}$’"
+investment.balance.net_value,"El valor neto de la inversión después de deducciones por impuestos, tarifas y otros cargos, a la fecha de referencia.",900,number,float,No,Yes,,"‘^-?\d{1,15}\.\d{2,8}$’"
+investment.balance.withheld_amount,La cantidad del instrumento de inversión que ha sido retenida o deducida del valor neto.,10,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
+investment.balance.transaction_fee,Las tarifas e impuestos cobrados por la transacción.,5,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
+investment.balance.purchase_unit_price,El precio unitario en el momento de la compra del valor o activo.,10,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
+investment.balance.pre_fixed_rate,La tasa de remuneración prefijada para el producto de ingresos.,0.05,number,float,No,Yes,,‘^\d{1}\.\d{6}$’
+investment.balance.post_fixed_rate,El porcentaje del indexador post-fijado para el producto de ingresos.,0.05,number,float,No,Yes,,‘^\d{1}\.\d{6}$’
+investment.balance.penalty_fee,"La penalización (multa) por retrasos en los pagos, tal como se define en el contrato.",10,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
+investment.balance.late_payment_fee,El interés cobrado por pagos atrasados.,10,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
+investment.balance.closing_price,El precio de cierre de la inversión en la fecha de referencia.,10,number,float,No,Yes,,"‘^-?\d{1,15}\.\d{2,8}$’"
+investment.balance.unit_price_factor,El factor utilizado para calcular el precio unitario.,1,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
+investment.remuneration,Los detalles de la remuneración del instrumento de inversión.,,object,,No,No,,
+investment.remuneration.pre_fixed_rate,"La tasa de interés fija definida en la emisión, expresada como un decimal (por ejemplo, `0.150000` representa el 15%).",0.05,number,float,No,Yes,,‘^\d{1}\.\d{6}$’
+investment.remuneration.post_fixed_rate,"La tasa de interés post-fijada definida en la emisión, expresada como un decimal (por ejemplo, `0.150000` representa el 15%).",0.05,number,float,No,Yes,,‘^\d{1}\.\d{6}$’
+investment.remuneration.rate_type,"El tipo de tasa de remuneración aplicada al instrumento financiero. Puede ser:
+  - `LINEAR`
+  - `EXPONENCIAL`",LINEAR,string,,No,Yes,,[\w\W-]*
+investment.remuneration.rate_periodicity,"La frecuencia con la que se aplica la tasa de remuneración al instrumento financiero. Puede ser:
+  - `DIARIO`
+  - `MENSAL`
+  - `ANUAL`
+  - `SEMESTRAL`",MENSAL,string,,No,Yes,,
+investment.remuneration.calculation_base,"Indica si el cálculo de la remuneración o de los intereses se basa en días hábiles (*dias úteis*) o días calendario (*dias corridos*).
+- `DIAS_UTEIS`
+  - `DIAS_CORRIDOS`",DIAS_CORRIDOS,string,,No,Yes,,[\w\W-]*
+investment.remuneration.indexer,"El índice utilizado como referencia para calcular la rentabilidad o los rendimientos del instrumento financiero. Puede ser uno de los siguientes:
+  - `CDI` 
+  - `DI` 
+  - `TR` 
+  - `IPCA` 
+  - `IGP_M` 
+  - `IGP_DI` 
+  - `INPC` 
+  - `BCP` 
+  - `TLC` 
+  - `SELIC` 
+  - `PRE_FIXADO` 
+  - `OUTROS`",CDI,string,,No,Yes,,[\w\W-]*
+investment.remuneration.indexer_additional_info,Información adicional sobre la tasa de `indexer`. Requerido cuando `indexer` está configurado en `OUTROS`.,IPCA + 5%,string,,No,Yes,,[\w\W-]*
+investment.classification_details,"Los detalles de clasificación del instrumento de inversión.
+
+> 🚧 Solo aplicable para inversiones de tipo `INVESTMENT_FUND`.
+>
+> Este objeto solo es aplicable para inversiones de tipo `INVESTMENT_FUND`. Para todos los demás tipos de inversión, este objeto será `null`.",,object,,No,Yes,,
+investment.classification_details.category,"La categoría del fondo de inversión, según los estándares de clasificación de ANBIMA. Puede ser una de las siguientes:
+  - `RENDA_FIXA`
+  - `ACOES`
+  - `MULTIMERCADO`
+  - `CAMBIAL`",ACOES,string,,No,Yes,,
+investment.classification_details.class,"La clase dentro de la categoría del fondo de inversión, según los estándares de clasificación de ANBIMA.",Ações Livre,string,,No,Yes,,[\w\W\s]*
+investment.classification_details.subclass,"La subclase del fondo de inversión, según los estándares de clasificación de ANBIMA.",Ações Livre,string,,No,Yes,,[\w\W\s]*
+investment.voucher_payment_details,"Los detalles del pago del voucher (también conocido como pagos de cupón) del instrumento de inversión.
+
+> 🚧 Solo aplicable para inversiones de tipo `FIXED_INCOME_CREDIT` y `TREASURY_BOND`.
+>
+> Este objeto solo es aplicable para inversiones de tipo `FIXED_INCOME_CREDIT` y `TREASURY_BOND`. Para todos los demás tipos de inversión, este objeto será `null`.",,object,,No,No,,
+investment.voucher_payment_details.is_voucher_payment,Indica si el instrumento financiero paga intereses periódicos (pagos de cupones).,True,boolean,,No,No,,
+investment.voucher_payment_details.periodicity,"La frecuencia con la que se realizan los pagos del voucher. Requerido cuando `is_voucher_payment` está configurado como `true`. Puede ser uno de los siguientes:
+  - `MENSAL` 
+  - `TRIMESTRAL` 
+  - `SEMESTRAL` 
+  - `ANUAL` 
+  - `IRREGULAR` 
+  - `OUTROS`",MENSAL,string,,No,Yes,,
+investment.voucher_payment_details.periodicity_additional_info,Información adicional sobre la periodicidad del pago del vale. Requerido cuando `periodicity` está configurado como `OUTROS`.,30/360,string,,No,Yes,,[\w\W\s]*
+investment.debtor_details,"Los detalles del deudor del instrumento de inversión.
+
+> 🚧 Solo aplicable para inversiones de tipo `FIXED_INCOME_CREDIT`.
+>
+> Este objeto solo es aplicable para inversiones de tipo `FIXED_INCOME_CREDIT`. Para todos los demás tipos de inversión, este objeto será `null`.",,object,,No,Yes,,
+investment.debtor_details.name,El nombre del deudor.,Roberto Marino,string,,No,No,,[\w\W\s]*
+investment.debtor_details.id_document_number,El número del documento de identificación del deudor (CNPJ).,12345678901,string,,No,No,,‘^\d{14}$’
+internal_identification,La identificación interna de la institución de la transacción de inversión.,ABCD2126019929279212650822221989319253344,string,,No,No,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
+value_date,"La fecha en la que se liquidó la transacción, en formato `YYYY-MM-DD`.
+
+> 📘 `VARIABLE_INCOME`
+>
+> Para inversiones de `VARIABLE_INCOME`, solo recibirás transacciones hasta la última fecha de negociación. Por ejemplo, si hoy es 19.11.2024, solo recibirás transacciones hasta el 18.11.2024.
+
+> 📘 `INVESTMENT_FUND`
+>
+> Para inversiones de `INVESTMENT_FUND`, esta es la fecha en la que la transacción (compra o rescate) se procesa oficialmente en acciones o cuotas del fondo. Para compras, esta es la fecha en la que el dinero del inversor se aplica para adquirir acciones del fondo. Para rescates, esta es la fecha en la que las acciones del fondo se convierten oficialmente de nuevo en efectivo.",2024-11-18,string,date,No,No,,
+gross_value,"El valor bruto de la transacción.
+
+> 🚧 No aplicable para inversiones de `VARIABLE_INCOME`.",60,number,float,No,No,,"‘^-?\d{1,15}\.\d{2,4}$’"
+net_value,"El valor neto de la transacción.
+
+> 🚧 No aplicable para inversiones de `VARIABLE_INCOME`.",60,number,float,No,No,,"‘^-?\d{1,15}\.\d{2,4}$’"
+value,"El valor de la transacción.
+
+Para inversiones de **`VARIABLE_INCOME`**, este es el valor de la operación ejecutada por el cliente. Si el cliente compra o vende acciones, este campo indica el valor total de la operación (por ejemplo, el precio por acción × cantidad).
+
+Para inversiones de **`INVESTMENT_FUND`**, este es el valor solicitado por el cliente para una transacción de fondo.
+
+> 🚧 Solo aplicable para inversiones de `VARIABLE_INCOME` y `INVESTMENT_FUND`.",60,number,float,No,No,,
+unit_price,El precio por una unidad o cuota individual.,3,number,float,No,No,,
+price_factor,"El número de unidades (acciones) considerado al calcular el precio por acción o unidad para una transacción.
+
+> 🚧 Solo aplicable para inversiones de `VARIABLE_INCOME`.",1,number,float,No,No,,
+transaction_tax,"El Impuesto sobre Operaciones Financieras (*Imposto sobre Operações Financeiras (IOF)*) aplicado o retenido durante la transacción.
+
+> 🚧 No aplicable para inversiones de `VARIABLE_INCOME`.",0,number,float,No,No,,
+income_tax,"El Impuesto sobre la Renta (*Imposto de Renda (IR)*) aplicado o retenido durante la transacción.
+
+> 🚧 No aplicable para inversiones de `VARIABLE_INCOME`.",0,number,float,No,No,,
+quantity,"El número de unidades, cuotas o activos involucrados en una transacción.",20,number,float,No,No,,
+type,El tipo de transacción (`INFLOW` o `OUTFLOW`) desde la perspectiva de la inversión.,INFLOW,string,,No,No,"INFLOW, OUTFLOW, null",
+subtype,"El subtipo de transacción.
+
+- Para `FIXED_INCOME_BANKING`: APLICACAO, RESGATE, CANCELAMENTO, VENCIMENTO, PAGAMENTO_JUROS, AMORTIZACAO, TRANSFERENCIA_TITULARIDADE, TRANSFERENCIA_CUSTODIA, OUTROS.
+- Para `FIXED_INCOME_CREDIT`: COMPRA, VENDA, CANCELAMENTO, VENCIMENTO, PAGAMENTO_JUROS, AMORTIZACAO, PRÊMIO, TRANSFERENCIA_TITULARIDADE, TRANSFERENCIA_CUSTODIA, MULTA, MORA, OUTROS.
+- Para `VARIABLE_INCOME`: COMPRA, VENDA, DIVIDENDOS, JCP, ALUGUEIS, TRANSFERENCIA_TITULARIDADE, OUTROS.
+- Para `INVESTMENT_FUND`: AMORTIZACAO, TRANSFERENCIA_DE_COTAS, APLICACAO, RESGATE, COME_COTAS, OUTROS.
+- Para `TREASURY_BOND`: COMPRA, VENDA, CANCELAMENTO, VENCIMENTO, PAGAMENTO_JUROS, AMORTIZACAO, TRANSFERENCIA_TITULARIDADE, TRANSFERENCIA_CUSTODIA, OUTROS.",,string,,No,No,,
+subtype_additional_info,Información adicional sobre el subtipo de transacción. Este campo es obligatorio cuando el subtipo es `OUTROS`.,,string,,No,No,,‘[\w\W\s]*’
+indexer_percentage,"El porcentaje máximo del indexador para el contrato (Bancaria) o transacción (Crédito).
+
+> 🚧 Solo aplicable para inversiones en `FIXED_INCOME_BANKING` y `FIXED_INCOME_CREDIT`.",0,number,float,No,No,,
+rate,"La tasa de remuneración aplicada a la transacción.
+
+> 🚧 Solo aplicable para inversiones en `FIXED_INCOME_BANKING`, `FIXED_INCOME_CREDIT` y `TREASURY_BOND`.",0,number,float,No,No,,
+exit_fee,"La tarifa de salida se aplica a la transacción del Fondo de Inversión (Fundos de Investimento). Esta tarifa se cobra cuando un cliente rescata o sale del fondo.
+
+> 🚧 Solo aplicable para inversiones de tipo `INVESTMENT_FUND`.",0,number,float,No,No,,
+broker_note_details,"Detalles sobre la nota de corretaje asociada con esta transacción. Este objeto solo se devuelve para transacciones que están asociadas con un tipo de inversión `VARIABLE_INCOME`.
+
+> 📘 Info
+>
+> Una nota de corretaje (*nota de corretagem*) es un documento oficial emitido por una correduría que detalla las transacciones realizadas por un inversor en un día determinado. Incluye información sobre el valor bruto de todas las compras y ventas, comisiones de corretaje, tarifas de compensación y liquidación, tarifas de compensación y registro, tarifas de aviso de negociación de activos en bolsa, tarifas de bolsa, tarifas de custodia de compensación, impuestos y el impuesto sobre la renta retenido en la fuente.",,object,,No,Yes,,
+broker_note_details.broker_note_number,El número de la nota del broker.,1854009930314350,string,,Yes,No,,"‘^\d{1,16}$’"
+broker_note_details.gross_value,El valor bruto de todas las compras y ventas del día.,1000,number,float,Yes,No,,
+broker_note_details.brokerage_fee,La tarifa total de corretaje cobrada por el día.,10,number,float,Yes,No,,
+broker_note_details.clearing_settlement_fee,La tarifa cobrada por la compensación y liquidación en custodia.,2.5,number,float,Yes,No,,
+broker_note_details.clearing_registration_fee,La tarifa cobrada por la compensación y el registro en custodia.,1,number,float,Yes,No,,
+broker_note_details.stock_exchange_asset_trade_notice_fee,La tarifa cobrada por la bolsa de valores por las notificaciones de comercio de activos.,0.5,number,float,Yes,No,,
+broker_note_details.stock_exchange_fee,La tarifa cobrada por la bolsa de valores por los servicios de registro.,3,number,float,Yes,No,,
+broker_note_details.clearing_custody_fee,La tarifa cobrada por las instituciones financieras por los servicios de custodia.,1.5,number,float,Yes,No,,
+broker_note_details.taxes,"El monto total de los impuestos cobrados en la transacción del día, excluyendo el impuesto sobre la renta retenido en la fuente.",10,number,float,Yes,No,,
+broker_note_details.income_tax,El monto total del impuesto sobre la renta retenido en la fuente para el día.,5,number,float,Yes,No,,
+broker_note_details.net_value,"El valor neto de la nota del corredor después de deducir los gastos por comisiones de corretaje, tarifas de liquidación de compensación, tarifas de registro, tarifas de ANA, emolumentos, tarifas de custodia, impuestos y IRRF.",980,number,float,Yes,No,,

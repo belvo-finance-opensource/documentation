@@ -1,19 +1,19 @@
 Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
-[].id,"Belvo's unique identifier for the current item.
+id,"Belvo's unique identifier for the current item.
 ",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
-[].collected_at,"The ISO-8601 timestamp when the data point was collected.
+collected_at,"The ISO-8601 timestamp when the data point was collected.
 ",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
-[].created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
 ",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
-[].informacion_general,"General information regarding the tax return (year, RFC, return type,
+informacion_general,"General information regarding the tax return (year, RFC, return type,
 person/company name, and so on).
 ",,object,,Yes,Yes,,
-[].determinacion_isr,Information used to calculate the provisional income tax for the period.,,object,,Yes,Yes,,
-[].detalle_pago_isr,Information on the monthly provisional payments for the income tax.,,object,,Yes,Yes,,
-[].determinacion_iva,Information used to calculate the provisional VAT tax for the period.,,object,,Yes,Yes,,
-[].detalle_pago_iva,Information on the monthly provisional payments for the VAT tax.,,object,,Yes,Yes,,
-[].pdf,Tax return PDF as a binary.,=PDF-STRING=,string,binary,Yes,Yes,,
-[].receipt_pdf,"The acknowledgement receipt from the fiscal institution confirming that
+determinacion_isr,Information used to calculate the provisional income tax for the period.,,object,,Yes,Yes,,
+detalle_pago_isr,Information on the monthly provisional payments for the income tax.,,object,,Yes,Yes,,
+determinacion_iva,Information used to calculate the provisional VAT tax for the period.,,object,,Yes,Yes,,
+detalle_pago_iva,Information on the monthly provisional payments for the VAT tax.,,object,,Yes,Yes,,
+pdf,Tax return PDF as a binary.,=PDF-STRING=,string,binary,Yes,Yes,,
+receipt_pdf,"The acknowledgement receipt from the fiscal institution confirming that
 they received the tax return.
 ",=PDF-STRING=,string,binary,No,Yes,,
-[].type,The type of tax return. Can be either monthly or annual.,monthly,string,,Yes,Yes,,
+type,The type of tax return. Can be either monthly or annual.,monthly,string,,Yes,Yes,,

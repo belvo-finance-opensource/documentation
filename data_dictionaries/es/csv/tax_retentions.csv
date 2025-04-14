@@ -1,0 +1,30 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+link,El `link.id` al que pertenecen los datos.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
+collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+created_at,La marca de tiempo ISO-8601 de cuando se creó el punto de datos en la base de datos de Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+invoice_identification,El ID único de la institución fiscal para la factura a la que se refiere la retención de impuestos.,def404af-5eef-4112-aa99-d1ec8493b89a,string,uuid,Yes,Yes,,
+version,La versión CFDI de las retenciones de impuestos.,1.0,string,,Yes,Yes,,
+code,"El código de retención de impuestos. Para obtener más información, consulta nuestro <a href=""https://developers.belvo.com/docs/sat-catalogs#retention-code"" target=""_blank"">artículo del DevPortal sobre los catálogos del SAT</a>.",25,integer,int32,Yes,Yes,,
+issued_at,La marca de tiempo ISO-8601 de cuando se emitió la retención de impuestos.,2019-01-03T21:10:40.000Z,string,date-time,Yes,Yes,,
+certified_at,La marca de tiempo ISO-8601 de cuando se certificó la retención de impuestos.,2019-01-03T21:10:41.000Z,string,date-time,Yes,Yes,,
+cancelled_at,La marca de tiempo ISO-8601 de cuando se canceló la retención de impuestos (si corresponde).,,string,date-time,Yes,Yes,,
+sender_id,El ID fiscal del remitente de la factura.,JKUF980404P0,string,,Yes,Yes,,
+sender_name,El nombre del remitente de la factura.,Roberto Nunez Batman,string,,Yes,Yes,,
+receiver_nationality,"Si el receptor de la factura es un nacional mexicano o no. Si el receptor no se considera un nacional mexicano, los impuestos retenidos pueden calcularse de manera diferente. Valores posibles:
+  - `NATIONAL`
+  - `FOREIGN`",NATIONAL,string,,Yes,Yes,"NATIONAL, FOREIGN",
+receiver_id,El ID fiscal del receptor de la factura.,GYGK3207809L1,string,,Yes,Yes,,
+receiver_name,El nombre del receptor de la factura.,ACME LTD,string,,Yes,Yes,,
+total_invoice_amount,El monto total de la factura al que se refiere la retención de impuestos.,53249.8,number,float,Yes,Yes,,
+total_exempt_amount,Cantidad total que está exenta de impuestos.,1000.8,number,float,Yes,Yes,,
+total_retained_amount,Total de impuestos retenidos.,1550.7,number,float,Yes,Yes,,
+total_taxable_amount,El monto total que se puede gravar. Se calcula como `total_invoice_amount` - `total_exempt_amount`.,43249,number,float,Yes,Yes,,
+retention_breakdown,Un desglose de los impuestos retenidos.,,array,,Yes,Yes,,
+retention_breakdown[].base_amount,El monto base que se utilizó para calcular la retención de impuestos.,0.03,number,float,Yes,Yes,,
+retention_breakdown[].tax_type,"Atributo opcional para indicar el tipo de impuesto retenido para el período o año según el <a href=""https://developers.belvo.com/docs/sat-catalogs#retention-code"" target=""_blank"">catálogo del SAT</a>.",01,string,,Yes,Yes,,
+retention_breakdown[].retained_amount,El monto retenido.,0,number,float,Yes,Yes,,
+retention_breakdown[].payment_status,"Indica si el impuesto ha sido pagado o no. Puede ser:
+  - `PAID`
+  - `PROVISIONED`",PAID,string,,Yes,Yes,"PAID, PROVISIONED",
+xml,El documento de retención de impuestos en formato XML.,=XML-STRING=,string,,Yes,Yes,,

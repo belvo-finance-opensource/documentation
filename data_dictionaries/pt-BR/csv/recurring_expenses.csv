@@ -1,0 +1,190 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+[].id,Identificador único da Belvo para o item atual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+[].account,"Detalhes sobre a conta.
+
+**Nota**: Para o nosso recurso de despesas recorrentes, esta conta está relacionada à conta que foi analisada para gerar o relatório de despesas recorrentes.",,object,,Yes,Yes,,
+[].account.id,Identificador único da Belvo para o item atual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+[].account.link,O `link.id` ao qual os dados pertencem.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
+[].account.institution,Detalhes sobre a instituição.,,object,,No,No,,
+[].account.institution.name,"O nome da instituição, conforme designado pela Belvo.
+
+Consulte nosso artigo <a href=""https://developers.belvo.com/docs/institution"" target=""_blank"">Instituições</a> no DevPortal para uma lista detalhada de nomes de instituições.",erebor_mx_retail,string,,No,No,,
+[].account.institution.type,"O tipo de instituição. Retornamos um dos seguintes valores:
+
+  - `bank`
+  - `fiscal`
+  - `employment`",,string,,No,No,"bank, fiscal, employment",
+[].account.collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+[].account.created_at,O carimbo de data e hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+[].account.category,"O tipo de conta.  
+Retornamos um dos seguintes valores do enum:  
+  - `CHECKING_ACCOUNT`
+  - `CREDIT_CARD`
+  - `INVESTMENT_ACCOUNT`
+  - `LOAN_ACCOUNT`
+  - `PENSION_FUND_ACCOUNT`
+  - `SAVINGS_ACCOUNT`
+  - `UNCATEGORIZED`
+  - `null`",CHECKING_ACCOUNT,string,,Yes,Yes,"CHECKING_ACCOUNT, CREDIT_CARD, INVESTMENT_ACCOUNT, LOAN_ACCOUNT, PENSION_FUND_ACCOUNT, SAVINGS_ACCOUNT, UNCATEGORIZED, None",
+[].account.balance_type,"Indica se esta conta é um `ASSET` ou um `LIABILITY`. Você pode considerar o saldo de um `ASSET` como positivo, enquanto o saldo de um `LIABILITY` como negativo.",ASSET,string,,Yes,Yes,,
+[].account.type,"O tipo de conta, conforme designado pela instituição.",Cuentas de efectivo,string,,Yes,Yes,,
+[].account.name,"O nome da conta, conforme fornecido pela instituição.",Cuenta Perfiles- M.N. - MXN-666,string,,Yes,Yes,,
+[].account.number,"O número da conta, conforme designado pela instituição.",4057068115181,string,,Yes,Yes,,
+[].account.balance,Detalhes sobre os saldos atual e disponível para a conta.,,object,,Yes,No,,
+[].account.balance.current,"O saldo atual é calculado de forma diferente de acordo com o tipo de conta.
+
+- **💰 Contas correntes e poupança**:
+
+O saldo da conta do usuário no timestamp `collected_at`.
+
+- **💳 Cartões de crédito**:
+
+O valor que o usuário gastou no período de faturamento atual do cartão (consulte `credit_data.cutting_date` para obter informações sobre quando o período de faturamento atual termina).
+
+- **🏡 Contas de empréstimo**:
+
+O valor restante a pagar no empréstimo do usuário.",5874.13,number,float,Yes,Yes,,
+[].account.balance.available,"O saldo que o proprietário da conta pode usar.
+
+- **💰 Contas correntes e poupança**:
+
+O saldo disponível pode ser diferente do saldo `current` devido a transações pendentes.
+
+- **💳 Cartões de crédito**:
+
+O valor de crédito que o usuário ainda tem disponível para o período atual. O saldo `available` pode ser diferente do saldo `current` devido a transações pendentes ou parcelas futuras.
+
+- **🏡 Contas de empréstimo**:
+
+O valor presente necessário para quitar o empréstimo, conforme fornecido pela instituição.
+
+**Nota:** Se a instituição não fornecer esse valor, retornamos `null`.",5621.12,number,float,No,Yes,,
+[].account.currency,"A moeda da conta. Por exemplo:
+- 🇧🇷 BRL (Real Brasileiro)
+- 🇨🇴 COP (Peso Colombiano)
+- 🇲🇽 MXN (Peso Mexicano)
+
+Por favor, note que outras moedas além das listadas acima podem ser retornadas.",MXN,string,,Yes,Yes,,
+[].account.public_identification_name,"O nome público para o tipo de identificação. Por exemplo: `""CLABE""`.
+
+ℹ️ Para contas de poupança e corrente 🇧🇷 brasileiras, este campo será `AGENCY/ACCOUNT`.",CLABE,string,,Yes,Yes,,
+[].account.public_identification_value,"O valor para o `public_identification_name`.
+
+ℹ️ Para contas de poupança e corrente brasileiras, este campo será o número da agência e da conta bancária, separados por uma barra. Por exemplo: `0444/45722-0`.",150194683119900273,string,,Yes,Yes,,
+[].account.last_accessed_at,O timestamp ISO-8601 do acesso mais recente e bem-sucedido da Belvo à instituição para o link fornecido.,2021-03-09T10:28:40.000Z,string,date-time,Yes,Yes,,
+[].account.credit_data,As opções de crédito associadas a esta conta.,,object,,Yes,Yes,,
+[].account.credit_data.credit_limit,O valor máximo de crédito que o proprietário pode receber.,192000,number,float,Yes,Yes,,
+[].account.credit_data.collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+[].account.credit_data.cutting_date,"A data de encerramento do período de crédito, no formato `YYYY-MM-DD`.",2019-12-11,string,,Yes,Yes,,
+[].account.credit_data.next_payment_date,"A data de vencimento para o próximo pagamento, no formato `YYYY-MM-DD`.",2019-12-13,string,,Yes,No,,
+[].account.credit_data.minimum_payment,O valor mínimo a ser pago na `next_payment_date`.,2400.3,number,float,Yes,Yes,,
+[].account.credit_data.no_interest_payment,O valor mínimo necessário para pagar para evitar a geração de juros.,2690.83,number,float,Yes,Yes,,
+[].account.credit_data.interest_rate,A taxa de juros anualizada do crédito.,4,number,float,Yes,Yes,,
+[].account.credit_data.monthly_payment,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
+
+*O pagamento mensal recorrente, se aplicável.*",,number,,No,Yes,,
+[].account.credit_data.last_payment_date,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
+
+*A data em que o último pagamento de crédito foi realizado, no formato `YYYY-MM-DD`.*",,string,,No,Yes,,
+[].account.credit_data.last_period_balance,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
+
+*O saldo restante após o `last_payment_date`.*",,string,,No,Yes,,
+[].account.loan_data,As opções de empréstimo associadas a esta conta.,,object,,Yes,Yes,,
+[].account.loan_data.collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+[].account.loan_data.contract_amount,"O valor total inicial do empréstimo, calculado pela instituição, quando o contrato foi assinado. Este valor inclui o principal + juros + impostos + taxas.",202000,number,float,No,Yes,,
+[].account.loan_data.principal,Valor total do empréstimo (o valor que o usuário recebe).,192000,number,float,Yes,Yes,,
+[].account.loan_data.loan_type,"O tipo do empréstimo, de acordo com a instituição.",Consignado,string,,No,Yes,,
+[].account.loan_data.payment_day,O dia do mês em que o proprietário precisa pagar o empréstimo (`DD`).,27,string,,No,Yes,,
+[].account.loan_data.outstanding_principal,"Montante pendente do empréstimo, ou seja, quanto resta a pagar sobre o principal (não incluindo juros).",142023,number,float,No,Yes,,
+[].account.loan_data.outstanding_balance,"O valor restante a pagar no total, incluindo juros.",182000,number,float,Yes,Yes,,
+[].account.loan_data.monthly_payment,"O pagamento mensal recorrente, se aplicável.",1000,number,float,Yes,Yes,,
+[].account.loan_data.interest_rates,Detalhamento dos juros aplicados ao empréstimo.,,array,,Yes,Yes,,
+[].account.loan_data.interest_rates[].name,O nome do tipo de taxa de juros aplicada ao empréstimo.,jurosEfetivo,string,,Yes,Yes,,
+[].account.loan_data.interest_rates[].type,"O período em que o juro é aplicado ao empréstimo. Retornamos um dos seguintes valores:
+
+  - `MONTHLY`
+  - `YEARLY`",MONTHLY,string,,Yes,Yes,"MONTHLY, YEARLY",
+[].account.loan_data.interest_rates[].value,A taxa de juros (em porcentagem ou valor monetário).,7.85,number,float,Yes,Yes,,
+[].account.loan_data.fees,Detalhamento das taxas aplicadas ao empréstimo.,,array,,No,Yes,,
+[].account.loan_data.fees[].type,"O tipo de taxa. Retornamos um dos seguintes valores:
+
+  - `OPERATION_FEE`
+  - `INSURANCE_FEE`
+  - `OTHERS`",OPERATION_FEE,string,,Yes,No,"OPERATION_FEE, INSURANCE_FEE, OTHERS",
+[].account.loan_data.fees[].value,O valor total da taxa. Mesma moeda do Empréstimo.,5.6,number,float,Yes,No,,
+[].account.loan_data.number_of_installments_total,O número total de parcelas necessárias para pagar o empréstimo.,60,integer,int32,No,Yes,,
+[].account.loan_data.number_of_installments_outstanding,O número de parcelas restantes para pagar.,48,integer,int32,No,Yes,,
+[].account.loan_data.contract_start_date,"A data em que o contrato de empréstimo foi assinado, no formato `YYYY-MM-DD`.",2020-03-01,string,,No,Yes,,
+[].account.loan_data.contract_end_date,"A data em que se espera que o empréstimo seja concluído, no formato `YYYY-MM-DD`.",2027-10-01,string,date,No,No,,
+[].account.loan_data.contract_number,"O número do contrato do empréstimo, conforme fornecido pela instituição.",890ASLDJF87SD00,string,,No,Yes,,
+[].account.loan_data.credit_limit,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
+
+Por favor, consulte `principal` em vez disso.",,number,,No,Yes,,
+[].account.loan_data.last_period_balance,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
+
+Por favor, consulte `outstanding_balance` em vez disso.",,number,,No,Yes,,
+[].account.loan_data.interest_rate,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
+
+Por favor, consulte o objeto `interest_rates`.",,number,,No,Yes,,
+[].account.loan_data.limit_day,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
+
+Consulte `payment_day` em vez disso.",,string,,No,Yes,,
+[].account.loan_data.cutting_day,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre campos descontinuados.*
+
+O dia de fechamento do mês para o empréstimo.",,string,,No,Yes,,
+[].account.loan_data.cutting_date,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
+
+A data de encerramento do período do empréstimo, no formato `YYYY-MM-DD`.",,string,,No,Yes,,
+[].account.loan_data.last_payment_date,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
+
+A data em que o último pagamento do empréstimo foi realizado, no formato `YYYY-MM-DD`.",,string,,No,Yes,,
+[].account.loan_data.next_payment_date,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
+
+Por favor, use `payment_day` em vez disso, no formato `YYYY-MM-DD`.",,string,,No,Yes,,
+[].account.loan_data.no_interest_payment,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
+
+O valor mínimo necessário para pagar e evitar a geração de juros.",,number,,No,Yes,,
+[].account.funds_data,Um ou mais fundos que contribuem para a conta de pensão.,,array,,No,Yes,,
+[].account.funds_data[].collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+[].account.funds_data[].name,O nome do fundo de pensão.,FIX X,string,,No,Yes,,
+[].account.funds_data[].type,Tipo de fundo de pensão.,CNPJ,string,,No,Yes,,
+[].account.funds_data[].public_identifications,Os IDs públicos do fundo.,,array,,No,Yes,,
+[].account.funds_data[].public_identifications[].name,O tipo de número de identificação para o fundo.,CNPJ,string,,Yes,No,,
+[].account.funds_data[].public_identifications[].value,O número de identificação do fundo.,05.954.445/0221-68,string,,Yes,Yes,,
+[].account.funds_data[].balance,O montante no fundo.,88427.94,number,float,No,Yes,,
+[].account.funds_data[].percentage,"Quanto este fundo, em porcentagem, contribui para o total da conta de pensão.",100,number,float,No,Yes,,
+[].account.bank_product_id,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuações, consulte nossa explicação sobre Campos descontinuados.*
+
+*O ID de produto da instituição para o tipo de conta.*",,string,,No,Yes,,
+[].account.internal_identification,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
+
+*Identificação interna da instituição para a conta.*",,string,,No,Yes,,
+[].name,"O nome para a despesa recorrente.
+
+ℹ️ **Nota**: Esta informação é retirada da seção de descrição de uma transação e, em seguida, normalizada para fornecer um nome de fácil leitura. Assim, às vezes o nome refletirá o comerciante para o qual o pagamento é feito (por exemplo, Netflix.com), enquanto para outras despesas recorrentes, isso pode ser algo como ""Pagamento mensal para John"".",Netflix,string,,Yes,Yes,,
+[].transactions,"Um array de objetos de transação minificados usado para avaliar a despesa recorrente. Se nenhuma transação for encontrada, retornamos um array vazio.",,array,,Yes,No,,
+[].transactions[].amount,O valor da transação.,2145.45,number,float,Yes,No,,
+[].transactions[].description,"A descrição da transação fornecida pela instituição. Normalmente, este é o texto que o usuário final veria no extrato bancário. A descrição pode ser uma string vazia.
+
+**Nota:** Para o EYOD Risk Insights, a descrição é aquela que você forneceu na solicitação inicial.",Netflix.com/march,string,,Yes,Yes,,
+[].transactions[].value_date,"A data em que a transação ocorreu, no formato `YYYY-MM-DD`.",2019-10-23,string,date,Yes,No,,
+[].frequency,"A frequência com que essa despesa recorrente ocorre.
+
+ℹ️ **Nota:** A Belvo identifica apenas frequências `MONTHLY`.",MONTHLY,string,,Yes,No,MONTHLY,
+[].average_transaction_amount,O valor médio da transação da despesa recorrente.,32.9,number,float,Yes,No,,
+[].median_transaction_amount,O valor mediano da transação da despesa recorrente.,32.9,number,float,Yes,No,,
+[].days_since_last_transaction,"Número de dias desde que a última despesa recorrente ocorreu.
+
+Com base na frequência, você pode inferir quantos dias faltam até que a próxima cobrança ocorra.",5,integer,int32,Yes,No,,
+[].category,"A categoria de transação para a despesa recorrente. Para mais informações sobre as categorias disponíveis, consulte nossa <a href=""https://developers.belvo.com/docs/banking#categorizing-transactions"" target=""_blank"">documentação de categorização de transações</a>.
+
+- `Online Platforms & Leisure` (Netflix, Spotify, Assinaturas de Academia)
+- `Bills & Utilities` (eletricidade, telefone, internet)
+- `Credits & Loans` (adiantamentos de cartão de crédito, empréstimo estudantil, leasing de embarcações)
+- `Insurance` (seguro residencial, automotivo, e de saúde & vida)
+- `Transport & Travel` (viagem de Uber, airbnb, estacionamento)
+- `Taxes` (taxa de serviço, doação, impostos judiciais)",Online Platforms & Leisure,string,,Yes,No,"Bills & Utilities, Credits & Loans, Insurance, Online Platforms & Leisure, Transport & Travel, Taxes",
+[].payment_type,"O tipo de despesa recorrente. Retornamos um dos seguintes valores:
+
+  - `SUBSCRIPTION`
+  - `REGULAR`",SUBSCRIPTION,string,,Yes,Yes,"SUBSCRIPTION, REGULAR",

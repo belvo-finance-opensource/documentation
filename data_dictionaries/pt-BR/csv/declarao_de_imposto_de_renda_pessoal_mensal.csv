@@ -1,0 +1,10 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+id,Identificador único da Belvo para o item atual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+created_at,O carimbo de data e hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+informacion_general,"Informações gerais sobre a declaração de imposto (ano, RFC, tipo de declaração, nome da pessoa/empresa, etc.).",,object,,Yes,Yes,,
+isr,Informações utilizadas para calcular os pagamentos mensais provisórios do imposto de renda.,,object,,Yes,Yes,,
+iva,Informações usadas para calcular os pagamentos provisórios mensais do imposto sobre o IVA.,,object,,Yes,Yes,,
+pdf,Declaração de imposto em PDF como binário.,=PDF-STRING=,string,binary,Yes,Yes,,
+receipt_pdf,O recibo de confirmação da instituição fiscal confirmando que eles receberam a declaração de imposto.,=PDF-STRING=,string,binary,No,Yes,,
+type,O tipo de declaração de imposto. Pode ser mensal ou anual.,monthly,string,,Yes,No,,

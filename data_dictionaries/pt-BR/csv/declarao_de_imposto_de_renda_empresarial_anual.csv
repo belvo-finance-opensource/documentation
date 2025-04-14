@@ -1,0 +1,28 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+id,Identificador único da Belvo para o item atual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
+collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+created_at,O carimbo de data e hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+informacion_general,"Informações gerais sobre a declaração de imposto (ano, RFC, tipo de declaração, nome da pessoa/empresa, etc.).",,object,,Yes,Yes,,
+datos_adicionales,Dados adicionais sobre a declaração de imposto de renda.,,object,,Yes,Yes,,
+estado_resultados,"Informações detalhadas sobre o lucro e perda anual da entidade legal.
+
+> **Nota**: Para declarações de imposto submetidas para o ano fiscal de 2022 e posteriores, este campo retornará nulo, pois não é mais um campo obrigatório ao enviar sua declaração de imposto.",,object,,Yes,Yes,,
+estado_posicion_financiera_balance,"Detalhes sobre o balanço patrimonial da entidade legal.
+
+> **Nota**: Para declarações de imposto apresentadas para o ano fiscal de 2022 e posteriores, este campo retornará nulo, pois não é mais um campo obrigatório ao enviar sua declaração de imposto.",,object,,Yes,Yes,,
+conciliacion_entre_resultado_contable_fiscal,"Detalhes sobre a reconciliação contábil.
+
+> **Nota**: Para declarações de imposto submetidas para o ano fiscal de 2022 e posteriores, este campo retornará nulo, pois não é mais um campo obrigatório ao enviar sua declaração de imposto.",,object,,Yes,Yes,,
+deducciones_autorizadas,Detalhes sobre as deduções da entidade legal.,,object,,Yes,Yes,,
+cifras_cierre_ejercicio,Detalhes sobre os números-chave no final do exercício fiscal.,,object,,Yes,Yes,,
+determinacion_del_impuesto_sobre_la_renta,Detalhes sobre a declaração de imposto final.,,object,,Yes,Yes,,
+dividendos_o_utilidades_distribuidos,Detalhes sobre dividendos distribuídos.,,object,,Yes,Yes,,
+detalle_pago_r1_isr_personas_morales,Detalhes do pagamento de impostos.,,object,,Yes,Yes,,
+ingressos,"> **Nota**: Aplicável apenas para declarações de imposto apresentadas em ou após 2022. Para declarações de imposto apresentadas antes de 2022, este campo retornará `null`.
+
+Detalhes sobre os valores totais ganhos no ano fiscal.",,object,,No,Yes,,
+determinacion,"> **Nota**: Aplicável apenas para declarações de imposto apresentadas em ou após 2022. Para declarações de imposto apresentadas antes de 2022, este campo retornará `null`.
+
+Detalhes sobre o imposto devido ou crédito fiscal.",,object,,No,Yes,,
+pdf,Declaração de imposto em PDF como binário.,=PDF-STRING=,string,binary,Yes,Yes,,
+receipt_pdf,O recibo de confirmação da instituição fiscal confirmando que eles receberam a declaração de imposto.,=PDF-STRING=,string,binary,Yes,Yes,,
