@@ -1,0 +1,16 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+id,El identificador único creado por Belvo utilizado para referenciar el saldo actual.,0b94bdf9-3719-43a9-81e7-be95d2318595,string,uuid,Yes,No,,
+link,El identificador único del enlace al que pertenece este balance.,0b94bdf9-3719-43a9-81e7-be95d2318595,string,uuid,Yes,No,,
+account_id,El `account.id` de Belvo al que pertenece este balance.,c4bfecf9-4eb6-4920-9f9f-e1f1e60ef321,string,uuid,Yes,No,,
+account_internal_identification,La identificación interna de la institución para la cuenta.,92792126019929279212650822221989319252576,string,,Yes,No,,
+collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2024-05-21T08:32:00Z,string,date-time,Yes,No,,
+created_at,La marca de tiempo ISO-8601 de cuando se creó el punto de datos en la base de datos de Belvo.,2024-05-21T08:32:00Z,string,date-time,Yes,No,,
+last_updated_at,"La marca de tiempo ISO-8601 de cuando esta institución actualizó por última vez el saldo.
+
+> 🚧 Advertencia
+>
+> El parámetro `last_updated_at` depende de cómo la institución procesa (o almacena) los datos. En el caso de que la institución almacene datos de manera sincrónica (es decir, tan pronto como ocurre una transacción, el saldo se actualiza), entonces `last_updated_at` reflejará el saldo en tiempo casi real. En el caso de que la institución almacene datos de manera asincrónica (es decir, recupera datos en bloque y luego actualiza el saldo), la información del saldo puede referirse a horas o días atrás. Además, en el caso de que la institución no pueda proporcionar la hora específica (debido a un error interno), la institución puede proporcionar una hora general en la que actualizaron por última vez la información de la cuenta y el saldo.",2021-05-21T08:30:00Z,string,date-time,Yes,No,,
+currency,El código de moneda de tres letras (ISO-4217).,USD,string,,Yes,No,,^[A-Z]{3}$
+available,El saldo disponible de la cuenta.,1000.02,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+blocked,"La cantidad que está actualmente bloqueada debido, por ejemplo, a transacciones pendientes.",1000.02,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+automatically_invested,La cantidad que se invierte automáticamente (según lo acordado con la institución).,1000.02,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"

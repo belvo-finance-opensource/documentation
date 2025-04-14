@@ -1,14 +1,14 @@
 Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
-[].id,"Belvo's unique identifier for the current item.
+id,"Belvo's unique identifier for the current item.
 ",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
-[].link,The `link.id` the data belongs to.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
-[].collected_at,"The ISO-8601 timestamp when the data point was collected.
+link,The `link.id` the data belongs to.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
+collected_at,"The ISO-8601 timestamp when the data point was collected.
 ",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
-[].created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
 ",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
-[].investment,,,object,,No,No,,
-[].investment.id,The unique identifier created by Belvo used to reference the current investment.,5359ddc5-31fc-4346-934b-cc24630a8d06,string,uuid,No,No,,
-[].investment.type,"The type of investment: Can be either
+investment,,,object,,No,No,,
+investment.id,The unique identifier created by Belvo used to reference the current investment.,5359ddc5-31fc-4346-934b-cc24630a8d06,string,uuid,No,No,,
+investment.type,"The type of investment: Can be either
 
   - `FIXED_INCOME_BANKING` (*Renda Fixa Bancária*)
   - `FIXED_INCOME_CREDIT` (*Renda Fixa Crédito*)
@@ -16,15 +16,15 @@ Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
   - `TREASURY_BOND` (*Tesouro Direto*)
   - `INVESTMENT_FUND` (*Fundos de Investimento*)
 ",FIXED_INCOME_BANKING,string,,No,No,,
-[].investment.issuer_id_number,"The CNPJ number of the issuing institution. For Investment Funds, this is the CNPJ of the fund.
+investment.issuer_id_number,"The CNPJ number of the issuing institution. For Investment Funds, this is the CNPJ of the fund.
 
 > 🚧 Not applicable for `TREASURY_BOND` investments.
 ",10187609364567,string,,No,Yes,,^\d{14}$
-[].investment.isin_number,"The ISO-6166 International Securities Identification Number (ISIN) for the financial instrument.
+investment.isin_number,"The ISO-6166 International Securities Identification Number (ISIN) for the financial instrument.
 ",BRCST4CTF001,string,,No,Yes,,‘^[A-Z]{2}([A-Z0-9]){9}\d{1}$’
-[].investment.currency,"The three-letter currency code (ISO-4217) of the investment. For example, `BRL` for Brazilian Real.
+investment.currency,"The three-letter currency code (ISO-4217) of the investment. For example, `BRL` for Brazilian Real.
 ",BRL,string,,No,No,,^[A-Z]{3}$
-[].investment.product_name,"The name of the investment product.
+investment.product_name,"The name of the investment product.
 
 - For `FIXED_INCOME_BANKING`, this can be: CDB, RDB, LCI, or LCA.
 - For `FIXED_INCOME_CREDIT`, this can be: DEBENTURES, CRI, or CRA.
@@ -32,71 +32,71 @@ Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
 - For `TREASURY_BOND`, this will be the name of the bond. For example: Tesouro Selic 2025.
 - For `VARIABLE_INCOME_INCOME`, this will be the name of the stock. For example AAPL.
 ",CONSTELLATION MASTER FIA,string,,No,No,,
-[].investment.is_tax_exempt,"Indicates if the investment is exempt from taxes.
+investment.is_tax_exempt,"Indicates if the investment is exempt from taxes.
 
 > 🚧 Only applicable for `FIXED_INCOME_CREDIT` investments.
 ",False,boolean,,No,No,,
-[].investment.clearing_code,"The clearing code of the investment.
+investment.clearing_code,"The clearing code of the investment.
 
 > 🚧 Only applicable for `FIXED_INCOME_BANKING` and `FIXED_INCOME_CREDIT`.
 ",CDB421GPXXX,string,,No,Yes,,[\w\W-]*
-[].investment.due_date,"The maturity date of the financial instrument. 
+investment.due_date,"The maturity date of the financial instrument. 
 
 > 🚧 Only applicable for `FIXED_INCOME_BANKING`, `FIXED_INCOME_CREDIT`, and `TREASURY_BOND` investments.
 ",2022-01-01,string,date,No,Yes,,
-[].investment.issue_date,"The date the financial instrument was issued.
+investment.issue_date,"The date the financial instrument was issued.
 
 > 🚧 Only applicable for `FIXED_INCOME_BANKING` and `FIXED_INCOME_CREDIT`.
 ",2021-01-01,string,date,No,Yes,,
-[].investment.purchase_date,"The date the financial instrument was purchased.
+investment.purchase_date,"The date the financial instrument was purchased.
 
 > 🚧 Only applicable for `FIXED_INCOME_BANKING`, `FIXED_INCOME_CREDIT`, and `TREASURY_BOND` investments.
 ",2021-01-01,string,date,No,Yes,,
-[].investment.grace_period_date,"The grace period date of the financial instrument.
+investment.grace_period_date,"The grace period date of the financial instrument.
 
 > 🚧 Only applicable for `FIXED_INCOME_BANKING` and `FIXED_INCOME_CREDIT`.
 ",2021-01-01,string,date,No,Yes,,
-[].investment.issue_unit_price,"The unit price of the financial instrument at the time of issuance.
+investment.issue_unit_price,"The unit price of the financial instrument at the time of issuance.
 
 > 🚧 Only applicable for `FIXED_INCOME_BANKING` and `FIXED_INCOME_CREDIT`.
 ",1000,number,float,No,Yes,,
-[].investment.balance,"The balance of the investment instrument, as of the `reference_date`.
+investment.balance,"The balance of the investment instrument, as of the `reference_date`.
 ",,object,,No,No,,
-[].investment.balance.reference_date,"The date and time that the balance was calculated for the investment instrument, in `YYYY-MM-DDTHH:MM:SSZ` format.
+investment.balance.reference_date,"The date and time that the balance was calculated for the investment instrument, in `YYYY-MM-DDTHH:MM:SSZ` format.
 ",2022-07-21T17:32:00Z,string,date-time,No,No,,
-[].investment.balance.gross_value,The gross value of the investment instrument.,1000,number,float,No,No,,
-[].investment.balance.blocked_amount,The amount of the investment instrument that is blocked or unavailable for transactions.,100,number,float,No,No,,
-[].investment.balance.quantity,"The number of units, quotas, or assets held on the reference date.",100,number,float,No,No,,"‘^-?\d{1,15}\.\d{2,8}$’"
-[].investment.balance.gross_unit_price,The current gross unit value of the investment on the reference date,10,number,float,No,Yes,,"‘^-?\d{1,15}\.\d{2,8}$’"
-[].investment.balance.net_value,"The net value of the investment after deductions for taxes, fees, and other charges, as of the reference date.",900,number,float,No,Yes,,"‘^-?\d{1,15}\.\d{2,8}$’"
-[].investment.balance.withheld_amount,The amount of the investment instrument that has been withheld or deducted from the net value.,10,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
-[].investment.balance.transaction_fee,The fees and taxes charged for the transaction.,5,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
-[].investment.balance.purchase_unit_price,The unit price at the time of purchase for the security or asset.,10,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
-[].investment.balance.pre_fixed_rate,The pre-fixed remuneration rate for the income product.,0.05,number,float,No,Yes,,‘^\d{1}\.\d{6}$’
-[].investment.balance.post_fixed_rate,The percentage of the post-fixed indexer for the income product.,0.05,number,float,No,Yes,,‘^\d{1}\.\d{6}$’
-[].investment.balance.penalty_fee,"The penalty (fine) for delays in payments, as defined in the contract.",10,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
-[].investment.balance.late_payment_fee,The interest charged for delayed payments.,10,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
-[].investment.balance.closing_price,The closing price of the investment on the reference date.,10,number,float,No,Yes,,"‘^-?\d{1,15}\.\d{2,8}$’"
-[].investment.balance.unit_price_factor,The factor used to calculate the unit price.,1,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
-[].investment.remuneration,"The remuneration details of the investment instrument.
+investment.balance.gross_value,The gross value of the investment instrument.,1000,number,float,No,No,,
+investment.balance.blocked_amount,The amount of the investment instrument that is blocked or unavailable for transactions.,100,number,float,No,No,,
+investment.balance.quantity,"The number of units, quotas, or assets held on the reference date.",100,number,float,No,No,,"‘^-?\d{1,15}\.\d{2,8}$’"
+investment.balance.gross_unit_price,The current gross unit value of the investment on the reference date,10,number,float,No,Yes,,"‘^-?\d{1,15}\.\d{2,8}$’"
+investment.balance.net_value,"The net value of the investment after deductions for taxes, fees, and other charges, as of the reference date.",900,number,float,No,Yes,,"‘^-?\d{1,15}\.\d{2,8}$’"
+investment.balance.withheld_amount,The amount of the investment instrument that has been withheld or deducted from the net value.,10,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
+investment.balance.transaction_fee,The fees and taxes charged for the transaction.,5,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
+investment.balance.purchase_unit_price,The unit price at the time of purchase for the security or asset.,10,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
+investment.balance.pre_fixed_rate,The pre-fixed remuneration rate for the income product.,0.05,number,float,No,Yes,,‘^\d{1}\.\d{6}$’
+investment.balance.post_fixed_rate,The percentage of the post-fixed indexer for the income product.,0.05,number,float,No,Yes,,‘^\d{1}\.\d{6}$’
+investment.balance.penalty_fee,"The penalty (fine) for delays in payments, as defined in the contract.",10,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
+investment.balance.late_payment_fee,The interest charged for delayed payments.,10,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
+investment.balance.closing_price,The closing price of the investment on the reference date.,10,number,float,No,Yes,,"‘^-?\d{1,15}\.\d{2,8}$’"
+investment.balance.unit_price_factor,The factor used to calculate the unit price.,1,number,float,No,Yes,,"‘^\d{1,15}\.\d{2,4}$’"
+investment.remuneration,"The remuneration details of the investment instrument.
 ",,object,,No,No,,
-[].investment.remuneration.pre_fixed_rate,"The fixed interest rate defined at issuance, expressed as a decimal (for example `0.150000` represents 15%).",0.05,number,float,No,Yes,,‘^\d{1}\.\d{6}$’
-[].investment.remuneration.post_fixed_rate,"The post-fixed interest rate defined at issuance, expressed as a decimal (for example `0.150000` represents 15%).",0.05,number,float,No,Yes,,‘^\d{1}\.\d{6}$’
-[].investment.remuneration.rate_type,"The type of remuneration rate applied to the financial instrument. Can be either:
+investment.remuneration.pre_fixed_rate,"The fixed interest rate defined at issuance, expressed as a decimal (for example `0.150000` represents 15%).",0.05,number,float,No,Yes,,‘^\d{1}\.\d{6}$’
+investment.remuneration.post_fixed_rate,"The post-fixed interest rate defined at issuance, expressed as a decimal (for example `0.150000` represents 15%).",0.05,number,float,No,Yes,,‘^\d{1}\.\d{6}$’
+investment.remuneration.rate_type,"The type of remuneration rate applied to the financial instrument. Can be either:
   - `LINEAR`
   - `EXPONENCIAL`
 ",LINEAR,string,,No,Yes,,[\w\W-]*
-[].investment.remuneration.rate_periodicity,"The frequency that the remuneration rate is applied to the financial instrument. Can be either:
+investment.remuneration.rate_periodicity,"The frequency that the remuneration rate is applied to the financial instrument. Can be either:
   - `DIARIO`
   - `MENSAL`
   - `ANUAL`
   - `SEMESTRAL`
 ",MENSAL,string,,No,Yes,,
-[].investment.remuneration.calculation_base,"Indicates whether the remuneration or interest calculation is based on business days (*dias úteis*) or calendar days (*dias corridos*).
+investment.remuneration.calculation_base,"Indicates whether the remuneration or interest calculation is based on business days (*dias úteis*) or calendar days (*dias corridos*).
 - `DIAS_UTEIS`
   - `DIAS_CORRIDOS`
 ",DIAS_CORRIDOS,string,,No,Yes,,[\w\W-]*
-[].investment.remuneration.indexer,"The index used as a reference to calculate the profitability or returns of the financial instrument. Can be one either:
+investment.remuneration.indexer,"The index used as a reference to calculate the profitability or returns of the financial instrument. Can be one either:
   - `CDI` 
   - `DI` 
   - `TR` 
@@ -110,33 +110,33 @@ Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
   - `PRE_FIXADO` 
   - `OUTROS`
 ",CDI,string,,No,Yes,,[\w\W-]*
-[].investment.remuneration.indexer_additional_info,"Additional information regarding the `indexer` rate. Required when `indexer` is set to `OUTROS`. 
+investment.remuneration.indexer_additional_info,"Additional information regarding the `indexer` rate. Required when `indexer` is set to `OUTROS`. 
 ",IPCA + 5%,string,,No,Yes,,[\w\W-]*
-[].investment.classification_details,"The classification details of the investment instrument.
+investment.classification_details,"The classification details of the investment instrument.
 
 > 🚧 Only applicable for `INVESTMENT_FUND` investments.
 >
 > This object is only applicable for `INVESTMENT_FUND` investments. For all other investment types, this object will be `null`.
 ",,object,,No,Yes,,
-[].investment.classification_details.category,"The investment fund's category, as defined by ANBIMA's classification standards. Can be one of:
+investment.classification_details.category,"The investment fund's category, as defined by ANBIMA's classification standards. Can be one of:
   - `RENDA_FIXA`
   - `ACOES`
   - `MULTIMERCADO`
   - `CAMBIAL`
 ",ACOES,string,,No,Yes,,
-[].investment.classification_details.class,"The class within the investment fund's category, as defined by ANBIMA's classification standards.
+investment.classification_details.class,"The class within the investment fund's category, as defined by ANBIMA's classification standards.
 ",Ações Livre,string,,No,Yes,,[\w\W\s]*
-[].investment.classification_details.subclass,"The subclass of the investment fund, as defined by ANBIMA's classification standards.
+investment.classification_details.subclass,"The subclass of the investment fund, as defined by ANBIMA's classification standards.
 ",Ações Livre,string,,No,Yes,,[\w\W\s]*
-[].investment.voucher_payment_details,"The voucher payment (also known as coupon payments) details of the investment instrument.
+investment.voucher_payment_details,"The voucher payment (also known as coupon payments) details of the investment instrument.
 
 > 🚧 Only applicable for `FIXED_INCOME_CREDIT` and `TREASURY_BOND` investments.
 >
 > This object is only applicable for `FIXED_INCOME_CREDIT` and `TREASURY_BOND` investments. For all other investment types, this object will be `null`.
 ",,object,,No,No,,
-[].investment.voucher_payment_details.is_voucher_payment,"Indicates whether the financial instrument pays periodic interest (voucher payments).
+investment.voucher_payment_details.is_voucher_payment,"Indicates whether the financial instrument pays periodic interest (voucher payments).
 ",True,boolean,,No,No,,
-[].investment.voucher_payment_details.periodicity,"The frequency that the voucher payments are made. Required when `is_voucher_payment` is set to `true`. Can be one of:
+investment.voucher_payment_details.periodicity,"The frequency that the voucher payments are made. Required when `is_voucher_payment` is set to `true`. Can be one of:
   - `MENSAL` 
   - `TRIMESTRAL` 
   - `SEMESTRAL` 
@@ -144,20 +144,20 @@ Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
   - `IRREGULAR` 
   - `OUTROS`
 ",MENSAL,string,,No,Yes,,
-[].investment.voucher_payment_details.periodicity_additional_info,"Additional information about the voucher payment periodicity. Required when `periodicity` is set to `OUTROS`.
+investment.voucher_payment_details.periodicity_additional_info,"Additional information about the voucher payment periodicity. Required when `periodicity` is set to `OUTROS`.
 ",30/360,string,,No,Yes,,[\w\W\s]*
-[].investment.debtor_details,"The debtor details of the investment instrument.
+investment.debtor_details,"The debtor details of the investment instrument.
 
 > 🚧 Only applicable for `FIXED_INCOME_CREDIT` investments.
 >
 > This object is only applicable for `FIXED_INCOME_CREDIT` investments. For all other investment types, this object will be `null`.
 ",,object,,No,Yes,,
-[].investment.debtor_details.name,"The name of the debtor.
+investment.debtor_details.name,"The name of the debtor.
 ",Roberto Marino,string,,No,No,,[\w\W\s]*
-[].investment.debtor_details.id_document_number,"The debtor's identification document number (CNPJ).
+investment.debtor_details.id_document_number,"The debtor's identification document number (CNPJ).
 ",12345678901,string,,No,No,,‘^\d{14}$’
-[].internal_identification,The institution's internal identification of the investment transaction.,ABCD2126019929279212650822221989319253344,string,,No,No,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
-[].value_date,"The date on which the transaction was settled, in `YYYY-MM-DD` format.
+internal_identification,The institution's internal identification of the investment transaction.,ABCD2126019929279212650822221989319253344,string,,No,No,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
+value_date,"The date on which the transaction was settled, in `YYYY-MM-DD` format.
 
 > 📘 `VARIABLE_INCOME`
 >
@@ -167,15 +167,15 @@ Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
 >
 > For `INVESTMENT_FUND` investments, this is the date when the transaction (purchase or redemption) is officially processed into fund shares or quotas. For purchases, this is the date the investor’s money is applied to acquire fund shares. For redemptions, this is the date when the fund shares are officially converted back into cash.
 ",2024-11-18,string,date,No,No,,
-[].gross_value,"The gross value of the transaction.
+gross_value,"The gross value of the transaction.
 
 > 🚧 Not applicable for `VARIABLE_INCOME` investments.
 ",60,number,float,No,No,,"‘^-?\d{1,15}\.\d{2,4}$’"
-[].net_value,"The net value of the transaction.
+net_value,"The net value of the transaction.
 
 > 🚧 Not applicable for `VARIABLE_INCOME` investments.
 ",60,number,float,No,No,,"‘^-?\d{1,15}\.\d{2,4}$’"
-[].value,"The value of the transaction.
+value,"The value of the transaction.
 
 For **`VARIABLE_INCOME` investments**, this is the value of the trade executed by the client. If the client buys or sells stocks, this field indicates the total value of the trade (for example, the price per share × quantity).
 
@@ -183,25 +183,25 @@ For **`INVESTMENT_FUND` investments**, this is the value requested by the client
 
 > 🚧 Only applicable for `VARIABLE_INCOME` and `INVESTMENT_FUND` investments.
 ",60,number,float,No,No,,
-[].unit_price,"The price for an individual unit or quota.
+unit_price,"The price for an individual unit or quota.
 ",3,number,float,No,No,,
-[].price_factor,"The number of units (shares) considered when calculating the price per share or unit for a transaction.
+price_factor,"The number of units (shares) considered when calculating the price per share or unit for a transaction.
 
 > 🚧 Only applicable for `VARIABLE_INCOME` investments.
 ",1,number,float,No,No,,
-[].transaction_tax,"The Financial Transaction Tax (*Imposto sobre Operações Financeiras (IOF)*) applied or withheld during the transaction.
+transaction_tax,"The Financial Transaction Tax (*Imposto sobre Operações Financeiras (IOF)*) applied or withheld during the transaction.
 
 > 🚧 Not applicable for `VARIABLE_INCOME` investments.
 ",0,number,float,No,No,,
-[].income_tax,"The Income Tax (*Imposto de Renda (IR)*) applied or withheld during the transaction.
+income_tax,"The Income Tax (*Imposto de Renda (IR)*) applied or withheld during the transaction.
 
 > 🚧 Not applicable for `VARIABLE_INCOME` investments.
 ",0,number,float,No,No,,
-[].quantity,"The number of units, quotas, or assets involved in a transaction.
+quantity,"The number of units, quotas, or assets involved in a transaction.
 ",20,number,float,No,No,,
-[].type,"The transaction type (`INFLOW` or `OUTFLOW`) from the investment perspective. 
+type,"The transaction type (`INFLOW` or `OUTFLOW`) from the investment perspective. 
 ",INFLOW,string,,No,No,"INFLOW, OUTFLOW, null",
-[].subtype,"The transaction subtype.
+subtype,"The transaction subtype.
 
 - For `FIXED_INCOME_BANKING`: APLICACAO, RESGATE, CANCELAMENTO, VENCIMENTO, PAGAMENTO_JUROS, AMORTIZACAO, TRANSFERENCIA_TITULARIDADE, TRANSFERENCIA_CUSTODIA, OUTROS.
 - For `FIXED_INCOME_CREDIT`: COMPRA, VENDA, CANCELAMENTO, VENCIMENTO, PAGAMENTO_JUROS, AMORTIZACAO, PRÊMIO, TRANSFERENCIA_TITULARIDADE, TRANSFERENCIA_CUSTODIA, MULTA, MORA, OUTROS.
@@ -209,34 +209,34 @@ For **`INVESTMENT_FUND` investments**, this is the value requested by the client
 - For `INVESTMENT_FUND`: AMORTIZACAO, TRANSFERENCIA_DE_COTAS, APLICACAO, RESGATE, COME_COTAS, OUTROS.
 - For `TREASURY_BOND`: COMPRA, VENDA, CANCELAMENTO, VENCIMENTO, PAGAMENTO_JUROS, AMORTIZACAO, TRANSFERENCIA_TITULARIDADE, TRANSFERENCIA_CUSTODIA, OUTROS.
 ",,string,,No,No,,
-[].subtype_additional_info,"Additional information about the transaction subtype. This field is mandatory when the subtype is `OUTROS`.
+subtype_additional_info,"Additional information about the transaction subtype. This field is mandatory when the subtype is `OUTROS`.
 ",,string,,No,No,,‘[\w\W\s]*’
-[].indexer_percentage,"The maximum percentage of the indexer for the contract (Bancaria) or transaction (Credito).
+indexer_percentage,"The maximum percentage of the indexer for the contract (Bancaria) or transaction (Credito).
 
 > 🚧 Only applicable for `FIXED_INCOME_BANKING` and `FIXED_INCOME_CREDIT` investments.
 ",0,number,float,No,No,,
-[].rate,"The remuneration rate applied to the transaction. 
+rate,"The remuneration rate applied to the transaction. 
 
 > 🚧 Only applicable for `FIXED_INCOME_BANKING`, `FIXED_INCOME_CREDIT`, and `TREASURY_BOND` investments.
 ",0,number,float,No,No,,
-[].exit_fee,"The exit fee applied to the Investment Fund (Fundos de Investimento) transaction. This fee is charged when a client redeems or exits the fund.
+exit_fee,"The exit fee applied to the Investment Fund (Fundos de Investimento) transaction. This fee is charged when a client redeems or exits the fund.
 
 > 🚧 Only applicable for `INVESTMENT_FUND` investments.
 ",0,number,float,No,No,,
-[].broker_note_details,"Details regarding the broker note that is associated with this transaction. This object is only returned for transactions that are associated with a `VARIABLE_INCOME` investment type.
+broker_note_details,"Details regarding the broker note that is associated with this transaction. This object is only returned for transactions that are associated with a `VARIABLE_INCOME` investment type.
 
 > 📘 Info
 >
 > A broker note (*nota de corretagem*) is an official document issued by a brokerage detailing the transactions made by an investor on a given day. It includes information on the gross value of all purchases and sales, brokerage fees, clearing and settlement fees, clearing and registration fees, stock exchange asset trade notice fees, stock exchange fees, clearing custody fees, taxes, and income tax withheld at source.
 ",,object,,No,Yes,,
-[].broker_note_details.broker_note_number,The broker note number.,1854009930314350,string,,Yes,No,,"‘^\d{1,16}$’"
-[].broker_note_details.gross_value,The gross value of all purchases and sales for the day.,1000,number,float,Yes,No,,
-[].broker_note_details.brokerage_fee,The total brokerage fee charged for the day.,10,number,float,Yes,No,,
-[].broker_note_details.clearing_settlement_fee,The fee charged for clearing and settlement in custody.,2.5,number,float,Yes,No,,
-[].broker_note_details.clearing_registration_fee,The fee charged for clearing and registration in custody.,1,number,float,Yes,No,,
-[].broker_note_details.stock_exchange_asset_trade_notice_fee,The fee charged by the stock exchange for asset trade notifications.,0.5,number,float,Yes,No,,
-[].broker_note_details.stock_exchange_fee,The fee charged by the stock exchange for registry services.,3,number,float,Yes,No,,
-[].broker_note_details.clearing_custody_fee,The fee charged by financial institutions for custody services.,1.5,number,float,Yes,No,,
-[].broker_note_details.taxes,"The total amount taxes charged on the transaction for the day, excluding income tax withheld at source.",10,number,float,Yes,No,,
-[].broker_note_details.income_tax,The total amount of income tax withheld at the source for the day.,5,number,float,Yes,No,,
-[].broker_note_details.net_value,"The net value of the broker note after deducting expenses for brokerage fees, clearing settlement fees, registration fees, ANA fees, emoluments, custody fees, taxes, and IRRF",980,number,float,Yes,No,,
+broker_note_details.broker_note_number,The broker note number.,1854009930314350,string,,Yes,No,,"‘^\d{1,16}$’"
+broker_note_details.gross_value,The gross value of all purchases and sales for the day.,1000,number,float,Yes,No,,
+broker_note_details.brokerage_fee,The total brokerage fee charged for the day.,10,number,float,Yes,No,,
+broker_note_details.clearing_settlement_fee,The fee charged for clearing and settlement in custody.,2.5,number,float,Yes,No,,
+broker_note_details.clearing_registration_fee,The fee charged for clearing and registration in custody.,1,number,float,Yes,No,,
+broker_note_details.stock_exchange_asset_trade_notice_fee,The fee charged by the stock exchange for asset trade notifications.,0.5,number,float,Yes,No,,
+broker_note_details.stock_exchange_fee,The fee charged by the stock exchange for registry services.,3,number,float,Yes,No,,
+broker_note_details.clearing_custody_fee,The fee charged by financial institutions for custody services.,1.5,number,float,Yes,No,,
+broker_note_details.taxes,"The total amount taxes charged on the transaction for the day, excluding income tax withheld at source.",10,number,float,Yes,No,,
+broker_note_details.income_tax,The total amount of income tax withheld at the source for the day.,5,number,float,Yes,No,,
+broker_note_details.net_value,"The net value of the broker note after deducting expenses for brokerage fees, clearing settlement fees, registration fees, ANA fees, emoluments, custody fees, taxes, and IRRF",980,number,float,Yes,No,,

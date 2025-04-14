@@ -1,0 +1,28 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+id,"Belvo's unique identifier for the current item.
+",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+display_name,"The full name of the individual that initiated the consent, as provided by the institution.
+",Jack Oswald White,string,,No,Yes,,"^[\w\W]{0,128}$"
+document_number,"The document number (CPF) of the individual.
+",76109277673,string,,No,No,,
+belvo_institution_name,"Belvo's name for the open finance institution that the consent is related to.
+",ofmockbank_br_retail,string,,No,No,,
+expired_at,"The ISO-8601 timestamp when the consent will expire. In the case that `undefined_consent_expiration` is `true`, this field will be `null`.",2021-02-27T13:01:41.941Z,string,date-time,No,No,,
+undefined_consent_expiration,"Indicated whether the consent is for an undefined period, that is, that there is no expiration for the consent.",False,boolean,,No,No,,
+created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+status,"The status of the consent in the open finance network. Can be either:
+
+  - `AUTHORISED`: The consent is still valid for use until the `expired_at` date.
+  - `AWAITING_AUTHORISATION_CONFIRMATION`: The user must confirm within their institution.
+  - `AWAITING_AUTHORISATION`: The user has been redirected to their institution to grant consent.
+  - `REJECTED`: The user has not granted consent within their institution.
+  - `EXPIRED`: The consent has expired as of the `expired_at` date.
+  - `null`
+",AUTHORISED,string,,No,Yes,"AUTHORISED, AWAITING_AUTHORISATION_CONFIRMATION, AWAITING_AUTHORISATION, REJECTED, EXPIRED, None",
+permissions,Details regarding the permissions attached to the consent.,,object,,No,No,,
+permissions.ACCOUNTS,A list of of open banking permissions relating to accessing account information.,"[""ACCOUNTS_OVERDRAFT_LIMITS_READ"", ""ACCOUNTS_READ"", ""ACCOUNTS_TRANSACTIONS_READ"", ""ACCOUNTS_BALANCES_READ""]",array,,No,No,,
+permissions.CREDIT_CARDS,A list of of open banking permissions relating to accessing credit card information.,"[""CREDIT_CARDS_ACCOUNTS_LIMITS_READ"", ""CREDIT_CARDS_ACCOUNTS_BILLS_READ"", ""CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ"", ""CREDIT_CARDS_ACCOUNTS_BILLS_TRANSACTIONS_READ"", ""CREDIT_CARDS_ACCOUNTS_READ""]",array,,No,No,,
+permissions.CREDIT_OPERATIONS,A list of of open banking permissions relating to accessing credit product information.,"[""LOANS_READ"", ""LOANS_WARRANTIES_READ"", ""LOANS_SCHEDULED_INSTALMENTS_READ"", ""LOANS_PAYMENTS_READ"", ""FINANCINGS_READ"", ""FINANCINGS_WARRANTIES_READ"", ""FINANCINGS_SCHEDULED_INSTALMENTS_READ"", ""FINANCINGS_PAYMENTS_READ"", ""UNARRANGED_ACCOUNTS_OVERDRAFT_READ"", ""UNARRANGED_ACCOUNTS_OVERDRAFT_WARRANTIES_READ"", ""UNARRANGED_ACCOUNTS_OVERDRAFT_SCHEDULED_INSTALMENTS_READ"", ""UNARRANGED_ACCOUNTS_OVERDRAFT_PAYMENTS_READ"", ""INVOICE_FINANCINGS_READ"", ""INVOICE_FINANCINGS_WARRANTIES_READ"", ""INVOICE_FINANCINGS_SCHEDULED_INSTALMENTS_READ"", ""INVOICE_FINANCINGS_PAYMENTS_READ""]",array,,No,No,,
+permissions.REGISTER,A list of of open banking permissions relating to accessing personal information.,"[""CUSTOMERS_PERSONAL_IDENTIFICATIONS_READ"", ""CUSTOMERS_PERSONAL_ADITTIONALINFO_READ""]",array,,No,No,,
+permissions.RESOURCES,A list of functional permissions required to interact with the permissions.,"[""RESOURCES_READ""]",array,,No,No,,

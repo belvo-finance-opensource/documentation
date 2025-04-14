@@ -4,7 +4,7 @@ id,"Belvo's unique identifier for the current item.
 institution,"Belvo's name for the institution.
 ",erebor_mx_retail,string,,No,No,,
 access_mode,"The link type.
-For more information, see our [Links](https://developers.belvo.com/docs/links-and-institutions#links) article.
+For more information, see our <a href=""https://developers.belvo.com/docs/links-and-institutions#links"" target=""_blank"">Links</a> article.
 We return one of the following enum values:
   - `single`
   - `recurrent`
@@ -17,7 +17,7 @@ created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's
 external_id,"An additional identifier for the link, provided by you, to store in the Belvo database. **Cannot** include any Personal Identifiable Information (PII). **Must** be at least three characters long.
 
 
-If we identify that the identifier contains PII, we will force a `null` value. For more information, see our [Link creation article](https://developers.belvo.com/docs/link-creation-best-practices#adding-your-own-identifier).
+If we identify that the identifier contains PII, we will force a `null` value. For more information, see our <a href=""https://developers.belvo.com/docs/link-creation-best-practices#adding-your-own-identifier"" target=""_blank"">Link creation article</a>.
 ",56ab5706-6e00-48a4-91c9-ca55968678d9,string,,No,No,,
 institution_user_id,"> 📘 Info
 >
@@ -27,9 +27,9 @@ institution_user_id,"> 📘 Info
 A unique 44-character string that can be used to identify a user at a given institution.
 
 
-📚 Check out our [Avoiding duplicated links](https://developers.belvo.com/docs/link-creation-best-practices#avoiding-duplicated-links) DevPortal article for more information and tips on how to use it.
+📚 Check out our <a href=""https://developers.belvo.com/docs/link-creation-best-practices#avoiding-duplicated-links"" target=""_blank"">Avoiding duplicated links</a> DevPortal article for more information and tips on how to use it.
 ",sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=,string,,No,No,,[A-Za-z0-9\-=_]{44}
-status,"The current status of the link. For more information, see our [Link](https://developers.belvo.com/docs/links-and-institutions#links) article in the devportal.
+status,"The current status of the link. For more information, see our <a href=""https://developers.belvo.com/docs/links-and-institutions#links"" target=""_blank"">Link</a> article in the devportal.
 We return one of the following values:
   - `valid`
   - `invalid`
@@ -37,7 +37,7 @@ We return one of the following values:
   - `token_required`
 ",valid,string,,No,No,"valid, invalid, unconfirmed, token_required",
 created_by,The unique ID for the user that created this item.,bcef7f35-67f2-4b19-b009-cb38795faf09,string,uuid,No,No,,
-refresh_rate,"The update refresh rate for the recurrent link. For more information, check out our [recurrent link documentation](https://developers.belvo.com/docs/links-and-institutions#recurrent-links) in our DevPortal.
+refresh_rate,"The update refresh rate for the recurrent link. For more information, check out our <a href=""https://developers.belvo.com/docs/links-and-institutions#recurrent-links"" target=""_blank"">recurrent link documentation</a> in our DevPortal.
 We return one of the following enum values:
   - `6h`
   - `12h`

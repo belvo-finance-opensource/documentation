@@ -1,0 +1,40 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+link,El `link.id` al que pertenecen los datos.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
+collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+created_at,La marca de tiempo ISO-8601 de cuando se creó el punto de datos en la base de datos de Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+personal_data,,,object,,No,No,,
+personal_data.full_name,El nombre completo del individuo.,Cabezas Pérez Martín Vicente ,string,,No,No,,
+personal_data.document_id_type,"El tipo de identificación de documento del individuo. Para Chile, esto siempre se establecerá en `RUT`.",RUT,string,,No,No,RUT,
+personal_data.document_id_number,"El número de identificación del documento del individuo. Para Chile, este será el número RUT.",12345678-9,string,,No,No,,
+debt_data_last_update,"La fecha en que se actualizaron por última vez los datos de la deuda, en formato `YYYY-MM-DD`.",2023-07-02,string,date,No,No,,
+currency,"La moneda de las deudas. Para Chile, esto será el `CLP`.",CLP,string,,No,No,,^[A-Z]{3}$
+total,"El monto total de la deuda, incluyendo deudas actuales, morosas, gravemente morosas y en incumplimiento.",6506000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+current,La cantidad de deuda que actualmente está pendiente pero no vencida.,5350000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+delinquent,La cantidad de deuda que tiene un retraso de 30 a 59 días.,,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+severely_delinquent,La cantidad de deuda que tiene un retraso de 60-89 días.,56000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+defaulted,La cantidad de deuda que tiene un retraso de 90 días.,1100000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+direct_debts,Una lista de deudas que se atribuyen directamente al individuo.,,array,,No,Yes,,
+direct_debts[].financial_institution,El nombre de la institución financiera donde se mantiene la deuda.,Banco Santander,string,,No,No,,
+direct_debts[].credit_type,"El tipo de crédito emitido por la institución financiera. Por ejemplo, `Vivienda`, `Comercial`, `Consumo` o `Otro`.",Vivienda,string,,No,No,,
+direct_debts[].amount,El monto total de la deuda en la institución financiera.,5000000.02,number,float,No,No,,"^\d{1,15}\.\d{2,4}$"
+direct_debts[].current,El monto pendiente actual de la deuda en la institución financiera.,5000000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+direct_debts[].delinquent,La cantidad de deuda que tiene un retraso de 30 a 59 días.,,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+direct_debts[].severely_delinquent,La cantidad de deuda que tiene un retraso de 60-89 días.,,number,float,No,Yes,,
+direct_debts[].defaulted,La cantidad de deuda que tiene un retraso de 90 días.,,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+indirect_debts,Lista de deudas indirectas de instituciones financieras.,,array,,No,Yes,,
+indirect_debts[].financial_institution,Nombre de la institución financiera que proporciona la deuda indirecta.,Banco BCI,string,,No,No,,
+indirect_debts[].credit_type,"El tipo de crédito emitido por la institución financiera. Por ejemplo, `Vivienda`, `Comercial`, `Consumo` o `Otro`.",Consumo,string,,No,No,,
+indirect_debts[].amount,El monto total de la deuda en la institución financiera.,200000.02,number,float,No,No,,"^\d{1,15}\.\d{2,4}$"
+indirect_debts[].current,El monto pendiente actual de la deuda en la institución financiera.,,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+indirect_debts[].delinquent,La cantidad de deuda que tiene un retraso de 30 a 59 días.,,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+indirect_debts[].severely_delinquent,La cantidad de deuda que tiene un retraso de 60-89 días.,,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+indirect_debts[].defaulted,La cantidad de deuda que tiene un retraso de 90 días.,200000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+credit_lines,Lista de líneas de crédito (como tarjetas de crédito) disponibles para el individuo.,,array,,No,Yes,,
+credit_lines[].financial_institution,El nombre de la institución financiera que proporciona la línea de crédito.,Banco BCI,string,,No,No,,
+credit_lines[].direct_amount,La cantidad de crédito directo disponible.,5000000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+credit_lines[].indirect_amount,La cantidad de crédito indirecto disponible.,,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+other_credits,"Lista de otros créditos (como notas de garantía, crédito extranjero, etc.) disponibles para el individuo.",,array,,No,Yes,,
+other_credits[].financial_institution,El nombre de la institución financiera que proporciona el crédito.,Banco BCI,string,,No,No,,
+other_credits[].direct_amount,La cantidad de crédito directo disponible.,,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+other_credits[].indirect_amount,La cantidad de crédito indirecto disponible.,250000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"

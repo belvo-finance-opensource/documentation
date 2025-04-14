@@ -1,0 +1,279 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+id,Identificador único da Belvo para o item atual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
+link,O `link.id` ao qual os dados pertencem.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
+internal_identification,O identificador interno da instituição para o proprietário.,7e5838e4,string,,Yes,Yes,,
+collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+created_at,O carimbo de data e hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+display_name,"O nome completo do indivíduo, conforme fornecido pela instituição.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",Jack Oswald White,string,,Yes,No,,"^[\w\W]{0,128}$"
+social_name,"O nome social do indivíduo, conforme geralmente aceito pelo país.",O Piadista,string,,Yes,Yes,,"^[\w\W]{0,128}$"
+birth_date,"A data de nascimento do indivíduo, no formato `YYYY-MM-DD`.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",1988-07-15,string,date,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+marital_status,"O estado civil do indivíduo. Retornamos um dos seguintes valores:
+
+  - `SINGLE`
+  - `MARRIED`
+  - `WIDOWED`
+  - `SEPARATED`
+  - `DIVORCED`
+  - `CIVIL_UNION`
+  - `OTHER`",SINGLE,string,,Yes,Yes,"SINGLE, MARRIED, WIDOWED, SEPARATED, DIVORCED, CIVIL_UNION, OTHER",
+marital_status_additional_info,Informações adicionais sobre o estado civil do indivíduo.,It's complicated,string,,Yes,Yes,,"^[\w\W]{0,50}$"
+gender,"O gênero do indivíduo. Retornamos um dos seguintes valores:
+
+  - `FEMALE`
+  - `MALE`
+  - `OTHER`",FEMALE,string,,Yes,Yes,"FEMALE, MALE, OTHER",
+companies_id,"As instituições responsáveis pela criação e verificação do proprietário.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",,array,,Yes,No,,
+is_local_resident,"Boolean para indicar se o indivíduo é residente local do país.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",True,boolean,,Yes,No,,
+document_id,"Informações sobre o documento de identificação que o proprietário forneceu ao banco.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",,object,,Yes,No,,
+document_id.document_type,"O tipo de documento que o proprietário forneceu à instituição para abrir a conta. Tipos comuns de documentos são:
+
+🇧🇷 Brasil
+- `CPF` (*Cadastro de Pessoas Físicas*)
+- `CNPJ` (*Cadastro Nacional de Pessoas Jurídicas*)
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",CPF,string,,Yes,No,,
+document_id.document_number,"O número de identificação do documento.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",235578435-S,string,,Yes,No,,
+additional_documents,"Informações detalhadas sobre documentos adicionais fornecidos para comprovar a identidade dos indivíduos.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",,array,,Yes,No,,
+additional_documents[].type,"O tipo de documento de identificação. Retornamos um dos seguintes valores:
+
+  - `DRIVERS_LICENSE`
+  - `PASSPORT`
+  - `ID_CARD`
+  - `FISCAL_ID`
+  - `FOREIGNER_REGISTRATION_CARD`
+  - `OTHER`
+  - `null`",DRIVERS_LICENSE,string,,Yes,Yes,"DRIVERS_LICENSE, PASSPORT, ID_CARD, FISCAL_ID, FOREIGNER_REGISTRATION_CARD, OTHER, None",
+additional_documents[].type_additional_info,"Informações adicionais sobre o tipo de documento.
+
+> Nota: Para documentos de ID Empresarial, este campo deve retornar um valor da rede de open finance do Brasil.",Learner's licence,string,,Yes,Yes,,"^[\w\W\s]{0,70}$"
+additional_documents[].number,"O número do documento de identidade.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",DL-7896829-7,string,,Yes,No,,"^[\w\W\s]{0,40}$"
+additional_documents[].check_digit,"O dígito verificador do documento de identidade.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",7,string,,Yes,No,,"^[\w\W\s]{0,2}$"
+additional_documents[].issue_date,"A data em que o documento de identificação foi emitido, no formato `YYYY-MM-DD`.",2019-01-01,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+additional_documents[].expiration_date,"A data de expiração do documento de identidade, no formato `YYYY-MM-DD`.",2019-01-01,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+additional_documents[].country_of_issuance,"O código de país de três letras que emitiu o documento (no formato ISO-3166 Alpha 3).
+
+Este campo deve ser retornado quando o `type` for `PASSPORT`.",CAN,string,,Yes,Yes,,^[\w]{3}$
+additional_documents[].additional_info,Informações adicionais sobre o documento de identificação.,The document has water damage,string,,Yes,Yes,,"^[\w\W\s]{0,100}$"
+nationalities,"Informações detalhadas sobre as nacionalidades do indivíduo.
+
+Só é necessário retornar quando `is_local_resident` estiver definido como `false`.",,array,,Yes,Yes,,
+nationalities[].info,A nacionalidade do indivíduo.,CAN,string,,Yes,Yes,,^\S[\s\S]*$
+nationalities[].documents,,,array,,Yes,No,,
+nationalities[].documents[].type,"O tipo de documento de identificação. Retornamos um dos seguintes valores:
+
+  - `DRIVERS_LICENSE`
+  - `PASSPORT`
+  - `ID_CARD`
+  - `FISCAL_ID`
+  - `FOREIGNER_REGISTRATION_CARD`
+  - `OTHER`
+  - `null`",DRIVERS_LICENSE,string,,Yes,Yes,"DRIVERS_LICENSE, PASSPORT, ID_CARD, FISCAL_ID, FOREIGNER_REGISTRATION_CARD, OTHER, None",
+nationalities[].documents[].number,"O número do documento de identidade.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",DL-7896829-7,string,,Yes,No,,"^[\w\W\s]{0,40}$"
+nationalities[].documents[].issue_date,"A data em que o documento de identificação foi emitido, no formato `YYYY-MM-DD`.",2019-01-01,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+nationalities[].documents[].expiration_date,"A data de expiração do documento de identidade, no formato `YYYY-MM-DD`.",2019-01-01,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+nationalities[].documents[].country_of_issuance,"O código de país de três letras que emitiu o documento (no formato ISO-3166 Alpha 3).
+
+Este campo deve ser retornado quando o `type` for `PASSPORT`.",CAN,string,,Yes,Yes,,^[\w]{3}$
+nationalities[].documents[].additional_info,Informações adicionais sobre o documento de identificação.,The document has water damage,string,,Yes,Yes,,"^[\w\W\s]{0,100}$"
+email,"O endereço de e-mail registrado do proprietário da conta.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",johndoe@belvo.com,string,email,Yes,Yes,,
+emails,"Lista adicional de e-mails fornecida pelo proprietário.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",,array,,Yes,No,,
+emails[].is_main,"Boolean para indicar se este é o endereço de e-mail principal do usuário.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",True,boolean,,Yes,No,,
+emails[].email,"O endereço de e-mail do usuário.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",homen_morcego@gmail.com,string,,Yes,No,,"^[\w\W\s]{0,320}$"
+address,"O endereço registrado do proprietário da conta.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.","Carrer de la Llacuna, 162, 08018 Barcelona",string,,Yes,Yes,,
+addresses,"Informações detalhadas sobre os endereços do proprietário.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",,array,,Yes,No,,
+addresses[].is_main,"Boolean para indicar se este é o endereço principal do usuário.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",True,boolean,,Yes,No,,
+addresses[].address,"O endereço do usuário.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.","Av Naburo Ykesaki, 1270",string,,Yes,No,,"^[\w\W\s]{0,150}$"
+addresses[].additional_info,Informações adicionais sobre o endereço do usuário.,In between two palm trees,string,,Yes,Yes,,"^[\w\W\s]{0,150}$"
+addresses[].district_name,O distrito do endereço.,CENTRO,string,,Yes,Yes,,"^[\w\W\s]{0,50}$"
+addresses[].town,"A cidade do usuário.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",Brasilia,string,,Yes,No,,"^[\w\W\s]{0,50}$"
+addresses[].town_code,"O código de sete dígitos para a cidade, se aplicável.
+
+Para o Brasil, este é o código do município do IBGE.",3550308,string,,Yes,Yes,,\d{7}$
+addresses[].state,O estado em que o endereço está localizado.,SP,string,,Yes,Yes,,"^[\w\W\s]{0,2}$"
+addresses[].postcode,"O código postal do endereço.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",17500001,string,,Yes,No,,^\d{8}$
+addresses[].country_name,"O nome do país.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",Brasil,string,,Yes,No,,"^[\w\W\s]{0,80}$"
+addresses[].country_code,O código de país de três letras (conforme ISO-3166 Alpha 3).,BRA,string,,Yes,Yes,,^([A-Z]{3})$
+addresses[].latitude,A coordenada de latitude geográfica.,-23.5475000,string,,Yes,Yes,,"^-?\d{1,2}\.\d{1,9}$"
+addresses[].longitude,A coordenada de longitude geográfica.,-46.6361100,string,,Yes,Yes,,"^-?\d{1,3}\.\d{1,8}$"
+phone_number,"O número de telefone registrado do proprietário da conta.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",+52-XXX-XXX-XXXX,string,,Yes,Yes,,
+phone_numbers,"Informações detalhadas sobre os números de telefone do proprietário.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",,array,,Yes,No,,
+phone_numbers[].is_main,"Boolean para indicar se este é o número de telefone principal do usuário.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",True,boolean,,Yes,No,,
+phone_numbers[].type,"O tipo de número de telefone. Retornamos um dos seguintes valores:
+
+  - `LANDLINE`
+  - `MOBILE`
+  - `OTHER`
+  - `null`",MOBILE,string,,Yes,Yes,"LANDLINE, MOBILE, OTHER, None",
+phone_numbers[].additional_info,Informações adicionais sobre o número de telefone.,This is their work mobile number.,string,,Yes,Yes,,"^[\w\W\s]{0,100}$"
+phone_numbers[].number,"O número de telefone (não incluindo o código do país, área ou ramal).
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",29875132,string,,Yes,No,,"^([0-9]{8,11})$"
+phone_numbers[].country_code,O código de discagem do país. Por exemplo: `351` (sem `+`).,351,string,,Yes,Yes,,"^\d{1,4}$"
+phone_numbers[].area_code,O código de discagem da área.,21,string,,Yes,Yes,,"^\d{1,2}$"
+phone_numbers[].extension,O código da extensão.,932,string,,Yes,Yes,,"^\d{1,5}$"
+filiations,"Informações sobre quaisquer relações familiares do indivíduo.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",,array,,Yes,No,,
+filiations[].type,"A relação familiar. Retornamos um dos seguintes valores:
+
+  - `MOTHER`
+  - `FATHER`
+  - `null`",MOTHER,string,,Yes,Yes,"MOTHER, FATHER, None",
+filiations[].civil_name,"O nome completo da pessoa.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",Bruce Wayne,string,,Yes,No,,"^[\w\W\s]{0,70}$"
+filiations[].social_name,O nome social da pessoa.,The Dark Knight,string,,Yes,Yes,,"^[\w\W\s]{0,70}$"
+financial_profile,Informações sobre o perfil financeiro do indivíduo.,,object,,Yes,Yes,,
+financial_profile.company_id,O identificador da empresa onde o indivíduo está empregado.,50685362000135,string,,Yes,Yes,,^\d{14}$
+financial_profile.occuptation_code,"A área de emprego do indivíduo. Retornamos um dos seguintes valores:
+
+  - `BRAZIL_PUBLIC_OFFICE`
+  - `BRAZIL_OCCUPATION_CODE`
+  - `OTHER`
+  - `null`",BRAZIL_OCCUPATION_CODE,string,,No,Yes,"BRAZIL_PUBLIC_OFFICE, BRAZIL_OCCUPATION_CODE, OTHER, None",
+financial_profile.occupation_description,Informações sobre a ocupação do indivíduo.,01,string,,Yes,Yes,,[\w\W\s]*
+financial_profile.informed_income,"Informações sobre a renda declarada do indivíduo.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",,object,,Yes,No,,
+financial_profile.informed_income.frequency,"Indica com que frequência o indivíduo recebe seu salário. Retornamos um dos seguintes valores:
+
+  - `DAILY`
+  - `WEEKLY`
+  - `FORTNIGHTLY`
+  - `MONTHLY`
+  - `BIMONTHLY`
+  - `QUARTERLY`
+  - `BIANNUALLY`
+  - `ANNUALLY`
+  - `OTHERS`",MONTHLY,string,,Yes,Yes,"DAILY, WEEKLY, FORTNIGHTLY, MONTHLY, BIMONTHLY, QUARTERLY, BIANNUALLY, ANNUALLY, OTHERS",
+financial_profile.informed_income.amount,"A renda declarada que o indivíduo recebe.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",45391.89,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+financial_profile.informed_income.currency,"O código de moeda de três letras (ISO-4217).
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",BRL,string,,Yes,No,,^[A-Z]{3}$
+financial_profile.informed_income.date,"Data em que o indivíduo recebeu seu salário pela última vez.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",2020-03-19,string,date,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+financial_profile.patrimony,Informações sobre os ativos relatados do indivíduo (se disponíveis).,,object,,Yes,Yes,,
+financial_profile.patrimony.amount,"Os ativos relatados do indivíduo.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil quando o objeto `patrimony` estiver disponível.",45391.89,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+financial_profile.patrimony.currency,"O código de moeda de três letras (ISO-4217).
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil quando o objeto `patrimony` estiver disponível.",BRL,string,,Yes,No,,^[A-Z]{3}$
+financial_profile.patrimony.year,"O ano ao qual os ativos reportados se aplicam.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil quando o objeto `patrimony` estiver disponível.",2020,integer,int32,Yes,No,,
+financial_relation,"Detalhes sobre qualquer relacionamento adicional que o indivíduo tenha com a instituição (por exemplo, outras contas ou produtos que ele possua com a instituição).",,object,,Yes,Yes,,
+financial_relation.start_date,"O carimbo de data/hora ISO-8601 quando o relacionamento financeiro entre o indivíduo e a instituição começou.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",2021-05-21T08:30:00Z,string,date-time,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
+financial_relation.product_services,"Uma lista de produtos que o indivíduo possui com a instituição.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",,array,,Yes,No,,
+financial_relation.product_services_additional_info,Informações adicionais sobre os produtos que o indivíduo possui.,Joint account with Robin,string,,Yes,Yes,,^[\w\W]*$
+financial_relation.procurators,Informações sobre quaisquer indivíduos ou empresas que possam agir em nome do proprietário.,,array,,Yes,No,,
+financial_relation.procurators[].type,"O tipo de representante que pode acessar e fazer alterações na conta. Retornamos um dos seguintes valores:
+
+  - `LEGAL_REPRESENTATIVE`
+  - `ATTORNEY`
+  - `null`",LEGAL_REPRESENTATIVE,string,,Yes,Yes,"LEGAL_REPRESENTATIVE, ATTORNEY, None",
+financial_relation.procurators[].civil_name,"O nome completo dos representantes.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `procurators` estiver disponível.",Alfred Thaddeus Pennyworth,string,,Yes,No,,^[\w\W]*$
+financial_relation.procurators[].social_name,O nome social da pessoa.,Alfred Pennyworth,string,,Yes,Yes,,^[\w\W]*$
+financial_relation.procurators[].document_number,"O número do documento do representante.
+
+**Nota**: Para indivíduos, este é o número do CPF do Brasil. Para empresas, este é o número do CNPJ do Brasil.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `procurators` estiver disponível.",73677831148,string,,Yes,No,,^\d{11}$
+financial_relation.products,Detalhes sobre quaisquer produtos adicionais que o indivíduo possua com a instituição.,,array,,Yes,No,,
+financial_relation.products[].type,"Os produtos adicionais que o indivíduo possui na instituição. Retornamos um dos seguintes valores:
+
+  - `SAVINGS_ACCOUNT`
+  - `CHECKING_ACCOUNT`
+  - `null`",SAVINGS_ACCOUNT,string,,Yes,Yes,"SAVINGS_ACCOUNT, CHECKING_ACCOUNT, None",
+financial_relation.products[].subtype,"O subtipo do produto que o indivíduo possui na instituição.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `products` estiver disponível.",CONJUNTA_SIMPLES,string,,Yes,Yes,,
+financial_relation.products[].agency,O código da agência onde o produto foi aberto.,6272,string,,Yes,Yes,,"^\d{1,4}$"
+financial_relation.products[].clearing_code,"O código de compensação bancária para o produto.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `products` estiver disponível.",001,string,,Yes,No,,^\d{3}$
+financial_relation.products[].number,"O número da conta do produto.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `procurators` estiver disponível.",24550245,string,,Yes,No,,"^\d{8,20}$"
+financial_relation.products[].check_digit,"O dígito verificador do número do produto.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `products` estiver disponível.",7,string,,Yes,No,,[\w\W\s]*
+financial_relation.salary_portability_requests,"Detalhes sobre quaisquer solicitações de portabilidade de salário que o indivíduo tenha feito com a instituição.
+
+Uma portabilidade de salário é uma solicitação para transferir o salário do indivíduo da conta bancária de 'folha de pagamento' do empregador para outra conta bancária.
+
+> 📘 
+>
+> Por favor, note que a conta bancária receptora não pode encerrar uma portabilidade de salário (ou ser informada de que ela foi encerrada). Apenas o banco da folha de pagamento do empregador pode fornecer essa informação. Assim, as portabilidades listadas aqui podem não estar atualizadas.",,array,,No,No,,
+financial_relation.salary_portability_requests[].employer_name,O nome do empregador.,ACME Inc.,string,,No,No,,^(?!\s)[\w\W\s]*[^\s]$
+financial_relation.salary_portability_requests[].employer_id_number,O CPF ou CNPJ do empregador.,12345678901,string,,No,No,,^\d{14}$|^\d{11}$
+financial_relation.salary_portability_requests[].employer_bank_id_number,O CNPJ do banco do empregador.,12345678901234,string,,No,No,,^\d{14}$
+financial_relation.salary_portability_requests[].employer_bank_code,O código ISPB (*Identificador de Sistema de Pagamentos Brasileiro*) do banco do empregador.,12345678,string,,No,No,,^[0-9]{8}$
+financial_relation.salary_portability_requests[].portability_approval_date,"A data em que a solicitação de portabilidade foi aprovada, no formato `YYYY-MM-DD`.",2024-04-01,string,date,No,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+financial_relation.payroll_accounts,"Detalhes sobre quaisquer contas bancárias de folha de pagamento associadas ao indivíduo. Ou seja, cada vez que o indivíduo tiver um novo empregador do qual recebe salário, isso deve ser listado aqui.
+
+> 📘
+>
+> Empregadores anteriores podem não fechar a conta de folha de pagamento do indivíduo. Assim, as contas de folha de pagamento listadas aqui podem não estar atualizadas.",,array,,No,No,,
+financial_relation.payroll_accounts[].employer_name,O nome do empregador.,ACME Inc.,string,,No,No,,^(?!\s)[\w\W\s]*[^\s]$
+financial_relation.payroll_accounts[].employer_id_number,O CPF ou CNPJ do empregador.,12345678901,string,,No,No,,^\d{14}$|^\d{11}$
+financial_relation.payroll_accounts[].employer_bank_id_number,O CNPJ do banco do empregador.,12345678901234,string,,No,No,,^\d{14}$
+financial_relation.payroll_accounts[].employer_bank_code,O código ISPB (*Identificador de Sistema de Pagamentos Brasileiro*) do banco do empregador.,12345678,string,,No,No,,^[0-9]{8}$
+financial_relation.payroll_accounts[].account_opening_date,"A data em que a conta bancária de salário foi aberta, no formato `YYYY-MM-DD`.",2024-04-01,string,date,No,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
