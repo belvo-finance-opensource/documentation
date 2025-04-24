@@ -1,22 +1,22 @@
 Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
-id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+belvo_institution_name,Nombre de Belvo para la institución de finanzas abiertas a la que está relacionado el consentimiento.,ofmockbank_br_retail,string,,No,No,,
+created_at,La marca de tiempo ISO-8601 de cuando se creó el punto de datos en la base de datos de Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
 display_name,"El nombre completo de la persona que inició el consentimiento, según lo proporcionado por la institución.",Jack Oswald White,string,,No,Yes,,"^[\w\W]{0,128}$"
 document_number,El número de documento (CPF) del individuo.,76109277673,string,,No,No,,
-belvo_institution_name,Nombre de Belvo para la institución de finanzas abiertas a la que está relacionado el consentimiento.,ofmockbank_br_retail,string,,No,No,,
 expired_at,"La marca de tiempo ISO-8601 cuando el consentimiento expirará. En el caso de que `undefined_consent_expiration` sea `true`, este campo será `null`.",2021-02-27T13:01:41.941Z,string,date-time,No,No,,
-undefined_consent_expiration,"Indique si el consentimiento es por un período indefinido, es decir, que no hay vencimiento para el consentimiento.",False,boolean,,No,No,,
-created_at,La marca de tiempo ISO-8601 de cuando se creó el punto de datos en la base de datos de Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
-status,"El estado del consentimiento en la red de finanzas abiertas. Puede ser:
-
-  - `AUTHORISED`: El consentimiento sigue siendo válido para su uso hasta la fecha `expired_at`.
-  - `AWAITING_AUTHORISATION_CONFIRMATION`: El usuario debe confirmar dentro de su institución.
-  - `AWAITING_AUTHORISATION`: El usuario ha sido redirigido a su institución para otorgar consentimiento.
-  - `REJECTED`: El usuario no ha otorgado consentimiento dentro de su institución.
-  - `EXPIRED`: El consentimiento ha expirado a partir de la fecha `expired_at`.
-  - `null`",AUTHORISED,string,,No,Yes,"AUTHORISED, AWAITING_AUTHORISATION_CONFIRMATION, AWAITING_AUTHORISATION, REJECTED, EXPIRED, None",
+id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
 permissions,Detalles sobre los permisos adjuntos al consentimiento.,,object,,No,No,,
 permissions.ACCOUNTS,Una lista de permisos de banca abierta relacionados con el acceso a la información de la cuenta.,"[""ACCOUNTS_OVERDRAFT_LIMITS_READ"", ""ACCOUNTS_READ"", ""ACCOUNTS_TRANSACTIONS_READ"", ""ACCOUNTS_BALANCES_READ""]",array,,No,No,,
 permissions.CREDIT_CARDS,Una lista de permisos de banca abierta relacionados con el acceso a la información de tarjetas de crédito.,"[""CREDIT_CARDS_ACCOUNTS_LIMITS_READ"", ""CREDIT_CARDS_ACCOUNTS_BILLS_READ"", ""CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ"", ""CREDIT_CARDS_ACCOUNTS_BILLS_TRANSACTIONS_READ"", ""CREDIT_CARDS_ACCOUNTS_READ""]",array,,No,No,,
 permissions.CREDIT_OPERATIONS,Una lista de permisos de banca abierta relacionados con el acceso a la información de productos de crédito.,"[""LOANS_READ"", ""LOANS_WARRANTIES_READ"", ""LOANS_SCHEDULED_INSTALMENTS_READ"", ""LOANS_PAYMENTS_READ"", ""FINANCINGS_READ"", ""FINANCINGS_WARRANTIES_READ"", ""FINANCINGS_SCHEDULED_INSTALMENTS_READ"", ""FINANCINGS_PAYMENTS_READ"", ""UNARRANGED_ACCOUNTS_OVERDRAFT_READ"", ""UNARRANGED_ACCOUNTS_OVERDRAFT_WARRANTIES_READ"", ""UNARRANGED_ACCOUNTS_OVERDRAFT_SCHEDULED_INSTALMENTS_READ"", ""UNARRANGED_ACCOUNTS_OVERDRAFT_PAYMENTS_READ"", ""INVOICE_FINANCINGS_READ"", ""INVOICE_FINANCINGS_WARRANTIES_READ"", ""INVOICE_FINANCINGS_SCHEDULED_INSTALMENTS_READ"", ""INVOICE_FINANCINGS_PAYMENTS_READ""]",array,,No,No,,
 permissions.REGISTER,Una lista de permisos de banca abierta relacionados con el acceso a información personal.,"[""CUSTOMERS_PERSONAL_IDENTIFICATIONS_READ"", ""CUSTOMERS_PERSONAL_ADITTIONALINFO_READ""]",array,,No,No,,
 permissions.RESOURCES,Una lista de permisos funcionales necesarios para interactuar con los permisos.,"[""RESOURCES_READ""]",array,,No,No,,
+status,"El estado del consentimiento en la red de finanzas abiertas. Puede ser:
+
+  - `AUTHORISED`: El consentimiento sigue siendo válido para su uso hasta la fecha de `expired_at`.
+  - `AWAITING_AUTHORISATION_CONFIRMATION`: El usuario debe confirmar dentro de su institución.
+  - `AWAITING_AUTHORISATION`: El usuario ha sido redirigido a su institución para otorgar consentimiento.
+  - `REJECTED`: El usuario no ha otorgado consentimiento dentro de su institución.
+  - `EXPIRED`: El consentimiento ha expirado a partir de la fecha de `expired_at`.
+  - `null`",AUTHORISED,string,,No,Yes,"AUTHORISED, AWAITING_AUTHORISATION_CONFIRMATION, AWAITING_AUTHORISATION, REJECTED, EXPIRED, None",
+undefined_consent_expiration,"Indique si el consentimiento es por un período indefinido, es decir, que no hay vencimiento para el consentimiento.",False,boolean,,No,No,,

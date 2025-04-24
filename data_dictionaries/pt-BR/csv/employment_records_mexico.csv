@@ -1,65 +1,20 @@
 Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
-id,Identificador único da Belvo para o item atual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
-link,O `link.id` ao qual os dados pertencem.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
-created_at,O carimbo de data e hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
 collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
-report_date,"A data em que o relatório de registro de emprego foi gerado, no formato `YYYY-MM-DD`.",2023-01-19,string,date,No,No,,
-internal_identification,"ID único para usuário de acordo com a instituição. Para IMSS e ISSSTE México, este é o CURP.",BLPM951331IONVGR54,string,,No,No,,
-personal_data,Detalhes sobre as informações pessoais do indivíduo.,,object,,No,No,,
-personal_data.official_name,O nome legal do indivíduo.,Bruce Banner del Torro,string,,No,Yes,,
-personal_data.first_name,O primeiro nome do indivíduo.,Bruce,string,,No,Yes,,
-personal_data.last_name,O sobrenome do indivíduo.,Banner del Torro,string,,No,Yes,,
-personal_data.birth_date,"A data de nascimento do indivíduo, no formato `YYYY-MM-DD`.",2022-02-09,string,date,No,Yes,,
-personal_data.entitlements,Detalhes sobre os benefícios aos quais o indivíduo tem direito.,,object,,No,No,,
-personal_data.entitlements.entitled_to_health_insurance,Indica se o indivíduo tem ou não direito a seguro de saúde.,True,boolean,,No,No,,
-personal_data.entitlements.entitled_to_company_benefits,Indica se o indivíduo tem ou não direito aos benefícios da empresa.,True,boolean,,No,No,,
-personal_data.entitlements.valid_until,"Data até quando o indivíduo está coberto pelo seguro de saúde e/ou benefícios da empresa. Se for `null`, o funcionário está atualmente trabalhando e não é necessária uma data de término.",,string,date,No,Yes,,
-personal_data.entitlements.status,"Indica o status de emprego do indivíduo. Retornamos uma das seguintes respostas:
-
-- `EMPLOYED`
-- `RETIRED`
-- `UNEMPLOYED`
-- `null`",EMPLOYED,string,,No,No,"EMPLOYED, RETIRED, UNEMPLOYED, null",
-personal_data.document_ids,Detalhes sobre os documentos de identificação do indivíduo.,,array,,No,No,,
-personal_data.document_ids[].document_type,"O tipo de documento relacionado ao indivíduo. Retornamos um dos seguintes valores:
-
-  - `NSS`
-  - `CURP`
-  - `RFC`",NSS,string,,No,Yes,"NSS, CURP, RFC",
-personal_data.document_ids[].document_number,O número do documento de identidade (como uma string).,10277663582,string,,No,Yes,,
-personal_data.email,O endereço de e-mail do indivíduo.,bruce.banner@avengers.com,string,,No,Yes,,
-social_security_summary,"Detalhes sobre as contribuições previdenciárias do indivíduo, de acordo com o IMSS.
-
->**Nota**: Para o ISSSTE México, este valor retornará `null`.",,object,,No,Yes,,
-social_security_summary.weeks_redeemed,Número de semanas que o indivíduo precisou retirar de sua aposentadoria.,0,integer,int32,No,Yes,,
-social_security_summary.weeks_reinstated,"Número de semanas que o indivíduo contribuiu novamente para o seu fundo de pensão (*AFORE*), após tê-lo resgatado anteriormente.",0,integer,int32,No,Yes,,
-social_security_summary.weeks_contributed,"Número de semanas que o indivíduo contribuiu para a sua previdência social, com base no número de semanas que o indivíduo trabalhou de acordo com o IMSS.",188,integer,int32,No,Yes,,
+created_at,O carimbo de data e hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
 employment_records,Detalhes sobre o histórico de emprego do indivíduo.,,array,,No,No,,
 employment_records[].collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2020-04-23T21:32:55.336854+00:00,string,date-time,No,No,,
+employment_records[].currency,O código de moeda de três letras em que o salário é pago.,MXN,string,,No,No,,
 employment_records[].employer,"O nome oficial do empregador.
 
 >**Nota**: Para o ISSSTE México, este é o nome oficial da entidade junto com a entidade responsável por gerenciar as informações do empregado, separados por um ponto e vírgula (`;`). Por exemplo: SECRETARIA DE EDUCACION PUBLICA (SEP);SECRETARIA DE EDUCACION PUBLICA (SEP).",Batman Enterprises CDMX,string,,No,No,,
 employment_records[].employer_id,"O ID oficial do empregador, de acordo com o país.
 
 >**Nota**: Para ISSSTE México, este valor retornará `null`.",780-BAT-88769-CDMX,string,,No,Yes,,
-employment_records[].start_date,"Data de início do emprego, no formato `YYYY-MM-DD`.",2019-10-10,string,date,No,No,,
-employment_records[].end_date,"Data de término do emprego, no formato `YYYY-MM-DD`.
-
->**Nota**: Este campo retornará `null` para o emprego atual do usuário.",2019-12-31,string,date,No,Yes,,
-employment_records[].weeks_employed,Número de semanas em que o indivíduo esteve empregado.,12,integer,int32,No,No,,
-employment_records[].state,"Em que estado geográfico o indivíduo estava empregado, de acordo com o país.
-
->**Nota**: Para ISSSTE México, este valor retornará `null`.",DISTRITO FEDERAL,string,,No,Yes,,
-employment_records[].most_recent_base_salary,"O salário base mais recente que o indivíduo recebeu.
-
-- Para o IMSS México, esse valor é calculado incluindo os benefícios aos quais o indivíduo tem direito ao longo do ano.
-- Para o ISSSTE México, esse valor é calculado dividindo o `monthly_salary` por 30 (dias) e exclui os benefícios do indivíduo.",762.54,number,float,No,No,,
-employment_records[].monthly_salary,"O salário mensal do indivíduo, incluindo quaisquer benefícios adicionais.
-
-- Para o IMSS México, este valor é calculado incluindo os benefícios aos quais o indivíduo tem direito ao longo do ano.
-- Para o ISSSTE México, este valor é calculado excluindo os benefícios.",,number,float,No,No,,
-employment_records[].currency,O código de moeda de três letras em que o salário é pago.,MXN,string,,No,No,,
 employment_records[].employment_status_updates,Detalhes sobre quaisquer mudanças de emprego do indivíduo.,,array,,No,Yes,,
+employment_records[].employment_status_updates[].base_salary,"O salário base do indivíduo, atualizado na `update_date`.
+
+  - Para o IMSS México, esse valor é calculado incluindo os benefícios aos quais o indivíduo tem direito ao longo do ano.
+  - Para o ISSSTE México, esse valor é calculado excluindo os benefícios do indivíduo.",1033.09,number,float,No,No,,
 employment_records[].employment_status_updates[].event,"Para o IMSS México, este é o evento que causou a mudança no status de emprego ou salário. Retornamos um dos seguintes valores:
 
 - `DISMISSED_RESIGNED`: O funcionário foi demitido ou pediu demissão.
@@ -74,30 +29,75 @@ Para o ISSSTE México, esta é a fonte de informação sobre a mudança no statu
 - `NORMAL`: Indica que a informação foi recebida do **Instituto de Seguridad y Servicios Sociales de los Trabajadores del Estado (ISSSTE)**.
 - `BDUTA_CERTIFICATE`: Indica que a informação foi recebida do banco de dados central, **Base de Datos Única de Trabajadores Activos (BDUTA)**.
 - `DYE_CERTIFICATE`: Indica que a informação foi recebida de uma instituição afiliada, **Dependencia y Entidad (DYE)**.",HIRED,string,,No,Yes,"DISMISSED_RESIGNED, SALARY_MODIFICATION, HIRED, VOLUNTARY_CONTRIBUTION, ABSENCE, SICK_LEAVE, NORMAL, BDUTA_CERTIFICATE, DYE_CERTIFICATE",
-employment_records[].employment_status_updates[].base_salary,"O salário base do indivíduo, atualizado na `update_date`.
-
-  - Para o IMSS México, esse valor é calculado incluindo os benefícios aos quais o indivíduo tem direito ao longo do ano.
-  - Para o ISSSTE México, esse valor é calculado excluindo os benefícios do indivíduo.",1033.09,number,float,No,No,,
 employment_records[].employment_status_updates[].update_date,"A data em que o evento de emprego ocorreu, no formato `YYYY-MM-DD`.",2021-09-01,string,date,No,No,,
+employment_records[].end_date,"Data de término do emprego, no formato `YYYY-MM-DD`.
+
+>**Nota**: Este campo retornará `null` para o emprego atual do usuário.",2019-12-31,string,date,No,Yes,,
+employment_records[].monthly_salary,"O salário mensal do indivíduo, incluindo quaisquer benefícios adicionais.
+
+- Para o IMSS México, este valor é calculado incluindo os benefícios aos quais o indivíduo tem direito ao longo do ano.
+- Para o ISSSTE México, este valor é calculado excluindo os benefícios.",,number,float,No,No,,
+employment_records[].most_recent_base_salary,"O salário base mais recente que o indivíduo recebeu.
+
+- Para o IMSS México, esse valor é calculado incluindo os benefícios aos quais o indivíduo tem direito ao longo do ano.
+- Para o ISSSTE México, esse valor é calculado dividindo o `monthly_salary` por 30 (dias) e exclui os benefícios do indivíduo.",762.54,number,float,No,No,,
+employment_records[].start_date,"Data de início do emprego, no formato `YYYY-MM-DD`.",2019-10-10,string,date,No,No,,
+employment_records[].state,"Em que estado geográfico o indivíduo estava empregado, de acordo com o país.
+
+>**Nota**: Para ISSSTE México, este valor retornará `null`.",DISTRITO FEDERAL,string,,No,Yes,,
+employment_records[].weeks_employed,Número de semanas em que o indivíduo esteve empregado.,12,integer,int32,No,No,,
 employment_scores,"Um array de pontuações de `employment_record`. Cada pontuação fornece uma visão sobre a empregabilidade e o potencial de geração de renda em um determinado período.
 
 > **Nota 1**: Este campo está disponível apenas para links criados com o IMSS do México. Para outras instituições, este campo retornará `null`.
 
 > **Nota 2**: Este campo retornará `null` para registros de emprego recuperados antes de 16-04-2024. Para registros de emprego gerados antes de 16-04-2024, será necessário fazer uma nova solicitação POST para recuperar os registros de emprego e calcular as pontuações.","[{""score"": 722, ""period"": 3, ""version"": ""1.0.0""}, {""score"": 612, ""period"": 6, ""version"": ""1.0.0""}, {""score"": 570, ""period"": 12, ""version"": ""1.0.0""}]",array,,No,Yes,,
+employment_scores[].period,"O número de meses (no futuro) para os quais a pontuação é calculada.
+
+Por exemplo, um período de `6` indica que a pontuação é calculada para os próximos `6` meses.
+
+> **Nota**: Atualmente, a Belvo calcula a pontuação para 3, 6 e 12 meses.",6,integer,,No,No,,
 employment_scores[].score,"Uma pontuação entre 300 e 900 que fornece uma visão sobre a empregabilidade e o potencial de geração de renda.
 
 - Uma pontuação baixa (próxima de 300) pode indicar uma empregabilidade e potencial de geração de renda previstos mais baixos, sugerindo possíveis desafios para conseguir emprego ou alcançar níveis de renda mais altos no futuro.
 - Uma pontuação alta (próxima de 900) pode sugerir uma maior probabilidade de conseguir emprego e gerar níveis de renda mais altos.
 
 A pontuação pode retornar `null` se o indivíduo não tiver histórico de emprego.",612,integer,,No,Yes,,
-employment_scores[].period,"O número de meses (no futuro) para os quais a pontuação é calculada.
-
-Por exemplo, um período de `6` indica que a pontuação é calculada para os próximos `6` meses.
-
-> **Nota**: Atualmente, a Belvo calcula a pontuação para 3, 6 e 12 meses.",6,integer,,No,No,,
 employment_scores[].version,A versão do nosso modelo de pontuação de emprego usada para realizar o cálculo.,1.0.0,string,,No,No,,
 files,Arquivos binários PDF adicionais relacionados ao emprego do indivíduo.,,array,,No,Yes,,
 files[].type,O título do documento.,ReporteSemanasCotizadas_190123,string,,No,No,,
 files[].value,"O binário PDF do arquivo (como uma string).
 
 > **Nota**: Em nosso ambiente sandbox, este campo retornará `null`.",=PDF_BINARY=,string,,No,Yes,,
+id,Identificador único da Belvo para o item atual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+internal_identification,"ID único para o usuário de acordo com a instituição. Para IMSS e ISSSTE México, este é o CURP.",BLPM951331IONVGR54,string,,No,No,,
+link,O `link.id` ao qual os dados pertencem.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
+personal_data,Detalhes sobre as informações pessoais do indivíduo.,,object,,No,No,,
+personal_data.birth_date,"A data de nascimento do indivíduo, no formato `YYYY-MM-DD`.",2022-02-09,string,date,No,Yes,,
+personal_data.document_ids,Detalhes sobre os documentos de identificação do indivíduo.,,array,,No,No,,
+personal_data.document_ids[].document_number,O número do documento de identidade (como uma string).,10277663582,string,,No,Yes,,
+personal_data.document_ids[].document_type,"O tipo de documento relacionado ao indivíduo. Retornamos um dos seguintes valores:
+
+  - `NSS`
+  - `CURP`
+  - `RFC`",NSS,string,,No,Yes,"NSS, CURP, RFC",
+personal_data.email,O endereço de e-mail do indivíduo.,bruce.banner@avengers.com,string,,No,Yes,,
+personal_data.entitlements,Detalhes sobre os benefícios aos quais o indivíduo tem direito.,,object,,No,No,,
+personal_data.entitlements.entitled_to_company_benefits,Indica se o indivíduo tem ou não direito aos benefícios da empresa.,True,boolean,,No,No,,
+personal_data.entitlements.entitled_to_health_insurance,Indica se o indivíduo tem ou não direito a seguro de saúde.,True,boolean,,No,No,,
+personal_data.entitlements.status,"Indica o status de emprego do indivíduo. Retornamos uma das seguintes respostas:
+
+- `EMPLOYED`
+- `RETIRED`
+- `UNEMPLOYED`
+- `null`",EMPLOYED,string,,No,No,"EMPLOYED, RETIRED, UNEMPLOYED, null",
+personal_data.entitlements.valid_until,"Data até quando o indivíduo está coberto pelo seguro de saúde e/ou benefícios da empresa. Se for `null`, o funcionário está atualmente trabalhando e não é necessária uma data de término.",,string,date,No,Yes,,
+personal_data.first_name,O primeiro nome do indivíduo.,Bruce,string,,No,Yes,,
+personal_data.last_name,O sobrenome do indivíduo.,Banner del Torro,string,,No,Yes,,
+personal_data.official_name,O nome legal do indivíduo.,Bruce Banner del Torro,string,,No,Yes,,
+report_date,"A data em que o relatório de registro de emprego foi gerado, no formato `YYYY-MM-DD`.",2023-01-19,string,date,No,No,,
+social_security_summary,"Detalhes sobre as contribuições previdenciárias do indivíduo, de acordo com o IMSS.
+
+>**Nota**: Para o ISSSTE México, este valor retornará `null`.",,object,,No,Yes,,
+social_security_summary.weeks_contributed,"Número de semanas que o indivíduo contribuiu para a sua previdência social, com base no número de semanas que o indivíduo trabalhou de acordo com o IMSS.",188,integer,int32,No,Yes,,
+social_security_summary.weeks_redeemed,Número de semanas que o indivíduo precisou retirar de sua aposentadoria.,0,integer,int32,No,Yes,,
+social_security_summary.weeks_reinstated,"Número de semanas que o indivíduo contribuiu novamente para o seu fundo de pensão (*AFORE*), após tê-lo resgatado anteriormente.",0,integer,int32,No,Yes,,

@@ -1,66 +1,10 @@
 Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
-id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
-link,El `link.id` al que pertenecen los datos.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
-institution,Detalles sobre la institución.,,object,,Yes,No,,
-institution.name,"El nombre de la institución, según lo designado por Belvo.
-
-Por favor, consulta nuestro artículo del <a href=""https://developers.belvo.com/docs/institution"" target=""_blank"">DevPortal sobre Instituciones</a> para obtener una lista detallada de nombres de instituciones.",erebor_mx_retail,string,,No,No,,
-institution.type,"El tipo de institución. Devolvemos uno de los siguientes valores:
-
-  - `bank`
-  - `fiscal`
-  - `employment`",,string,,No,No,"bank, fiscal, employment",
-collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
-created_at,La marca de tiempo ISO-8601 de cuando se creó el punto de datos en la base de datos de Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
-last_accessed_at,La marca de tiempo ISO-8601 del acceso más reciente y exitoso de Belvo a la institución para el enlace dado.,2021-03-09T10:28:40.000Z,string,date-time,Yes,Yes,,
-category,"El tipo de cuenta.  
-Devolvemos uno de los siguientes valores de enum:  
-  - `ADVANCE_DEPOSIT_ACCOUNT`
-  - `CHECKING_ACCOUNT`
-  - `CREDIT_CARD`
-  - `FINANCING_ACCOUNT`
-  - `INVESTMENT_ACCOUNT`
-  - `INVOICE_FINANCING_ACCOUNT`
-  - `LOAN_ACCOUNT`
-  - `PENSION_FUND_ACCOUNT`
-  - `SAVINGS_ACCOUNT`
-  - `UNCATEGORIZED`",CHECKING_ACCOUNT,string,,Yes,Yes,"ADVANCE_DEPOSIT_ACCOUNT, CHECKING_ACCOUNT, CREDIT_CARD, FINANCING_ACCOUNT, INVESTMENT_ACCOUNT, INVOICE_FINANCING_ACCOUNT, LOAN_ACCOUNT, PENSION_FUND_ACCOUNT, SAVINGS_ACCOUNT, UNCATEGORIZED",
-balance_type,"Indica si esta cuenta es un `ASSET` o un `LIABILITY`. Puedes considerar el saldo de un `ASSET` como positivo, mientras que el saldo de un `LIABILITY` como negativo.",ASSET,string,,Yes,Yes,,
-overdraft,,,object,,No,Yes,,
-overdraft.arranged,"El límite de sobregiro acordado entre el titular de la cuenta y la institución.
-
-> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `overdraft` está disponible.",5000.5,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
-overdraft.used,"El valor del sobregiro utilizado.
-
-> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor si el campo `overdraft` está disponible.",1000.5,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
-overdraft.unarranged,"El sobregiro utilizado que no fue acordado entre el titular de la cuenta y la institución.
-
-> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `overdraft` está disponible.",300.1,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
-type,"El tipo de cuenta, según lo designado por la institución.
-
-> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",STANDARD_NACIONAL,string,,Yes,No,,
-subtype,"El subtipo de cuenta, según lo designado por la institución.
-
-> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",FINANCIAMENTO_HABITACIONAL_SFH,string,,Yes,No,,
-name,"El nombre de la cuenta, tal como lo proporciona la institución.",Cuenta Perfiles- M.N. - MXN-666,string,,Yes,Yes,,
-number,"El número de cuenta, tal como lo designa la institución.",4057068115181,string,,Yes,Yes,,
 agency,El código de sucursal donde se abrió el producto.,6272,string,,Yes,Yes,,"^\d{1,4}$"
-check_digit,"El dígito de control del número del producto, si corresponde.",7,string,,Yes,Yes,,[\w\W\s]*
 balance,Detalles sobre los saldos actual y disponible de la cuenta.,,object,,Yes,No,,
-balance.current,"El saldo actual se calcula de manera diferente según el tipo de cuenta.
+balance.automatically_invested,"La cantidad que se invierte automáticamente (según lo acordado con la institución).
 
-- **💰 Cuentas corrientes y de ahorro**:
-
-El saldo de la cuenta del usuario en el momento del timestamp `collected_at`.
-
-- **💳 Tarjetas de crédito**:
-
-La cantidad que el usuario ha gastado en el período de facturación actual de la tarjeta (consulta `credit_data.cutting_date` para obtener información sobre cuándo finaliza el período de facturación actual).
-
-- **🏡 Cuentas de préstamo**:
-
-La cantidad restante por pagar en el préstamo del usuario.",5874.13,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
-balance.available,"El saldo que el propietario de la cuenta puede utilizar.
+> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `balances` está disponible.",131.5,number,float,No,No,,"^\d{1,15}\.\d{2,4}$"
+balance.available,"El saldo que el titular de la cuenta puede utilizar.
 
 - **💰 Cuentas corrientes y de ahorro**:
 
@@ -78,53 +22,79 @@ El valor presente requerido para liquidar el préstamo, según lo proporcionado 
 balance.blocked,"La cantidad que está actualmente bloqueada debido a transacciones pendientes.
 
 > **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `balances` está disponible.",60.32,number,float,No,No,,"^\d{1,15}\.\d{2,4}$"
-balance.automatically_invested,"La cantidad que se invierte automáticamente (según lo acordado con la institución).
+balance.current,"El saldo actual se calcula de manera diferente según el tipo de cuenta.
 
-> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `balances` está disponible.",131.5,number,float,No,No,,"^\d{1,15}\.\d{2,4}$"
-currency,"El código de moneda de tres letras (ISO-4217).
+- **💰 Cuentas corrientes y de ahorro**:
 
-> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `balances` está disponible.",BRL,string,,Yes,No,,^[A-Z]{3}$
-public_identification_name,"El nombre público para el tipo de identificación. Para cuentas de ahorro y corrientes en 🇧🇷 Brasil, este campo será `AGENCY/ACCOUNT`.",AGENCY/ACCOUNT,string,,Yes,Yes,,
-public_identification_value,"El valor para el `public_identification_name`.
+El saldo de la cuenta del usuario en el momento del timestamp `collected_at`.
 
-Para cuentas de ahorro y corriente OFDA brasileñas 🇧🇷, este campo será el número de agencia y cuenta bancaria, separados por una barra. Por ejemplo: `0444/45722-0`.
+- **💳 Tarjetas de crédito**:
 
-Para cuentas de tarjeta de crédito OFDA brasileñas 🇧🇷, devolveremos una cadena de números de tarjeta de crédito concatenados asociados con la cuenta. Por ejemplo: ""8763,9076,5522""",0444/45722-0,string,,Yes,Yes,,
-internal_identification,"La identificación interna de la institución para la cuenta.
+La cantidad que el usuario ha gastado en el período de facturación actual de la tarjeta (consulte `credit_data.cutting_date` para obtener información sobre cuándo finaliza el período de facturación actual).
 
-> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `balances` está disponible.",92792126019929279212650822221989319252576,string,,Yes,No,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
+- **🏡 Cuentas de préstamo**:
+
+La cantidad restante por pagar en el préstamo del usuario.",5874.13,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
+balance_type,"Indica si esta cuenta es un `ASSET` o un `LIABILITY`. Puedes considerar el saldo de un `ASSET` como positivo, mientras que el saldo de un `LIABILITY` como negativo.",ASSET,string,,Yes,Yes,,
+category,"El tipo de cuenta.  
+Devolvemos uno de los siguientes valores de enum:  
+  - `ADVANCE_DEPOSIT_ACCOUNT`
+  - `CHECKING_ACCOUNT`
+  - `CREDIT_CARD`
+  - `FINANCING_ACCOUNT`
+  - `INVESTMENT_ACCOUNT`
+  - `INVOICE_FINANCING_ACCOUNT`
+  - `LOAN_ACCOUNT`
+  - `PENSION_FUND_ACCOUNT`
+  - `SAVINGS_ACCOUNT`
+  - `UNCATEGORIZED`",CHECKING_ACCOUNT,string,,Yes,Yes,"ADVANCE_DEPOSIT_ACCOUNT, CHECKING_ACCOUNT, CREDIT_CARD, FINANCING_ACCOUNT, INVESTMENT_ACCOUNT, INVOICE_FINANCING_ACCOUNT, LOAN_ACCOUNT, PENSION_FUND_ACCOUNT, SAVINGS_ACCOUNT, UNCATEGORIZED",
+check_digit,"El dígito de control del número del producto, si corresponde.",7,string,,Yes,Yes,,[\w\W\s]*
+collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+created_at,La marca de tiempo ISO-8601 de cuando se creó el punto de datos en la base de datos de Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
 credit_data,Detalles sobre las tarjetas de crédito asociadas con esta cuenta.,,object,,Yes,Yes,,
+credit_data.cards,Detalles sobre las tarjetas asociadas con la cuenta.,,array,,No,No,,
+credit_data.cards[].identification_number,"El número de la tarjeta de crédito.
+
+**Nota:** A menudo, esto es solo los últimos cuatro dígitos de la tarjeta de crédito.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",4453,string,,Yes,No,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
+credit_data.cards[].is_multiple,"Boolean para indicar si esta cuenta tiene múltiples tarjetas de crédito.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",False,boolean,,Yes,No,,
 credit_data.collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
 credit_data.credit_limit,"El límite de crédito superior de la tarjeta.
 
 > **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",192000.9,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
+credit_data.cutting_date,La fecha de vencimiento de la factura de la tarjeta de crédito.,2019-12-11,string,date,No,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+credit_data.interest_rate,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,number,float,No,Yes,,
+credit_data.last_payment_date,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,string,,No,Yes,,
 credit_data.limits,,,array,,No,No,,
+credit_data.limits[].available_amount,"El monto aún disponible.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",600,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+credit_data.limits[].consolidation_type,"Indica si el límite de crédito es consolidado o individual.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",INDIVIDUAL,string,,Yes,No,,
+credit_data.limits[].credit_limit,El límite de la tarjeta de crédito.,1000.04,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
 credit_data.limits[].identification_number,"El número de la tarjeta de crédito.
 
 **Nota:** A menudo, esto es solo los últimos cuatro dígitos de la tarjeta de crédito.
 
 > **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",4453,string,,Yes,Yes,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
-credit_data.limits[].credit_limit,El límite de la tarjeta de crédito.,1000.04,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
-credit_data.limits[].used_amount,La cantidad utilizada.,400.04,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
-credit_data.limits[].available_amount,"El monto aún disponible.
-
-> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",600,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
 credit_data.limits[].is_limit_flexible,"Boolean para indicar si el `credit_limit` es flexible.
 
 > **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",False,boolean,,Yes,No,,
+credit_data.limits[].line_name,El nombre de la línea de límite de crédito.,CREDITO_A_VISTA,string,,Yes,Yes,,
+credit_data.limits[].line_name_additional_info,Información adicional sobre el nombre de la línea.,Informações adicionais e complementares,string,,Yes,Yes,,[\w\W\s]*
 credit_data.limits[].type,"El tipo de límite. Devolvemos uno de los siguientes valores:
 
   - `TOTAL_LIMIT`
   - `MODAL_LIMIT`
 
   > **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",TOTAL_LIMIT,string,,Yes,No,"TOTAL_LIMIT, MODAL_LIMIT",
-credit_data.limits[].consolidation_type,"Indica si el límite de crédito es consolidado o individual.
-
-> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",INDIVIDUAL,string,,Yes,No,,
-credit_data.limits[].line_name,El nombre de la línea de límite de crédito.,CREDITO_A_VISTA,string,,Yes,Yes,,
-credit_data.limits[].line_name_additional_info,Información adicional sobre el nombre de la línea.,Informações adicionais e complementares,string,,Yes,Yes,,[\w\W\s]*
-credit_data.cutting_date,La fecha de vencimiento de la factura de la tarjeta de crédito.,2019-12-11,string,date,No,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+credit_data.limits[].used_amount,La cantidad utilizada.,400.04,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
 credit_data.minimum_payment,La cantidad mínima que el titular de la cuenta necesita pagar en el período de crédito actual.,2400.3,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+credit_data.monthly_payment,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,number,,No,Yes,,
 credit_data.network,"La red de crédito con la que está asociada la tarjeta. Devolvemos uno de los siguientes valores:
 
   - `VISA`
@@ -139,107 +109,68 @@ credit_data.network,"La red de crédito con la que está asociada la tarjeta. De
 
   > **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",MASTERCARD,string,,No,No,"VISA, MASTERCARD, AMERICAN_EXPRESS, DINERS_CLUB, HIPERCARD, BANDEIRA_PROPRIA, CHEQUE_ELETRONICO, ELO, OTHER",
 credit_data.network_additional_info,Información adicional sobre la red de tarjetas de crédito.,It's an orange card.,string,,No,Yes,,[\w\W\s]*
-credit_data.cards,Detalles sobre las tarjetas asociadas con la cuenta.,,array,,No,No,,
-credit_data.cards[].is_multiple,"Boolean para indicar si esta cuenta tiene múltiples tarjetas de crédito.
-
-> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",False,boolean,,Yes,No,,
-credit_data.cards[].identification_number,"El número de la tarjeta de crédito.
-
-**Nota:** A menudo, esto es solo los últimos cuatro dígitos de la tarjeta de crédito.
-
-> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",4453,string,,Yes,No,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
 credit_data.next_payment_date,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,string,,No,Yes,,
 credit_data.no_interest_payment,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,number,float,No,Yes,,
-credit_data.interest_rate,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,number,float,No,Yes,,
-credit_data.monthly_payment,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,number,,No,Yes,,
-credit_data.last_payment_date,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,string,,No,Yes,,
+currency,"El código de moneda de tres letras (ISO-4217).
+
+> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `balances` está disponible.",BRL,string,,Yes,No,,^[A-Z]{3}$
+funds_data,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,string,,Yes,Yes,,
+id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
+institution,Detalles sobre la institución.,,object,,Yes,No,,
+institution.name,"El nombre de la institución, según lo designado por Belvo.
+
+Por favor, consulta nuestro artículo del <a href=""https://developers.belvo.com/docs/institution"" target=""_blank"">DevPortal sobre Instituciones</a> para obtener una lista detallada de nombres de instituciones.",erebor_mx_retail,string,,No,No,,
+institution.type,"El tipo de institución. Devolvemos uno de los siguientes valores:
+
+  - `bank`
+  - `fiscal`
+  - `employment`",,string,,No,No,"bank, fiscal, employment",
+internal_identification,"La identificación interna de la institución para la cuenta.
+
+> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `balances` está disponible.",92792126019929279212650822221989319252576,string,,Yes,No,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
+last_accessed_at,La marca de tiempo ISO-8601 del acceso más reciente y exitoso de Belvo a la institución para el enlace dado.,2021-03-09T10:28:40.000Z,string,date-time,Yes,Yes,,
+link,El `link.id` al que pertenecen los datos.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
 loan_data,Las opciones de préstamo asociadas con esta cuenta.,,object,,Yes,Yes,,
+loan_data.amortization_schedule,"El calendario de amortización del préstamo.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",SEM_SISTEMA_AMORTIZACAO,string,,Yes,No,,
+loan_data.amortization_schedule_info,Información adicional sobre el `amortization_schedule`.,No need for a schedule.,string,,Yes,Yes,,[\w\W\s]*
+loan_data.balloon_payments,"Información detallada sobre cualquier pago global del préstamo, si corresponde.",,array,,Yes,Yes,,
+loan_data.balloon_payments[].amount,El monto total del pago global.,45391.89,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
+loan_data.balloon_payments[].currency,El código de moneda de tres letras (ISO-4217).,BRL,string,,Yes,Yes,,^[A-Z]{3}$
+loan_data.balloon_payments[].due_date,"La fecha en que se debe pagar el balloon payment, en formato `YYYY-MM-DD`.",2021-09-06,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+loan_data.collaterals,Detalles sobre cualquier garantía de préstamo que el individuo o negocio haya proporcionado.,,array,,Yes,Yes,,
+loan_data.collaterals[].amount,"El monto total de la factura.
+
+> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `collaterals` está disponible.",45391.89,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+loan_data.collaterals[].currency,"El código de moneda de tres letras (ISO-4217).
+
+> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `collaterals` está disponible.",BRL,string,,Yes,No,,^[A-Z]{3}$
+loan_data.collaterals[].subtype,"El subtipo de la garantía, según lo definido por la institución.
+
+> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `collaterals` está disponible.",CCR_CONVENIO_CREDITOS_RECIPROCOS,string,,Yes,No,,
+loan_data.collaterals[].type,"El tipo de garantía, según lo definido por la institución.
+
+> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `collaterals` está disponible.",OPERACOES_GARANTIDAS_PELO_GOVERNO,string,,Yes,No,,
 loan_data.collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
-loan_data.loan_code,"El número de contrato estandarizado específico del país.
-
-> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",92792126019929279212650822221989319252576,string,,Yes,No,,"^\d{22,67}$"
+loan_data.consignee_id,El ID del consignatario del préstamo.,60500998000135,string,,Yes,Yes,,^\d{14}$
 loan_data.contract_amount,"El monto total inicial del préstamo cuando se firmó el contrato, calculado por la institución. Este monto incluye el principal + intereses + impuestos + tarifas.",202000,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
-loan_data.total_effective_cost,El costo total efectivo inicial del préstamo.,209000,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
-loan_data.loan_type,"El tipo de préstamo, según la institución.
+loan_data.contract_end_date,"La fecha en la que se espera que el préstamo se complete, en formato `YYYY-MM-DD`.",2027-10-01,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+loan_data.contract_number,"El número de contrato del préstamo, tal como lo proporciona la institución.",1324926521496,string,,Yes,Yes,,"^\d{1,100}$"
+loan_data.contract_remaining_frequency,"La frecuencia de los pagos de las cuotas restantes contratadas, tal como se definió cuando se firmó el contrato por primera vez. Devolvemos uno de los siguientes valores:
+- `DAY`
+- `WEEK`
+- `MONTH`
+- `YEAR`
+- `NO_DEADLINE_REMAINING`
+- `null`",MONTH,string,,Yes,Yes,"DAY, WEEK, MONTH, YEAR, NO_DEADLINE_REMAINING, None",
+loan_data.contract_remaining_total,El número total de cuotas restantes del préstamo.,20,integer,int32,Yes,Yes,,
+loan_data.contract_start_date,"La fecha en que se firmó el contrato de préstamo, en formato `YYYY-MM-DD`.
 
-> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",HOME_EQUITY,string,,Yes,No,,
-loan_data.outstanding_balance,"El monto restante a pagar en total, incluidos los intereses.",182000,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
-loan_data.interest_rates,"Desglose del interés aplicado al préstamo. Con OF Brasil, recomendamos encarecidamente utilizar la información en `interest_rate_data` para obtener información detallada.
-
-> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",,array,,Yes,No,,
-loan_data.interest_rates[].name,"El nombre del tipo de tasa de interés aplicada al préstamo.
-
-**Nota:** Para OFDA Brasil, recomendamos usar el parámetro `interest_date_data.tax_type`.",NOMINAL,string,,Yes,Yes,,
-loan_data.interest_rates[].type,"El período durante el cual se aplica el interés al préstamo.
-
-> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",MONTHLY,string,,Yes,No,"MONTHLY, YEARLY",
-loan_data.interest_rates[].value,"La tasa de interés (en porcentaje o valor monetario).
-
-**Nota:** Para OFDA Brasil, recomendamos usar el parámetro `interest_date_data.pre_fixed_rate` y `interest_date_data.post_fixed_rate`.",7.85,number,float,Yes,Yes,,
-loan_data.interest_rates[].interest_rate_data,Información detallada sobre la tasa de interés.,,object,,Yes,Yes,,
-loan_data.interest_rates[].interest_rate_data.tax_type,"El tipo de impuesto sobre la tasa de interés. Devolvemos uno de los siguientes valores:
-
-  - `NOMINAL`
-  - `EFFECTIVE`
-  
-  > **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",NOMINAL,string,,Yes,No,"NOMINAL, EFFECTIVE",
-loan_data.interest_rates[].interest_rate_data.rate_type,"El tipo de tasa de interés. Devolvemos uno de los siguientes valores:
-
-  - `SIMPLE`
-  - `COMPOUND`
-
-  > **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",SIMPLE,string,,Yes,No,"SIMPLE, COMPOUND",
-loan_data.interest_rates[].interest_rate_data.type,"El período durante el cual se aplica el interés al préstamo.
-
-> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",MONTHLY,string,,No,No,"MONTHLY, YEARLY",
-loan_data.interest_rates[].interest_rate_data.calculation_base,"El cálculo base para la tasa de interés.
-
-> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",30/360,string,,Yes,No,,^[0-9]{2}\/[0-9]{3}$
-loan_data.interest_rates[].interest_rate_data.reference_index_type,"La tasa de índice de referencia. Devolvemos uno de los siguientes valores:
-
-  - `WITHOUT_INDEX_TYPE`
-  - `PRE_FIXED`
-  - `POST_FIXED`
-  - `FLOATING`
-  - `INDEXED_PRICE`
-  - `RURAL_CREDIT`
-  - `OTHER_INDEX`
-
-  > **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",FLOATING,string,,Yes,No,"WITHOUT_INDEX_TYPE, PRE_FIXED, POST_FIXED, FLOATING, INDEXED_PRICE, RURAL_CREDIT, OTHER_INDEX",
-loan_data.interest_rates[].interest_rate_data.reference_index_subtype,El subtipo de la tasa de índice de referencia.,TR_TBF,string,,Yes,Yes,,
-loan_data.interest_rates[].interest_rate_data.reference_index_info,Información adicional sobre la tasa del índice de referencia.,Additional information,string,,Yes,Yes,,"^[\w\W\s]{0,140}$"
-loan_data.interest_rates[].interest_rate_data.pre_fixed_rate,"La tasa de interés con porcentaje prefijado.
-
-> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",0.062,number,float,Yes,No,,^[01]\.\d{6}$
-loan_data.interest_rates[].interest_rate_data.post_fixed_rate,"La tasa de porcentaje post-fijada de la tasa de interés.
-
-> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",0.062,number,float,Yes,No,,^[01]\.\d{6}$
-loan_data.interest_rates[].interest_rate_data.additional_info,Información adicional sobre la tasa de interés.,Additional information,string,,Yes,Yes,,[\w\W\s]*
-loan_data.fees,Desglose de las tarifas aplicadas al préstamo.,,array,,Yes,Yes,,
-loan_data.fees[].type,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,string,,Yes,Yes,"OPERATION_FEE, INSURANCE_FEE, OTHERS, None",
-loan_data.fees[].value,El valor total de la tarifa. Misma moneda que el préstamo.,5.6,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
-loan_data.fees[].name,"El nombre de la tarifa.
-
- > **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `fees` está disponible.",Renovação de cadastro,string,,Yes,No,,"^[\w\W\s]{0,140}$"
-loan_data.fees[].code,"El código de tarifa.
-
- > **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `fees` está disponible.",CADASTRO,string,,Yes,No,,"^[\w\W\s]{0,140}$"
-loan_data.fees[].fee_charge_type,"Indica el tipo de cargo. Devolvemos uno de los siguientes valores:
-
-  - `SINGLE`
-  - `PER_INSTALLMENT`
-
-   > **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `fees` está disponible.",SINGLE,string,,Yes,No,"SINGLE, PER_INSTALLMENT",
-loan_data.fees[].fee_charge,"Método de facturación, según lo acordado con la institución. Devolvemos uno de los siguientes valores:
-
-  - `MINIMUM`
-  - `MAXIMUM`
-  - `FIXED`
-  - `PERCENTAGE`
-
-   > **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `fees` está disponible.",FIXED,string,,Yes,No,"MINIMUM, MAXIMUM, FIXED, PERCENTAGE",
-loan_data.fees[].rate,La tasa porcentual de la tarifa. Requerido cuando `fee_charge` está configurado en `PERCENTAGE`.,0.062,number,float,Yes,Yes,,^[01]\.\d{6}$
+> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil.",2020-03-01,string,date,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
 loan_data.contracted_charges,"Lo siento, no hay texto proporcionado para traducir. Por favor, proporciona el texto que necesitas que traduzca.",,array,,No,Yes,,
+loan_data.contracted_charges[].info,Información adicional sobre el cargo contratado.,Late fee,string,,No,Yes,,"^[\w\W\s]{0,140}$"
+loan_data.contracted_charges[].rate,"La tasa porcentual del cargo, calculada en función del monto del préstamo.",0.062,number,float,No,Yes,,^[01]\.\d{6}$
 loan_data.contracted_charges[].type,"El tipo de cargo contratado. Devolvemos uno de los siguientes valores:
 
   - `LATE_PAYMENT_INTEREST_FEE`
@@ -251,33 +182,35 @@ loan_data.contracted_charges[].type,"El tipo de cargo contratado. Devolvemos uno
   - `OTHER`
 
   > **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `contracted_charges` está disponible.",LATE_PAYMENT_INTEREST_FEE,string,,No,No,"LATE_PAYMENT_INTEREST_FEE, LATE_PAYMENT_PENALTY_FEE, DEFAULT_INTEREST_FEE, LOAN_CONTRACT_TAX, LATE_PAYMENT_TAX, NO_CHARGE, OTHER",
-loan_data.contracted_charges[].info,Información adicional sobre el cargo contratado.,Late fee,string,,No,Yes,,"^[\w\W\s]{0,140}$"
-loan_data.contracted_charges[].rate,"La tasa porcentual del cargo, calculada en función del monto del préstamo.",0.062,number,float,No,Yes,,^[01]\.\d{6}$
-loan_data.collaterals,Detalles sobre cualquier garantía de préstamo que el individuo o negocio haya proporcionado.,,array,,Yes,Yes,,
-loan_data.collaterals[].type,"El tipo de garantía, según lo definido por la institución.
+loan_data.credit_limit,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,number,,Yes,Yes,,
+loan_data.cutting_date,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,string,,Yes,Yes,,
+loan_data.cutting_day,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,string,,Yes,Yes,,
+loan_data.disbursement_dates,Un array de fechas cuando se desembolsó el préstamo.,,array,,Yes,Yes,,
+loan_data.fees,Desglose de las tarifas aplicadas al préstamo.,,array,,Yes,Yes,,
+loan_data.fees[].code,"El código de tarifa.
 
-> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `collaterals` está disponible.",OPERACOES_GARANTIDAS_PELO_GOVERNO,string,,Yes,No,,
-loan_data.collaterals[].subtype,"El subtipo de la garantía, según lo definido por la institución.
+ > **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `fees` está disponible.",CADASTRO,string,,Yes,No,,"^[\w\W\s]{0,140}$"
+loan_data.fees[].fee_charge,"Método de facturación, según lo acordado con la institución. Devolvemos uno de los siguientes valores:
 
-> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `collaterals` está disponible.",CCR_CONVENIO_CREDITOS_RECIPROCOS,string,,Yes,No,,
-loan_data.collaterals[].currency,"El código de moneda de tres letras (ISO-4217).
+  - `MINIMUM`
+  - `MAXIMUM`
+  - `FIXED`
+  - `PERCENTAGE`
 
-> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `collaterals` está disponible.",BRL,string,,Yes,No,,^[A-Z]{3}$
-loan_data.collaterals[].amount,"El monto total de la factura.
+   > **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `fees` está disponible.",FIXED,string,,Yes,No,"MINIMUM, MAXIMUM, FIXED, PERCENTAGE",
+loan_data.fees[].fee_charge_type,"Indica el tipo de cargo. Devolvemos uno de los siguientes valores:
 
-> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `collaterals` está disponible.",45391.89,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
-loan_data.balloon_payments,"Información detallada sobre cualquier pago global del préstamo, si corresponde.",,array,,Yes,Yes,,
-loan_data.balloon_payments[].due_date,"La fecha en que se debe pagar el balloon payment, en formato `YYYY-MM-DD`.",2021-09-06,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
-loan_data.balloon_payments[].currency,El código de moneda de tres letras (ISO-4217).,BRL,string,,Yes,Yes,,^[A-Z]{3}$
-loan_data.balloon_payments[].amount,El monto total del pago global.,45391.89,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
-loan_data.installments_contract_term_frequency,"La frecuencia de los pagos a plazos contratados, tal como se definió cuando se firmó el contrato por primera vez. Devolvemos uno de los siguientes:
+  - `SINGLE`
+  - `PER_INSTALLMENT`
 
-  - `DAY`
-  - `WEEK`
-  - `MONTH`
-  - `YEAR`
-  - `NO_DEADLINE_REMAINING`
-  - `null`",MONTH,string,,Yes,Yes,"DAY, WEEK, MONTH, YEAR, NO_DEADLINE_REMAINING, None",
+   > **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `fees` está disponible.",SINGLE,string,,Yes,No,"SINGLE, PER_INSTALLMENT",
+loan_data.fees[].name,"El nombre de la tarifa.
+
+ > **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `fees` está disponible.",Renovação de cadastro,string,,Yes,No,,"^[\w\W\s]{0,140}$"
+loan_data.fees[].rate,La tasa porcentual de la tarifa. Requerido cuando `fee_charge` está configurado en `PERCENTAGE`.,0.062,number,float,Yes,Yes,,^[01]\.\d{6}$
+loan_data.fees[].type,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,string,,Yes,Yes,"OPERATION_FEE, INSURANCE_FEE, OTHERS, None",
+loan_data.fees[].value,El valor total de la tarifa. Misma moneda que el préstamo.,5.6,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
+loan_data.first_installment_due_date,"La fecha en la que debe pagarse la primera cuota del préstamo, en formato `YYYY-MM-DD`.",2020-03-01,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
 loan_data.installment_frequency,"La frecuencia con la que se pagan las cuotas. Devolvemos uno de los siguientes valores:
 
   - `IRREGULAR`
@@ -292,41 +225,108 @@ loan_data.installment_frequency,"La frecuencia con la que se pagan las cuotas. D
 
   > **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",MONTHLY,string,,Yes,No,"IRREGULAR, WEEKLY, FORTNIGHTLY, MONTHLY, BIMONTHLY, QUARTERLY, BIANNUALLY, ANNUALLY, OTHER",
 loan_data.installment_frequency_info,Información adicional sobre el `installment_frequency`.,Both the term and requency are the same.,string,,Yes,Yes,,"^[\w\W\s]{0,99}$$"
-loan_data.first_installment_due_date,"La fecha en la que debe pagarse la primera cuota del préstamo, en formato `YYYY-MM-DD`.",2020-03-01,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
-loan_data.number_of_installments_total,El número total de cuotas necesarias para pagar el préstamo.,60,integer,int32,Yes,Yes,,
+loan_data.installments_contract_term_frequency,"La frecuencia de los pagos a plazos contratados, tal como se definió cuando se firmó el contrato por primera vez. Devolvemos uno de los siguientes:
+
+  - `DAY`
+  - `WEEK`
+  - `MONTH`
+  - `YEAR`
+  - `NO_DEADLINE_REMAINING`
+  - `null`",MONTH,string,,Yes,Yes,"DAY, WEEK, MONTH, YEAR, NO_DEADLINE_REMAINING, None",
+loan_data.interest_rate,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,number,,Yes,Yes,,
+loan_data.interest_rates,"Desglose del interés aplicado al préstamo. Con OF Brasil, recomendamos encarecidamente utilizar la información en `interest_rate_data` para obtener información detallada.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",,array,,Yes,No,,
+loan_data.interest_rates[].interest_rate_data,Información detallada sobre la tasa de interés.,,object,,Yes,Yes,,
+loan_data.interest_rates[].interest_rate_data.additional_info,Información adicional sobre la tasa de interés.,Additional information,string,,Yes,Yes,,[\w\W\s]*
+loan_data.interest_rates[].interest_rate_data.calculation_base,"El cálculo base para la tasa de interés.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",30/360,string,,Yes,No,,^[0-9]{2}\/[0-9]{3}$
+loan_data.interest_rates[].interest_rate_data.post_fixed_rate,"La tasa de porcentaje post-fijada de la tasa de interés.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",0.062,number,float,Yes,No,,^[01]\.\d{6}$
+loan_data.interest_rates[].interest_rate_data.pre_fixed_rate,"La tasa de interés con porcentaje prefijado.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",0.062,number,float,Yes,No,,^[01]\.\d{6}$
+loan_data.interest_rates[].interest_rate_data.rate_type,"El tipo de tasa de interés. Devolvemos uno de los siguientes valores:
+
+  - `SIMPLE`
+  - `COMPOUND`
+
+  > **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",SIMPLE,string,,Yes,No,"SIMPLE, COMPOUND",
+loan_data.interest_rates[].interest_rate_data.reference_index_info,Información adicional sobre la tasa del índice de referencia.,Additional information,string,,Yes,Yes,,"^[\w\W\s]{0,140}$"
+loan_data.interest_rates[].interest_rate_data.reference_index_subtype,El subtipo de la tasa de índice de referencia.,TR_TBF,string,,Yes,Yes,,
+loan_data.interest_rates[].interest_rate_data.reference_index_type,"La tasa de índice de referencia. Devolvemos uno de los siguientes valores:
+
+  - `WITHOUT_INDEX_TYPE`
+  - `PRE_FIXED`
+  - `POST_FIXED`
+  - `FLOATING`
+  - `INDEXED_PRICE`
+  - `RURAL_CREDIT`
+  - `OTHER_INDEX`
+
+  > **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",FLOATING,string,,Yes,No,"WITHOUT_INDEX_TYPE, PRE_FIXED, POST_FIXED, FLOATING, INDEXED_PRICE, RURAL_CREDIT, OTHER_INDEX",
+loan_data.interest_rates[].interest_rate_data.tax_type,"El tipo de impuesto sobre la tasa de interés. Devolvemos uno de los siguientes valores:
+
+  - `NOMINAL`
+  - `EFFECTIVE`
+  
+  > **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",NOMINAL,string,,Yes,No,"NOMINAL, EFFECTIVE",
+loan_data.interest_rates[].interest_rate_data.type,"El período durante el cual se aplica el interés al préstamo.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",MONTHLY,string,,No,No,"MONTHLY, YEARLY",
+loan_data.interest_rates[].name,"El nombre del tipo de tasa de interés aplicada al préstamo.
+
+**Nota:** Para OFDA Brasil, recomendamos usar el parámetro `interest_date_data.tax_type`.",NOMINAL,string,,Yes,Yes,,
+loan_data.interest_rates[].type,"El período durante el cual se aplica el interés al préstamo.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",MONTHLY,string,,Yes,No,"MONTHLY, YEARLY",
+loan_data.interest_rates[].value,"La tasa de interés (en porcentaje o valor monetario).
+
+**Nota:** Para OFDA Brasil, recomendamos usar el parámetro `interest_date_data.pre_fixed_rate` y `interest_date_data.post_fixed_rate`.",7.85,number,float,Yes,Yes,,
+loan_data.last_payment_date,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,string,,Yes,Yes,,
+loan_data.last_period_balance,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,number,,Yes,Yes,,
+loan_data.limit_day,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,string,,Yes,Yes,,
+loan_data.loan_code,"El número de contrato estandarizado específico del país.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",92792126019929279212650822221989319252576,string,,Yes,No,,"^\d{22,67}$"
+loan_data.loan_type,"El tipo de préstamo, según la institución.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",HOME_EQUITY,string,,Yes,No,,
+loan_data.monthly_payment,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,number,float,Yes,Yes,,
+loan_data.no_interest_payment,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,number,,Yes,Yes,,
 loan_data.number_of_installments_outstanding,El número de cuotas restantes por pagar.,48,integer,int32,Yes,Yes,,
 loan_data.number_of_installments_paid,El número de cuotas ya pagadas.,32,integer,int32,Yes,Yes,,
 loan_data.number_of_installments_past_due,El número de cuotas que están vencidas.,2,integer,int32,Yes,Yes,,
-loan_data.disbursement_dates,Un array de fechas cuando se desembolsó el préstamo.,,array,,Yes,Yes,,
-loan_data.settlement_date,"La fecha en que se liquidó el préstamo, en formato `YYYY-MM-DD`.",2021-09-23,string,,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
-loan_data.contract_start_date,"La fecha en que se firmó el contrato de préstamo, en formato `YYYY-MM-DD`.
-
-> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil.",2020-03-01,string,date,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
-loan_data.contract_end_date,"La fecha en la que se espera que el préstamo se complete, en formato `YYYY-MM-DD`.",2027-10-01,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
-loan_data.contract_remaining_frequency,"La frecuencia de los pagos de las cuotas restantes contratadas, tal como se definió cuando se firmó el contrato por primera vez. Devolvemos uno de los siguientes valores:
-- `DAY`
-- `WEEK`
-- `MONTH`
-- `YEAR`
-- `NO_DEADLINE_REMAINING`
-- `null`",MONTH,string,,Yes,Yes,"DAY, WEEK, MONTH, YEAR, NO_DEADLINE_REMAINING, None",
-loan_data.contract_remaining_total,El número total de cuotas restantes del préstamo.,20,integer,int32,Yes,Yes,,
-loan_data.amortization_schedule,"El calendario de amortización del préstamo.
-
-> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",SEM_SISTEMA_AMORTIZACAO,string,,Yes,No,,
-loan_data.amortization_schedule_info,Información adicional sobre el `amortization_schedule`.,No need for a schedule.,string,,Yes,Yes,,[\w\W\s]*
-loan_data.consignee_id,El ID del consignatario del préstamo.,60500998000135,string,,Yes,Yes,,^\d{14}$
-loan_data.contract_number,"El número de contrato del préstamo, tal como lo proporciona la institución.",1324926521496,string,,Yes,Yes,,"^\d{1,100}$"
-loan_data.monthly_payment,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,number,float,Yes,Yes,,
-loan_data.principal,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,number,float,Yes,Yes,,
-loan_data.payment_day,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,string,,Yes,Yes,,
+loan_data.number_of_installments_total,El número total de cuotas necesarias para pagar el préstamo.,60,integer,int32,Yes,Yes,,
+loan_data.outstanding_balance,"El monto restante a pagar en total, incluidos los intereses.",182000,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
 loan_data.outstanding_principal,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,number,float,Yes,Yes,,
-loan_data.credit_limit,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,number,,Yes,Yes,,
-loan_data.last_period_balance,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,number,,Yes,Yes,,
-loan_data.interest_rate,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,number,,Yes,Yes,,
-loan_data.limit_day,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,string,,Yes,Yes,,
-loan_data.cutting_day,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,string,,Yes,Yes,,
-loan_data.cutting_date,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,string,,Yes,Yes,,
-loan_data.last_payment_date,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,string,,Yes,Yes,,
-loan_data.no_interest_payment,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,number,,Yes,Yes,,
-funds_data,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,string,,Yes,Yes,,
+loan_data.payment_day,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,string,,Yes,Yes,,
+loan_data.principal,**Nota:** Este campo no es aplicable para OF Brazil y devolverá null.,,number,float,Yes,Yes,,
+loan_data.settlement_date,"La fecha en que se liquidó el préstamo, en formato `YYYY-MM-DD`.",2021-09-23,string,,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+loan_data.total_effective_cost,El costo total efectivo inicial del préstamo.,209000,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+name,"El nombre de la cuenta, tal como lo proporciona la institución.",Cuenta Perfiles- M.N. - MXN-666,string,,Yes,Yes,,
+number,"El número de cuenta, tal como lo designa la institución.",4057068115181,string,,Yes,Yes,,
+overdraft,,,object,,No,Yes,,
+overdraft.arranged,"El límite de sobregiro acordado entre el titular de la cuenta y la institución.
+
+> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `overdraft` está disponible.",5000.5,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+overdraft.unarranged,"El sobregiro utilizado que no fue acordado entre el titular de la cuenta y la institución.
+
+> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `overdraft` está disponible.",300.1,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+overdraft.used,"El valor del sobregiro utilizado.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor si el campo `overdraft` está disponible.",1000.5,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+public_identification_name,"El nombre público para el tipo de identificación. Para cuentas de ahorro y corrientes en 🇧🇷 Brasil, este campo será `AGENCY/ACCOUNT`.",AGENCY/ACCOUNT,string,,Yes,Yes,,
+public_identification_value,"El valor para el `public_identification_name`.
+
+Para cuentas de ahorro y corriente OFDA brasileñas 🇧🇷, este campo será el número de agencia y cuenta bancaria, separados por una barra. Por ejemplo: `0444/45722-0`.
+
+Para cuentas de tarjeta de crédito OFDA brasileñas 🇧🇷, devolveremos una cadena de números de tarjeta de crédito concatenados asociados con la cuenta. Por ejemplo: ""8763,9076,5522""",0444/45722-0,string,,Yes,Yes,,
+subtype,"El subtipo de cuenta, según lo designado por la institución.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",FINANCIAMENTO_HABITACIONAL_SFH,string,,Yes,No,,
+type,"El tipo de cuenta, según lo designado por la institución.
+
+> **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",STANDARD_NACIONAL,string,,Yes,No,,

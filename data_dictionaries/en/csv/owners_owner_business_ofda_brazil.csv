@@ -1,0 +1,305 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+additional_documents,"Detailed information regarding additional documents provided to prove the business's ID.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",,array,,Yes,No,,
+additional_documents[].additional_info,"Additional information about the ID document.
+
+> **Note**: This field is not applicable for Business ID documents and will return `null`.
+",,string,,Yes,Yes,,"^[\w\W\s]{0,100}$"
+additional_documents[].check_digit,"The check digit of the ID document.
+
+> **Note**: This field is not applicable for Business ID documents and will return `null`.
+",,string,,Yes,No,,"^[\w\W\s]{0,2}$"
+additional_documents[].country_of_issuance,"The three-letter country code that issued the document (in ISO-3166 Alpha 3 format).
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",CAN,string,,Yes,Yes,,^(\w{3}){1}$
+additional_documents[].expiration_date,"The date the the ID document expires, in `YYYY-MM-DD` format.
+",2019-01-01,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+additional_documents[].issue_date,"The date the the ID document was issued, in `YYYY-MM-DD` format.
+
+> **Note**: This field is not applicable for Business ID documents and will return `null`.
+",,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+additional_documents[].number,"The ID document's number.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",DL-7896829-7,string,,Yes,No,,"^[\w\W]{0,40}$"
+additional_documents[].type,"The type of ID document. We return one of the following values:
+
+  - `DRIVERS_LICENSE`
+  - `PASSPORT`
+  - `ID_CARD`
+  - `FISCAL_ID`
+  - `FOREIGNER_REGISTRATION_CARD`
+  - `OTHER`
+  - `null`
+  
+",DRIVERS_LICENSE,string,,Yes,Yes,"DRIVERS_LICENSE, PASSPORT, ID_CARD, FISCAL_ID, FOREIGNER_REGISTRATION_CARD, OTHER, None",
+additional_documents[].type_additional_info,"Additional information regarding the document type.
+
+> Note: For Business ID documents, this field must return a value from Brazil's open finance network.
+",EIN,string,,Yes,Yes,,"^[\w\W\s]{0,70}$"
+address,The accounts owners registered address.,"Carrer de la Llacuna, 162, 08018 Barcelona",string,,Yes,Yes,,
+addresses,Detailed information regarding the owner's addresses.,,array,,Yes,No,,
+addresses[].additional_info,"Additional information regarding the user's address.
+",In between two palm trees,string,,Yes,Yes,,"^[\w\W\s]{0,150}$"
+addresses[].address,"The user's address.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+","Av Naburo Ykesaki, 1270",string,,Yes,No,,"^[\w\W\s]{0,150}$"
+addresses[].country_code,"The three-letter country code (ISO-3166 Alpha 3 compliant).
+",BRA,string,,Yes,Yes,,^([A-Z]{3})$
+addresses[].country_name,"The name of the country.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",Brasil,string,,Yes,No,,"^[\w\W\s]{0,80}$"
+addresses[].district_name,"The distrct of the address.
+",CENTRO,string,,Yes,Yes,,"^[\w\W\s]{0,50}$"
+addresses[].is_main,"Boolean to indicate if this is the user's main address.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",True,boolean,,Yes,No,,
+addresses[].latitude,"The geographic latitude coordinate.
+",-23.5475000,string,,Yes,Yes,,"^-?\d{1,2}\.\d{1,9}$"
+addresses[].longitude,"The geographic longitude coordinate.
+",-46.6361100,string,,Yes,Yes,,"^-?\d{1,3}\.\d{1,8}$"
+addresses[].postcode,"The postcode of the address.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",17500001,string,,Yes,No,,^\d{8}$
+addresses[].state,"The state that the address is located in.
+",SP,string,,Yes,Yes,,"^[\w\W\s]{0,2}$"
+addresses[].town,"The user's town.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",Brasilia,string,,Yes,No,,"^[\w\W\s]{0,50}$"
+addresses[].town_code,"The seven-digit code for the town, if applicable.
+
+For Brazil, this is the IBGE town code.
+",3550308,string,,Yes,Yes,,\d{7}$
+collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+companies_id,"The institutions responsible for the creation and verification of the owner.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",,array,,Yes,No,,
+company_name,"The full (official) name of the business, as provided by the institution.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",Wayne Enterprises,string,,Yes,No,,"^[\w\W]{0,128}$"
+created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+document_id,"Information regarding the identification document the owner provided to the bank.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",,object,,Yes,No,,
+document_id.document_number,"The document's identification number.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",235578435-S,string,,Yes,No,,
+document_id.document_type,"The type of document the owner provided to the institution to open the account. Common document types are:
+
+🇧🇷 Brazil
+- `CPF` (*Cadastro de Pessoas Físicas*)
+- `CNPJ`(*Cadastro Nacional de Pessoas Jurídicas*)
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",CPF,string,,Yes,No,,
+email,The account owner's registered email address.,johndoe@belvo.com,string,email,Yes,Yes,,
+emails,Additional list of emails the owner provided.,,array,,Yes,No,,
+emails[].email,"The user's email address.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",homen_morcego@gmail.com,string,,Yes,No,,"^[\w\W\s]{0,320}$"
+emails[].is_main,"Boolean to indicate if this is the user's main email address.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",True,boolean,,Yes,No,,
+financial_profile,Information regarding the financial profile of the individual.,,object,,Yes,Yes,,
+financial_profile.economic_activities,Details regarding the reported economic activities of the business.,,array,,Yes,No,,
+financial_profile.economic_activities[].code,"The code of the economic activity, as given by the country.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `economic_activities` field is available.
+",8599604,string,,Yes,No,,"^\d{2,7}$"
+financial_profile.economic_activities[].is_main,"Boolean to indicate whether this is the business's main economic activity.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `economic_activities` field is available.
+",True,boolean,,Yes,No,,
+financial_profile.informed_revenue,Information regarding the business's reported revenue.,,object,,Yes,Yes,,
+financial_profile.informed_revenue.amount,"The reported revenue of the business.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `informed_revenue` field is available.
+",45391.89,number,,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+financial_profile.informed_revenue.currency,"The three-letter currency code (ISO-4217).
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `informed_revenue` field is available.
+",BRL,string,,Yes,No,,^[A-Z]{3}$
+financial_profile.informed_revenue.frequency,"Indicates how often the business declares their revenue. We return one of the following values:
+  
+  - `DAILY`
+  - `WEEKLY`
+  - `FORTNIGHTLY`
+  - `MONTHLY`
+  - `BIMONTHLY`
+  - `QUARTERLY`
+  - `BIANNUALLY`
+  - `ANNUALLY`
+  - `OTHERS`
+  - `null`
+",MONTHLY,string,,Yes,Yes,"DAILY, WEEKLY, FORTNIGHTLY, MONTHLY, BIMONTHLY, QUARTERLY, BIANNUALLY, ANNUALLY, OTHERS, None",
+financial_profile.informed_revenue.frequency_additional_info,"Additional information regarding the frequency.
+",Recently switched from weekly to monthly.,string,,Yes,Yes,,[\w\W\s]*
+financial_profile.informed_revenue.year,"The year when revenue was last declared.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `informed_revenue` field is available.
+",2022,integer,,Yes,No,,
+financial_profile.patrimony,Information regarding the individual's reported assets.,,object,,Yes,Yes,,
+financial_profile.patrimony.amount,"The reported assets of the business.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `patrimony` field is available.
+",45391.89,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+financial_profile.patrimony.currency,"The three-letter currency code (ISO-4217).
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `patrimony` field is available.
+",BRL,string,,Yes,No,,^[A-Z]{3}$
+financial_profile.patrimony.date,"The date that the reported assets applied, in `YYYY-MM-DD` format.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `patrimony` field is available.
+",2022-12-12,string,date,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+financial_relation,"Details regarding any additional relationship the business has with the institution (for example, other accounts or products they have with the institution).",,object,,Yes,Yes,,
+financial_relation.procurators,Information regarding any individuals or companies that can act on behalf of the owner.,,array,,Yes,No,,
+financial_relation.procurators[].civil_name,"The representatives's full name.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `procurators` field is available.
+",Alfred Thaddeus Pennyworth,string,,Yes,No,,^[\w\W]*$
+financial_relation.procurators[].document_number,"The document number of the representative.
+
+**Note**: For individuals, this is Brazil's CPF number. For businesses, this is Brazil's CNPJ number.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `procurators` field is available.
+",73677831148,string,,Yes,No,,^\d{11}$
+financial_relation.procurators[].social_name,"The person's social name.
+",Alfred Pennyworth,string,,Yes,Yes,,^[\w\W]*$
+financial_relation.procurators[].type,"The type of representative that can access and make changes to the account. We return one of the following values:
+
+  - `LEGAL_REPRESENTATIVE`
+  - `ATTORNEY`
+  - `null`
+  
+",LEGAL_REPRESENTATIVE,string,,Yes,Yes,"LEGAL_REPRESENTATIVE, ATTORNEY, None",
+financial_relation.product_services,"A list of products that the business has with the institution.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",,array,,Yes,No,,
+financial_relation.products,Details regarding any additional products that the business has with the institution.,,array,,Yes,No,,
+financial_relation.products[].agency,"The branch code where the product was opened.
+",6272,string,,Yes,Yes,,"^\d{1,4}$"
+financial_relation.products[].check_digit,"The check digit of the product's number.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `products` field is available.
+",7,string,,Yes,No,,"^[\w\W\s]{0,2}$"
+financial_relation.products[].clearing_code,"The banking clearing code for the product.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `products` field is available.
+",001,string,,Yes,No,,^\d{3}$
+financial_relation.products[].number,"The account number of the product.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `products` field is available.
+",24550245,string,,Yes,No,,"^\d{8,20}$"
+financial_relation.products[].subtype,"The subtype of the product that the business has at the institution.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `products` field is available.
+",CONJUNTA_SIMPLES,string,,Yes,No,,
+financial_relation.products[].type,"The additional products the business has at the institution. We return one of the following values:
+
+  - `SAVINGS_ACCOUNT`
+  - `CHECKING_ACCOUNT`
+  - `null`
+  
+",SAVINGS_ACCOUNT,string,,Yes,Yes,"SAVINGS_ACCOUNT, CHECKING_ACCOUNT, None",
+financial_relation.start_date,"The ISO-8601 timestamp when the financial relationship between the business and the institution started.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",2021-05-21T08:30:00Z,string,date-time,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
+id,"Belvo's unique identifier for the current item.
+",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
+incorporation_date,"The date that the business was incorporated, in `YYYY-MM-DD` format.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",1988-07-15,string,date,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+internal_identification,The institution's internal identifier for the owner.,7e5838e4,string,,Yes,Yes,,
+link,The `link.id` the data belongs to.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
+parties,"Detailed information regarding the parties allowed to act on the owner's behalf.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",,array,,Yes,No,,
+parties[].company_name,"The full (official) name of the business. Only applicable if the `person_type` is `COMPANY`.
+",Wayne Enterprises,string,,No,Yes,,"^[\w\W]{0,128}$"
+parties[].display_name,"The full name of the individual, as provided by the institution. Only applicable if the `person_type` is `INDIVIDUAL`.
+",Jack Oswald White,string,,Yes,Yes,,"^[\w\W]{0,128}$"
+parties[].document_additional_info,"Additional information regarding the document.
+",Confirmed CPF with their driver's licence.,string,,Yes,Yes,,"^[\w\W\s]{0,100}$"
+parties[].document_country,"The three-letter country code that issued the document (in ISO-3166 Alpha 3 format).
+",CAN,string,,Yes,Yes,,^(\w{3}){1}$
+parties[].document_expiration_date,"The date the the ID document expires, in `YYYY-MM-DD` format.
+",2019-01-01,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+parties[].document_issue_date,"The date the the ID document was issued, in `YYYY-MM-DD` format.
+",2019-01-01,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+parties[].document_number,"The ID document's number.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",DL-7896829-7,string,,Yes,No,,"^[\w\W\s]{0,40}$"
+parties[].document_type,"The type of ID document the party provided when being added to the account. We return one of the following values:
+
+  - `CPF`
+  - `CNPJ`
+  - `OTHER_TRAVEL_DOCUMENT`
+  - `PASSPORT`
+",CPF,string,,Yes,Yes,"CPF, CNPJ, OTHER_TRAVEL_DOCUMENT, PASSPORT",
+parties[].percentage_type,"The party's equity interest.
+",0.51,number,float,Yes,Yes,,^[01]\.\d{6}$
+parties[].person_type,"The type of person that is an ownership party of the account. We return one of the following values:
+
+  - `INDIVIDUAL`
+  - `COMPANY`
+  
+",INDIVIDUAL,string,,Yes,Yes,"INDIVIDUAL, COMPANY",
+parties[].social_name,"The social name of the individual, as generally accepted by the country. Only applicable if the `person_type` is `INDIVIDUAL`.
+",O Piadista,string,,Yes,Yes,,"^[\w\W]{0,128}$"
+parties[].start_date,"The date that the party was added to the account, in `YYYY-MM-DD` format.
+",2021-07-15,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+parties[].trade_name,"The trade name of the business. Only applicable if the `person_type` is `COMPANY`.
+",WayneCorp,string,,Yes,Yes,,"^[\w\W]{0,128}$"
+parties[].type,"The access type that the `person_type` has to the account. We return one of the following values:
+
+- `MEMBER` indicates that the `person_type` has read access to the account.
+- `ADMINISTRATOR` indicates that the `person_type` can perform all actions for the account (including transfers).
+",MEMBER,string,,Yes,Yes,"MEMBER, ADMINISTRATOR",
+phone_number,The account owner's registered phone number.,+52-XXX-XXX-XXXX,string,,Yes,Yes,,
+phone_numbers,Detailed information regarding the owner's `phone_number`s.,,array,,Yes,No,,
+phone_numbers[].additional_info,"Additional information about the phone number.
+",This is their work mobile number.,string,,Yes,Yes,,"^[\w\W\s]{0,100}$"
+phone_numbers[].area_code,"The area dialling code.
+",21,string,,Yes,Yes,,"^\d{1,2}$"
+phone_numbers[].country_code,"The country dialling code. For example: `351` (no `+`).
+",351,string,,Yes,Yes,,"^\d{1,4}$"
+phone_numbers[].extension,"The extension code.
+",932,string,,Yes,Yes,,"^\d{1,5}$"
+phone_numbers[].is_main,"Boolean to indicate if this is the user's main phone number.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",True,boolean,,Yes,No,,
+phone_numbers[].number,"The phone number (not including the country, area, or extension codes).
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",29875132,string,,Yes,No,,"^([0-9]{8,11})$"
+phone_numbers[].type,"The type of phone number. We return one of the following values:
+
+  - `LANDLINE`
+  - `MOBILE`
+  - `OTHER`
+  - `null`
+",MOBILE,string,,Yes,Yes,"LANDLINE, MOBILE, OTHER, None",
+trade_name,"The trade name of the business.
+",WayneCorp,string,,Yes,Yes,,"^[\w\W]{0,128}$"

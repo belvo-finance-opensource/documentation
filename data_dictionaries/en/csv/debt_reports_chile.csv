@@ -1,0 +1,43 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+credit_lines,List of credit lines (such as credit cards) available to the individual.,,array,,No,Yes,,
+credit_lines[].direct_amount,The amount of direct credit available.,5000000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+credit_lines[].financial_institution,The name of the financial institution providing the credit line.,Banco BCI,string,,No,No,,
+credit_lines[].indirect_amount,The amount of indirect credit available.,,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+currency,"The currency of the debts. For Chile, this will be the `CLP`.",CLP,string,,No,No,,^[A-Z]{3}$
+current,The amount of debt that is currently outstanding but not past due.,5350000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+debt_data_last_update,"The date when the debt data was last updated, in `YYYY-MM-DD` format.",2023-07-02,string,date,No,No,,
+defaulted,The amount of debt that is 90 days past due.,1100000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+delinquent,The amount of debt that is 30-59 days past due.,,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+direct_debts,A list of debts that are directly atttribued to the individual.,,array,,No,Yes,,
+direct_debts[].amount,The total amount of the debt at the financial institution.,5000000.02,number,float,No,No,,"^\d{1,15}\.\d{2,4}$"
+direct_debts[].credit_type,"The type of credit issued by the financial institution. For example, `Vivienda`, `Comercial`, `Consumo`, or `Otro`.",Vivienda,string,,No,No,,
+direct_debts[].current,The current outstanding amount of the debt at the financial institution.,5000000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+direct_debts[].defaulted,The amount of debt that is 90 days past due.,,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+direct_debts[].delinquent,The amount of debt that is 30-59 days past due.,,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+direct_debts[].financial_institution,The name of the financial institution where the debt is held.,Banco Santander,string,,No,No,,
+direct_debts[].severely_delinquent,The amount of debt that is 60-89 days past due.,,number,float,No,Yes,,
+id,"Belvo's unique identifier for the current item.
+",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+indirect_debts,List of indirect debts from financial institutions.,,array,,No,Yes,,
+indirect_debts[].amount,The total amount of the debt at the financial institution.,200000.02,number,float,No,No,,"^\d{1,15}\.\d{2,4}$"
+indirect_debts[].credit_type,"The type of credit issued by the financial institution. For example, `Vivienda`, `Comercial`, `Consumo`, or `Otro`.",Consumo,string,,No,No,,
+indirect_debts[].current,The current outstanding amount of the debt at the financial institution.,,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+indirect_debts[].defaulted,The amount of debt that is 90 days past due.,200000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+indirect_debts[].delinquent,The amount of debt that is 30-59 days past due.,,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+indirect_debts[].financial_institution,Name of the financial institution providing the indirect debt.,Banco BCI,string,,No,No,,
+indirect_debts[].severely_delinquent,The amount of debt that is 60-89 days past due.,,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+link,The `link.id` the data belongs to.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
+other_credits,"List of other credits (such as guarantee notes, foreign credit, and so on) available to the individual.",,array,,No,Yes,,
+other_credits[].direct_amount,The amount of direct credit available.,,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+other_credits[].financial_institution,The name of the financial institution providing the credit.,Banco BCI,string,,No,No,,
+other_credits[].indirect_amount,The amount of indirect credit available.,250000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+personal_data,,,object,,No,No,,
+personal_data.document_id_number,"The document ID number of the individual. For Chile, this will be the RUT number.",12345678-9,string,,No,No,,
+personal_data.document_id_type,"The type of document ID of the individual. For Chile, this will be always set to `RUT`.",RUT,string,,No,No,RUT,
+personal_data.full_name,The full name of the individual.,Cabezas Pérez Martín Vicente ,string,,No,No,,
+severely_delinquent,The amount of debt that is 60-89 days past due.,56000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+total,"The total amount of debt including current, delinquent, severely delinquent, and defaulted debts.",6506000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"

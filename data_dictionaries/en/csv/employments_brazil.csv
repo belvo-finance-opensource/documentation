@@ -1,0 +1,37 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+employer_data,Details regarding the employer.,,object,,Yes,No,,
+employer_data.code,The institution's unique code for the employer.,49430669,string,,Yes,No,,
+employer_data.economic_activity,"The main economic activity the employer is involved in. For Brazil, this is the *Classificação Nacional de Atividades Econômicas* (CNAE) code.",6421-2 - BANCOS COMERCIAIS,string,,Yes,No,,
+employer_data.name,The name of the employer.,Wayne Industries,string,,Yes,No,,
+end_date,"The employee's end date at the employer, in `YYYY-MM-DD` format. If `null`, the employee is still working at the employer.",2023-01-01,string,date,Yes,Yes,,^\d{4}-\d{2}-\d{2}$
+id,"Belvo's unique identifier for the current item.
+",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
+link,The `link.id` the data belongs to.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
+occupations,The employee's occupations at the employer.,,array,,Yes,No,,
+occupations[].description,"The position the employee held. For Brazil, this description must be according to the Ministry of Labour and listed in the *Classificação Brasileira de Ocupações* (CBO).",ANALISTA DE PRODUTOS BANCARIOS,string,,Yes,No,,
+occupations[].end_date,"The date that the employee stopped working in this position, in `YYYY-MM-DD` format. If `null`, this means that the employee is still holds this position.",2023-01-01,string,date,Yes,Yes,,^\d{4}-\d{2}-\d{2}$
+occupations[].locale,"Where the employee fufilled their duties. For Brazil, this can be either:
+  -  `Urbana` (Urban)
+  - `Rural` (Rural)
+  - `Não Identificado`
+  - `null`
+",Urbana,string,,Yes,No,,
+occupations[].name,"The employees occupation, as provided by the employer.",ANALISTA DE PRODUTOS BANCARIOS - 2525-40,string,,Yes,No,,
+occupations[].start_date,"The date that the employee started the position, in `YYYY-MM-DD` format.",2022-01-01,string,date,Yes,No,,^\d{4}-\d{2}-\d{2}$
+salaries,The salaries the employee received from the employer.,,array,,Yes,No,,
+salaries[].base_amount,"The base amount of the salary, before any deductions or bonuses.",1033.09,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+salaries[].currency,The three-letter currency code (ISO-4217).,BRL,string,,Yes,No,,^[A-Z]{3}$
+salaries[].month,"The month that the employee received their salary, in `YYYY-MM` format.",2022-01,string,,Yes,No,,^\d{4}-\d{2}$
+salaries[].retained_amount,The amount retained by Brazil's *Instituto Nacional do Seguro Social* (INSS).,0.01,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+salaries[].type,"The type of salary.
+
+We return one of the following values:
+  - `REGULAR`
+  - `THIRTEENTH`
+  - `null`
+",REGULAR,string,,No,Yes,"REGULAR, THIRTEENTH, None",
+start_date,"The employee's start date at the employer, in `YYYY-MM-DD` format.",2022-01-01,string,date,Yes,No,,^\d{4}-\d{2}-\d{2}$

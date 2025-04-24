@@ -1,11 +1,41 @@
 Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
-id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
-link,El `link.id` al que pertenecen los datos.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
+cancelation_status,"Si la factura es cancelada, este campo indica el estado de la cancelación.",,string,,Yes,Yes,,
+cancelation_update_date,"La fecha de la cancelación de la factura, en formato `YYYY-MM-DD`.",2019-12-02,string,date,Yes,Yes,,
+certification_authority,El ID fiscal del proveedor de certificación.,CCC333333CC33,string,,Yes,Yes,,
+certification_date,"La fecha de la certificación fiscal, en formato `YYYY-MM-DD`.",2019-12-01,string,date,Yes,Yes,,
 collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
 created_at,La marca de tiempo ISO-8601 de cuando se creó el punto de datos en la base de datos de Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
-invoice_identification,El ID único de la institución fiscal para la factura.,A1A1A1A1-2B2B-3C33-D44D-555555E55EE,string,,Yes,Yes,,
+currency,"La moneda de la factura. Por ejemplo:
+
+- 🇧🇷 BRL (Real Brasileño)
+- 🇨🇴 COP (Peso Colombiano)
+- 🇲🇽 MXN (Peso Mexicano)
+- 🇺🇸 USD (Dólar Estadounidense)",MXN,string,,Yes,Yes,,
+discount_amount,El monto total descontado en esta factura.,10,number,float,Yes,Yes,,
+exchange_rate,El tipo de cambio utilizado en esta factura para la moneda.,0.052,number,float,Yes,Yes,,
+folio,El número de control interno que el contribuyente asigna a la factura.,26,string,,No,Yes,,
+id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
 invoice_date,"La fecha de la factura, en formato `YYYY-MM-DD`.",2019-12-01,string,,Yes,Yes,,
-status,El estado de la factura. Puede ser *Vigente* (válido) o *Cancelado* (cancelado).,Vigente,string,,Yes,Yes,,
+invoice_details,Una lista de descripciones para cada artículo (producto comprado o servicio prestado) en la factura.,,array,,Yes,No,,
+invoice_details[].collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+invoice_details[].description,La descripción del artículo de la factura (una factura puede tener uno o más artículos).,December 2019 accounting fees,string,,Yes,Yes,,
+invoice_details[].pre_tax_amount,El precio total de este artículo antes de aplicar impuestos es (`quantity` x `unit_amount`).,400,number,float,Yes,Yes,,
+invoice_details[].product_identification,"El código de identificación del producto o del servicio, tal como lo define la entidad legal en el país.\n- \U0001F1F2\U0001F1FD <a href=""http://200.57.3.89/Pys/catPyS.aspx"" target=""_blank"">México</a>.",84101600,string,,Yes,Yes,,
+invoice_details[].quantity,La cantidad de este artículo de factura.,10,number,float,Yes,Yes,,
+invoice_details[].retained_taxes,El impuesto retenido en el artículo de la factura.,,array,,No,No,,
+invoice_details[].retained_taxes[].collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+invoice_details[].retained_taxes[].retained_tax_amount,El monto del impuesto retenido.,209.79,number,float,Yes,Yes,,
+invoice_details[].retained_taxes[].tax,"El tipo de impuesto retenido (por ejemplo, ISR, IVA o IEPS).",ISR,string,,Yes,Yes,,
+invoice_details[].retained_taxes[].tax_percentage,El porcentaje de impuesto retenido.,10,number,float,Yes,Yes,,
+invoice_details[].retained_taxes[].tax_type,El tipo de impuesto del artículo.,,string,,No,Yes,,
+invoice_details[].tax_amount,El monto del impuesto para este artículo de factura (`pre_tax_amount` x `tax_percentage`).,64,number,float,Yes,Yes,,
+invoice_details[].tax_percentage,El porcentaje de impuesto a aplicar.,16,number,float,Yes,Yes,,
+invoice_details[].tax_type,El tipo de impuesto del artículo.,,string,,No,Yes,,
+invoice_details[].total_amount,El precio total para este artículo de factura (`pre_tax_amount` + `tax_amount`).,464,number,float,Yes,Yes,,
+invoice_details[].unit_amount,El precio de un artículo singular.,200,number,float,Yes,Yes,,
+invoice_details[].unit_code,"La unidad de medida, según lo definido por la entidad legal en el país. \n- \U0001F1F2\U0001F1FD México <a href=""https://developers.belvo.com/docs/sat-catalogs#unit-code"" target=""_blank"">Referencia del catálogo SAT</a>.",E48,string,,Yes,Yes,,
+invoice_details[].unit_description,"La descripción del artículo, según lo definido por la entidad legal en el país.\n- \U0001F1F2\U0001F1FD México <a href=""https://developers.belvo.com/docs/sat-catalogs#unit-code"" target=""_blank"">Referencia del catálogo SAT</a>.",Unidad de servicio,string,,Yes,Yes,,
+invoice_identification,El ID único de la institución fiscal para la factura.,A1A1A1A1-2B2B-3C33-D44D-555555E55EE,string,,Yes,Yes,,
 invoice_type,"La clasificación de la factura por parte de la institución fiscal.
 
 Para el SAT de México, devolvemos uno de los siguientes valores:
@@ -15,34 +45,90 @@ Para el SAT de México, devolvemos uno de los siguientes valores:
   - `Nómina`
   - `Pago`
   - `Traslado`",Ingreso,string,,Yes,Yes,"Egreso, Ingreso, Nómina, Pago, Traslado",
-type,"La dirección de la factura (desde la perspectiva del propietario del Link).
-- `OUTFLOW` indica una factura enviada.
-- `INFLOW` indica una factura recibida.",INFLOW,string,,Yes,Yes,"OUTFLOW, INFLOW, None",
-sender_id,El ID fiscal del remitente de la factura,AAA111111AA11,string,,Yes,Yes,,
-sender_name,El nombre del remitente de la factura.,ACME CORP,string,,Yes,Yes,,
-sender_tax_fraud_status,"Indica si el remitente está o no en la lista de fraude fiscal del SAT por haber presentado datos incorrectos, tener pagos pendientes o haber realizado negocios que violan las regulaciones de la institución fiscal.<br><br>
+link,El `link.id` al que pertenecen los datos.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
+payment_method,"El código del método de pago utilizado para esta factura, según lo definido por la entidad legal del país.
 
-El SAT actualiza la lista de fraude fiscal cada tres meses. <br><br>
+- 🇲🇽 México <a href=""https://developers.belvo.com/docs/sat-catalogs#payment-method"" target=""_blank"">artículo de referencia del catálogo SAT</a>. Para México, devolvemos `PUE`, `PPD` o `null`.",PUE,string,,No,Yes,"PUE, PPD, None",
+payment_method_description,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulte nuestra explicación de Campos desaprobados.*
 
-Para más información sobre las razones por las cuales un contribuyente puede ser incluido en la lista de fraude fiscal, consulte el <a href=""http://omawww.sat.gob.mx/cifras_sat/Paginas/datos/vinculo.html?page=ListCompleta69.html"" target=""_blank"">Artículo 69</a> y el <a href=""http://omawww.sat.gob.mx/cifras_sat/Paginas/datos/vinculo.html?page=ListCompleta69B.html"" target=""_blank"">Artículo 69-B</a> del Código Fiscal de la Federación de México.
-<br><br>
+*La descripción del método de pago utilizado para esta factura.*",,string,,No,Yes,,
+payment_type,"El código de tipo de pago utilizado para esta factura, según lo definido por la entidad legal del país.
 
-Los estados posibles son:
+- 🇲🇽 México <a href=""https://developers.belvo.com/docs/sat-catalogs#payment-type"" target=""_blank"">Artículo de referencia del catálogo SAT</a>",99,string,,Yes,Yes,,
+payment_type_description,"*Este campo ha quedado obsoleto. Para obtener más información sobre Belvo y la obsolescencia, consulte nuestra explicación de Campos obsoletos.*",,string,,Yes,Yes,,
+payments,Una lista que detalla todos los pagos de facturas.,,array,,Yes,No,,
+payments[].amount,"El monto de la factura, en la moneda de la factura original.",8000.5,number,float,Yes,Yes,,
+payments[].beneficiary_account_number,El número de cuenta bancaria del beneficiario del pago.,12343453245633,string,,Yes,Yes,,
+payments[].beneficiary_rfc,El ID fiscal del beneficiario del pago.,BNM840515VB1,string,,No,Yes,,
+payments[].currency,"La moneda del pago. Por ejemplo:
 
-- `INVESTIGATING` <br>
-La institución fiscal ha identificado irregularidades y ha abierto una investigación sobre el contribuyente.
-<br>
-- `DISMISSED` <br>
-La institución fiscal ha investigado al contribuyente y lo ha declarado inocente.
-<br>
-- `CONFIRMED` <br>
-La institución fiscal ha confirmado que el contribuyente es culpable.
-<br>
-- `OVERTURNED` <br>
-La institución fiscal ha reevaluado a un contribuyente previamente confirmado y, basándose en nueva evidencia, lo ha retirado de la lista de fraude fiscal.
-<br>
-- `NO_TAX_FRAUD_STATUS` <br>
-El receptor o remitente no se encuentra en la lista (en otras palabras, están cumpliendo con las regulaciones de la institución fiscal).",NO_TAX_FRAUD_STATUS,string,,No,Yes,,
+- 🇧🇷 BRL (Real Brasileño)
+- 🇨🇴 COP (Peso Colombiano)
+- 🇲🇽 MXN (Peso Mexicano)
+
+Tenga en cuenta que pueden devolverse otras monedas además de las enumeradas anteriormente.",BRL,string,,Yes,Yes,,
+payments[].date,Marca de tiempo ISO-8601 cuando se realizó el pago.,2020-03-17T12:00:00.000Z,string,date-time,Yes,Yes,,
+payments[].exchange_rate,La tasa de cambio de `currency` a MXN cuando se realizó el pago.,3.75,string,,Yes,Yes,,
+payments[].operation_number,El identificador interno de la institución fiscal para la operación.,831840,string,,Yes,Yes,,
+payments[].payer_account_number,El número de cuenta bancaria del emisor del pago.,13343663245699,string,,Yes,Yes,,
+payments[].payer_bank_name,La institución bancaria que fue utilizada por el emisor del pago.,CITI BANAMEX,string,,Yes,Yes,,
+payments[].payer_rfc,El ID fiscal del emisor del pago.,BKJM840515VB1,string,,Yes,Yes,,
+payments[].payment_type,"Código de tipo de pago utilizado para esta factura, según lo definido por la entidad legal del país.
+
+- 🇲🇽 México <a href=""https://developers.belvo.com/docs/sat-catalogs#payment-type"" target=""_blank"">Artículo de referencia del catálogo SAT</a>",03,string,,Yes,Yes,,
+payments[].related_documents,Una lista de todas las facturas diferidas relacionadas afectadas por el pago.,,array,,Yes,No,,
+payments[].related_documents[].amount_paid,El monto pagado en esta cuota.,8000,number,float,Yes,Yes,,
+payments[].related_documents[].currency,"La moneda de la factura relacionada. Por ejemplo:
+
+- 🇧🇷 BRL (Real Brasileño)
+- 🇨🇴 COP (Peso Colombiano)
+- 🇲🇽 MXN (Peso Mexicano)
+
+Tenga en cuenta que pueden devolverse otras monedas además de las enumeradas anteriormente.",MXN,string,,Yes,Yes,,
+payments[].related_documents[].invoice_identification,El ID único de la institución fiscal para la factura diferida relacionada.,7EE015F3-6311-11EA-B02A-00155D014007,string,,Yes,Yes,,
+payments[].related_documents[].outstanding_balance,El monto restante por pagar.,10877.84,number,float,Yes,Yes,,
+payments[].related_documents[].partiality_number,El número de cuota de pago.,1,integer,int32,No,No,,
+payments[].related_documents[].payment_method,El método de pago de la factura relacionada.,PPD,string,,Yes,Yes,,
+payments[].related_documents[].previous_balance,El monto de la factura antes del pago.,18877.84,number,float,Yes,Yes,,
+payroll,Detalles sobre el pago de nómina. Solo aplicable para facturas de nómina.,,object,,Yes,Yes,,
+payroll.amount,El monto total del pago de nómina.,20400.1,number,float,Yes,No,,
+payroll.collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+payroll.date_from,"La fecha de inicio del período de pago, en formato `YYYY-MM-DD`.",2018-07-01,string,date,Yes,Yes,,
+payroll.date_to,"La fecha de finalización del período de pago, en formato `YYYY-MM-DD`.",2018-07-31,string,date,Yes,Yes,,
+payroll.days,El número de días cubiertos por el pago.,30,integer,int32,Yes,Yes,,
+payroll.earnings_breakdown,Un desglose de las ganancias para el pago de nómina.,,array,,No,Yes,,
+payroll.earnings_breakdown[].taxable_amount,La cantidad de ingresos que es imponible.,1505,number,float,No,No,,
+payroll.earnings_breakdown[].type,"El tipo de ingreso. Para ver una lista completa de los valores posibles, por favor consulta la <a href=""https://developers.belvo.com/docs/sat-catalogs#payroll-earnings-breakdown-type"" target=""_blank"">tabla de tipos de desglose de ingresos de nómina</a>.",CHRISTMAS_BONUS,string,,No,Yes,,
+payroll.earnings_breakdown[].vat_free_amount,El monto del ingreso que no está sujeto a IVA.,0,number,float,No,No,,
+payroll.other_payments,Un desglose de otros pagos para la nómina.,,array,,No,Yes,,
+payroll.other_payments[].amount,El monto del otro pago.,1505,number,float,No,No,,
+payroll.other_payments[].type,"El tipo de otro pago. Para ver una lista completa de los valores posibles, consulte la <a href=""https://developers.belvo.com/docs/sat-catalogs#payroll-other-payments-type"" target=""_blank"">tabla de tipos de otros pagos de nómina</a>.",EMPLOYMENT_SUBSIDY,string,,No,Yes,,
+payroll.payment_date,"La fecha de pago, en formato `YYYY-MM-DD`.",2018-07-16,string,date,Yes,No,,
+payroll.periodicity,"Con qué frecuencia se realiza el pago de nómina.
+
+Para el SAT de México, devolvemos uno de los siguientes valores:
+
+  - `DAILY`
+  - `WEEKLY`
+  - `TENTH_DAY`
+  - `FOURTEENTH_DAY`
+  - `FIFTEENTH_DAY`
+  - `MONTHLY`
+  - `BIMONTHLY`
+  - `PER_TASK`
+  - `COMMISSION`
+  - `ONE_OFF`
+  - `OTHER_PERIODICITY`",MONTHLY,string,,No,Yes,"DAILY, WEEKLY, TENTH_DAY, FOURTEENTH_DAY, FIFTEENTH_DAY, MONTHLY, BIMONTHLY, PER_TASK, COMMISSION, ONE_OFF, OTHER_PERIODICITY, null",
+payroll.tax_deductions,Un desglose de las deducciones fiscales en el pago de nómina.,,array,,No,Yes,,
+payroll.tax_deductions[].amount,El monto de la deducción fiscal.,1505,number,float,No,No,,
+payroll.tax_deductions[].type,"El tipo de deducción fiscal. Para ver una lista completa de los valores posibles, por favor consulta la <a href=""https://developers.belvo.com/docs/sat-catalogs#payroll-tax-deductions-type"" target=""_blank"">tabla de tipos de deducciones fiscales de nómina</a>.",UNION_FEES,string,,No,Yes,,
+payroll.type,"El tipo de nómina, según lo definido por la entidad legal del país.
+
+- 🇲🇽 México <a href=""https://developers.belvo.com/docs/sat-catalogs#payroll-type"" target=""_blank"">Artículo de referencia del catálogo SAT</a>",O,string,,Yes,Yes,,
+payroll.version,La versión del objeto de nómina.,1.2,string,,Yes,No,,
+place_of_issue,El código postal de donde se emitió la factura.,01165,string,,No,Yes,,
+receiver_blacklist_status,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulte nuestra explicación de Campos desaprobados.*
+Por favor, use `receiver_tax_fraud_status` en su lugar.",,string,,No,Yes,,
 receiver_id,El ID fiscal del receptor de la factura.,BBB222222BB22,string,,Yes,Yes,,
 receiver_name,El nombre del receptor de la factura.,BELVO CORP,string,,Yes,Yes,,
 receiver_tax_fraud_status,"Indica si el receptor está o no en la lista de fraude fiscal del SAT por haber presentado datos incorrectos, tener pagos pendientes o haber realizado negocios que violan las regulaciones de la institución fiscal.<br><br>
@@ -68,127 +154,44 @@ La institución fiscal ha reevaluado a un contribuyente previamente confirmado y
 <br>
 - `NO_TAX_FRAUD_STATUS` <br>
 El receptor o emisor no se encuentra en la lista (en otras palabras, está cumpliendo con las regulaciones de la institución fiscal).",NO_TAX_FRAUD_STATUS,string,,No,Yes,,
-cancelation_status,"Si la factura es cancelada, este campo indica el estado de la cancelación.",,string,,Yes,Yes,,
-cancelation_update_date,"La fecha de la cancelación de la factura, en formato `YYYY-MM-DD`.",2019-12-02,string,date,Yes,Yes,,
-certification_date,"La fecha de la certificación fiscal, en formato `YYYY-MM-DD`.",2019-12-01,string,date,Yes,Yes,,
-certification_authority,El ID fiscal del proveedor de certificación.,CCC333333CC33,string,,Yes,Yes,,
-payment_type,"El código de tipo de pago utilizado para esta factura, según lo definido por la entidad legal del país.
+sender_blacklist_status,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulte nuestra explicación de Campos desaprobados.*
+Por favor, use `sender_tax_fraud_status` en su lugar.",,string,,No,Yes,,
+sender_id,El ID fiscal del remitente de la factura,AAA111111AA11,string,,Yes,Yes,,
+sender_name,El nombre del remitente de la factura.,ACME CORP,string,,Yes,Yes,,
+sender_tax_fraud_status,"Indica si el remitente está o no en la lista de fraude fiscal del SAT por haber presentado datos incorrectos, tener pagos pendientes o haber realizado negocios que violan las regulaciones de la institución fiscal.<br><br>
 
-- 🇲🇽 México <a href=""https://developers.belvo.com/docs/sat-catalogs#payment-type"" target=""_blank"">Artículo de referencia del catálogo SAT</a>",99,string,,Yes,Yes,,
-payment_type_description,"*Este campo ha quedado obsoleto. Para obtener más información sobre Belvo y la obsolescencia, consulte nuestra explicación de Campos obsoletos.*",,string,,Yes,Yes,,
-payment_method,"El código del método de pago utilizado para esta factura, según lo definido por la entidad legal del país.
+El SAT actualiza la lista de fraude fiscal cada tres meses. <br><br>
 
-- 🇲🇽 México <a href=""https://developers.belvo.com/docs/sat-catalogs#payment-method"" target=""_blank"">artículo de referencia del catálogo SAT</a>. Para México, devolvemos `PUE`, `PPD` o `null`.",PUE,string,,No,Yes,"PUE, PPD, None",
-payment_method_description,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulte nuestra explicación de Campos desaprobados.*
+Para más información sobre las razones por las cuales un contribuyente puede ser incluido en la lista de fraude fiscal, consulte el <a href=""http://omawww.sat.gob.mx/cifras_sat/Paginas/datos/vinculo.html?page=ListCompleta69.html"" target=""_blank"">Artículo 69</a> y el <a href=""http://omawww.sat.gob.mx/cifras_sat/Paginas/datos/vinculo.html?page=ListCompleta69B.html"" target=""_blank"">Artículo 69-B</a> del Código Fiscal de la Federación de México.
+<br><br>
 
-*La descripción del método de pago utilizado para esta factura.*",,string,,No,Yes,,
+Los estados posibles son:
+
+- `INVESTIGATING` <br>
+La institución fiscal ha identificado irregularidades y ha abierto una investigación sobre el contribuyente.
+<br>
+- `DISMISSED` <br>
+La institución fiscal ha investigado al contribuyente y lo ha declarado inocente.
+<br>
+- `CONFIRMED` <br>
+La institución fiscal ha confirmado que el contribuyente es culpable.
+<br>
+- `OVERTURNED` <br>
+La institución fiscal ha reevaluado a un contribuyente previamente confirmado y, basándose en nueva evidencia, lo ha retirado de la lista de fraude fiscal.
+<br>
+- `NO_TAX_FRAUD_STATUS` <br>
+El receptor o remitente no se encuentra en la lista (en otras palabras, están cumpliendo con las regulaciones de la institución fiscal).",NO_TAX_FRAUD_STATUS,string,,No,Yes,,
+status,El estado de la factura. Puede ser *Vigente* (válido) o *Cancelado* (cancelado).,Vigente,string,,Yes,Yes,,
+subtotal_amount,El monto antes de impuestos de esta factura (suma del `pre_tax_amount` de cada artículo).,400,number,float,Yes,Yes,,
+tax_amount,El monto del impuesto para esta factura (suma del `tax_amount` de cada artículo).,64,number,float,Yes,Yes,,
+total_amount,El monto total de la factura (`subtotal_amount` + `tax_amount` - `discount_amount`),454,number,float,Yes,Yes,,
+type,"La dirección de la factura (desde la perspectiva del propietario del Link).
+- `OUTFLOW` indica una factura enviada.
+- `INFLOW` indica una factura recibida.",INFLOW,string,,Yes,Yes,"OUTFLOW, INFLOW, None",
 usage,"El código de uso de la factura, tal como lo define la entidad legal del país.
 
 - 🇲🇽 México <a href=""https://developers.belvo.com/docs/sat-catalogs#usage"" target=""_blank"">Artículo de referencia del catálogo del SAT</a>",P01,string,,No,Yes,,
 version,La versión CFDI de la factura.,3.3,string,,No,Yes,,
-place_of_issue,El código postal de donde se emitió la factura.,01165,string,,No,Yes,,
-invoice_details,Una lista de descripciones para cada artículo (producto comprado o servicio prestado) en la factura.,,array,,Yes,No,,
-invoice_details[].description,La descripción del artículo de la factura (una factura puede tener uno o más artículos).,December 2019 accounting fees,string,,Yes,Yes,,
-invoice_details[].product_identification,"El código de identificación del producto o del servicio, tal como lo define la entidad legal en el país.\n- \U0001F1F2\U0001F1FD <a href=""http://200.57.3.89/Pys/catPyS.aspx"" target=""_blank"">México</a>.",84101600,string,,Yes,Yes,,
-invoice_details[].quantity,La cantidad de este artículo de factura.,10,number,float,Yes,Yes,,
-invoice_details[].unit_code,"La unidad de medida, según lo definido por la entidad legal en el país. \n- \U0001F1F2\U0001F1FD México <a href=""https://developers.belvo.com/docs/sat-catalogs#unit-code"" target=""_blank"">Referencia del catálogo SAT</a>.",E48,string,,Yes,Yes,,
-invoice_details[].unit_description,"La descripción del artículo, según lo definido por la entidad legal en el país.\n- \U0001F1F2\U0001F1FD México <a href=""https://developers.belvo.com/docs/sat-catalogs#unit-code"" target=""_blank"">Referencia del catálogo SAT</a>.",Unidad de servicio,string,,Yes,Yes,,
-invoice_details[].unit_amount,El precio de un artículo singular.,200,number,float,Yes,Yes,,
-invoice_details[].tax_type,El tipo de impuesto del artículo.,,string,,No,Yes,,
-invoice_details[].pre_tax_amount,El precio total de este artículo antes de aplicar impuestos es (`quantity` x `unit_amount`).,400,number,float,Yes,Yes,,
-invoice_details[].tax_percentage,El porcentaje de impuesto a aplicar.,16,number,float,Yes,Yes,,
-invoice_details[].tax_amount,El monto del impuesto para este artículo de factura (`pre_tax_amount` x `tax_percentage`).,64,number,float,Yes,Yes,,
-invoice_details[].total_amount,El precio total para este artículo de factura (`pre_tax_amount` + `tax_amount`).,464,number,float,Yes,Yes,,
-invoice_details[].retained_taxes,El impuesto retenido en el artículo de la factura.,,array,,No,No,,
-invoice_details[].retained_taxes[].collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
-invoice_details[].retained_taxes[].tax_type,El tipo de impuesto del artículo.,,string,,No,Yes,,
-invoice_details[].retained_taxes[].tax,"El tipo de impuesto retenido (por ejemplo, ISR, IVA o IEPS).",ISR,string,,Yes,Yes,,
-invoice_details[].retained_taxes[].tax_percentage,El porcentaje de impuesto retenido.,10,number,float,Yes,Yes,,
-invoice_details[].retained_taxes[].retained_tax_amount,El monto del impuesto retenido.,209.79,number,float,Yes,Yes,,
-invoice_details[].collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
-currency,"La moneda de la factura. Por ejemplo:
-
-- 🇧🇷 BRL (Real Brasileño)
-- 🇨🇴 COP (Peso Colombiano)
-- 🇲🇽 MXN (Peso Mexicano)
-- 🇺🇸 USD (Dólar Estadounidense)",MXN,string,,Yes,Yes,,
-subtotal_amount,El monto antes de impuestos de esta factura (suma del `pre_tax_amount` de cada artículo).,400,number,float,Yes,Yes,,
-exchange_rate,El tipo de cambio utilizado en esta factura para la moneda.,0.052,number,float,Yes,Yes,,
-tax_amount,El monto del impuesto para esta factura (suma del `tax_amount` de cada artículo).,64,number,float,Yes,Yes,,
-discount_amount,El monto total descontado en esta factura.,10,number,float,Yes,Yes,,
-total_amount,El monto total de la factura (`subtotal_amount` + `tax_amount` - `discount_amount`),454,number,float,Yes,Yes,,
-payments,Una lista que detalla todos los pagos de facturas.,,array,,Yes,No,,
-payments[].date,Marca de tiempo ISO-8601 cuando se realizó el pago.,2020-03-17T12:00:00.000Z,string,date-time,Yes,Yes,,
-payments[].payment_type,"Código de tipo de pago utilizado para esta factura, según lo definido por la entidad legal del país.
-
-- 🇲🇽 México <a href=""https://developers.belvo.com/docs/sat-catalogs#payment-type"" target=""_blank"">Artículo de referencia del catálogo SAT</a>",03,string,,Yes,Yes,,
-payments[].currency,"La moneda del pago. Por ejemplo:
-
-- 🇧🇷 BRL (Real Brasileño)
-- 🇨🇴 COP (Peso Colombiano)
-- 🇲🇽 MXN (Peso Mexicano)
-
-Tenga en cuenta que pueden devolverse otras monedas además de las enumeradas anteriormente.",BRL,string,,Yes,Yes,,
-payments[].exchange_rate,La tasa de cambio de `currency` a MXN cuando se realizó el pago.,3.75,string,,Yes,Yes,,
-payments[].amount,"El monto de la factura, en la moneda de la factura original.",8000.5,number,float,Yes,Yes,,
-payments[].operation_number,El identificador interno de la institución fiscal para la operación.,831840,string,,Yes,Yes,,
-payments[].beneficiary_rfc,El ID fiscal del beneficiario del pago.,BNM840515VB1,string,,No,Yes,,
-payments[].beneficiary_account_number,El número de cuenta bancaria del beneficiario del pago.,12343453245633,string,,Yes,Yes,,
-payments[].payer_rfc,El ID fiscal del emisor del pago.,BKJM840515VB1,string,,Yes,Yes,,
-payments[].payer_account_number,El número de cuenta bancaria del emisor del pago.,13343663245699,string,,Yes,Yes,,
-payments[].payer_bank_name,La institución bancaria que fue utilizada por el emisor del pago.,CITI BANAMEX,string,,Yes,Yes,,
-payments[].related_documents,Una lista de todas las facturas diferidas relacionadas afectadas por el pago.,,array,,Yes,No,,
-payments[].related_documents[].invoice_identification,El ID único de la institución fiscal para la factura diferida relacionada.,7EE015F3-6311-11EA-B02A-00155D014007,string,,Yes,Yes,,
-payments[].related_documents[].currency,"La moneda de la factura relacionada. Por ejemplo:
-
-- 🇧🇷 BRL (Real Brasileño)
-- 🇨🇴 COP (Peso Colombiano)
-- 🇲🇽 MXN (Peso Mexicano)
-
-Tenga en cuenta que pueden devolverse otras monedas además de las enumeradas anteriormente.",MXN,string,,Yes,Yes,,
-payments[].related_documents[].payment_method,El método de pago de la factura relacionada.,PPD,string,,Yes,Yes,,
-payments[].related_documents[].partiality_number,El número de cuota de pago.,1,integer,int32,No,No,,
-payments[].related_documents[].previous_balance,El monto de la factura antes del pago.,18877.84,number,float,Yes,Yes,,
-payments[].related_documents[].amount_paid,El monto pagado en esta cuota.,8000,number,float,Yes,Yes,,
-payments[].related_documents[].outstanding_balance,El monto restante por pagar.,10877.84,number,float,Yes,Yes,,
-payroll,Detalles sobre el pago de nómina. Solo aplicable para facturas de nómina.,,object,,Yes,Yes,,
-payroll.days,El número de días cubiertos por el pago.,30,integer,int32,Yes,Yes,,
-payroll.type,"El tipo de nómina, según lo definido por la entidad legal del país.
-
-- 🇲🇽 México <a href=""https://developers.belvo.com/docs/sat-catalogs#payroll-type"" target=""_blank"">Artículo de referencia del catálogo SAT</a>",O,string,,Yes,Yes,,
-payroll.amount,El monto total del pago de nómina.,20400.1,number,float,Yes,No,,
-payroll.version,La versión del objeto de nómina.,1.2,string,,Yes,No,,
-payroll.date_from,"La fecha de inicio del período de pago, en formato `YYYY-MM-DD`.",2018-07-01,string,date,Yes,Yes,,
-payroll.date_to,"La fecha de finalización del período de pago, en formato `YYYY-MM-DD`.",2018-07-31,string,date,Yes,Yes,,
-payroll.collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
-payroll.payment_date,"La fecha de pago, en formato `YYYY-MM-DD`.",2018-07-16,string,date,Yes,No,,
-payroll.periodicity,"Con qué frecuencia se realiza el pago de nómina.
-
-Para el SAT de México, devolvemos uno de los siguientes valores:
-
-  - `DAILY`
-  - `WEEKLY`
-  - `TENTH_DAY`
-  - `FOURTEENTH_DAY`
-  - `FIFTEENTH_DAY`
-  - `MONTHLY`
-  - `BIMONTHLY`
-  - `PER_TASK`
-  - `COMMISSION`
-  - `ONE_OFF`
-  - `OTHER_PERIODICITY`",MONTHLY,string,,No,Yes,"DAILY, WEEKLY, TENTH_DAY, FOURTEENTH_DAY, FIFTEENTH_DAY, MONTHLY, BIMONTHLY, PER_TASK, COMMISSION, ONE_OFF, OTHER_PERIODICITY, null",
-payroll.earnings_breakdown,Un desglose de las ganancias para el pago de nómina.,,array,,No,Yes,,
-payroll.earnings_breakdown[].type,"El tipo de ingreso. Para ver una lista completa de los valores posibles, por favor consulta la <a href=""https://developers.belvo.com/docs/sat-catalogs#payroll-earnings-breakdown-type"" target=""_blank"">tabla de tipos de desglose de ingresos de nómina</a>.",CHRISTMAS_BONUS,string,,No,Yes,,
-payroll.earnings_breakdown[].taxable_amount,La cantidad de ingresos que es imponible.,1505,number,float,No,No,,
-payroll.earnings_breakdown[].vat_free_amount,El monto del ingreso que no está sujeto a IVA.,0,number,float,No,No,,
-payroll.tax_deductions,Un desglose de las deducciones fiscales en el pago de nómina.,,array,,No,Yes,,
-payroll.tax_deductions[].type,"El tipo de deducción fiscal. Para ver una lista completa de los valores posibles, por favor consulta la <a href=""https://developers.belvo.com/docs/sat-catalogs#payroll-tax-deductions-type"" target=""_blank"">tabla de tipos de deducciones fiscales de nómina</a>.",UNION_FEES,string,,No,Yes,,
-payroll.tax_deductions[].amount,El monto de la deducción fiscal.,1505,number,float,No,No,,
-payroll.other_payments,Un desglose de otros pagos para la nómina.,,array,,No,Yes,,
-payroll.other_payments[].type,"El tipo de otro pago. Para ver una lista completa de los valores posibles, consulte la <a href=""https://developers.belvo.com/docs/sat-catalogs#payroll-other-payments-type"" target=""_blank"">tabla de tipos de otros pagos de nómina</a>.",EMPLOYMENT_SUBSIDY,string,,No,Yes,,
-payroll.other_payments[].amount,El monto del otro pago.,1505,number,float,No,No,,
-folio,El número de control interno que el contribuyente asigna a la factura.,26,string,,No,Yes,,
-xml,XML del documento de factura.,,string,,No,Yes,,
 warnings,Objeto que contiene información sobre cualquier advertencia relacionada con esta factura.,,object,,No,Yes,,
 warnings.code,"El código de advertencia. Puede ser uno de:
 
@@ -207,7 +210,4 @@ No está disponible la descarga de detalles de facturas. El portal del SAT gener
 might be missing data. Please check https://tinyurl.com/yydzhy5d for more
 information on this error.
 ",string,,Yes,Yes,,
-sender_blacklist_status,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulte nuestra explicación de Campos desaprobados.*
-Por favor, use `sender_tax_fraud_status` en su lugar.",,string,,No,Yes,,
-receiver_blacklist_status,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulte nuestra explicación de Campos desaprobados.*
-Por favor, use `receiver_tax_fraud_status` en su lugar.",,string,,No,Yes,,
+xml,XML del documento de factura.,,string,,No,Yes,,

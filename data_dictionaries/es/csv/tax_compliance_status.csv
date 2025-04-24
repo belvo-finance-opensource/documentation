@@ -1,8 +1,8 @@
 Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
-id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
 collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
 created_at,La marca de tiempo ISO-8601 de cuando se creó el punto de datos en la base de datos de Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
 internal_identification,El número de identificación interno de la institución para el documento.,20NE1234567,string,,No,Yes,,
+outcome,"Indica si el contribuyente está cumpliendo con todas sus obligaciones fiscales (`POSITIVE`), si no lo está (`NEGATIVE`), o si no tiene ninguna obligación que cumplir (`NO_OBLIGATIONS`).",NEGATIVE,string,,No,Yes,"POSITIVE, NEGATIVE, NO_OBLIGATIONS",
 pdf,Estado de cumplimiento fiscal PDF como binario.,=PDF-STRING=,string,binary,Yes,Yes,,
 rfc,El número de RFC (Registro Federal de Contribuyentes) del titular de la cuenta.,KDFC211118IS0,string,,No,Yes,,
-outcome,"Indica si el contribuyente está cumpliendo con todas sus obligaciones fiscales (`POSITIVE`), si no lo está (`NEGATIVE`), o si no tiene ninguna obligación que cumplir (`NO_OBLIGATIONS`).",NEGATIVE,string,,No,Yes,"POSITIVE, NEGATIVE, NO_OBLIGATIONS",

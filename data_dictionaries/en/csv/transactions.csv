@@ -1,95 +1,14 @@
 Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
-id,"Belvo's unique identifier for the current item.
-",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
-internal_identification,"The institution's internal identification for the transaction.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network.
-",TXpRMU9UQTROMWhZV2xSU1FUazJSMDl,string,,Yes,No,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
 account,"Details regarding the account.
 ",,object,,Yes,Yes,,
-account.id,"Belvo's unique identifier for the current item.
-",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
-account.link,The `link.id` the data belongs to.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
-account.institution,Details regarding the institution.,,object,,Yes,No,,
-account.institution.name,"The name of the institution, as designated by Belvo.
-
-Please see our <a href=""https://developers.belvo.com/docs/institution"" target=""_blank"">Institutions</a> DevPortal article for a detailed list of institution names.
-",erebor_mx_retail,string,,No,No,,
-account.institution.type,"The type of institution. We return one of the following values:
-
-  - `bank`
-  - `fiscal`
-  - `employment`
-",,string,,No,No,"bank, fiscal, employment",
-account.collected_at,"The ISO-8601 timestamp when the data point was collected.
-",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
-account.created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
-",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
-account.last_accessed_at,"The ISO-8601 timestamp of Belvo's most recent successful access to the institution for the given link.
-",2021-03-09T10:28:40.000Z,string,date-time,Yes,Yes,,
-account.category,"The type of account.
-We return one of the following enum values:
-  - `ADVANCE_DEPOSIT_ACCOUNT`
-  - `CHECKING_ACCOUNT`
-  - `CREDIT_CARD`
-  - `FINANCING_ACCOUNT`
-  - `INVESTMENT_ACCOUNT`
-  - `INVOICE_FINANCING_ACCOUNT`
-  - `LOAN_ACCOUNT`
-  - `PENSION_FUND_ACCOUNT`
-  - `SAVINGS_ACCOUNT`
-  - `UNCATEGORIZED`
-",CHECKING_ACCOUNT,string,,Yes,Yes,"ADVANCE_DEPOSIT_ACCOUNT, CHECKING_ACCOUNT, CREDIT_CARD, FINANCING_ACCOUNT, INVESTMENT_ACCOUNT, INVOICE_FINANCING_ACCOUNT, LOAN_ACCOUNT, PENSION_FUND_ACCOUNT, SAVINGS_ACCOUNT, UNCATEGORIZED",
-account.balance_type,"Indicates whether this account is either an `ASSET` or a `LIABILITY`. You can consider the balance of an `ASSET` as being positive, while the balance of a `LIABILITY` as negative.
-",ASSET,string,,Yes,Yes,,
-account.overdraft,,,object,,No,Yes,,
-account.overdraft.arranged,"The agreed upon overdraft limit between the account holder and the institution.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network if the `overdraft` field is available.
-",5000.5,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
-account.overdraft.used,"The overdraft value used.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network if the `overdraft` field is available.
-",1000.5,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
-account.overdraft.unarranged,"The overdraft used that was not arranged between the account holder and the institution.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network if the `overdraft` field is available.
-",300.1,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
-account.type,"The account type, as designated by the institution.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network.
-",STANDARD_NACIONAL,string,,Yes,No,,
-account.subtype,"The account subtype, as designated by the institution.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network.
-",FINANCIAMENTO_HABITACIONAL_SFH,string,,Yes,No,,
-account.name,"The account name, as given by the institution.",Cuenta Perfiles- M.N. - MXN-666,string,,Yes,Yes,,
-account.number,"The account number, as designated by the institution.
-",4057068115181,string,,Yes,Yes,,
 account.agency,"The branch code where the product was opened.
 ",6272,string,,Yes,Yes,,"^\d{1,4}$"
-account.check_digit,"The check digit of the product's number, if applicable.
-",7,string,,Yes,Yes,,[\w\W\s]*
 account.balance,"Details regarding the current and available balances for the account.
 ",,object,,Yes,No,,
-account.balance.current,"The current balance is calculated differently according to the type of account.
+account.balance.automatically_invested,"The amount that is automatically invested (as agreed upon with the institution).
 
-
-- **💰 Checking and saving accounts**:
-
-
-The user's account balance at the `collected_at` timestamp.
-
-- **💳 Credit cards**:
-
-
-The amount the user has spent in the current card billing period (see `credit_data.cutting_date` for information on when the current billing period finishes).
-
-- **🏡 Loan accounts**:
-
-
-The amount remaining to pay on the users's loan.
-",5874.13,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `balances` field is available.
+",131.5,number,float,No,No,,"^\d{1,15}\.\d{2,4}$"
 account.balance.available,"The balance that the account owner can use.
 
 - **💰 Checking and saving accounts**:
@@ -114,52 +33,93 @@ account.balance.blocked,"The amount that is currently blocked due to pending tra
 
 > **Non-nullable:** A value must be returned by Brazil's open finance network if the `balances` field is available.
 ",60.32,number,float,No,No,,"^\d{1,15}\.\d{2,4}$"
-account.balance.automatically_invested,"The amount that is automatically invested (as agreed upon with the institution).
+account.balance.current,"The current balance is calculated differently according to the type of account.
 
-> **Non-nullable:** A value must be returned by Brazil's open finance network if the `balances` field is available.
-",131.5,number,float,No,No,,"^\d{1,15}\.\d{2,4}$"
-account.currency,"The three-letter currency code (ISO-4217).
 
-> **Non-nullable:** A value must be returned by Brazil's open finance network if the `balances` field is available.
-",BRL,string,,Yes,No,,^[A-Z]{3}$
-account.public_identification_name,"The public name for the type of identification. For 🇧🇷 Brazilian savings and checking accounts, this field will be `AGENCY/ACCOUNT`.
-",AGENCY/ACCOUNT,string,,Yes,Yes,,
-account.public_identification_value,"The value for the `public_identification_name`.
+- **💰 Checking and saving accounts**:
 
-For 🇧🇷 OFDA Brazilian savings and checking accounts, this field will be the agency and bank account number, separated by a slash. For example: `0444/45722-0`.
 
-For 🇧🇷 OFDA Brazilian credit card accounts, we will return a string of concatenated credit card numbers associated with the account. For example: ""8763,9076,5522""
-",0444/45722-0,string,,Yes,Yes,,
-account.internal_identification,"The institution's internal identification for the account.
+The user's account balance at the `collected_at` timestamp.
 
-> **Non-nullable:** A value must be returned by Brazil's open finance network if the `balances` field is available.
-",92792126019929279212650822221989319252576,string,,Yes,No,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
+- **💳 Credit cards**:
+
+
+The amount the user has spent in the current card billing period (see `credit_data.cutting_date` for information on when the current billing period finishes).
+
+- **🏡 Loan accounts**:
+
+
+The amount remaining to pay on the users's loan.
+",5874.13,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
+account.balance_type,"Indicates whether this account is either an `ASSET` or a `LIABILITY`. You can consider the balance of an `ASSET` as being positive, while the balance of a `LIABILITY` as negative.
+",ASSET,string,,Yes,Yes,,
+account.category,"The type of account.
+We return one of the following enum values:
+  - `ADVANCE_DEPOSIT_ACCOUNT`
+  - `CHECKING_ACCOUNT`
+  - `CREDIT_CARD`
+  - `FINANCING_ACCOUNT`
+  - `INVESTMENT_ACCOUNT`
+  - `INVOICE_FINANCING_ACCOUNT`
+  - `LOAN_ACCOUNT`
+  - `PENSION_FUND_ACCOUNT`
+  - `SAVINGS_ACCOUNT`
+  - `UNCATEGORIZED`
+",CHECKING_ACCOUNT,string,,Yes,Yes,"ADVANCE_DEPOSIT_ACCOUNT, CHECKING_ACCOUNT, CREDIT_CARD, FINANCING_ACCOUNT, INVESTMENT_ACCOUNT, INVOICE_FINANCING_ACCOUNT, LOAN_ACCOUNT, PENSION_FUND_ACCOUNT, SAVINGS_ACCOUNT, UNCATEGORIZED",
+account.check_digit,"The check digit of the product's number, if applicable.
+",7,string,,Yes,Yes,,[\w\W\s]*
+account.collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+account.created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
 account.credit_data,Details regarding the credit cards associated with this account.,,object,,Yes,Yes,,
+account.credit_data.cards,Details regarding the cards associated with the account.,,array,,No,No,,
+account.credit_data.cards[].identification_number,"The credit card number.
+
+**Note:** Often, this is just the last four digit of the credit card.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",4453,string,,Yes,No,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
+account.credit_data.cards[].is_multiple,"Boolean to indicate if this account has multiple credit cards.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",False,boolean,,Yes,No,,
 account.credit_data.collected_at,"The ISO-8601 timestamp when the data point was collected.
 ",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
 account.credit_data.credit_limit,"The upper credit limit of the card.
 
 > **Non-nullable:** A value must be returned by Brazil's open finance network.
 ",192000.9,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
+account.credit_data.cutting_date,The date when the credit card's bill is due.,2019-12-11,string,date,No,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+account.credit_data.interest_rate,"**Note:** This field is not applicable for OF Brazil and will return null.
+",,number,float,No,Yes,,
+account.credit_data.last_payment_date,"**Note:** This field is not applicable for OF Brazil and will return null.
+",,string,,No,Yes,,
 account.credit_data.limits,,,array,,No,No,,
+account.credit_data.limits[].available_amount,"The amount still available.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",600,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+account.credit_data.limits[].consolidation_type,"Indicates whether or not the credit limit is consolidated or individual.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",INDIVIDUAL,string,,Yes,No,,
+account.credit_data.limits[].credit_limit,"The limit of the credit card.
+",1000.04,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
 account.credit_data.limits[].identification_number,"The credit card number.
 
 **Note:** Often, this is just the last four digit of the credit card.
 
 > **Non-nullable:** A value must be returned by Brazil's open finance network.
 ",4453,string,,Yes,Yes,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
-account.credit_data.limits[].credit_limit,"The limit of the credit card.
-",1000.04,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
-account.credit_data.limits[].used_amount,"The amount used.
-",400.04,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
-account.credit_data.limits[].available_amount,"The amount still available.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network.
-",600,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
 account.credit_data.limits[].is_limit_flexible,"Boolean to indicate if the `credit_limit` is flexible.
 
 > **Non-nullable:** A value must be returned by Brazil's open finance network.
 ",False,boolean,,Yes,No,,
+account.credit_data.limits[].line_name,"The credit limit line name.
+",CREDITO_A_VISTA,string,,Yes,Yes,,
+account.credit_data.limits[].line_name_additional_info,"Additional information about the line name.
+",Informações adicionais e complementares,string,,Yes,Yes,,[\w\W\s]*
 account.credit_data.limits[].type,"The type of limit. We return one of the following values:
 
   - `TOTAL_LIMIT`
@@ -167,17 +127,12 @@ account.credit_data.limits[].type,"The type of limit. We return one of the follo
 
   > **Non-nullable:** A value must be returned by Brazil's open finance network.
 ",TOTAL_LIMIT,string,,Yes,No,"TOTAL_LIMIT, MODAL_LIMIT",
-account.credit_data.limits[].consolidation_type,"Indicates whether or not the credit limit is consolidated or individual.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network.
-",INDIVIDUAL,string,,Yes,No,,
-account.credit_data.limits[].line_name,"The credit limit line name.
-",CREDITO_A_VISTA,string,,Yes,Yes,,
-account.credit_data.limits[].line_name_additional_info,"Additional information about the line name.
-",Informações adicionais e complementares,string,,Yes,Yes,,[\w\W\s]*
-account.credit_data.cutting_date,The date when the credit card's bill is due.,2019-12-11,string,date,No,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+account.credit_data.limits[].used_amount,"The amount used.
+",400.04,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
 account.credit_data.minimum_payment,"The minimum amount that the account owner needs to pay in the current credit period.
 ",2400.3,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+account.credit_data.monthly_payment,"**Note:** This field is not applicable for OF Brazil and will return null.
+",,number,,No,Yes,,
 account.credit_data.network,"The credit network that the card is associated with. We return one of the following values:
 
   - `VISA`
@@ -194,142 +149,98 @@ account.credit_data.network,"The credit network that the card is associated with
 ",MASTERCARD,string,,No,No,"VISA, MASTERCARD, AMERICAN_EXPRESS, DINERS_CLUB, HIPERCARD, BANDEIRA_PROPRIA, CHEQUE_ELETRONICO, ELO, OTHER",
 account.credit_data.network_additional_info,"Additional information about the credit card network.
 ",It's an orange card.,string,,No,Yes,,[\w\W\s]*
-account.credit_data.cards,Details regarding the cards associated with the account.,,array,,No,No,,
-account.credit_data.cards[].is_multiple,"Boolean to indicate if this account has multiple credit cards.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network.
-",False,boolean,,Yes,No,,
-account.credit_data.cards[].identification_number,"The credit card number.
-
-**Note:** Often, this is just the last four digit of the credit card.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network.
-",4453,string,,Yes,No,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
 account.credit_data.next_payment_date,"**Note:** This field is not applicable for OF Brazil and will return null.
 ",,string,,No,Yes,,
 account.credit_data.no_interest_payment,"**Note:** This field is not applicable for OF Brazil and will return null.
 ",,number,float,No,Yes,,
-account.credit_data.interest_rate,"**Note:** This field is not applicable for OF Brazil and will return null.
-",,number,float,No,Yes,,
-account.credit_data.monthly_payment,"**Note:** This field is not applicable for OF Brazil and will return null.
-",,number,,No,Yes,,
-account.credit_data.last_payment_date,"**Note:** This field is not applicable for OF Brazil and will return null.
-",,string,,No,Yes,,
+account.currency,"The three-letter currency code (ISO-4217).
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `balances` field is available.
+",BRL,string,,Yes,No,,^[A-Z]{3}$
+account.funds_data,"**Note:** This field is not applicable for OF Brazil and will return null.
+",,string,,Yes,Yes,,
+account.id,"Belvo's unique identifier for the current item.
+",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
+account.institution,Details regarding the institution.,,object,,Yes,No,,
+account.institution.name,"The name of the institution, as designated by Belvo.
+
+Please see our <a href=""https://developers.belvo.com/docs/institution"" target=""_blank"">Institutions</a> DevPortal article for a detailed list of institution names.
+",erebor_mx_retail,string,,No,No,,
+account.institution.type,"The type of institution. We return one of the following values:
+
+  - `bank`
+  - `fiscal`
+  - `employment`
+",,string,,No,No,"bank, fiscal, employment",
+account.internal_identification,"The institution's internal identification for the account.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `balances` field is available.
+",92792126019929279212650822221989319252576,string,,Yes,No,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
+account.last_accessed_at,"The ISO-8601 timestamp of Belvo's most recent successful access to the institution for the given link.
+",2021-03-09T10:28:40.000Z,string,date-time,Yes,Yes,,
+account.link,The `link.id` the data belongs to.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
 account.loan_data,The loan options associated with this account.,,object,,Yes,Yes,,
+account.loan_data.amortization_schedule,"The loan amortization schedule.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",SEM_SISTEMA_AMORTIZACAO,string,,Yes,No,,
+account.loan_data.amortization_schedule_info,"Additional information regarding the `amortization_schedule`.
+",No need for a schedule.,string,,Yes,Yes,,[\w\W\s]*
+account.loan_data.balloon_payments,"Detailed information regarding any balloon payments for the loan, if applicable.
+",,array,,Yes,Yes,,
+account.loan_data.balloon_payments[].amount,"The total amount of the balloon payment.
+",45391.89,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
+account.loan_data.balloon_payments[].currency,"The three-letter currency code (ISO-4217).
+",BRL,string,,Yes,Yes,,^[A-Z]{3}$
+account.loan_data.balloon_payments[].due_date,"The date that the balloon payment is to be paid, in `YYYY-MM-DD` format.
+",2021-09-06,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+account.loan_data.collaterals,"Details regarding any loan collaterals that the individual or business supplied.
+",,array,,Yes,Yes,,
+account.loan_data.collaterals[].amount,"The total amount of the bill.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `collaterals` field is available.
+",45391.89,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+account.loan_data.collaterals[].currency,"The three-letter currency code (ISO-4217).
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `collaterals` field is available.
+",BRL,string,,Yes,No,,^[A-Z]{3}$
+account.loan_data.collaterals[].subtype,"The subtype of the collateral, as defined by the institution.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `collaterals` field is available.
+",CCR_CONVENIO_CREDITOS_RECIPROCOS,string,,Yes,No,,
+account.loan_data.collaterals[].type,"The type of collateral, as defined by the institution.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `collaterals` field is available.
+",OPERACOES_GARANTIDAS_PELO_GOVERNO,string,,Yes,No,,
 account.loan_data.collected_at,"The ISO-8601 timestamp when the data point was collected.
 ",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
-account.loan_data.loan_code,"The country-specific standardized contract number.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network.
-",92792126019929279212650822221989319252576,string,,Yes,No,,"^\d{22,67}$"
+account.loan_data.consignee_id,"The ID of the consignee of the loan.
+",60500998000135,string,,Yes,Yes,,^\d{14}$
 account.loan_data.contract_amount,"The initial total loan amount when the contract was signed, calculated by the institution. This amount includes the principal + interest + taxes + fees.
 ",202000,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
-account.loan_data.total_effective_cost,"The initial total effective cost of the loan.
-",209000,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
-account.loan_data.loan_type,"The type of the loan, according to the institution.
+account.loan_data.contract_end_date,"The date when the loan is expected to be completed, in `YYYY-MM-DD` format.
+",2027-10-01,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+account.loan_data.contract_number,"The contract number of the loan, as given by the institution.
+",1324926521496,string,,Yes,Yes,,"^\d{1,100}$"
+account.loan_data.contract_remaining_frequency,"The frequency of the remaining contracted installment payments, as defined when the contract was first signed. We return one of the following:
+- `DAY`
+- `WEEK`
+- `MONTH`
+- `YEAR`
+- `NO_DEADLINE_REMAINING`
+- `null`
+",MONTH,string,,Yes,Yes,"DAY, WEEK, MONTH, YEAR, NO_DEADLINE_REMAINING, None",
+account.loan_data.contract_remaining_total,"The total number of installments remaining on the loan.
+",20,integer,int32,Yes,Yes,,
+account.loan_data.contract_start_date,"The date when the loan contract was signed, in `YYYY-MM-DD` format.
 
 > **Non-nullable:** A value must be returned by Brazil's open finance network.
-",HOME_EQUITY,string,,Yes,No,,
-account.loan_data.outstanding_balance,"The amount remaining to pay in total, including interest.
-",182000,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
-account.loan_data.interest_rates,"Breakdown of the interest applied to the loan. With OF Brazil, we highly recommend using the information in `interest_rate_data` for in-depth information.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network.
-",,array,,Yes,No,,
-account.loan_data.interest_rates[].name,"The name of the type of interest rate applied to the loan.
-
-**Note:** For OFDA Brazil, we recommend you use the `interest_date_data.tax_type` parameter.
-",NOMINAL,string,,Yes,Yes,,
-account.loan_data.interest_rates[].type,"The period that the interest is applied to the loan.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network.
-",MONTHLY,string,,Yes,No,"MONTHLY, YEARLY",
-account.loan_data.interest_rates[].value,"The interest rate (in percent or currency value).
-
-**Note:** For OFDA Brazil, we recommend you use the `interest_date_data.pre_fixed_rate` and `interest_date_data.post_fixed_rate`parameter.
-",7.85,number,float,Yes,Yes,,
-account.loan_data.interest_rates[].interest_rate_data,Detailed information regarding the interest rate.,,object,,Yes,Yes,,
-account.loan_data.interest_rates[].interest_rate_data.tax_type,"The type of interest rate tax. We return one of the following values:
-
-  - `NOMINAL`
-  - `EFFECTIVE`
-  
-  > **Non-nullable:** A value must be returned by Brazil's open finance network.
-",NOMINAL,string,,Yes,No,"NOMINAL, EFFECTIVE",
-account.loan_data.interest_rates[].interest_rate_data.rate_type,"The type of interest rate. We return one of the following values:
-
-  - `SIMPLE`
-  - `COMPOUND`
-
-  > **Non-nullable:** A value must be returned by Brazil's open finance network.
-",SIMPLE,string,,Yes,No,"SIMPLE, COMPOUND",
-account.loan_data.interest_rates[].interest_rate_data.type,"The period that the interest is applied to the loan.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network.
-",MONTHLY,string,,No,No,"MONTHLY, YEARLY",
-account.loan_data.interest_rates[].interest_rate_data.calculation_base,"The base calculation for the interest rate.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network.
-",30/360,string,,Yes,No,,^[0-9]{2}\/[0-9]{3}$
-account.loan_data.interest_rates[].interest_rate_data.reference_index_type,"The reference index rate. We return one of the following values:
-
-  - `WITHOUT_INDEX_TYPE`
-  - `PRE_FIXED`
-  - `POST_FIXED`
-  - `FLOATING`
-  - `INDEXED_PRICE`
-  - `RURAL_CREDIT`
-  - `OTHER_INDEX`
-
-  > **Non-nullable:** A value must be returned by Brazil's open finance network.
-",FLOATING,string,,Yes,No,"WITHOUT_INDEX_TYPE, PRE_FIXED, POST_FIXED, FLOATING, INDEXED_PRICE, RURAL_CREDIT, OTHER_INDEX",
-account.loan_data.interest_rates[].interest_rate_data.reference_index_subtype,"The subtype of the reference index rate.
-",TR_TBF,string,,Yes,Yes,,
-account.loan_data.interest_rates[].interest_rate_data.reference_index_info,"Additional information regarding the reference index rate.
-",Additional information,string,,Yes,Yes,,"^[\w\W\s]{0,140}$"
-account.loan_data.interest_rates[].interest_rate_data.pre_fixed_rate,"The pre-fixed percentage rate of the interest rate.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network.
-",0.062,number,float,Yes,No,,^[01]\.\d{6}$
-account.loan_data.interest_rates[].interest_rate_data.post_fixed_rate,"The post-fixed percentage rate of the interest rate.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network.
-",0.062,number,float,Yes,No,,^[01]\.\d{6}$
-account.loan_data.interest_rates[].interest_rate_data.additional_info,"Additional information regarding the interest rate.
-",Additional information,string,,Yes,Yes,,[\w\W\s]*
-account.loan_data.fees,"Breakdown of the fees applied to the loan.
-",,array,,Yes,Yes,,
-account.loan_data.fees[].type,"**Note:** This field is not applicable for OF Brazil and will return null.
-",,string,,Yes,Yes,"OPERATION_FEE, INSURANCE_FEE, OTHERS, None",
-account.loan_data.fees[].value,"The total value of the fee. Same currency as the loan.
-",5.6,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
-account.loan_data.fees[].name,"The fee name.
-
- > **Non-nullable:** A value must be returned by Brazil's open finance network if the `fees` field is available.
-",Renovação de cadastro,string,,Yes,No,,"^[\w\W\s]{0,140}$"
-account.loan_data.fees[].code,"The fee code.
-
- > **Non-nullable:** A value must be returned by Brazil's open finance network if the `fees` field is available.
-",CADASTRO,string,,Yes,No,,"^[\w\W\s]{0,140}$"
-account.loan_data.fees[].fee_charge_type,"Indicates the type of charge. We return one of the following values:
-
-  - `SINGLE`
-  - `PER_INSTALLMENT`
-
-   > **Non-nullable:** A value must be returned by Brazil's open finance network if the `fees` field is available.
-",SINGLE,string,,Yes,No,"SINGLE, PER_INSTALLMENT",
-account.loan_data.fees[].fee_charge,"Billing method, as agreed upon with the institution. We return one of the following values:
-
-  - `MINIMUM`
-  - `MAXIMUM`
-  - `FIXED`
-  - `PERCENTAGE`
-
-   > **Non-nullable:** A value must be returned by Brazil's open finance network if the `fees` field is available.
-",FIXED,string,,Yes,No,"MINIMUM, MAXIMUM, FIXED, PERCENTAGE",
-account.loan_data.fees[].rate,"The percentage rate of the fee. Required when `fee_charge` is set to `PERCENTAGE`.
-",0.062,number,float,Yes,Yes,,^[01]\.\d{6}$
+",2020-03-01,string,date,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
 account.loan_data.contracted_charges,,,array,,No,Yes,,
+account.loan_data.contracted_charges[].info,"Additional information regarding the contracted charge.
+",Late fee,string,,No,Yes,,"^[\w\W\s]{0,140}$"
+account.loan_data.contracted_charges[].rate,"The percentage rate of the charge, calculated based on the amount of the loan.
+",0.062,number,float,No,Yes,,^[01]\.\d{6}$
 account.loan_data.contracted_charges[].type,"The type of contracted charge. We return one of the following values:
 
   - `LATE_PAYMENT_INTEREST_FEE`
@@ -342,45 +253,48 @@ account.loan_data.contracted_charges[].type,"The type of contracted charge. We r
 
   > **Non-nullable:** A value must be returned by Brazil's open finance network if the `contracted_charges` field is available.
 ",LATE_PAYMENT_INTEREST_FEE,string,,No,No,"LATE_PAYMENT_INTEREST_FEE, LATE_PAYMENT_PENALTY_FEE, DEFAULT_INTEREST_FEE, LOAN_CONTRACT_TAX, LATE_PAYMENT_TAX, NO_CHARGE, OTHER",
-account.loan_data.contracted_charges[].info,"Additional information regarding the contracted charge.
-",Late fee,string,,No,Yes,,"^[\w\W\s]{0,140}$"
-account.loan_data.contracted_charges[].rate,"The percentage rate of the charge, calculated based on the amount of the loan.
-",0.062,number,float,No,Yes,,^[01]\.\d{6}$
-account.loan_data.collaterals,"Details regarding any loan collaterals that the individual or business supplied.
+account.loan_data.credit_limit,"**Note:** This field is not applicable for OF Brazil and will return null.
+",,number,,Yes,Yes,,
+account.loan_data.cutting_date,"**Note:** This field is not applicable for OF Brazil and will return null.
+",,string,,Yes,Yes,,
+account.loan_data.cutting_day,"**Note:** This field is not applicable for OF Brazil and will return null.
+",,string,,Yes,Yes,,
+account.loan_data.disbursement_dates,"An array of dates when the loan was disbursed.
 ",,array,,Yes,Yes,,
-account.loan_data.collaterals[].type,"The type of collateral, as defined by the institution.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network if the `collaterals` field is available.
-",OPERACOES_GARANTIDAS_PELO_GOVERNO,string,,Yes,No,,
-account.loan_data.collaterals[].subtype,"The subtype of the collateral, as defined by the institution.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network if the `collaterals` field is available.
-",CCR_CONVENIO_CREDITOS_RECIPROCOS,string,,Yes,No,,
-account.loan_data.collaterals[].currency,"The three-letter currency code (ISO-4217).
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network if the `collaterals` field is available.
-",BRL,string,,Yes,No,,^[A-Z]{3}$
-account.loan_data.collaterals[].amount,"The total amount of the bill.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network if the `collaterals` field is available.
-",45391.89,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
-account.loan_data.balloon_payments,"Detailed information regarding any balloon payments for the loan, if applicable.
+account.loan_data.fees,"Breakdown of the fees applied to the loan.
 ",,array,,Yes,Yes,,
-account.loan_data.balloon_payments[].due_date,"The date that the balloon payment is to be paid, in `YYYY-MM-DD` format.
-",2021-09-06,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
-account.loan_data.balloon_payments[].currency,"The three-letter currency code (ISO-4217).
-",BRL,string,,Yes,Yes,,^[A-Z]{3}$
-account.loan_data.balloon_payments[].amount,"The total amount of the balloon payment.
-",45391.89,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
-account.loan_data.installments_contract_term_frequency,"The frequency of contracted installment payments, as defined when the contract was first signed. We return one of the following:
+account.loan_data.fees[].code,"The fee code.
 
-  - `DAY`
-  - `WEEK`
-  - `MONTH`
-  - `YEAR`
-  - `NO_DEADLINE_REMAINING`
-  - `null`
-",MONTH,string,,Yes,Yes,"DAY, WEEK, MONTH, YEAR, NO_DEADLINE_REMAINING, None",
+ > **Non-nullable:** A value must be returned by Brazil's open finance network if the `fees` field is available.
+",CADASTRO,string,,Yes,No,,"^[\w\W\s]{0,140}$"
+account.loan_data.fees[].fee_charge,"Billing method, as agreed upon with the institution. We return one of the following values:
+
+  - `MINIMUM`
+  - `MAXIMUM`
+  - `FIXED`
+  - `PERCENTAGE`
+
+   > **Non-nullable:** A value must be returned by Brazil's open finance network if the `fees` field is available.
+",FIXED,string,,Yes,No,"MINIMUM, MAXIMUM, FIXED, PERCENTAGE",
+account.loan_data.fees[].fee_charge_type,"Indicates the type of charge. We return one of the following values:
+
+  - `SINGLE`
+  - `PER_INSTALLMENT`
+
+   > **Non-nullable:** A value must be returned by Brazil's open finance network if the `fees` field is available.
+",SINGLE,string,,Yes,No,"SINGLE, PER_INSTALLMENT",
+account.loan_data.fees[].name,"The fee name.
+
+ > **Non-nullable:** A value must be returned by Brazil's open finance network if the `fees` field is available.
+",Renovação de cadastro,string,,Yes,No,,"^[\w\W\s]{0,140}$"
+account.loan_data.fees[].rate,"The percentage rate of the fee. Required when `fee_charge` is set to `PERCENTAGE`.
+",0.062,number,float,Yes,Yes,,^[01]\.\d{6}$
+account.loan_data.fees[].type,"**Note:** This field is not applicable for OF Brazil and will return null.
+",,string,,Yes,Yes,"OPERATION_FEE, INSURANCE_FEE, OTHERS, None",
+account.loan_data.fees[].value,"The total value of the fee. Same currency as the loan.
+",5.6,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
+account.loan_data.first_installment_due_date,"The date when the first installment of the loan is to be paid, in `YYYY-MM-DD` format.
+",2020-03-01,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
 account.loan_data.installment_frequency,"The frequency that the installments are paid. We return one of the following values:
 
   - `IRREGULAR`
@@ -397,121 +311,160 @@ account.loan_data.installment_frequency,"The frequency that the installments are
 ",MONTHLY,string,,Yes,No,"IRREGULAR, WEEKLY, FORTNIGHTLY, MONTHLY, BIMONTHLY, QUARTERLY, BIANNUALLY, ANNUALLY, OTHER",
 account.loan_data.installment_frequency_info,"Additional information regarding the `installment_frequency`.
 ",Both the term and requency are the same.,string,,Yes,Yes,,"^[\w\W\s]{0,99}$$"
-account.loan_data.first_installment_due_date,"The date when the first installment of the loan is to be paid, in `YYYY-MM-DD` format.
-",2020-03-01,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
-account.loan_data.number_of_installments_total,"The total number of installments required to pay the loan.
-",60,integer,int32,Yes,Yes,,
+account.loan_data.installments_contract_term_frequency,"The frequency of contracted installment payments, as defined when the contract was first signed. We return one of the following:
+
+  - `DAY`
+  - `WEEK`
+  - `MONTH`
+  - `YEAR`
+  - `NO_DEADLINE_REMAINING`
+  - `null`
+",MONTH,string,,Yes,Yes,"DAY, WEEK, MONTH, YEAR, NO_DEADLINE_REMAINING, None",
+account.loan_data.interest_rate,"**Note:** This field is not applicable for OF Brazil and will return null.
+",,number,,Yes,Yes,,
+account.loan_data.interest_rates,"Breakdown of the interest applied to the loan. With OF Brazil, we highly recommend using the information in `interest_rate_data` for in-depth information.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",,array,,Yes,No,,
+account.loan_data.interest_rates[].interest_rate_data,Detailed information regarding the interest rate.,,object,,Yes,Yes,,
+account.loan_data.interest_rates[].interest_rate_data.additional_info,"Additional information regarding the interest rate.
+",Additional information,string,,Yes,Yes,,[\w\W\s]*
+account.loan_data.interest_rates[].interest_rate_data.calculation_base,"The base calculation for the interest rate.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",30/360,string,,Yes,No,,^[0-9]{2}\/[0-9]{3}$
+account.loan_data.interest_rates[].interest_rate_data.post_fixed_rate,"The post-fixed percentage rate of the interest rate.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",0.062,number,float,Yes,No,,^[01]\.\d{6}$
+account.loan_data.interest_rates[].interest_rate_data.pre_fixed_rate,"The pre-fixed percentage rate of the interest rate.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",0.062,number,float,Yes,No,,^[01]\.\d{6}$
+account.loan_data.interest_rates[].interest_rate_data.rate_type,"The type of interest rate. We return one of the following values:
+
+  - `SIMPLE`
+  - `COMPOUND`
+
+  > **Non-nullable:** A value must be returned by Brazil's open finance network.
+",SIMPLE,string,,Yes,No,"SIMPLE, COMPOUND",
+account.loan_data.interest_rates[].interest_rate_data.reference_index_info,"Additional information regarding the reference index rate.
+",Additional information,string,,Yes,Yes,,"^[\w\W\s]{0,140}$"
+account.loan_data.interest_rates[].interest_rate_data.reference_index_subtype,"The subtype of the reference index rate.
+",TR_TBF,string,,Yes,Yes,,
+account.loan_data.interest_rates[].interest_rate_data.reference_index_type,"The reference index rate. We return one of the following values:
+
+  - `WITHOUT_INDEX_TYPE`
+  - `PRE_FIXED`
+  - `POST_FIXED`
+  - `FLOATING`
+  - `INDEXED_PRICE`
+  - `RURAL_CREDIT`
+  - `OTHER_INDEX`
+
+  > **Non-nullable:** A value must be returned by Brazil's open finance network.
+",FLOATING,string,,Yes,No,"WITHOUT_INDEX_TYPE, PRE_FIXED, POST_FIXED, FLOATING, INDEXED_PRICE, RURAL_CREDIT, OTHER_INDEX",
+account.loan_data.interest_rates[].interest_rate_data.tax_type,"The type of interest rate tax. We return one of the following values:
+
+  - `NOMINAL`
+  - `EFFECTIVE`
+  
+  > **Non-nullable:** A value must be returned by Brazil's open finance network.
+",NOMINAL,string,,Yes,No,"NOMINAL, EFFECTIVE",
+account.loan_data.interest_rates[].interest_rate_data.type,"The period that the interest is applied to the loan.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",MONTHLY,string,,No,No,"MONTHLY, YEARLY",
+account.loan_data.interest_rates[].name,"The name of the type of interest rate applied to the loan.
+
+**Note:** For OFDA Brazil, we recommend you use the `interest_date_data.tax_type` parameter.
+",NOMINAL,string,,Yes,Yes,,
+account.loan_data.interest_rates[].type,"The period that the interest is applied to the loan.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",MONTHLY,string,,Yes,No,"MONTHLY, YEARLY",
+account.loan_data.interest_rates[].value,"The interest rate (in percent or currency value).
+
+**Note:** For OFDA Brazil, we recommend you use the `interest_date_data.pre_fixed_rate` and `interest_date_data.post_fixed_rate`parameter.
+",7.85,number,float,Yes,Yes,,
+account.loan_data.last_payment_date,"**Note:** This field is not applicable for OF Brazil and will return null.
+",,string,,Yes,Yes,,
+account.loan_data.last_period_balance,"**Note:** This field is not applicable for OF Brazil and will return null.
+",,number,,Yes,Yes,,
+account.loan_data.limit_day,"**Note:** This field is not applicable for OF Brazil and will return null.
+",,string,,Yes,Yes,,
+account.loan_data.loan_code,"The country-specific standardized contract number.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",92792126019929279212650822221989319252576,string,,Yes,No,,"^\d{22,67}$"
+account.loan_data.loan_type,"The type of the loan, according to the institution.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",HOME_EQUITY,string,,Yes,No,,
+account.loan_data.monthly_payment,"**Note:** This field is not applicable for OF Brazil and will return null.
+",,number,float,Yes,Yes,,
+account.loan_data.no_interest_payment,"**Note:** This field is not applicable for OF Brazil and will return null.
+",,number,,Yes,Yes,,
 account.loan_data.number_of_installments_outstanding,"The number of installments left to pay.
 ",48,integer,int32,Yes,Yes,,
 account.loan_data.number_of_installments_paid,"The number of installments already paid.
 ",32,integer,int32,Yes,Yes,,
 account.loan_data.number_of_installments_past_due,"The number of installments that are overdue.
 ",2,integer,int32,Yes,Yes,,
-account.loan_data.disbursement_dates,"An array of dates when the loan was disbursed.
-",,array,,Yes,Yes,,
-account.loan_data.settlement_date,"The date that the loan was settled, in `YYYY-MM-DD` format.
-",2021-09-23,string,,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
-account.loan_data.contract_start_date,"The date when the loan contract was signed, in `YYYY-MM-DD` format.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network.
-",2020-03-01,string,date,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
-account.loan_data.contract_end_date,"The date when the loan is expected to be completed, in `YYYY-MM-DD` format.
-",2027-10-01,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
-account.loan_data.contract_remaining_frequency,"The frequency of the remaining contracted installment payments, as defined when the contract was first signed. We return one of the following:
-- `DAY`
-- `WEEK`
-- `MONTH`
-- `YEAR`
-- `NO_DEADLINE_REMAINING`
-- `null`
-",MONTH,string,,Yes,Yes,"DAY, WEEK, MONTH, YEAR, NO_DEADLINE_REMAINING, None",
-account.loan_data.contract_remaining_total,"The total number of installments remaining on the loan.
-",20,integer,int32,Yes,Yes,,
-account.loan_data.amortization_schedule,"The loan amortization schedule.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network.
-",SEM_SISTEMA_AMORTIZACAO,string,,Yes,No,,
-account.loan_data.amortization_schedule_info,"Additional information regarding the `amortization_schedule`.
-",No need for a schedule.,string,,Yes,Yes,,[\w\W\s]*
-account.loan_data.consignee_id,"The ID of the consignee of the loan.
-",60500998000135,string,,Yes,Yes,,^\d{14}$
-account.loan_data.contract_number,"The contract number of the loan, as given by the institution.
-",1324926521496,string,,Yes,Yes,,"^\d{1,100}$"
-account.loan_data.monthly_payment,"**Note:** This field is not applicable for OF Brazil and will return null.
-",,number,float,Yes,Yes,,
-account.loan_data.principal,"**Note:** This field is not applicable for OF Brazil and will return null.
+account.loan_data.number_of_installments_total,"The total number of installments required to pay the loan.
+",60,integer,int32,Yes,Yes,,
+account.loan_data.outstanding_balance,"The amount remaining to pay in total, including interest.
+",182000,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
+account.loan_data.outstanding_principal,"**Note:** This field is not applicable for OF Brazil and will return null.
 ",,number,float,Yes,Yes,,
 account.loan_data.payment_day,"**Note:** This field is not applicable for OF Brazil and will return null.
 ",,string,,Yes,Yes,,
-account.loan_data.outstanding_principal,"**Note:** This field is not applicable for OF Brazil and will return null.
+account.loan_data.principal,"**Note:** This field is not applicable for OF Brazil and will return null.
 ",,number,float,Yes,Yes,,
-account.loan_data.credit_limit,"**Note:** This field is not applicable for OF Brazil and will return null.
-",,number,,Yes,Yes,,
-account.loan_data.last_period_balance,"**Note:** This field is not applicable for OF Brazil and will return null.
-",,number,,Yes,Yes,,
-account.loan_data.interest_rate,"**Note:** This field is not applicable for OF Brazil and will return null.
-",,number,,Yes,Yes,,
-account.loan_data.limit_day,"**Note:** This field is not applicable for OF Brazil and will return null.
-",,string,,Yes,Yes,,
-account.loan_data.cutting_day,"**Note:** This field is not applicable for OF Brazil and will return null.
-",,string,,Yes,Yes,,
-account.loan_data.cutting_date,"**Note:** This field is not applicable for OF Brazil and will return null.
-",,string,,Yes,Yes,,
-account.loan_data.last_payment_date,"**Note:** This field is not applicable for OF Brazil and will return null.
-",,string,,Yes,Yes,,
-account.loan_data.no_interest_payment,"**Note:** This field is not applicable for OF Brazil and will return null.
-",,number,,Yes,Yes,,
-account.funds_data,"**Note:** This field is not applicable for OF Brazil and will return null.
-",,string,,Yes,Yes,,
-collected_at,"The ISO-8601 timestamp when the data point was collected.
-",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
-created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
-",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
-value_date,"The date when the transaction occurred, in `YYYY-MM-DD` format, in `YYYY-MM-DD` format.
+account.loan_data.settlement_date,"The date that the loan was settled, in `YYYY-MM-DD` format.
+",2021-09-23,string,,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+account.loan_data.total_effective_cost,"The initial total effective cost of the loan.
+",209000,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+account.name,"The account name, as given by the institution.",Cuenta Perfiles- M.N. - MXN-666,string,,Yes,Yes,,
+account.number,"The account number, as designated by the institution.
+",4057068115181,string,,Yes,Yes,,
+account.overdraft,,,object,,No,Yes,,
+account.overdraft.arranged,"The agreed upon overdraft limit between the account holder and the institution.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `overdraft` field is available.
+",5000.5,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+account.overdraft.unarranged,"The overdraft used that was not arranged between the account holder and the institution.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `overdraft` field is available.
+",300.1,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+account.overdraft.used,"The overdraft value used.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network if the `overdraft` field is available.
+",1000.5,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+account.public_identification_name,"The public name for the type of identification. For 🇧🇷 Brazilian savings and checking accounts, this field will be `AGENCY/ACCOUNT`.
+",AGENCY/ACCOUNT,string,,Yes,Yes,,
+account.public_identification_value,"The value for the `public_identification_name`.
+
+For 🇧🇷 OFDA Brazilian savings and checking accounts, this field will be the agency and bank account number, separated by a slash. For example: `0444/45722-0`.
+
+For 🇧🇷 OFDA Brazilian credit card accounts, we will return a string of concatenated credit card numbers associated with the account. For example: ""8763,9076,5522""
+",0444/45722-0,string,,Yes,Yes,,
+account.subtype,"The account subtype, as designated by the institution.
 
 > **Non-nullable:** A value must be returned by Brazil's open finance network.
-",2019-10-23,string,date,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
-transacted_at,"The ISO-8601 timestamp of when the transaction occurred (in the UTC timezone).
+",FINANCIAMENTO_HABITACIONAL_SFH,string,,Yes,No,,
+account.type,"The account type, as designated by the institution.
 
-> **Note:** For transactions that occurred before 31.01.2024, the timestamp may only indicate the day (for example, `2016-01-29T00:00:00.000Z`). However, transactions that occurred after this date must include the date and time (`2024-02-20T12:29:03.374Z`).
-
-> **Institutions not abiding by this format:**
-> Some institutions may not provide the exact time of the transaction. In this case, the timestamp will be set to `00:00:00.000Z`.
-> Belvo has identified the following institutions as not abiding by the regulation and have raised the issue with regulators: Bradesco, Itau, and Sicoob.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network for **credit card and checking account transactions**.
-",2024-02-20T12:29:03.374Z,string,date-time,No,No,,(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)\.(?:[0-9]){3}Z$)
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",STANDARD_NACIONAL,string,,Yes,No,,
 accounting_date,"The date when the transaction was processed and accounted for by the institution, in `YYYY-MM-DD` format.
 > **Non-nullable:** A value must be returned by Brazil's open finance network for **credit card transactions**.",2019-10-23,string,,Yes,Yes,,
-inferred_accounting_date,"In the case that the transaction occured on a weekend or public holiday, Belvo will infer the date that the transaction is accounted for by the institution. Typically, this is the next business day.
-",2019-10-23,string,date,No,No,,
 amount,"The transaction amount.
 ℹ️ The amount displayed is always positive as we indicate the direction of the transaction in the `type` parameter.
 > **Non-nullable:** A value must be returned by Brazil's open finance network.
 ",2145.45,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
-local_currency_amount,"The value of the transaction in the local currency.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network for **credit card transactions**.
-",7623.64,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
 balance,"**Note:** This field is not applicable for OF Brazil and will return null.
 ",,number,float,Yes,Yes,,
-currency,"The three-letter currency code (ISO-4217).
-",BRL,string,,Yes,Yes,,^[A-Z]{3}$
-description,"The description of transaction provided by the institution. Usually this
-is the text that the end user sees in the online platform.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network.
-",SEVEN BUDDHAS RFC:XXXXXXXXXX,string,,Yes,Yes,,
-observations,"**Note:** This field is not applicable for OF Brazil and will return null.
-",,string,,Yes,Yes,,
-merchant,"Additional data regarding the merchant involved in the transaction.
-We only return merchant information for new transactions made from *checking* or *credit card* accounts.
-> **Get merchant information**
- We retrieve the merchant information for a transaction as part of our <a href=""https://developers.belvo.com/docs/banking#categorizing-transactions"" target=""_blank"">Transaction categorization</a> product, turning raw data into actionable insights. To enable this product, just <a href=""https://belvo.com/contact/?utm_source=documentation"" target=""_blank"">reach out</a> to us, and we'll get right to it.
-",,object,,Yes,Yes,,
-merchant.logo,The URL to the merchant's logo.,https://logo.clearbit.com/asesor-contable.es,string,,No,Yes,,
-merchant.website,The URL to the merchant's website.,https://merchants-r-us.com,string,,No,Yes,,
-merchant.merchant_name,The name of the merchant.,Merchants R Us Global,string,,No,No,,
 category,"The name of the transaction category.
 
 > **Get transaction categorization**
@@ -540,6 +493,187 @@ We return one of the following enum values:
 
   \* For clients not using our Transaction Categorization product, we return `null` instead.
 ",Income & Payments,string,,Yes,Yes,"Bills & Utilities, Credits & Loans, Deposits, Fees & Charges, Food & Groceries, Home & Life, Income & Payments, Insurance, Investments & Savings, Online Platforms & Leisure, Personal Shopping, Taxes, Transfers, Transport & Travel, Unknown, Withdrawal & ATM, None",
+collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+counterparty,"Information regarding the other party of this transaction, if available.",,object,,Yes,Yes,,
+counterparty.agency,"The branch code where the account was opened.
+",6272,string,,Yes,Yes,,"^\d{1,4}$"
+counterparty.check_digit,"The check digit of the account number, if applicable.
+",7,string,,Yes,Yes,,[\w\W\s]*
+counterparty.clearing_code,"The banking clearing code.
+",001,string,,Yes,Yes,,^\d{3}$
+counterparty.document_number,"The document number of the representative.
+
+**Note**: 
+
+For Brazil:
+  - When the `type` is `INDIVIDUAL`, this is the CPF number.
+  - When the `type` is `COMPANY`, this is the CNPJ number.
+",73677831148,string,,Yes,Yes,,^\d{11}$
+counterparty.number,"The account number of the product.
+",24550245,string,,Yes,Yes,,"^\d{8,20}$"
+counterparty.type,"The transaction counterparty type. We return one of the following values:
+
+  - `INDIVIDUAL`
+  - `COMPANY`
+  - `null`
+",INDIVIDUAL,string,,Yes,Yes,"INDIVIDUAL, COMPANY, None",
+created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+credit_card_data,Additional data provided by the institution for credit card transactions.,,object,,Yes,Yes,,
+credit_card_data.bill_amount,"The bill amount, as of `collected_at`. For more information, see `credit_card_bill`.",300,number,float,Yes,Yes,,"^-?\d{1,15}\.\d{2,4}$"
+credit_card_data.bill_due_date,"The date that the bill is due to be paid, in `YYYY-MM-DD` format.
+
+> **Note**: This field is only returned for 'closed' bills (meaning the billing period has ended and the bill has been emitted). If the billing period is still ongoing, we return `null`.
+",2023-06-17,string,date,No,Yes,,
+credit_card_data.bill_internal_identification,"The institution's internal identifier for the bill.
+
+> **Note**: This field is only returned for 'closed' bills (meaning the billing period has ended and the bill has been emitted). If the billing period is still ongoing, we return `null`.
+",927921260199292792126508222219893192525A6,string,,No,Yes,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
+credit_card_data.bill_name,"The title of the monthly credit card bill the transaction belongs to. The format of the returned value is institution specific, however, some common examples are:
+
+- diciembre-2021
+- dec-2021
+- dec-21
+
+> **Note**: This field is only returned for 'closed' bills (meaning the billing period has ended and the bill has been emitted). If the billing period is still ongoing, we return `null`.
+",apr-2020,string,,Yes,Yes,,
+credit_card_data.bill_status,"**Note:** This field is not applicable for OFDA Brazil and will return `null`.
+",,string,,Yes,Yes,,
+credit_card_data.card_number,"The credit card number.
+
+**Note:** Often, this is just the last four digit of the credit card.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",4453,string,,Yes,No,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
+credit_card_data.collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+credit_card_data.credit_card_bill,"Information regarding the bill that this transaction appears on.
+",,object,,No,Yes,,
+credit_card_data.credit_card_bill.id,"The unique identifier created by Belvo used to reference the current credit card bill.
+
+> **Note**: This field is only returned for 'closed' bills (meaning the billing period has ended and the bill has been emitted). If the billing period is still ongoing, we return `null`.
+",8e9d13c2-af41-4a49-b43e-2da012bd1d11,string,uuid,No,No,,
+credit_card_data.credit_card_bill.internal_identification,"The institution's internal identifier for the bill.
+
+> **Note**: This field is only returned for 'closed' bills (meaning the billing period has ended and the bill has been emitted). If the billing period is still ongoing, we return `null`.
+",92792126019929279212650822221989319252576,string,,No,Yes,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
+credit_card_data.credits_type,"Other types of credit that have been contracted on the card. We return one of the following values:
+
+  - `REVOLVING_CREDIT`
+  - `BILL_INSTALLMENT_PAYMENT`
+  - `LOAN`
+  - `OTHERS`
+  - `null`
+",BILL_INSTALLMENT_PAYMENT,string,,Yes,Yes,"REVOLVING_CREDIT, BILL_INSTALLMENT_PAYMENT, LOAN, OTHERS, None",
+credit_card_data.credits_type_additional_info,"Additional information regarding the credit type.
+",Some additional information.,string,,Yes,Yes,,"^[\w\W\s]{0,140}$"
+credit_card_data.fee_type,"The fee that can be charged for a card transaction. We return one of the following values:
+
+  - `ANNUAL_FEE`
+  - `NATIONAL_WITHDRAWAL`
+  - `INTERNATIONAL_WITHDRAWAL`
+  - `EMERGENCY_CREDIT_EVALUATION_FEE`
+  - `DUPLICATE_ISSUANCE_FEE`
+  - `PAYMENT_FEE`
+  - `SMS_FEE`
+  - `OTHERS`
+  - `null`
+",NATIONAL_WITHDRAWAL,string,,Yes,Yes,"ANNUAL_FEE, NATIONAL_WITHDRAWAL, INTERNATIONAL_WITHDRAWAL, EMERGENCY_CREDIT_EVALUATION_FEE, DUPLICATE_ISSUANCE_FEE, PAYMENT_FEE, SMS_FEE, OTHERS, None",
+credit_card_data.fee_type_additional_info,"Additional information regarding the fee.
+",ATM withdrawal in Curitiba.,string,,Yes,Yes,,"^[\w\W\s]{0,140}$"
+credit_card_data.installment_identifier,"An identifier for the installment, according to the institution.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",PARCELA_896,string,,Yes,No,,"^[\w\W\s]{0,140}$"
+credit_card_data.number_of_installments,"The total number of installments for the card transaction, if applicable.
+",4,integer,,Yes,Yes,,
+credit_card_data.previous_bill_total,"**Note:** This field is not applicable for OFDA Brazil and will return `null`.
+",,string,,Yes,Yes,,
+currency,"The three-letter currency code (ISO-4217).
+",BRL,string,,Yes,Yes,,^[A-Z]{3}$
+description,"The description of transaction provided by the institution. Usually this
+is the text that the end user sees in the online platform.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",SEVEN BUDDHAS RFC:XXXXXXXXXX,string,,Yes,Yes,,
+id,"Belvo's unique identifier for the current item.
+",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
+inferred_accounting_date,"In the case that the transaction occured on a weekend or public holiday, Belvo will infer the date that the transaction is accounted for by the institution. Typically, this is the next business day.
+",2019-10-23,string,date,No,No,,
+internal_identification,"The institution's internal identification for the transaction.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",TXpRMU9UQTROMWhZV2xSU1FUazJSMDl,string,,Yes,No,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
+loan_data,"Information regarding the loan transactional data, if applicable.",,object,,Yes,Yes,,
+loan_data.charges,Details regarding the charges associated with this payment. Only applicable when `is_detached` = `true`.,,array,,Yes,No,,
+loan_data.charges[].amount,"The amount of the charge.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network when the `charges` field is present
+",8903.77,number,float,Yes,No,,"^-?\d{1,15}\.\d{2,4}$"
+loan_data.charges[].info,"Additional information regarding the charge `type`.
+",Late payment charge.,string,,Yes,No,,"^[\w\W\s]{0,140}$"
+loan_data.charges[].type,"The type of charge.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network when the `charges` field is present
+",MULTA_ATRASO_PAGAMENTO,string,,Yes,No,,"^[\w\W\s]{0,140}$"
+loan_data.fees,Details regarding the fees associated with this payment. Only applicable when `is_detached` = `true`.,,array,,Yes,No,,
+loan_data.fees[].amount,"The amount of the fee.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network when the `fees` field is present.
+",8903.77,number,float,Yes,Yes,,"^-?\d{1,15}\.\d{2,4}$"
+loan_data.fees[].code,"The institution's code for the fee.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network when the `fees` field is present.
+",aval_bem,string,,Yes,No,,"^[\w\W\s]{0,140}$"
+loan_data.fees[].name,"The name of the fee.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network when the `fees` field is present.
+",Reavaliação periódica do bem,string,,Yes,No,,"^[\w\W\s]{0,140}$"
+loan_data.installment_id,"The institution's unique ID for this payment installment.
+",WGx0aExYcEJMVm93TFRsZFcyRXRla0V0V2pBdE9Wd3RYWH,string,,No,Yes,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
+loan_data.is_detached,"Boolean to indicate whether or not this loan payment was part of the original payment schedule.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network.
+",True,boolean,,Yes,No,,
+local_currency_amount,"The value of the transaction in the local currency.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network for **credit card transactions**.
+",7623.64,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
+mcc,"The four-digit (ISO-18245 compliant) Merchant Category Code (MCC) for the transaction. This field is only applicable for credit card transactions.
+",5137,integer,int32,Yes,Yes,,^[0-9]{4}$
+merchant,"Additional data regarding the merchant involved in the transaction.
+We only return merchant information for new transactions made from *checking* or *credit card* accounts.
+> **Get merchant information**
+ We retrieve the merchant information for a transaction as part of our <a href=""https://developers.belvo.com/docs/banking#categorizing-transactions"" target=""_blank"">Transaction categorization</a> product, turning raw data into actionable insights. To enable this product, just <a href=""https://belvo.com/contact/?utm_source=documentation"" target=""_blank"">reach out</a> to us, and we'll get right to it.
+",,object,,Yes,Yes,,
+merchant.logo,The URL to the merchant's logo.,https://logo.clearbit.com/asesor-contable.es,string,,No,Yes,,
+merchant.merchant_name,The name of the merchant.,Merchants R Us Global,string,,No,No,,
+merchant.website,The URL to the merchant's website.,https://merchants-r-us.com,string,,No,Yes,,
+observations,"**Note:** This field is not applicable for OF Brazil and will return null.
+",,string,,Yes,Yes,,
+operation_type,"The type of transaction. For example, a PIX payment or a deposit.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network for **non-loan account transactions**.
+",TRANSFERENCIA_MESMA_INSTITUICAO,string,,Yes,No,,"^[A-Za-z_]{0,50}$"
+operation_type_additional_info,"Additional information regarding the `operation_type`, if applicable.
+",Internal transfer.,string,,Yes,Yes,,^\S[\s\S]*$
+payment_type,"The transaction payment type. We return one of the following values:
+
+  - `FULL`
+  - `INSTALLMENT`
+  - `null`
+",FULL,string,,Yes,Yes,"FULL, INSTALLMENT, None",
+reference,"**Note:** This field is not applicable for OF Brazil and will return null.
+",,string,,Yes,Yes,,
+status,"The status of the transaction. We return one of the following values:
+
+  - `PROCESSED` (The transaction has been processed by the institution.)
+  - `PENDING` (The institution clearly states that the transaction has not yet been processed.)
+  - `UNCATEGORIZED` (deprecated)
+  - `null` (deprecated)
+  
+",PROCESSED,string,,Yes,Yes,"PENDING, PROCESSED, UNCATEGORIZED, None",
 subcategory,"The transaction subcategory.
 
   > **Get transaction categorization**
@@ -627,156 +761,22 @@ We return one of the following enum values:
   - `Other`
   - `null`
 ",Freelance,string,,Yes,Yes,"Electricity & Energy, Rent, Telecommunications, Water, Auto, Credit Card, Instalment, Interest & Charges, Mortgage, Pay Advance, Personal, Adjustments, Bank Fees, Chargeback, Refund, Blocked Balances, Alimony, Alcohol & Tobacco, Bakery & Coffee, Bars & Nightclubs, Convenience Store, Delivery, Groceries, Restaurants, Education, Gyms & Fitness, Hair & Beauty, Health, Home Decor & Appliances, Laundry & Dry Cleaning, Pharmacies, Professional Services, Veterinary Services, Freelance, Interest, Retirement, Salary, Government, Home Insurance, Auto Insurance, Health & Life Insurance, Savings, Fixed income, Equity, Investment Funds, Derivatives, Cryptocurrencies, Apps, Software and Cloud Services, Events, Parks and Museums, Gambling, Gaming, Lottery, Movie & Audio, Books & News, Clothing & Accessories, Department Store, Electronics, E-commerce, Gifts, Office Supplies, Pet Supplies, Auto Tax & Fees, Donation, Government Fees, Income Tax, Real Estate Tax & Fees, Tax Return, Accommodation, Auto Expenses, Auto Rental, Flights, Gas, Mileage Programs, Parking & Tolls, Public Transit, Taxis & Rideshares, Other, None",
-reference,"**Note:** This field is not applicable for OF Brazil and will return null.
-",,string,,Yes,Yes,,
+transacted_at,"The ISO-8601 timestamp of when the transaction occurred (in the UTC timezone).
+
+> **Note:** For transactions that occurred before 31.01.2024, the timestamp may only indicate the day (for example, `2016-01-29T00:00:00.000Z`). However, transactions that occurred after this date must include the date and time (`2024-02-20T12:29:03.374Z`).
+
+> **Institutions not abiding by this format:**
+> Some institutions may not provide the exact time of the transaction. In this case, the timestamp will be set to `00:00:00.000Z`.
+> Belvo has identified the following institutions as not abiding by the regulation and have raised the issue with regulators: Bradesco, Itau, and Sicoob.
+
+> **Non-nullable:** A value must be returned by Brazil's open finance network for **credit card and checking account transactions**.
+",2024-02-20T12:29:03.374Z,string,date-time,No,No,,(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)\.(?:[0-9]){3}Z$)
 type,"The direction of the transaction:
 - `INFLOW` indicates money coming into the account.
 - `OUTFLOW` indicates money going out of the account.
 - `null` when no information was present regarding the direction of the transaction.
 ",INFLOW,string,,Yes,Yes,"OUTFLOW, INFLOW, None",
-status,"The status of the transaction. We return one of the following values:
-
-  - `PROCESSED` (The transaction has been processed by the institution.)
-  - `PENDING` (The institution clearly states that the transaction has not yet been processed.)
-  - `UNCATEGORIZED` (deprecated)
-  - `null` (deprecated)
-  
-",PROCESSED,string,,Yes,Yes,"PENDING, PROCESSED, UNCATEGORIZED, None",
-credit_card_data,Additional data provided by the institution for credit card transactions.,,object,,Yes,Yes,,
-credit_card_data.collected_at,"The ISO-8601 timestamp when the data point was collected.
-",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
-credit_card_data.bill_name,"The title of the monthly credit card bill the transaction belongs to. The format of the returned value is institution specific, however, some common examples are:
-
-- diciembre-2021
-- dec-2021
-- dec-21
-
-> **Note**: This field is only returned for 'closed' bills (meaning the billing period has ended and the bill has been emitted). If the billing period is still ongoing, we return `null`.
-",apr-2020,string,,Yes,Yes,,
-credit_card_data.bill_due_date,"The date that the bill is due to be paid, in `YYYY-MM-DD` format.
-
-> **Note**: This field is only returned for 'closed' bills (meaning the billing period has ended and the bill has been emitted). If the billing period is still ongoing, we return `null`.
-",2023-06-17,string,date,No,Yes,,
-credit_card_data.bill_internal_identification,"The institution's internal identifier for the bill.
-
-> **Note**: This field is only returned for 'closed' bills (meaning the billing period has ended and the bill has been emitted). If the billing period is still ongoing, we return `null`.
-",927921260199292792126508222219893192525A6,string,,No,Yes,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
-credit_card_data.bill_status,"**Note:** This field is not applicable for OFDA Brazil and will return `null`.
-",,string,,Yes,Yes,,
-credit_card_data.previous_bill_total,"**Note:** This field is not applicable for OFDA Brazil and will return `null`.
-",,string,,Yes,Yes,,
-credit_card_data.bill_amount,"The bill amount, as of `collected_at`. For more information, see `credit_card_bill`.",300,number,float,Yes,Yes,,"^-?\d{1,15}\.\d{2,4}$"
-credit_card_data.card_number,"The credit card number.
-
-**Note:** Often, this is just the last four digit of the credit card.
+value_date,"The date when the transaction occurred, in `YYYY-MM-DD` format, in `YYYY-MM-DD` format.
 
 > **Non-nullable:** A value must be returned by Brazil's open finance network.
-",4453,string,,Yes,No,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
-credit_card_data.fee_type,"The fee that can be charged for a card transaction. We return one of the following values:
-
-  - `ANNUAL_FEE`
-  - `NATIONAL_WITHDRAWAL`
-  - `INTERNATIONAL_WITHDRAWAL`
-  - `EMERGENCY_CREDIT_EVALUATION_FEE`
-  - `DUPLICATE_ISSUANCE_FEE`
-  - `PAYMENT_FEE`
-  - `SMS_FEE`
-  - `OTHERS`
-  - `null`
-",NATIONAL_WITHDRAWAL,string,,Yes,Yes,"ANNUAL_FEE, NATIONAL_WITHDRAWAL, INTERNATIONAL_WITHDRAWAL, EMERGENCY_CREDIT_EVALUATION_FEE, DUPLICATE_ISSUANCE_FEE, PAYMENT_FEE, SMS_FEE, OTHERS, None",
-credit_card_data.fee_type_additional_info,"Additional information regarding the fee.
-",ATM withdrawal in Curitiba.,string,,Yes,Yes,,"^[\w\W\s]{0,140}$"
-credit_card_data.credits_type,"Other types of credit that have been contracted on the card. We return one of the following values:
-
-  - `REVOLVING_CREDIT`
-  - `BILL_INSTALLMENT_PAYMENT`
-  - `LOAN`
-  - `OTHERS`
-  - `null`
-",BILL_INSTALLMENT_PAYMENT,string,,Yes,Yes,"REVOLVING_CREDIT, BILL_INSTALLMENT_PAYMENT, LOAN, OTHERS, None",
-credit_card_data.credits_type_additional_info,"Additional information regarding the credit type.
-",Some additional information.,string,,Yes,Yes,,"^[\w\W\s]{0,140}$"
-credit_card_data.installment_identifier,"An identifier for the installment, according to the institution.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network.
-",PARCELA_896,string,,Yes,No,,"^[\w\W\s]{0,140}$"
-credit_card_data.number_of_installments,"The total number of installments for the card transaction, if applicable.
-",4,integer,,Yes,Yes,,
-credit_card_data.credit_card_bill,"Information regarding the bill that this transaction appears on.
-",,object,,No,Yes,,
-credit_card_data.credit_card_bill.id,"The unique identifier created by Belvo used to reference the current credit card bill.
-
-> **Note**: This field is only returned for 'closed' bills (meaning the billing period has ended and the bill has been emitted). If the billing period is still ongoing, we return `null`.
-",8e9d13c2-af41-4a49-b43e-2da012bd1d11,string,uuid,No,No,,
-credit_card_data.credit_card_bill.internal_identification,"The institution's internal identifier for the bill.
-
-> **Note**: This field is only returned for 'closed' bills (meaning the billing period has ended and the bill has been emitted). If the billing period is still ongoing, we return `null`.
-",92792126019929279212650822221989319252576,string,,No,Yes,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
-counterparty,"Information regarding the other party of this transaction, if available.",,object,,Yes,Yes,,
-counterparty.type,"The transaction counterparty type. We return one of the following values:
-
-  - `INDIVIDUAL`
-  - `COMPANY`
-  - `null`
-",INDIVIDUAL,string,,Yes,Yes,"INDIVIDUAL, COMPANY, None",
-counterparty.document_number,"The document number of the representative.
-
-**Note**: 
-
-For Brazil:
-  - When the `type` is `INDIVIDUAL`, this is the CPF number.
-  - When the `type` is `COMPANY`, this is the CNPJ number.
-",73677831148,string,,Yes,Yes,,^\d{11}$
-counterparty.clearing_code,"The banking clearing code.
-",001,string,,Yes,Yes,,^\d{3}$
-counterparty.agency,"The branch code where the account was opened.
-",6272,string,,Yes,Yes,,"^\d{1,4}$"
-counterparty.check_digit,"The check digit of the account number, if applicable.
-",7,string,,Yes,Yes,,[\w\W\s]*
-counterparty.number,"The account number of the product.
-",24550245,string,,Yes,Yes,,"^\d{8,20}$"
-loan_data,"Information regarding the loan transactional data, if applicable.",,object,,Yes,Yes,,
-loan_data.is_detached,"Boolean to indicate whether or not this loan payment was part of the original payment schedule.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network.
-",True,boolean,,Yes,No,,
-loan_data.installment_id,"The institution's unique ID for this payment installment.
-",WGx0aExYcEJMVm93TFRsZFcyRXRla0V0V2pBdE9Wd3RYWH,string,,No,Yes,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
-loan_data.fees,Details regarding the fees associated with this payment. Only applicable when `is_detached` = `true`.,,array,,Yes,No,,
-loan_data.fees[].name,"The name of the fee.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network when the `fees` field is present.
-",Reavaliação periódica do bem,string,,Yes,No,,"^[\w\W\s]{0,140}$"
-loan_data.fees[].code,"The institution's code for the fee.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network when the `fees` field is present.
-",aval_bem,string,,Yes,No,,"^[\w\W\s]{0,140}$"
-loan_data.fees[].amount,"The amount of the fee.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network when the `fees` field is present.
-",8903.77,number,float,Yes,Yes,,"^-?\d{1,15}\.\d{2,4}$"
-loan_data.charges,Details regarding the charges associated with this payment. Only applicable when `is_detached` = `true`.,,array,,Yes,No,,
-loan_data.charges[].type,"The type of charge.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network when the `charges` field is present
-",MULTA_ATRASO_PAGAMENTO,string,,Yes,No,,"^[\w\W\s]{0,140}$"
-loan_data.charges[].info,"Additional information regarding the charge `type`.
-",Late payment charge.,string,,Yes,No,,"^[\w\W\s]{0,140}$"
-loan_data.charges[].amount,"The amount of the charge.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network when the `charges` field is present
-",8903.77,number,float,Yes,No,,"^-?\d{1,15}\.\d{2,4}$"
-payment_type,"The transaction payment type. We return one of the following values:
-
-  - `FULL`
-  - `INSTALLMENT`
-  - `null`
-",FULL,string,,Yes,Yes,"FULL, INSTALLMENT, None",
-operation_type,"The type of transaction. For example, a PIX payment or a deposit.
-
-> **Non-nullable:** A value must be returned by Brazil's open finance network for **non-loan account transactions**.
-",TRANSFERENCIA_MESMA_INSTITUICAO,string,,Yes,No,,"^[A-Za-z_]{0,50}$"
-operation_type_additional_info,"Additional information regarding the `operation_type`, if applicable.
-",Internal transfer.,string,,Yes,Yes,,^\S[\s\S]*$
-mcc,"The four-digit (ISO-18245 compliant) Merchant Category Code (MCC) for the transaction. This field is only applicable for credit card transactions.
-",5137,integer,int32,Yes,Yes,,^[0-9]{4}$
+",2019-10-23,string,date,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$

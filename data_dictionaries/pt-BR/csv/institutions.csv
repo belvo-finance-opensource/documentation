@@ -1,32 +1,24 @@
 Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
-id,O ID da instituição conforme designado pela Belvo.,1003,integer,int32,No,No,,
-name,"O nome da instituição, conforme designado pela Belvo.
-
-Consulte nosso artigo <a href=""https://developers.belvo.com/docs/institution"" target=""_blank"">Instituições</a> no DevPortal para uma lista detalhada de nomes de instituições.",erebor_mx_retail,string,,No,No,,
-type,"O tipo de instituição. Retornamos um dos seguintes valores:
-
-  - `bank`
-  - `fiscal`
-  - `employment`",,string,,No,No,"bank, fiscal, employment",
-website,A URL do site da instituição.,https://www.erebor.com/,string,,No,Yes,,
-display_name,O nome da instituição voltado para o cliente.,Erebor Mexico,string,,No,No,,
 country_codes,"Os códigos de país onde a instituição está disponível, por exemplo:
 - 🇧🇷 BR (Brasil)
 - 🇨🇴 CO (Colômbia)
 - 🇲🇽 MX (México)",,array,,No,No,,
-primary_color,A cor primária no site da instituição.,#056dae,string,,No,No,,
-logo,A URL do logotipo da instituição.,https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.png,string,,No,Yes,,
-icon_logo,A URL do logotipo do ícone da instituição.,https://statics.belvo.io/widget/images/institutions/erebor.svg,string,,No,Yes,,
-text_logo,A URL do logotipo de texto da instituição.,https://statics.belvo.io/widget/images/institutions/erebor.svg,string,,No,Yes,,
+display_name,O nome da instituição voltado para o cliente.,Erebor Mexico,string,,No,No,,
+features,"Os recursos que a instituição suporta. Se a instituição não tiver recursos especiais, a Belvo retorna um array vazio.
+
+Aqui está uma lista dos recursos disponíveis:
+- `token_required` indica que a instituição pode exigir um token durante a criação do link ou ao fazer qualquer outra solicitação.",,array,,No,No,,
+features[].description,A descrição do recurso.,The institution may require a token during link creation or login,string,,No,No,,
+features[].name,O nome do recurso.,token_required,string,,No,No,,
 form_fields,,,array,,No,No,,
-form_fields[].name,"O campo de nome de usuário, senha ou tipo de nome de usuário.",username,string,,No,No,,
-form_fields[].type,"O tipo de entrada para o campo do formulário. Por exemplo, string.",text,string,,No,No,,
 form_fields[].label,"O rótulo do campo do formulário. Por exemplo:
 - Número do cliente
 - Chave Bancanet
 - Documento",Client number,string,,No,No,,
-form_fields[].validation,O tipo de validação de entrada usado para o campo.,"^.{1,}$",string,,No,No,,
+form_fields[].name,"O campo de nome de usuário, senha ou tipo de nome de usuário.",username,string,,No,No,,
 form_fields[].placeholder,O texto do espaço reservado no campo do formulário.,ABC333333A33,string,,No,No,,
+form_fields[].type,"O tipo de entrada para o campo do formulário. Por exemplo, string.",text,string,,No,No,,
+form_fields[].validation,O tipo de validação de entrada usado para o campo.,"^.{1,}$",string,,No,No,,
 form_fields[].validation_message,A mensagem exibida quando uma entrada inválida é fornecida no campo do formulário.,Invalid client number,string,,No,No,,
 form_fields[].values,"Se o campo do formulário for para documentos, a instituição pode exigir informações adicionais sobre o tipo de documento.",,array,,No,No,,
 form_fields[].values[].code,O código do documento.,001,string,,No,No,,
@@ -34,15 +26,20 @@ form_fields[].values[].label,"O rótulo para o campo. Por exemplo:
 - Cédula de Ciudadanía
 - Cédula de Extranjería
 - Pasaporte",Cédula de Ciudadanía,string,,No,No,,
+form_fields[].values[].placeholder,O texto do espaço reservado no campo do formulário.,DEF4444908M22,string,,No,No,,
 form_fields[].values[].validation,O tipo de validação de entrada usado para o campo.,"^.{1,}$",string,,No,No,,
 form_fields[].values[].validation_message,A mensagem exibida quando uma entrada inválida é fornecida no campo do formulário.,Invalid document number,string,,No,No,,
-form_fields[].values[].placeholder,O texto do espaço reservado no campo do formulário.,DEF4444908M22,string,,No,No,,
-features,"Os recursos que a instituição suporta. Se a instituição não tiver recursos especiais, a Belvo retorna um array vazio.
+icon_logo,A URL do logotipo do ícone da instituição.,https://statics.belvo.io/widget/images/institutions/erebor.svg,string,,No,Yes,,
+id,O ID da instituição conforme designado pela Belvo.,1003,integer,int32,No,No,,
+integration_type,"O tipo de tecnologia usada para acessar a instituição. Retornamos um dos seguintes valores:
 
-Aqui está uma lista dos recursos disponíveis:
-- `token_required` indica que a instituição pode exigir um token durante a criação do link ou ao fazer qualquer outra solicitação.",,array,,No,No,,
-features[].name,O nome do recurso.,token_required,string,,No,No,,
-features[].description,A descrição do recurso.,The institution may require a token during link creation or login,string,,No,No,,
+- `credentials`: Usa a tecnologia de scraping da Belvo, combinada com credenciais do usuário, para realizar solicitações.
+- `openfinance`: Usa a API de open finance do banco para realizar solicitações.",credentials,string,,No,No,"credentials, openfinance",
+logo,A URL do logotipo da instituição.,https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.png,string,,No,Yes,,
+name,"O nome da instituição, conforme designado pela Belvo.
+
+Consulte nosso artigo <a href=""https://developers.belvo.com/docs/institution"" target=""_blank"">Instituições</a> no DevPortal para uma lista detalhada de nomes de instituições.",erebor_mx_retail,string,,No,No,,
+primary_color,A cor primária no site da instituição.,#056dae,string,,No,No,,
 resources,"Uma lista de recursos do Belvo que você pode usar com a instituição. Esta lista inclui um ou mais dos seguintes recursos:
 
   - `ACCOUNTS`
@@ -63,8 +60,11 @@ resources,"Uma lista de recursos do Belvo que você pode usar com a instituiçã
   - `TAX_RETENTIONS`
   - `TAX_RETURNS`
   - `TAX_STATUS`","[""ACCOUNTS"", ""BALANCES"", ""INCOMES"", ""OWNERS"", ""RECURRING_EXPENSES"", ""RISK_INSIGHTS"", ""TRANSACTIONS""]",array,,No,No,,
-integration_type,"O tipo de tecnologia usada para acessar a instituição. Retornamos um dos seguintes valores:
-
-- `credentials`: Usa a tecnologia de scraping da Belvo, combinada com as credenciais do usuário, para realizar solicitações.
-- `openfinance`: Usa a API de open finance do banco para realizar solicitações.",credentials,string,,No,No,"credentials, openfinance",
 status,Indica se a integração da Belvo com a instituição está atualmente ativa (`healthy`) ou em manutenção (`down`).,healthy,string,,No,No,"healthy, down",
+text_logo,A URL do logotipo de texto da instituição.,https://statics.belvo.io/widget/images/institutions/erebor.svg,string,,No,Yes,,
+type,"O tipo de instituição. Retornamos um dos seguintes valores:
+
+  - `bank`
+  - `fiscal`
+  - `employment`",,string,,No,No,"bank, fiscal, employment",
+website,A URL do site da instituição.,https://www.erebor.com/,string,,No,Yes,,

@@ -1,36 +1,27 @@
 Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
-id,The ID of the institution as designated by Belvo.,1003,integer,int32,No,No,,
-name,"The name of the institution, as designated by Belvo.
-
-Please see our <a href=""https://developers.belvo.com/docs/institution"" target=""_blank"">Institutions</a> DevPortal article for a detailed list of institution names.
-",erebor_mx_retail,string,,No,No,,
-type,"The type of institution. We return one of the following values:
-
-  - `bank`
-  - `fiscal`
-  - `employment`
-",,string,,No,No,"bank, fiscal, employment",
-website,The URL of the institution's website.,https://www.erebor.com/,string,,No,Yes,,
-display_name,The customer-facing name of the institution.,Erebor Mexico,string,,No,No,,
 country_codes,"The country codes where the institution is available, for example:
 - 🇧🇷 BR (Brazil)
 - 🇨🇴 CO (Colombia)
 - 🇲🇽 MX (Mexico)  
 ",,array,,No,No,,
-primary_color,The primary color on the institution's website.,#056dae,string,,No,No,,
-logo,The URL of the institution's logo.,https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.png,string,,No,Yes,,
-icon_logo,The URL of the institution's icon logo.,https://statics.belvo.io/widget/images/institutions/erebor.svg,string,,No,Yes,,
-text_logo,The URL of the institution's text logo.,https://statics.belvo.io/widget/images/institutions/erebor.svg,string,,No,Yes,,
+display_name,The customer-facing name of the institution.,Erebor Mexico,string,,No,No,,
+features,"The features that the institution supports. If the institution has no special features, then Belvo returns an empty array.
+
+Here is a list of the available features:
+- `token_required` indicates that the institution may require a token during link creation or when making any other requests.
+",,array,,No,No,,
+features[].description,The description of the feature.,The institution may require a token during link creation or login,string,,No,No,,
+features[].name,The name of the feature.,token_required,string,,No,No,,
 form_fields,,,array,,No,No,,
-form_fields[].name,"The username, password, or username type field.",username,string,,No,No,,
-form_fields[].type,"The input type for the form field. For example, string.",text,string,,No,No,,
 form_fields[].label,"The label of the form field. For example:
 - Client number
 - Key Bancanet
 - Document
 ",Client number,string,,No,No,,
-form_fields[].validation,The type of input validation used for the field.,"^.{1,}$",string,,No,No,,
+form_fields[].name,"The username, password, or username type field.",username,string,,No,No,,
 form_fields[].placeholder,The placeholder text in the form field.,ABC333333A33,string,,No,No,,
+form_fields[].type,"The input type for the form field. For example, string.",text,string,,No,No,,
+form_fields[].validation,The type of input validation used for the field.,"^.{1,}$",string,,No,No,,
 form_fields[].validation_message,The message displayed when an invalid input is provided in the form field.,Invalid client number,string,,No,No,,
 form_fields[].values,"If the form field is for documents, the institution may require additional
 input regarding the document type.
@@ -41,16 +32,22 @@ form_fields[].values[].label,"The label for the field. For example:
 - Cédula de Extranjería
 - Pasaporte
 ",Cédula de Ciudadanía,string,,No,No,,
+form_fields[].values[].placeholder,The placeholder text in the form field.,DEF4444908M22,string,,No,No,,
 form_fields[].values[].validation,The type of input validation used for the field.,"^.{1,}$",string,,No,No,,
 form_fields[].values[].validation_message,The message displayed when an invalid input is provided in the form field.,Invalid document number,string,,No,No,,
-form_fields[].values[].placeholder,The placeholder text in the form field.,DEF4444908M22,string,,No,No,,
-features,"The features that the institution supports. If the institution has no special features, then Belvo returns an empty array.
+icon_logo,The URL of the institution's icon logo.,https://statics.belvo.io/widget/images/institutions/erebor.svg,string,,No,Yes,,
+id,The ID of the institution as designated by Belvo.,1003,integer,int32,No,No,,
+integration_type,"The type of technology used to access the institution. We return one of the following values:
 
-Here is a list of the available features:
-- `token_required` indicates that the institution may require a token during link creation or when making any other requests.
-",,array,,No,No,,
-features[].name,The name of the feature.,token_required,string,,No,No,,
-features[].description,The description of the feature.,The institution may require a token during link creation or login,string,,No,No,,
+- `credentials`: Uses Belvo's scraping technology, combined with user credentials, to perform requests.
+- `openfinance`: Uses the bank's open finance API to perform requests.
+",credentials,string,,No,No,"credentials, openfinance",
+logo,The URL of the institution's logo.,https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.png,string,,No,Yes,,
+name,"The name of the institution, as designated by Belvo.
+
+Please see our <a href=""https://developers.belvo.com/docs/institution"" target=""_blank"">Institutions</a> DevPortal article for a detailed list of institution names.
+",erebor_mx_retail,string,,No,No,,
+primary_color,The primary color on the institution's website.,#056dae,string,,No,No,,
 resources,"A list of Belvo resources that you can use with the institution. This list includes one or more of the following resources:
 
   - `ACCOUNTS`
@@ -72,10 +69,13 @@ resources,"A list of Belvo resources that you can use with the institution. This
   - `TAX_RETURNS`
   - `TAX_STATUS`
 ","[""ACCOUNTS"", ""BALANCES"", ""INCOMES"", ""OWNERS"", ""RECURRING_EXPENSES"", ""RISK_INSIGHTS"", ""TRANSACTIONS""]",array,,No,No,,
-integration_type,"The type of technology used to access the institution. We return one of the following values:
-
-- `credentials`: Uses Belvo's scraping technology, combined with user credentials, to perform requests.
-- `openfinance`: Uses the bank's open finance API to perform requests.
-",credentials,string,,No,No,"credentials, openfinance",
 status,"Indicates whether Belvo's integration with the institution is currently active (`healthy`) or undergoing maintenance (`down`).
 ",healthy,string,,No,No,"healthy, down",
+text_logo,The URL of the institution's text logo.,https://statics.belvo.io/widget/images/institutions/erebor.svg,string,,No,Yes,,
+type,"The type of institution. We return one of the following values:
+
+  - `bank`
+  - `fiscal`
+  - `employment`
+",,string,,No,No,"bank, fiscal, employment",
+website,The URL of the institution's website.,https://www.erebor.com/,string,,No,Yes,,

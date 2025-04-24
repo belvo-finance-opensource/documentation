@@ -1,9 +1,40 @@
 Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
-id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
-link,El `link.id` al que pertenecen los datos.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
+best_working_day_to_charge,El mejor día laborable del mes para cobrar al usuario.,22,integer,int32,Yes,No,,
 created_at,La marca de tiempo ISO-8601 de cuando se creó el punto de datos en la base de datos de Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+first_transaction_date,"La fecha en que ocurrió la primera transacción, en formato `YYYY-MM-DD`.",2022-06-09,string,date,Yes,Yes,,
+good_working_days_to_charge,Días laborales adicionales que se han identificado como buenos días para cobrar al usuario.,"[17, 7, 2]",array,,Yes,No,,
+id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
+income_source_type,"El tipo de fuente de la que generamos información sobre ingresos.
+Devolvemos uno de los siguientes valores de 'enum':
+
+  - `BANK`",BANK,string,,Yes,No,BANK,
 income_streams,Una matriz de objetos de flujo de ingresos enriquecidos.,,array,,Yes,No,,
 income_streams[].account_id,ID único para la cuenta bancaria que se verificará para flujos de ingresos.,EBACA-89077589,string,,Yes,No,,
+income_streams[].average_income_amount,El monto promedio de transacción de ingresos de la fuente.,2500,number,float,Yes,No,,
+income_streams[].confidence,"Nivel de confianza de Belvo para ingresos futuros.
+
+Devolvemos uno de los siguientes valores de enum:
+
+  - `HIGH`
+  - `MEDIUM`
+  - `LOW`",HIGH,string,,Yes,No,"HIGH, MEDIUM, LOW",
+income_streams[].currency,"El código de moneda de tres letras del ingreso. Por ejemplo:
+
+  • 🇧🇷 BRL (Real Brasileño)
+  • 🇨🇴 COP (Peso Colombiano)
+  • 🇲🇽 MXN (Peso Mexicano)",BRL,string,,Yes,No,,
+income_streams[].frequency,"Con qué frecuencia se recibe el ingreso.
+
+Devolvemos uno de los siguientes valores de enum:
+
+  - `MONTHLY` - Para transacciones que ocurren una vez al mes.
+  - `FORTNIGHTLY` - Para transacciones que ocurren una vez cada dos semanas.
+  - `WEEKLY` - Para transacciones que ocurren una vez por semana.
+  - `IRREGULAR` - Para transacciones que no ocurren con un patrón de frecuencia definido.
+  - `SINGLE` - Para transacciones que ocurren solo una vez y no se repiten.",MONTHLY,string,,Yes,No,"MONTHLY, FORTNIGHTLY, WEEKLY, IRREGULAR, SINGLE",
+income_streams[].full_periods,"Número de unidades de período (basado en *meses móviles*) con datos para realizar cálculos.
+
+**Nota:** Un *mes móvil* es un período de 30 días. Por ejemplo, del 2023-01-15 al 2023-02-15.",9,integer,int32,Yes,No,,
 income_streams[].income_type,"El tipo de ingreso utilizado en los cálculos.
 
 Devolvemos uno de los siguientes valores de enum:
@@ -18,30 +49,22 @@ Devolvemos uno de los siguientes valores de enum:
   - `TRANSFER`
   - `DEPOSIT`
   - `UNKNOWN`",SALARY,string,,Yes,No,"SALARY, GOVERNMENT, INTEREST, RENT, RETIREMENT, FREELANCE, ALTERNATIVE_INCOME, TRANSFER, DEPOSIT, UNKNOWN",
-income_streams[].frequency,"Con qué frecuencia se recibe el ingreso.
+income_streams[].last_income_amount,El monto del ingreso más reciente recibido de la fuente.,2500,number,float,Yes,No,,
+income_streams[].last_income_date,"La fecha en que se recibió el ingreso más reciente del flujo, en formato `YYYY-MM-DD`.",2023-02-09,string,date,Yes,No,,
+income_streams[].last_income_description,La descripción del ingreso más reciente del stream.,Salário,string,,Yes,No,,
+income_streams[].lookback_periods,"Número de unidades de período (basadas en *meses móviles*) utilizadas para generar conocimientos y cálculos.
 
-Devolvemos uno de los siguientes valores de enum:
-
-  - `MONTHLY` - Para transacciones que ocurren una vez al mes.
-  - `FORTNIGHTLY` - Para transacciones que ocurren una vez cada dos semanas.
-  - `WEEKLY` - Para transacciones que ocurren una vez por semana.
-  - `IRREGULAR` - Para transacciones que no ocurren con un patrón de frecuencia definido.
-  - `SINGLE` - Para transacciones que ocurren solo una vez y no se repiten.",MONTHLY,string,,Yes,No,"MONTHLY, FORTNIGHTLY, WEEKLY, IRREGULAR, SINGLE",
+**Nota:** Un *mes móvil* es un período de 30 días. Por ejemplo, del 2023-01-15 al 2023-02-15.",9,integer,int32,Yes,No,,
 income_streams[].monthly_average,La cantidad promedio de ingresos recibidos de la fuente durante `periods_with_income`.,2500,number,float,Yes,No,,
 income_streams[].monthly_median,La cantidad mediana de ingresos recibidos de la fuente durante un mes natural.,2200,number,float,No,No,,
-income_streams[].average_income_amount,El monto promedio de transacción de ingresos de la fuente.,2500,number,float,Yes,No,,
-income_streams[].last_income_amount,El monto del ingreso más reciente recibido de la fuente.,2500,number,float,Yes,No,,
-income_streams[].currency,"El código de moneda de tres letras del ingreso. Por ejemplo:
+income_streams[].number_of_incomes,Número de transacciones de ingresos durante los `lookback_periods`.,9,integer,int32,Yes,No,,
+income_streams[].periods_with_income,"Número de unidades de período (basadas en *meses móviles*) con al menos un ingreso disponible.
 
-  • 🇧🇷 BRL (Real Brasileño)
-  • 🇨🇴 COP (Peso Colombiano)
-  • 🇲🇽 MXN (Peso Mexicano)",BRL,string,,Yes,No,,
-income_streams[].last_income_description,La descripción del ingreso más reciente del stream.,Salário,string,,Yes,No,,
-income_streams[].last_income_date,"La fecha en que se recibió el ingreso más reciente del flujo, en formato `YYYY-MM-DD`.",2023-02-09,string,date,Yes,No,,
-income_streams[].stability,"La estabilidad del ingreso basada en su cantidad, con un rango de 0 a 1, donde 1 representa estabilidad perfecta.
+**Nota:** Un *mes móvil* es un período de 30 días. Por ejemplo, del 2023-01-15 al 2023-02-15.",9,integer,int32,Yes,No,,
+income_streams[].regularity,"La regularidad del ingreso se basa en su frecuencia, con un rango de 0 a 1, donde 1 representa una regularidad perfecta.
 
 **Nota:** Para transacciones con `frequency`=`SINGLE`, este valor devuelve `null`.",1,number,float,Yes,Yes,,
-income_streams[].regularity,"La regularidad del ingreso se basa en su frecuencia, con un rango de 0 a 1, donde 1 representa una regularidad perfecta.
+income_streams[].stability,"La estabilidad del ingreso basada en su cantidad, con un rango de 0 a 1, donde 1 representa estabilidad perfecta.
 
 **Nota:** Para transacciones con `frequency`=`SINGLE`, este valor devuelve `null`.",1,number,float,Yes,Yes,,
 income_streams[].trend,"La tendencia de ingresos durante un período de tiempo se calcula entre el último ingreso y el primer ingreso recibido, donde:
@@ -49,41 +72,18 @@ income_streams[].trend,"La tendencia de ingresos durante un período de tiempo s
   - un número flotante positivo significa que la tendencia de ingresos está aumentando durante el período de tiempo.
 
 **Nota:** Para transacciones con `frequency`=`SINGLE`, este valor devuelve `null`.",0,number,float,Yes,Yes,,
-income_streams[].lookback_periods,"Número de unidades de período (basadas en *meses móviles*) utilizadas para generar conocimientos y cálculos.
-
-**Nota:** Un *mes móvil* es un período de 30 días. Por ejemplo, del 2023-01-15 al 2023-02-15.",9,integer,int32,Yes,No,,
-income_streams[].full_periods,"Número de unidades de período (basado en *meses móviles*) con datos para realizar cálculos.
-
-**Nota:** Un *mes móvil* es un período de 30 días. Por ejemplo, del 2023-01-15 al 2023-02-15.",9,integer,int32,Yes,No,,
-income_streams[].periods_with_income,"Número de unidades de período (basadas en *meses móviles*) con al menos un ingreso disponible.
-
-**Nota:** Un *mes móvil* es un período de 30 días. Por ejemplo, del 2023-01-15 al 2023-02-15.",9,integer,int32,Yes,No,,
-income_streams[].number_of_incomes,Número de transacciones de ingresos durante los `lookback_periods`.,9,integer,int32,Yes,No,,
-income_streams[].confidence,"Nivel de confianza de Belvo para ingresos futuros.
-
-Devolvemos uno de los siguientes valores de enum:
-
-  - `HIGH`
-  - `MEDIUM`
-  - `LOW`",HIGH,string,,Yes,No,"HIGH, MEDIUM, LOW",
-income_source_type,"El tipo de fuente de la que generamos información sobre ingresos.
-Devolvemos uno de los siguientes valores de 'enum':
-
-  - `BANK`",BANK,string,,Yes,No,BANK,
-first_transaction_date,"La fecha en que ocurrió la primera transacción, en formato `YYYY-MM-DD`.",2022-06-09,string,date,Yes,Yes,,
 last_transaction_date,"La fecha en la que ocurrió la última transacción, en formato `YYYY-MM-DD`.",2023-02-09,string,date,Yes,No,,
-best_working_day_to_charge,El mejor día laborable del mes para cobrar al usuario.,22,integer,int32,Yes,No,,
-good_working_days_to_charge,Días laborales adicionales que se han identificado como buenos días para cobrar al usuario.,"[17, 7, 2]",array,,Yes,No,,
-number_of_income_streams,Número de flujos de ingresos totales analizados.,1,integer,int32,Yes,No,,
+link,El `link.id` al que pertenecen los datos.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
 monthly_average,Cantidad promedio de ingresos recibidos por mes en todas las cuentas para el usuario específico.,2500,number,float,Yes,No,,
-monthly_average_regular,"Cantidad promedio de ingresos regulares (con una frecuencia de `MONTHLY`, `FORTNIGHTLY` o `WEEKLY`) recibidos por mes para el usuario específico.",2500,number,float,Yes,No,,
-monthly_average_irregular,Cantidad promedio de ingresos irregulares (con una frecuencia de `SINGLE` o `IRREGULAR`) recibidos por mes para el usuario específico.,0,number,float,Yes,No,,
+monthly_average_high_confidence,Cantidad promedio de ingresos recibidos por mes para el usuario específico con confianza `HIGH`.,2500,number,float,Yes,No,,
+monthly_average_irregular,Monto promedio de ingresos irregulares (con una frecuencia de `SINGLE` o `IRREGULAR`) recibidos por mes para el usuario específico.,0,number,float,Yes,No,,
 monthly_average_low_confidence,Cantidad promedio de ingresos recibidos por mes para el usuario específico con confianza `LOW`.,0,number,float,Yes,No,,
 monthly_average_medium_confidence,Cantidad promedio de ingresos recibidos por mes para el usuario específico con confianza `MEDIUM`.,0,number,float,Yes,No,,
-monthly_average_high_confidence,Cantidad promedio de ingresos recibidos por mes para el usuario específico con confianza `HIGH`.,2500,number,float,Yes,No,,
-total_income_amount,Cantidad total de todos los ingresos recibidos para el usuario específico.,22500,number,float,Yes,No,,
-total_regular_income_amount,"Cantidad total de ingresos regulares (con una frecuencia de `MONTHLY`, `FORTNIGHTLY`, `WEEKLY`) para el usuario específico.",22500,number,float,Yes,No,,
-total_irregular_income_amount,Cantidad total de ingresos irregulares (con una frecuencia de `SINGLE` o `IRREGULAR`) para el usuario específico.,0,number,float,No,No,,
+monthly_average_regular,"Cantidad promedio de ingresos regulares (con una frecuencia de `MONTHLY`, `FORTNIGHTLY` o `WEEKLY`) recibidos por mes para el usuario específico.",2500,number,float,Yes,No,,
+number_of_income_streams,Número de flujos de ingresos totales analizados.,1,integer,int32,Yes,No,,
+total_high_confidence,Cantidad total de ingresos para el usuario específico con confianza `HIGH`.,22500,number,float,Yes,No,,
+total_income_amount,Monto total de todos los ingresos recibidos para el usuario específico.,22500,number,float,Yes,No,,
+total_irregular_income_amount,Monto total de ingresos irregulares (con una frecuencia de `SINGLE` o `IRREGULAR`) para el usuario específico.,0,number,float,No,No,,
 total_low_confidence,Cantidad total de ingresos para el usuario específico con confianza `LOW`.,0,number,float,Yes,No,,
 total_medium_confidence,Cantidad total de ingresos para el usuario específico con confianza `MEDIUM`.,0,number,float,Yes,No,,
-total_high_confidence,Cantidad total de ingresos para el usuario específico con confianza `HIGH`.,22500,number,float,Yes,No,,
+total_regular_income_amount,"Cantidad total de ingresos regulares (con una frecuencia de `MONTHLY`, `FORTNIGHTLY`, `WEEKLY`) para el usuario específico.",22500,number,float,Yes,No,,

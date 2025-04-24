@@ -1,17 +1,17 @@
 Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
-id,The unique identifier created by Belvo used to reference the current balance.,0b94bdf9-3719-43a9-81e7-be95d2318595,string,uuid,Yes,No,,
-link,The unique identifier of the link that this balance belongs to.,0b94bdf9-3719-43a9-81e7-be95d2318595,string,uuid,Yes,No,,
 account_id,The Belvo `account.id` that this balance belongs to.,c4bfecf9-4eb6-4920-9f9f-e1f1e60ef321,string,uuid,Yes,No,,
 account_internal_identification,The institution's internal identification for the account.,92792126019929279212650822221989319252576,string,,Yes,No,,
+automatically_invested,The amount that is automatically invested (as agreed upon with the institution).,1000.02,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+available,The available account balance.,1000.02,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+blocked,"The amount that is currently blocked due to, for example, pending transactions.",1000.02,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
 collected_at,The ISO-8601 timestamp when the data point was collected.,2024-05-21T08:32:00Z,string,date-time,Yes,No,,
 created_at,The ISO-8601 timestamp of when the data point was created in Belvo's database.,2024-05-21T08:32:00Z,string,date-time,Yes,No,,
+currency,The three-letter currency code (ISO-4217).,USD,string,,Yes,No,,^[A-Z]{3}$
+id,The unique identifier created by Belvo used to reference the current balance.,0b94bdf9-3719-43a9-81e7-be95d2318595,string,uuid,Yes,No,,
 last_updated_at,"The ISO-8601 timestamp of when this balance was last updated by the institution.
 
 > 🚧 Warning
 >
 > The `last_updated_at` parameter depends on how the institution processes (or stores) data. In the case that the institution stores data synchronously (that is, as soon as a transaction occurs, the balance us updated), then the `last_updated_at` will reflect the balance in near real time. In the case that the institution stores data asynchronously (that is, it retrieves data in bulk and then updates the balance), the balance information can refer to hours or days ago. Additionally, in the case that the institution cannot provide the specific time (due to an internal error), the institution may provide an overall time where they last refreshed the account and balance information.
 ",2021-05-21T08:30:00Z,string,date-time,Yes,No,,
-currency,The three-letter currency code (ISO-4217).,USD,string,,Yes,No,,^[A-Z]{3}$
-available,The available account balance.,1000.02,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
-blocked,"The amount that is currently blocked due to, for example, pending transactions.",1000.02,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
-automatically_invested,The amount that is automatically invested (as agreed upon with the institution).,1000.02,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+link,The unique identifier of the link that this balance belongs to.,0b94bdf9-3719-43a9-81e7-be95d2318595,string,uuid,Yes,No,,

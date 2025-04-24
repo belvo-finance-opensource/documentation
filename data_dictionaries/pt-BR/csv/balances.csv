@@ -1,16 +1,16 @@
 Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
-id,O identificador único criado pela Belvo usado para referenciar o saldo atual.,0b94bdf9-3719-43a9-81e7-be95d2318595,string,uuid,Yes,No,,
-link,O identificador único do link ao qual este saldo pertence.,0b94bdf9-3719-43a9-81e7-be95d2318595,string,uuid,Yes,No,,
 account_id,O `account.id` do Belvo ao qual este saldo pertence.,c4bfecf9-4eb6-4920-9f9f-e1f1e60ef321,string,uuid,Yes,No,,
 account_internal_identification,A identificação interna da instituição para a conta.,92792126019929279212650822221989319252576,string,,Yes,No,,
+automatically_invested,O valor que é automaticamente investido (conforme acordado com a instituição).,1000.02,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+available,O saldo disponível da conta.,1000.02,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+blocked,"O valor que está atualmente bloqueado devido, por exemplo, a transações pendentes.",1000.02,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
 collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2024-05-21T08:32:00Z,string,date-time,Yes,No,,
 created_at,O carimbo de data/hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2024-05-21T08:32:00Z,string,date-time,Yes,No,,
+currency,O código de moeda de três letras (ISO-4217).,USD,string,,Yes,No,,^[A-Z]{3}$
+id,O identificador único criado pela Belvo usado para referenciar o saldo atual.,0b94bdf9-3719-43a9-81e7-be95d2318595,string,uuid,Yes,No,,
 last_updated_at,"O carimbo de data/hora ISO-8601 de quando este saldo foi atualizado pela última vez pela instituição.
 
 > 🚧 Aviso
 >
 > O parâmetro `last_updated_at` depende de como a instituição processa (ou armazena) os dados. No caso de a instituição armazenar dados de forma síncrona (ou seja, assim que uma transação ocorre, o saldo é atualizado), então o `last_updated_at` refletirá o saldo em tempo quase real. No caso de a instituição armazenar dados de forma assíncrona (ou seja, ela recupera dados em lote e depois atualiza o saldo), as informações de saldo podem se referir a horas ou dias atrás. Além disso, no caso de a instituição não conseguir fornecer o horário específico (devido a um erro interno), a instituição pode fornecer um horário geral em que atualizou pela última vez as informações da conta e do saldo.",2021-05-21T08:30:00Z,string,date-time,Yes,No,,
-currency,O código de moeda de três letras (ISO-4217).,USD,string,,Yes,No,,^[A-Z]{3}$
-available,O saldo disponível da conta.,1000.02,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
-blocked,"O valor que está atualmente bloqueado devido, por exemplo, a transações pendentes.",1000.02,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
-automatically_invested,O valor que é automaticamente investido (conforme acordado com a instituição).,1000.02,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+link,O identificador único do link ao qual este saldo pertence.,0b94bdf9-3719-43a9-81e7-be95d2318595,string,uuid,Yes,No,,

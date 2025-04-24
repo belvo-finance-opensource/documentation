@@ -1,60 +1,41 @@
 Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
-id,Identificador único da Belvo para o item atual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
-link,O `link.id` ao qual os dados pertencem.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
+age,A idade do indivíduo.,32,integer,int32,Yes,No,,
+average_monthly_salary_1y,O salário médio mensal do indivíduo no último ano.,3402.88,number,float,Yes,Yes,,
+average_monthly_salary_3y,O salário médio mensal do indivíduo nos últimos três anos.,3402.88,number,float,Yes,Yes,,
+average_monthly_salary_5y,O salário médio mensal do indivíduo nos últimos cinco anos.,3402.88,number,float,Yes,Yes,,
+base_salary_last,"O salário base mais recente do usuário. Se `current_status` for `EMPLOYED`, este é o salário base atual do usuário.",42.17,number,float,Yes,Yes,,
 collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
 created_at,O carimbo de data e hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
-updated_at,O carimbo de data/hora ISO-8601 de quando o cálculo das métricas de emprego foi atualizado pela última vez.,2023-08-30T15:31:35.728607Z,string,date-time,Yes,Yes,,
-reference_date,"A reference_date que você forneceu em sua solicitação. Se você não forneceu uma, este campo retornará `null`, indicando que os cálculos são realizados até a data da solicitação.
-
-**Nota:** Todos os cálculos são relativos a esta data.",2023-06-01,string,date,Yes,Yes,,
-age,A idade do indivíduo.,32,integer,int32,Yes,No,,
+current_employer_count,O número de empregadores que o indivíduo tem no momento.,1,integer,int32,Yes,Yes,,
 current_status,"Indica o status de emprego do indivíduo. Retornamos uma das seguintes respostas:
 
 - `EMPLOYED`
 - `RETIRED`
 - `UNEMPLOYED`
 - `null`",EMPLOYED,string,,Yes,No,"EMPLOYED, RETIRED, UNEMPLOYED, null",
-current_employer_count,O número de empregadores que o indivíduo tem no momento.,1,integer,int32,Yes,Yes,,
-base_salary_last,"O salário base mais recente do usuário. Se `current_status` for `EMPLOYED`, este é o salário base atual do usuário.",42.17,number,float,Yes,Yes,,
-weeks_employed_last_job,"O número de semanas que o usuário esteve empregado em seu último emprego. Se `current_status` for `EMPLOYED`, então este campo indica o número de semanas que o usuário está empregado em seu emprego atual.",327.1429,number,float,Yes,Yes,,
-weeks_since_last_job,"O número de semanas desde o último emprego. Se o valor deste campo for `0`, isso indica que o usuário está atualmente empregado.",0,number,float,Yes,Yes,,
-weeks_employed_total,"O número total de semanas que o usuário esteve empregado, de acordo com a instituição.
+decreases_1y,O número total de reduções salariais ao longo do último ano do indivíduo (YTD).,0,integer,int32,Yes,Yes,,
+decreases_3y,"O número total de reduções salariais ao longo dos últimos três anos do indivíduo.
 
 > **Nota:**
 >
-> No caso de o usuário estar empregado em dois ou mais lugares ao mesmo tempo, ainda calculamos essas semanas como uma semana. Por exemplo, se um usuário tem três empregos simultâneos por um mês, isso é calculado como 4 semanas.",148.2,number,float,Yes,Yes,,
-weeks_with_multiple_employers,O número de semanas em que o indivíduo teve mais de um empregador ao mesmo tempo.,0,number,float,Yes,Yes,,
+> Se a carreira profissional do indivíduo for inferior a três anos, retornamos `null`.",,integer,int32,Yes,Yes,,
+decreases_5y,"O número total de reduções salariais ao longo dos últimos cinco anos do indivíduo.
+
+> **Nota:**
+>
+> Se a carreira profissional do indivíduo for inferior a cinco anos, retornamos `null`.",,integer,int32,Yes,Yes,,
+decreases_after_change,O número total de reduções salariais entre o penúltimo emprego do indivíduo e o último (ou atual) emprego.,0,integer,int32,Yes,Yes,,
+decreases_last_job,"O número total de aumentos salariais que o usuário teve em seu último emprego. Se `current_status` for `EMPLOYED`, isso se refere ao emprego atual do usuário.",0,integer,int32,Yes,Yes,,
+decreases_overall,O número total de reduções salariais ao longo da carreira profissional do indivíduo.,0,integer,int32,Yes,Yes,,
 employer_count,O número total de empregadores que o usuário teve. Útil para indicar a estabilidade de emprego ao longo de sua vida.,14,integer,int32,Yes,Yes,,
-unique_employer_count,"O número de empregadores únicos que o indivíduo teve.
-
-> **Nota:**
->
-> Se o usuário saiu de uma empresa e retornou, por exemplo, seis meses depois para a mesma empresa, isso é contado como um empregador.",3,integer,int32,Yes,Yes,,
 employers_per_year,"Número de empregadores por ano. Útil para indicar a estabilidade no emprego ao longo de um ano.
 
 > **Nota:**
 >
 > Se o usuário saiu de uma empresa e retornou, por exemplo, seis meses depois para a mesma empresa, isso é contado como um empregador.",0.6326,number,float,Yes,Yes,,
-weeks_between_jobs,O número total de semanas em que o indivíduo esteve desempregado.,687.2865,number,float,Yes,Yes,,
-max_weeks_between_jobs,O número máximo de semanas em que o indivíduo esteve desempregado.,249.8571,number,float,Yes,Yes,,
-increases_last_job,"O número total de aumentos salariais que o usuário teve em seu último emprego. Se `current_status` for `EMPLOYED`, isso se refere ao emprego atual do usuário.
-
-> **Nota:**
->
-> Para todos os aumentos ou diminuições salariais, consideramos apenas aqueles em que a mudança no salário é superior a 2%.",0,integer,int32,Yes,Yes,,
-decreases_last_job,"O número total de aumentos salariais que o usuário teve em seu último emprego. Se `current_status` for `EMPLOYED`, isso se refere ao emprego atual do usuário.",0,integer,int32,Yes,Yes,,
-increases_after_change,O número total de aumentos salariais entre o penúltimo emprego do indivíduo e o último (ou atual) emprego.,0,integer,int32,Yes,Yes,,
-decreases_after_change,O número total de reduções salariais entre o penúltimo emprego do indivíduo e o último (ou atual) emprego.,0,integer,int32,Yes,Yes,,
-increases_overall,O número total de aumentos salariais ao longo da carreira profissional do indivíduo.,0,integer,int32,Yes,Yes,,
-decreases_overall,O número total de reduções salariais ao longo da carreira profissional do indivíduo.,0,integer,int32,Yes,Yes,,
+id,Identificador único da Belvo para o item atual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
 increases_1y,O número total de aumentos salariais ao longo do último ano do indivíduo (YTD).,0,integer,int32,Yes,Yes,,
-decreases_1y,O número total de reduções salariais ao longo do último ano do indivíduo (YTD).,0,integer,int32,Yes,Yes,,
 increases_3y,"O número total de aumentos salariais ao longo dos últimos três anos do indivíduo.
-
-> **Nota:**
->
-> Se a carreira profissional do indivíduo for inferior a três anos, retornamos `null`.",,integer,int32,Yes,Yes,,
-decreases_3y,"O número total de reduções salariais ao longo dos últimos três anos do indivíduo.
 
 > **Nota:**
 >
@@ -64,11 +45,39 @@ increases_5y,"O número total de aumentos salariais ao longo dos últimos cinco 
 > **Nota:**
 >
 > Se a carreira profissional do indivíduo for inferior a cinco anos, retornamos `null`.",,integer,int32,Yes,Yes,,
-decreases_5y,"O número total de reduções salariais ao longo dos últimos cinco anos do indivíduo.
+increases_after_change,O número total de aumentos salariais entre o penúltimo emprego do indivíduo e o último (ou atual) emprego.,0,integer,int32,Yes,Yes,,
+increases_last_job,"O número total de aumentos salariais que o usuário teve em seu último emprego. Se `current_status` for `EMPLOYED`, isso se refere ao emprego atual do usuário.
 
 > **Nota:**
 >
-> Se a carreira profissional do indivíduo for inferior a cinco anos, retornamos `null`.",,integer,int32,Yes,Yes,,
+> Para todos os aumentos ou reduções salariais, consideramos apenas aqueles em que a mudança no salário é superior a 2%.",0,integer,int32,Yes,Yes,,
+increases_overall,O número total de aumentos salariais ao longo da carreira profissional do indivíduo.,0,integer,int32,Yes,Yes,,
+link,O `link.id` ao qual os dados pertencem.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
+max_monthly_salary_1y,O salário mensal máximo do indivíduo no último ano.,3402.88,number,float,Yes,Yes,,
+max_monthly_salary_3y,O salário mensal máximo do indivíduo nos últimos três anos.,3402.88,number,float,Yes,Yes,,
+max_monthly_salary_5y,O salário mensal máximo do indivíduo nos últimos cinco anos.,3402.88,number,float,Yes,Yes,,
+max_weeks_between_jobs,O número máximo de semanas em que o indivíduo esteve desempregado.,249.8571,number,float,Yes,Yes,,
+min_monthly_salary_1y,O salário mensal mínimo do indivíduo no último ano.,3402.88,number,float,Yes,Yes,,
+min_monthly_salary_3y,O salário mensal mínimo do indivíduo nos últimos três anos.,3402.88,number,float,Yes,Yes,,
+min_monthly_salary_5y,O salário mensal mínimo do indivíduo nos últimos cinco anos.,3402.88,number,float,Yes,Yes,,
+reference_date,"A reference_date que você forneceu em sua solicitação. Se você não forneceu uma, este campo retornará `null`, indicando que os cálculos são realizados até a data da solicitação.
+
+**Nota:** Todos os cálculos são relativos a esta data.",2023-06-01,string,date,Yes,Yes,,
+unique_employer_count,"O número de empregadores únicos que o indivíduo teve.
+
+> **Nota:**
+>
+> Se o usuário saiu de uma empresa e retornou, por exemplo, seis meses depois para a mesma empresa, isso é contado como um empregador.",3,integer,int32,Yes,Yes,,
+updated_at,O carimbo de data/hora ISO-8601 de quando o cálculo das métricas de emprego foi atualizado pela última vez.,2023-08-30T15:31:35.728607Z,string,date-time,Yes,Yes,,
+weeks_between_jobs,O número total de semanas em que o indivíduo esteve desempregado.,687.2865,number,float,Yes,Yes,,
+weeks_employed_last_job,"O número de semanas em que o usuário esteve empregado em seu último emprego. Se `current_status` for `EMPLOYED`, então este campo indica o número de semanas em que o usuário está empregado em seu emprego atual.",327.1429,number,float,Yes,Yes,,
+weeks_employed_total,"O número total de semanas em que o usuário esteve empregado, de acordo com a instituição.
+
+> **Nota:**
+>
+> No caso de o usuário estar empregado em dois ou mais lugares ao mesmo tempo, ainda calculamos essas semanas como uma semana. Por exemplo, se um usuário tem três empregos simultâneos por um mês, isso é calculado como 4 semanas.",148.2,number,float,Yes,Yes,,
+weeks_since_last_job,"O número de semanas desde o último emprego. Se o valor deste campo for `0`, isso indica que o usuário está atualmente empregado.",0,number,float,Yes,Yes,,
+weeks_with_multiple_employers,O número de semanas em que o indivíduo teve mais de um empregador ao mesmo tempo.,0,number,float,Yes,Yes,,
 yearly_change_1y,A mudança percentual do salário do indivíduo para o último ano (YTD).,0,number,float,Yes,Yes,,
 yearly_change_3y,"A variação percentual do salário do indivíduo nos últimos três anos.
 
@@ -80,12 +89,3 @@ yearly_change_5y,"A variação percentual do salário do indivíduo nos últimos
 > **Nota:**
 >
 > Se a carreira profissional do indivíduo for inferior a cinco anos, retornamos `null`.",,number,float,Yes,Yes,,
-min_monthly_salary_1y,O salário mensal mínimo do indivíduo no último ano.,3402.88,number,float,Yes,Yes,,
-min_monthly_salary_3y,O salário mensal mínimo do indivíduo nos últimos três anos.,3402.88,number,float,Yes,Yes,,
-min_monthly_salary_5y,O salário mensal mínimo do indivíduo nos últimos cinco anos.,3402.88,number,float,Yes,Yes,,
-average_monthly_salary_1y,O salário médio mensal do indivíduo no último ano.,3402.88,number,float,Yes,Yes,,
-average_monthly_salary_3y,O salário médio mensal do indivíduo nos últimos três anos.,3402.88,number,float,Yes,Yes,,
-average_monthly_salary_5y,O salário médio mensal do indivíduo nos últimos cinco anos.,3402.88,number,float,Yes,Yes,,
-max_monthly_salary_1y,O salário mensal máximo do indivíduo no último ano.,3402.88,number,float,Yes,Yes,,
-max_monthly_salary_3y,O salário mensal máximo do indivíduo nos últimos três anos.,3402.88,number,float,Yes,Yes,,
-max_monthly_salary_5y,O salário mensal máximo do indivíduo nos últimos cinco anos.,3402.88,number,float,Yes,Yes,,

@@ -1,0 +1,14 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+id,"Belvo's unique identifier for the current item.
+",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+internal_identification,The institution’s internal identification number for the document.,20NE1234567,string,,No,Yes,,
+outcome,"Indicates whether the taxpayer is complying to all their tax obligations
+(`POSITIVE`), if they are not (`NEGATIVE`), or have none to comply to
+(`NO_OBLIGATIONS`).
+",NEGATIVE,string,,No,Yes,"POSITIVE, NEGATIVE, NO_OBLIGATIONS",
+pdf,Tax compliance status PDF as a binary.,=PDF-STRING=,string,binary,Yes,Yes,,
+rfc,The account holder's RFC (Registro Federal de Contribuyentes) number.,KDFC211118IS0,string,,No,Yes,,

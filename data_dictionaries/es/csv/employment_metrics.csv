@@ -1,60 +1,41 @@
 Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
-id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
-link,El `link.id` al que pertenecen los datos.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
+age,La edad del individuo.,32,integer,int32,Yes,No,,
+average_monthly_salary_1y,El salario mensual promedio del individuo durante el último año.,3402.88,number,float,Yes,Yes,,
+average_monthly_salary_3y,El salario mensual promedio del individuo durante los últimos tres años.,3402.88,number,float,Yes,Yes,,
+average_monthly_salary_5y,El salario mensual promedio del individuo durante los últimos cinco años.,3402.88,number,float,Yes,Yes,,
+base_salary_last,"El último salario base del usuario. Si `current_status` es `EMPLOYED`, este es el salario base actual del usuario.",42.17,number,float,Yes,Yes,,
 collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
 created_at,La marca de tiempo ISO-8601 de cuando se creó el punto de datos en la base de datos de Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
-updated_at,La marca de tiempo ISO-8601 de cuándo se actualizó por última vez el cálculo de las métricas de empleo.,2023-08-30T15:31:35.728607Z,string,date-time,Yes,Yes,,
-reference_date,"La reference_date que proporcionaste en tu solicitud. Si no proporcionaste una, este campo devolverá `null`, lo que indica que los cálculos se realizan hasta la fecha de la solicitud.
-
-**Nota:** Todos los cálculos son relativos a esta fecha.",2023-06-01,string,date,Yes,Yes,,
-age,La edad del individuo.,32,integer,int32,Yes,No,,
+current_employer_count,El número de empleadores que tiene actualmente el individuo.,1,integer,int32,Yes,Yes,,
 current_status,"Indica el estado laboral del individuo. Devolvemos una de las siguientes respuestas:
 
   - `EMPLOYED`
   - `RETIRED`
   - `UNEMPLOYED`
   - `null`",EMPLOYED,string,,Yes,No,"EMPLOYED, RETIRED, UNEMPLOYED, null",
-current_employer_count,El número de empleadores que tiene actualmente el individuo.,1,integer,int32,Yes,Yes,,
-base_salary_last,"El último salario base del usuario. Si `current_status` es `EMPLOYED`, este es el salario base actual del usuario.",42.17,number,float,Yes,Yes,,
-weeks_employed_last_job,"El número de semanas que el usuario estuvo empleado en su último trabajo. Si `current_status` es `EMPLOYED`, entonces este campo indica el número de semanas que el usuario ha estado empleado en su trabajo actual.",327.1429,number,float,Yes,Yes,,
-weeks_since_last_job,"El número de semanas desde su último trabajo. Si el valor de este campo es `0`, esto indica que el usuario está actualmente empleado.",0,number,float,Yes,Yes,,
-weeks_employed_total,"El número total de semanas que el usuario ha estado empleado, según la institución.
+decreases_1y,El número total de disminuciones salariales a lo largo del último año del individuo (YTD).,0,integer,int32,Yes,Yes,,
+decreases_3y,"El número total de disminuciones salariales a lo largo de los últimos tres años del individuo.
 
 > **Nota:**
 >
-> En el caso de que el usuario esté empleado en dos o más lugares al mismo tiempo, seguimos calculando esas semanas como una semana. Por ejemplo, si un usuario tiene tres trabajos concurrentes durante un mes, esto se calcula como 4 semanas.",148.2,number,float,Yes,Yes,,
-weeks_with_multiple_employers,El número de semanas que el individuo ha tenido más de un empleador al mismo tiempo.,0,number,float,Yes,Yes,,
+> Si la carrera laboral del individuo es de menos de tres años, devolvemos `null`.",,integer,int32,Yes,Yes,,
+decreases_5y,"El número total de disminuciones salariales a lo largo de los últimos cinco años del individuo.
+
+> **Nota:**
+>
+> Si la carrera laboral del individuo es de menos de cinco años, devolvemos `null`.",,integer,int32,Yes,Yes,,
+decreases_after_change,El número total de disminuciones salariales entre el penúltimo trabajo del individuo y el último (o actual) trabajo.,0,integer,int32,Yes,Yes,,
+decreases_last_job,"El número total de aumentos salariales que el usuario tuvo en su último trabajo. Si `current_status` es `EMPLOYED`, esto se refiere al trabajo actual del usuario.",0,integer,int32,Yes,Yes,,
+decreases_overall,El número total de disminuciones salariales a lo largo de la carrera laboral del individuo.,0,integer,int32,Yes,Yes,,
 employer_count,El número total de empleadores que el usuario ha tenido. Útil para indicar la estabilidad laboral a lo largo de su vida.,14,integer,int32,Yes,Yes,,
-unique_employer_count,"El número de empleadores únicos que ha tenido el individuo.
-
-> **Nota:**
->
-> Si el usuario dejó una empresa y regresó, por ejemplo, seis meses después a la misma empresa, esto se cuenta como un solo empleador.",3,integer,int32,Yes,Yes,,
 employers_per_year,"Número de empleadores por año. Útil para indicar la estabilidad laboral a lo largo de un año.
 
 > **Nota:**
 >
 > Si el usuario dejó una empresa y regresó, por ejemplo, seis meses después a la misma empresa, esto se cuenta como un solo empleador.",0.6326,number,float,Yes,Yes,,
-weeks_between_jobs,El número total de semanas que el individuo estuvo desempleado.,687.2865,number,float,Yes,Yes,,
-max_weeks_between_jobs,El número máximo de semanas que el individuo estuvo desempleado.,249.8571,number,float,Yes,Yes,,
-increases_last_job,"El número total de aumentos salariales que el usuario tuvo en su último trabajo. Si `current_status` es `EMPLOYED`, esto se refiere al trabajo actual del usuario.
-
-> **Nota:**
->
-> Para todos los aumentos o disminuciones salariales, solo tomamos en cuenta aquellos donde el cambio en el salario es mayor al 2%.",0,integer,int32,Yes,Yes,,
-decreases_last_job,"El número total de aumentos salariales que el usuario tuvo en su último trabajo. Si `current_status` es `EMPLOYED`, esto se refiere al trabajo actual del usuario.",0,integer,int32,Yes,Yes,,
-increases_after_change,El número total de aumentos salariales entre el penúltimo trabajo del individuo y el último (o actual) trabajo.,0,integer,int32,Yes,Yes,,
-decreases_after_change,El número total de disminuciones salariales entre el penúltimo trabajo del individuo y el último (o actual) trabajo.,0,integer,int32,Yes,Yes,,
-increases_overall,El número total de aumentos salariales a lo largo de la carrera laboral del individuo.,0,integer,int32,Yes,Yes,,
-decreases_overall,El número total de disminuciones salariales a lo largo de la carrera laboral del individuo.,0,integer,int32,Yes,Yes,,
+id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
 increases_1y,El número total de aumentos salariales a lo largo del último año del individuo (YTD).,0,integer,int32,Yes,Yes,,
-decreases_1y,El número total de disminuciones salariales a lo largo del último año del individuo (YTD).,0,integer,int32,Yes,Yes,,
 increases_3y,"El número total de aumentos salariales durante los últimos tres años del individuo.
-
-> **Nota:**
->
-> Si la carrera laboral del individuo es de menos de tres años, devolvemos `null`.",,integer,int32,Yes,Yes,,
-decreases_3y,"El número total de disminuciones salariales a lo largo de los últimos tres años del individuo.
 
 > **Nota:**
 >
@@ -64,11 +45,39 @@ increases_5y,"El número total de aumentos salariales durante los últimos cinco
 > **Nota:**
 >
 > Si la carrera laboral del individuo es de menos de cinco años, devolvemos `null`.",,integer,int32,Yes,Yes,,
-decreases_5y,"El número total de disminuciones salariales a lo largo de los últimos cinco años del individuo.
+increases_after_change,El número total de aumentos salariales entre el penúltimo trabajo del individuo y el último (o actual) trabajo.,0,integer,int32,Yes,Yes,,
+increases_last_job,"El número total de aumentos salariales que el usuario tuvo en su último trabajo. Si `current_status` es `EMPLOYED`, esto se refiere al trabajo actual del usuario.
 
 > **Nota:**
 >
-> Si la carrera laboral del individuo es de menos de cinco años, devolvemos `null`.",,integer,int32,Yes,Yes,,
+> Para todos los aumentos o disminuciones salariales, solo tomamos en cuenta aquellos donde el cambio en el salario es superior al 2%.",0,integer,int32,Yes,Yes,,
+increases_overall,El número total de aumentos salariales a lo largo de la carrera laboral del individuo.,0,integer,int32,Yes,Yes,,
+link,El `link.id` al que pertenecen los datos.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
+max_monthly_salary_1y,El salario mensual máximo del individuo para el último año.,3402.88,number,float,Yes,Yes,,
+max_monthly_salary_3y,El salario mensual máximo del individuo durante los últimos tres años.,3402.88,number,float,Yes,Yes,,
+max_monthly_salary_5y,El salario mensual máximo del individuo durante los últimos cinco años.,3402.88,number,float,Yes,Yes,,
+max_weeks_between_jobs,El número máximo de semanas que el individuo estuvo desempleado.,249.8571,number,float,Yes,Yes,,
+min_monthly_salary_1y,El salario mensual mínimo del individuo durante el último año.,3402.88,number,float,Yes,Yes,,
+min_monthly_salary_3y,El salario mensual mínimo del individuo durante los últimos tres años.,3402.88,number,float,Yes,Yes,,
+min_monthly_salary_5y,El salario mensual mínimo del individuo durante los últimos cinco años.,3402.88,number,float,Yes,Yes,,
+reference_date,"La reference_date que proporcionaste en tu solicitud. Si no proporcionaste una, este campo devolverá `null`, lo que indica que los cálculos se realizan hasta la fecha de la solicitud.
+
+**Nota:** Todos los cálculos son relativos a esta fecha.",2023-06-01,string,date,Yes,Yes,,
+unique_employer_count,"El número de empleadores únicos que ha tenido la persona.
+
+> **Nota:**
+>
+> Si el usuario dejó una empresa y regresó, por ejemplo, seis meses después a la misma empresa, esto se cuenta como un solo empleador.",3,integer,int32,Yes,Yes,,
+updated_at,La marca de tiempo ISO-8601 de cuándo se actualizó por última vez el cálculo de las métricas de empleo.,2023-08-30T15:31:35.728607Z,string,date-time,Yes,Yes,,
+weeks_between_jobs,El número total de semanas que el individuo estuvo desempleado.,687.2865,number,float,Yes,Yes,,
+weeks_employed_last_job,"El número de semanas que el usuario estuvo empleado en su último trabajo. Si `current_status` es `EMPLOYED`, entonces este campo indica el número de semanas que el usuario ha estado empleado en su trabajo actual.",327.1429,number,float,Yes,Yes,,
+weeks_employed_total,"El número total de semanas que el usuario ha estado empleado, según la institución.
+
+> **Nota:**
+>
+> En el caso de que el usuario esté empleado en dos o más lugares al mismo tiempo, seguimos calculando esas semanas como una semana. Por ejemplo, si un usuario tiene tres trabajos simultáneos durante un mes, esto se calcula como 4 semanas.",148.2,number,float,Yes,Yes,,
+weeks_since_last_job,"El número de semanas desde su último trabajo. Si el valor de este campo es `0`, esto indica que el usuario está actualmente empleado.",0,number,float,Yes,Yes,,
+weeks_with_multiple_employers,El número de semanas que el individuo ha tenido más de un empleador al mismo tiempo.,0,number,float,Yes,Yes,,
 yearly_change_1y,El cambio porcentual del salario del individuo para el último año (YTD).,0,number,float,Yes,Yes,,
 yearly_change_3y,"El cambio porcentual del salario del individuo durante los últimos tres años.
 
@@ -80,12 +89,3 @@ yearly_change_5y,"El cambio porcentual del salario del individuo durante los úl
 > **Nota:**
 >
 > Si la carrera laboral del individuo es inferior a cinco años, devolvemos `null`.",,number,float,Yes,Yes,,
-min_monthly_salary_1y,El salario mensual mínimo del individuo durante el último año.,3402.88,number,float,Yes,Yes,,
-min_monthly_salary_3y,El salario mensual mínimo del individuo durante los últimos tres años.,3402.88,number,float,Yes,Yes,,
-min_monthly_salary_5y,El salario mensual mínimo del individuo durante los últimos cinco años.,3402.88,number,float,Yes,Yes,,
-average_monthly_salary_1y,El salario mensual promedio del individuo durante el último año.,3402.88,number,float,Yes,Yes,,
-average_monthly_salary_3y,El salario mensual promedio del individuo durante los últimos tres años.,3402.88,number,float,Yes,Yes,,
-average_monthly_salary_5y,El salario mensual promedio del individuo durante los últimos cinco años.,3402.88,number,float,Yes,Yes,,
-max_monthly_salary_1y,El salario mensual máximo del individuo para el último año.,3402.88,number,float,Yes,Yes,,
-max_monthly_salary_3y,El salario mensual máximo del individuo durante los últimos tres años.,3402.88,number,float,Yes,Yes,,
-max_monthly_salary_5y,El salario mensual máximo del individuo durante los últimos cinco años.,3402.88,number,float,Yes,Yes,,

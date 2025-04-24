@@ -1,26 +1,27 @@
 Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
-id,Identificador único da Belvo para o item atual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
-link,O `link.id` ao qual os dados pertencem.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
-created_at,O carimbo de data e hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
 collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
-start_date,"A data de início do funcionário no empregador, no formato `YYYY-MM-DD`.",2022-01-01,string,date,Yes,No,,^\d{4}-\d{2}-\d{2}$
-end_date,"A data de término do funcionário na empresa, no formato `YYYY-MM-DD`. Se for `null`, o funcionário ainda está trabalhando na empresa.",2023-01-01,string,date,Yes,Yes,,^\d{4}-\d{2}-\d{2}$
+created_at,O carimbo de data e hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
 employer_data,Detalhes sobre o empregador.,,object,,Yes,No,,
-employer_data.name,O nome do empregador.,Wayne Industries,string,,Yes,No,,
 employer_data.code,O código único da instituição para o empregador.,49430669,string,,Yes,No,,
 employer_data.economic_activity,"A principal atividade econômica em que o empregador está envolvido. Para o Brasil, este é o código da *Classificação Nacional de Atividades Econômicas* (CNAE).",6421-2 - BANCOS COMERCIAIS,string,,Yes,No,,
+employer_data.name,O nome do empregador.,Wayne Industries,string,,Yes,No,,
+end_date,"A data de término do funcionário na empresa, no formato `YYYY-MM-DD`. Se for `null`, o funcionário ainda está trabalhando na empresa.",2023-01-01,string,date,Yes,Yes,,^\d{4}-\d{2}-\d{2}$
+id,Identificador único da Belvo para o item atual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
+link,O `link.id` ao qual os dados pertencem.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
 occupations,As ocupações do funcionário no empregador.,,array,,Yes,No,,
-occupations[].start_date,"A data em que o funcionário começou na posição, no formato `YYYY-MM-DD`.",2022-01-01,string,date,Yes,No,,^\d{4}-\d{2}-\d{2}$
-occupations[].end_date,"A data em que o funcionário parou de trabalhar nesta posição, no formato `YYYY-MM-DD`. Se for `null`, isso significa que o funcionário ainda ocupa esta posição.",2023-01-01,string,date,Yes,Yes,,^\d{4}-\d{2}-\d{2}$
 occupations[].description,"A posição que o funcionário ocupava. Para o Brasil, essa descrição deve estar de acordo com o Ministério do Trabalho e listada na *Classificação Brasileira de Ocupações* (CBO).",ANALISTA DE PRODUTOS BANCARIOS,string,,Yes,No,,
-occupations[].name,"A ocupação dos funcionários, conforme fornecida pelo empregador.",ANALISTA DE PRODUTOS BANCARIOS - 2525-40,string,,Yes,No,,
+occupations[].end_date,"A data em que o funcionário parou de trabalhar nesta posição, no formato `YYYY-MM-DD`. Se for `null`, isso significa que o funcionário ainda ocupa esta posição.",2023-01-01,string,date,Yes,Yes,,^\d{4}-\d{2}-\d{2}$
 occupations[].locale,"Onde o funcionário cumpriu suas funções. Para o Brasil, isso pode ser:
   - `Urbana` (Urbano)
   - `Rural`
   - `Não Identificado`
   - `null`",Urbana,string,,Yes,No,,
+occupations[].name,"A ocupação dos funcionários, conforme fornecida pelo empregador.",ANALISTA DE PRODUTOS BANCARIOS - 2525-40,string,,Yes,No,,
+occupations[].start_date,"A data em que o funcionário começou na posição, no formato `YYYY-MM-DD`.",2022-01-01,string,date,Yes,No,,^\d{4}-\d{2}-\d{2}$
 salaries,Os salários que o funcionário recebeu do empregador.,,array,,Yes,No,,
 salaries[].base_amount,"O valor base do salário, antes de quaisquer deduções ou bônus.",1033.09,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+salaries[].currency,O código de moeda de três letras (ISO-4217).,BRL,string,,Yes,No,,^[A-Z]{3}$
+salaries[].month,"O mês em que o funcionário recebeu seu salário, no formato `YYYY-MM`.",2022-01,string,,Yes,No,,^\d{4}-\d{2}$
 salaries[].retained_amount,O valor retido pelo *Instituto Nacional do Seguro Social* (INSS) do Brasil.,0.01,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
 salaries[].type,"O tipo de salário.
 
@@ -28,5 +29,4 @@ Retornamos um dos seguintes valores:
   - `REGULAR`
   - `THIRTEENTH`
   - `null`",REGULAR,string,,No,Yes,"REGULAR, THIRTEENTH, None",
-salaries[].month,"O mês em que o funcionário recebeu seu salário, no formato `YYYY-MM`.",2022-01,string,,Yes,No,,^\d{4}-\d{2}$
-salaries[].currency,O código de moeda de três letras (ISO-4217).,BRL,string,,Yes,No,,^[A-Z]{3}$
+start_date,"A data de início do funcionário no empregador, no formato `YYYY-MM-DD`.",2022-01-01,string,date,Yes,No,,^\d{4}-\d{2}-\d{2}$
