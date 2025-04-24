@@ -1,0 +1,26 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+id,"Belvo's unique identifier for the current item.
+",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+link,The `link.id` the data belongs to.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
+collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+informacion_general,"General information on the tax return (year, RFC, return type,
+person/company name, and so on).
+",,object,,Yes,Yes,,
+sueldos_salarios,"Details regarding the income information together combined with withheld
+taxes.
+",,object,,Yes,Yes,,
+servicios_profesionales,"Details regarding the income and tax information from professional
+services provided.
+",,object,,Yes,Yes,,
+deducciones_personales,List of all personal tax deductions.,,object,,Yes,Yes,,
+determinacion_impuesto,Details regarding the final tax return.,,object,,Yes,Yes,,
+retenciones,Details on the already withheld taxes.,,object,,Yes,Yes,,
+dividendos,Details regarding dividends.,,object,,Yes,Yes,,
+datos_informativos,Extra informative data on the tax return.,,object,,No,Yes,,
+pdf,Tax return PDF as a binary.,=PDF-STRING=,string,binary,Yes,Yes,,
+receipt_pdf,"The acknowledgement receipt from the fiscal institution confirming that
+they received the tax return.
+",=PDF-STRING=,string,binary,Yes,Yes,,

@@ -31,7 +31,7 @@ Retornamos um dos seguintes valores do enum:
 [].account.name,"O nome da conta, conforme fornecido pela instituição.",Cuenta Perfiles- M.N. - MXN-666,string,,Yes,Yes,,
 [].account.number,"O número da conta, conforme designado pela instituição.",4057068115181,string,,Yes,Yes,,
 [].account.balance,Detalhes sobre os saldos atual e disponível para a conta.,,object,,Yes,No,,
-[].account.balance.current,"O saldo atual é calculado de forma diferente de acordo com o tipo de conta.
+[].account.balance.current,"O saldo atual é calculado de maneira diferente de acordo com o tipo de conta.
 
 - **💰 Contas correntes e poupança**:
 
@@ -39,7 +39,7 @@ O saldo da conta do usuário no timestamp `collected_at`.
 
 - **💳 Cartões de crédito**:
 
-O valor que o usuário gastou no período de faturamento atual do cartão (consulte `credit_data.cutting_date` para obter informações sobre quando o período de faturamento atual termina).
+O valor que o usuário gastou no período de faturamento atual do cartão (consulte `credit_data.cutting_date` para informações sobre quando o período de faturamento atual termina).
 
 - **🏡 Contas de empréstimo**:
 
@@ -58,7 +58,7 @@ O valor de crédito que o usuário ainda tem disponível para o período atual. 
 
 O valor presente necessário para quitar o empréstimo, conforme fornecido pela instituição.
 
-**Nota:** Se a instituição não fornecer esse valor, retornamos `null`.",5621.12,number,float,No,Yes,,
+**Nota:** Se a instituição não fornecer este valor, retornamos `null`.",5621.12,number,float,No,Yes,,
 [].account.currency,"A moeda da conta. Por exemplo:
 - 🇧🇷 BRL (Real Brasileiro)
 - 🇨🇴 COP (Peso Colombiano)

@@ -1,0 +1,246 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+[].id,"Belvo's unique identifier for the current item.
+",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+[].account,"Details regarding the account.
+
+**Note**: For our recurring expenses resource, this account relates to the account that was analyzed to generate the recurring expenses report.
+",,object,,Yes,Yes,,
+[].account.id,"Belvo's unique identifier for the current item.
+",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+[].account.link,The `link.id` the data belongs to.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
+[].account.institution,Details regarding the institution.,,object,,No,No,,
+[].account.institution.name,"The name of the institution, as designated by Belvo.
+
+Please see our <a href=""https://developers.belvo.com/docs/institution"" target=""_blank"">Institutions</a> DevPortal article for a detailed list of institution names.
+",erebor_mx_retail,string,,No,No,,
+[].account.institution.type,"The type of institution. We return one of the following values:
+
+  - `bank`
+  - `fiscal`
+  - `employment`
+",,string,,No,No,"bank, fiscal, employment",
+[].account.collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+[].account.created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+[].account.category,"The type of account.
+We return one of the following enum values:
+  - `CHECKING_ACCOUNT`
+  - `CREDIT_CARD`
+  - `INVESTMENT_ACCOUNT`
+  - `LOAN_ACCOUNT`
+  - `PENSION_FUND_ACCOUNT`
+  - `SAVINGS_ACCOUNT`
+  - `UNCATEGORIZED`
+  - `null`
+",CHECKING_ACCOUNT,string,,Yes,Yes,"CHECKING_ACCOUNT, CREDIT_CARD, INVESTMENT_ACCOUNT, LOAN_ACCOUNT, PENSION_FUND_ACCOUNT, SAVINGS_ACCOUNT, UNCATEGORIZED, None",
+[].account.balance_type,"Indicates whether this account is either an `ASSET` or a `LIABILITY`. You can consider the balance of an `ASSET` as being positive, while the balance of a `LIABILITY` as negative.
+",ASSET,string,,Yes,Yes,,
+[].account.type,"The account type, as designated by the institution.",Cuentas de efectivo,string,,Yes,Yes,,
+[].account.name,"The account name, as given by the institution.",Cuenta Perfiles- M.N. - MXN-666,string,,Yes,Yes,,
+[].account.number,"The account number, as designated by the institution.",4057068115181,string,,Yes,Yes,,
+[].account.balance,"Details regarding the current and available balances for the account.
+",,object,,Yes,No,,
+[].account.balance.current,"The current balance is calculated differently according to the type of account.
+
+
+- **💰 Checking and saving accounts**:
+
+
+The user's account balance at the `collected_at` timestamp.
+
+- **💳 Credit cards**:
+
+
+The amount the user has spent in the current card billing period (see `credit_data.cutting_date` for information on when the current billing period finishes).
+
+- **🏡 Loan accounts**:
+
+
+The amount remaining to pay on the users's loan.
+",5874.13,number,float,Yes,Yes,,
+[].account.balance.available,"The balance that the account owner can use.
+
+- **💰 Checking and saving accounts**:
+
+
+The available balance may be different to the `current` balance due to pending transactions.
+
+- **💳 Credit cards**:
+
+
+The credit amount the user still has available for the current period. The `available` balance may be different to the `current` balance due to pending transactions or future instalments.
+
+- **🏡 Loan accounts**:
+
+
+The present value required to pay off the loan, as provided by the institution.
+
+
+**Note:** If the institution does not provide this value, we return `null`.
+",5621.12,number,float,No,Yes,,
+[].account.currency,"The currency of the account. For example:
+- 🇧🇷 BRL (Brazilian Real)
+- 🇨🇴 COP (Colombian Peso)
+- 🇲🇽 MXN (Mexican Peso)
+
+ Please note that other currencies other than in the list above may be returned.",MXN,string,,Yes,Yes,,
+[].account.public_identification_name,"The public name for the type of identification. For example: `""CLABE""`.
+
+ℹ️ For 🇧🇷 Brazilian savings and checking accounts, this field will be `AGENCY/ACCOUNT`.
+",CLABE,string,,Yes,Yes,,
+[].account.public_identification_value,"The value for the `public_identification_name`.
+
+ℹ️ For 🇧🇷 Brazilian savings and checking accounts, this field will be the agency and bank account number, separated by a slash.
+For example: `0444/45722-0`.
+",150194683119900273,string,,Yes,Yes,,
+[].account.last_accessed_at,"The ISO-8601 timestamp of Belvo's most recent successful access to the institution for the given link.
+",2021-03-09T10:28:40.000Z,string,date-time,Yes,Yes,,
+[].account.credit_data,The credit options associated with this account.,,object,,Yes,Yes,,
+[].account.credit_data.credit_limit,The maximum amount of credit the owner can receive.,192000,number,float,Yes,Yes,,
+[].account.credit_data.collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+[].account.credit_data.cutting_date,"The closing date of the credit period, in `YYYY-MM-DD` format.",2019-12-11,string,,Yes,Yes,,
+[].account.credit_data.next_payment_date,"The due date for the next payment , in `YYYY-MM-DD` format.",2019-12-13,string,,Yes,No,,
+[].account.credit_data.minimum_payment,The minimum amount to be paid on the `next_payment_date`.,2400.3,number,float,Yes,Yes,,
+[].account.credit_data.no_interest_payment,The minimum amount required to pay to avoid generating interest.,2690.83,number,float,Yes,Yes,,
+[].account.credit_data.interest_rate,The annualized interest rate of the credit.,4,number,float,Yes,Yes,,
+[].account.credit_data.monthly_payment,"*This field has been deprecated. For more information regarding Belvo and deprecation, see our Deprecated fields explanation.*
+
+*The recurrent monthly payment, if applicable.*
+",,number,,No,Yes,,
+[].account.credit_data.last_payment_date,"*This field has been deprecated. For more information regarding Belvo and deprecation, see our Deprecated fields explanation.*
+
+
+*The date when the last credit payment was made, in `YYYY-MM-DD` format.*
+",,string,,No,Yes,,
+[].account.credit_data.last_period_balance,"*This field has been deprecated. For more information regarding Belvo and deprecation, see our Deprecated fields explanation.*
+
+
+*The balance remaining after the `last_payment_date`.*
+",,string,,No,Yes,,
+[].account.loan_data,The loan options associated with this account.,,object,,Yes,Yes,,
+[].account.loan_data.collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+[].account.loan_data.contract_amount,"The initial total loan amount, calculated by the institution, when the contract was signed. This amount includes the principal + interest + taxes + fees.",202000,number,float,No,Yes,,
+[].account.loan_data.principal,Total amount of the loan (the amount the user receives).,192000,number,float,Yes,Yes,,
+[].account.loan_data.loan_type,"The type of the loan, according to the institution.",Consignado,string,,No,Yes,,
+[].account.loan_data.payment_day,The day of the month by which the owner needs to pay the loan (`DD`).,27,string,,No,Yes,,
+[].account.loan_data.outstanding_principal,"Outstanding loan amount, that is, how much remains to pay on the principal (not including interest).
+",142023,number,float,No,Yes,,
+[].account.loan_data.outstanding_balance,"The amount remaining to pay in total, including interest.",182000,number,float,Yes,Yes,,
+[].account.loan_data.monthly_payment,"The recurrent monthly payment, if applicable.",1000,number,float,Yes,Yes,,
+[].account.loan_data.interest_rates,Breakdown of the interest applied to the loan.,,array,,Yes,Yes,,
+[].account.loan_data.interest_rates[].name,The name of the type of interest rate applied to the loan.,jurosEfetivo,string,,Yes,Yes,,
+[].account.loan_data.interest_rates[].type,"The period that the interest is applied to the loan. We return one of the following values:
+
+  - `MONTHLY`
+  - `YEARLY`
+",MONTHLY,string,,Yes,Yes,"MONTHLY, YEARLY",
+[].account.loan_data.interest_rates[].value,The interest rate (in percent or currency value).,7.85,number,float,Yes,Yes,,
+[].account.loan_data.fees,Breakdown of the fees applied to the loan.,,array,,No,Yes,,
+[].account.loan_data.fees[].type,"The type of fee. We return one of the following values:
+
+  - `OPERATION_FEE`
+  - `INSURANCE_FEE`
+  - `OTHERS`
+",OPERATION_FEE,string,,Yes,No,"OPERATION_FEE, INSURANCE_FEE, OTHERS",
+[].account.loan_data.fees[].value,"The total value of the fee. Same currency of the Loan.
+",5.6,number,float,Yes,No,,
+[].account.loan_data.number_of_installments_total,The total number of installments required to pay the loan.,60,integer,int32,No,Yes,,
+[].account.loan_data.number_of_installments_outstanding,The number of installments left to pay.,48,integer,int32,No,Yes,,
+[].account.loan_data.contract_start_date,"The date when the loan contract was signed , in `YYYY-MM-DD` format.",2020-03-01,string,,No,Yes,,
+[].account.loan_data.contract_end_date,"The date when the loan is expected to be completed, in `YYYY-MM-DD` format.",2027-10-01,string,date,No,No,,
+[].account.loan_data.contract_number,"The contract number of the loan, as given by the institution.",890ASLDJF87SD00,string,,No,Yes,,
+[].account.loan_data.credit_limit,"*This field has been deprecated. For more information regarding Belvo and deprecation, see our Deprecated fields explanation.*
+
+Please see `principal` instead.
+",,number,,No,Yes,,
+[].account.loan_data.last_period_balance,"*This field has been deprecated. For more information regarding Belvo and deprecation, see our Deprecated fields explanation.*
+
+Please see `outstanding_balance` instead.
+",,number,,No,Yes,,
+[].account.loan_data.interest_rate,"*This field has been deprecated. For more information regarding Belvo and deprecation, see our Deprecated fields explanation.*
+
+Please see the `interest_rates` object instead.
+",,number,,No,Yes,,
+[].account.loan_data.limit_day,"*This field has been deprecated. For more information regarding Belvo and deprecation, see our Deprecated fields explanation.*
+
+Please see `payment_day` instead.
+",,string,,No,Yes,,
+[].account.loan_data.cutting_day,"*This field has been deprecated. For more information regarding Belvo and deprecation, see our Deprecated fields explanation.*
+
+The closing day of the month for the loan.
+",,string,,No,Yes,,
+[].account.loan_data.cutting_date,"*This field has been deprecated. For more information regarding Belvo and deprecation, see our Deprecated fields explanation.*
+
+The closing date of the loan period, in `YYYY-MM-DD` format.
+",,string,,No,Yes,,
+[].account.loan_data.last_payment_date,"*This field has been deprecated. For more information regarding Belvo and deprecation, see our Deprecated fields explanation.*
+
+The date when the last loan payment was made, in `YYYY-MM-DD` format.
+",,string,,No,Yes,,
+[].account.loan_data.next_payment_date,"*This field has been deprecated. For more information regarding Belvo and deprecation, see our Deprecated fields explanation.*
+
+Please use `payment_day` instead, in `YYYY-MM-DD` format.
+",,string,,No,Yes,,
+[].account.loan_data.no_interest_payment,"*This field has been deprecated. For more information regarding Belvo and deprecation, see our Deprecated fields explanation.*
+
+The minimum amount required to pay to avoid generating interest.
+",,number,,No,Yes,,
+[].account.funds_data,One or more funds that contribute to the the pension account.,,array,,No,Yes,,
+[].account.funds_data[].collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+[].account.funds_data[].name,The pension fund name.,FIX X,string,,No,Yes,,
+[].account.funds_data[].type,Type of pension fund.,CNPJ,string,,No,Yes,,
+[].account.funds_data[].public_identifications,The fund's public IDs.,,array,,No,Yes,,
+[].account.funds_data[].public_identifications[].name,The type of identification number for the fund.,CNPJ,string,,Yes,No,,
+[].account.funds_data[].public_identifications[].value,The fund's identification number.,05.954.445/0221-68,string,,Yes,Yes,,
+[].account.funds_data[].balance,The amount in the fund.,88427.94,number,float,No,Yes,,
+[].account.funds_data[].percentage,"How much this fund, as a percentage, contributes to the pension
+account's total.
+",100,number,float,No,Yes,,
+[].account.bank_product_id,"*This field has been deprecated. For more information regarding Belvo and deprecation, see our Deprecated fields explanation.*
+
+*The institution's product ID for the account type.*
+",,string,,No,Yes,,
+[].account.internal_identification,"*This field has been deprecated. For more information regarding Belvo and deprecation, see our Deprecated fields explanation.*
+
+*The institution's internal identification for the account.*
+",,string,,No,Yes,,
+[].name,"The name for the recurring expense.
+
+ℹ️ **Note**: This information is taken from the description section of a transaction and then normalized to provide you with an easy-to-read name. As such, sometimes the name will reflect the merchant the payment is made to (for example, Netflix.com), while for other recurring expenses, this could be something like ""Monthly payment to John"".
+",Netflix,string,,Yes,Yes,,
+[].transactions,"An array of minified transaction objects used to evaluate the recurring expense. If no transactions were found, we return an empty array.",,array,,Yes,No,,
+[].transactions[].amount,The transaction amount.,2145.45,number,float,Yes,No,,
+[].transactions[].description,"The description of the transaction provided by the institution. Usually, this is the text that the end user would see in the bank statement. The description can be an empty string.
+
+**Note:** For EYOD Risk Insights, the description is the one that you provided in the initial request.
+",Netflix.com/march,string,,Yes,Yes,,
+[].transactions[].value_date,"The date when the transaction occurred, in `YYYY-MM-DD` format.",2019-10-23,string,date,Yes,No,,
+[].frequency,"The frequency at which this recurring expense occurs.
+
+
+ℹ️ **Note:** Belvo only identifies `MONTHLY` frequencies.
+",MONTHLY,string,,Yes,No,MONTHLY,
+[].average_transaction_amount,The average transaction amount of the recurring expense.,32.9,number,float,Yes,No,,
+[].median_transaction_amount,The median transaction amount of the recurring expense.,32.9,number,float,Yes,No,,
+[].days_since_last_transaction,"Number of days since the last recurring expense occurred.
+
+Based on the frequency, you can infer how many days until the next charge will occur.
+",5,integer,int32,Yes,No,,
+[].category,"The transaction category for the recurring expense. For more information on the available categories, please see our <a href=""https://developers.belvo.com/docs/banking#categorizing-transactions"" target=""_blank"">Transaction categorization documentation</a>.
+
+- `Online Platforms & Leisure` (Netflix, Spotify, Gym Memberships)
+- `Bills & Utilities` (electricity, telephone, internet)
+- `Credits & Loans` (credit card cash advances, student loan, watercraft lease)
+- `Insurance` (home, car, and health & life insurance)
+- `Transport & Travel` (Uber trip, airbnb, parking)
+- `Taxes` (service fee, donation, court taxes)
+",Online Platforms & Leisure,string,,Yes,No,"Bills & Utilities, Credits & Loans, Insurance, Online Platforms & Leisure, Transport & Travel, Taxes",
+[].payment_type,"The type of recurring expense. We return one of the following values:
+
+  - `SUBSCRIPTION`
+  - `REGULAR`
+",SUBSCRIPTION,string,,Yes,Yes,"SUBSCRIPTION, REGULAR",

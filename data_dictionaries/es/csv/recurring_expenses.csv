@@ -39,7 +39,7 @@ El saldo de la cuenta del usuario en el momento del timestamp `collected_at`.
 
 - **💳 Tarjetas de crédito**:
 
-La cantidad que el usuario ha gastado en el período de facturación actual de la tarjeta (consulta `credit_data.cutting_date` para obtener información sobre cuándo finaliza el período de facturación actual).
+La cantidad que el usuario ha gastado en el período de facturación actual de la tarjeta (consulte `credit_data.cutting_date` para obtener información sobre cuándo finaliza el período de facturación actual).
 
 - **🏡 Cuentas de préstamo**:
 

@@ -19,7 +19,7 @@ logo,La URL del logotipo de la institución.,https://belvo-api-media.s3.amazonaw
 icon_logo,La URL del logotipo del icono de la institución.,https://statics.belvo.io/widget/images/institutions/erebor.svg,string,,No,Yes,,
 text_logo,La URL del logotipo de texto de la institución.,https://statics.belvo.io/widget/images/institutions/erebor.svg,string,,No,Yes,,
 form_fields,,,array,,No,No,,
-form_fields[].name,"El campo de username, contraseña o tipo de username.",username,string,,No,No,,
+form_fields[].name,"El campo de nombre de usuario, contraseña o tipo de nombre de usuario.",username,string,,No,No,,
 form_fields[].type,"El tipo de entrada para el campo del formulario. Por ejemplo, string.",text,string,,No,No,,
 form_fields[].label,"La etiqueta del campo del formulario. Por ejemplo:
 - Client number

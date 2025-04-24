@@ -1,0 +1,140 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+id,"Belvo's unique identifier for the current item.
+",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+link,The `link.id` the data belongs to.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
+created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+report_date,"The date when the employment record report was generated, in `YYYY-MM-DD` format.",2023-01-19,string,date,No,No,,
+internal_identification,"Unique ID for user according to the institution. For IMSS and ISSSTE Mexico, this is the CURP.",BLPM951331IONVGR54,string,,No,No,,
+personal_data,Details regarding the personal information of the individual.,,object,,No,No,,
+personal_data.official_name,"The legal name of the individual.
+",Bruce Banner del Torro,string,,No,Yes,,
+personal_data.first_name,"The first name of the individual.
+",Bruce,string,,No,Yes,,
+personal_data.last_name,"The last name of the individual.
+",Banner del Torro,string,,No,Yes,,
+personal_data.birth_date,"The date of birth of the individual, in `YYYY-MM-DD` format.
+",2022-02-09,string,date,No,Yes,,
+personal_data.entitlements,Details regarding the benefits the individual is entitled to.,,object,,No,No,,
+personal_data.entitlements.entitled_to_health_insurance,"Indicates whether or not the individual is entitled to health insurance.
+",True,boolean,,No,No,,
+personal_data.entitlements.entitled_to_company_benefits,"Indicates whether or not the individual is entitled to company benefits.
+",True,boolean,,No,No,,
+personal_data.entitlements.valid_until,"Date until when the individual is covered by health insurance and/or company benefits. If `null` the employee is currently working and no end date is required.
+",,string,date,No,Yes,,
+personal_data.entitlements.status,"Indicates the employment status of the individual. We return one of the following responses:
+  
+  - `EMPLOYED`
+  - `RETIRED`
+  - `UNEMPLOYED`
+  - `null`
+",EMPLOYED,string,,No,No,"EMPLOYED, RETIRED, UNEMPLOYED, null",
+personal_data.document_ids,Details regarding the individual's ID documents.,,array,,No,No,,
+personal_data.document_ids[].document_type,"The type of document related to the individual. We return one of the following values:
+
+  - `NSS`
+  - `CURP`
+  - `RFC`
+  
+",NSS,string,,No,Yes,"NSS, CURP, RFC",
+personal_data.document_ids[].document_number,"The ID document's number (as a string).
+",10277663582,string,,No,Yes,,
+personal_data.email,"The email address of the individual.
+",bruce.banner@avengers.com,string,,No,Yes,,
+social_security_summary,"Details regarding the individual's social security contributions, according to the IMSS.
+
+>**Note**: For ISSSTE Mexico, this value will return `null`.
+",,object,,No,Yes,,
+social_security_summary.weeks_redeemed,"Number of weeks the individual needed to take out of their pension.
+",0,integer,int32,No,Yes,,
+social_security_summary.weeks_reinstated,"Number of weeks the individual has paid back into their pension (*AFORE*), after having redeemed them previously.
+",0,integer,int32,No,Yes,,
+social_security_summary.weeks_contributed,"Number of weeks the individual has contributed to their social security, based on the number of weeks the individual has worked according to IMSS.
+",188,integer,int32,No,Yes,,
+employment_records,Details regarding the individual's employment history.,,array,,No,No,,
+employment_records[].collected_at,The ISO-8601 timestamp when the data point was collected.,2020-04-23T21:32:55.336854+00:00,string,date-time,No,No,,
+employment_records[].employer,"The official name of the employer.
+
+>**Note**: For ISSSTE Mexico, this is the official name of the entity along with the entity that is responsible for managing the employee's information, separated by a semicolon (`;`). For example: SECRETARIA DE EDUCACION PUBLICA (SEP);SECRETARIA DE EDUCACION PUBLICA (SEP).
+",Batman Enterprises CDMX,string,,No,No,,
+employment_records[].employer_id,"The official ID of the employer, according to the country.
+
+>**Note**: For ISSSTE Mexico, this value will return `null`.
+",780-BAT-88769-CDMX,string,,No,Yes,,
+employment_records[].start_date,"Date when employment started, in `YYYY-MM-DD` format.
+",2019-10-10,string,date,No,No,,
+employment_records[].end_date,"Date when employment finished, in `YYYY-MM-DD` format.
+
+>**Note**: This field will return `null` for the user's current employment.
+",2019-12-31,string,date,No,Yes,,
+employment_records[].weeks_employed,"Number of weeks that the individual was employed.
+",12,integer,int32,No,No,,
+employment_records[].state,"In what geographical state the individual was employed, according to the country.
+
+>**Note**: For ISSSTE Mexico, this value will return `null`.
+",DISTRITO FEDERAL,string,,No,Yes,,
+employment_records[].most_recent_base_salary,"The most recent base salary the individual earned.
+
+- For IMSS Mexico, this value is calculated including the perks that the individual is entitled to throughout the year.
+- For ISSSTE Mexico, this value is calculated dividing `monthly_salary` by 30 (days), and excludes the individual's perks.
+",762.54,number,float,No,No,,
+employment_records[].monthly_salary,"The monthly salary of the individual, including any additional perks.
+
+- For IMSS Mexico, this value is calculated including the perks that the individual is entitled to throughout the year.
+- For ISSSTE Mexico, this value is calculated excluding perks.
+",,number,float,No,No,,
+employment_records[].currency,"The three-letter currency code in which the salary is paid.
+",MXN,string,,No,No,,
+employment_records[].employment_status_updates,Details regarding any employment changes of the individual.,,array,,No,Yes,,
+employment_records[].employment_status_updates[].event,"For IMSS Mexico, this is the event that caused the change in employment status or salary. We return one of the following values:
+  
+  - `DISMISSED_RESIGNED`: The employee was either dismissed or resigned.
+  - `SALARY_MODIFICATION`: The employee received a salary modification (increase or decrease).
+  - `HIRED`: The employee was hired.
+  - `VOLUNTARY_CONTRIBUTION`: The employee made a voluntary contribution to IMSS.
+  - `ABSENCE`: The employee was on absent (such as on vacation).
+  - `SICK_LEAVE`: The employee was on sick leave.
+
+For ISSSTE Mexico, this is the information source regarding the change in employment status or salary. We return one of the following values:
+
+  - `NORMAL`: Indicates that the information was received from the **Instituto de Seguridad y Servicios Sociales de los Trabajadores del Estado (ISSSTE)**.
+  - `BDUTA_CERTIFICATE`: Indicates that the information was received from the central database, **Base de Datos Única de Trabajadores Activos (BDUTA)**.
+  - `DYE_CERTIFICATE`: Indicates that the information was received from an affiliate institution, **Dependencia y Entidad (DYE)**.
+  
+",HIRED,string,,No,Yes,"DISMISSED_RESIGNED, SALARY_MODIFICATION, HIRED, VOLUNTARY_CONTRIBUTION, ABSENCE, SICK_LEAVE, NORMAL, BDUTA_CERTIFICATE, DYE_CERTIFICATE",
+employment_records[].employment_status_updates[].base_salary,"The base salary of the individual, current as of the `update_date`.
+
+  - For IMSS Mexico, this value is calculated including the perks that the individual is entitled to throughout the year.
+  - For ISSSTE Mexico, this value is calculated excluding the individual's perks.
+",1033.09,number,float,No,No,,
+employment_records[].employment_status_updates[].update_date,"The date that the employment event occurred, in `YYYY-MM-DD` format.
+",2021-09-01,string,date,No,No,,
+employment_scores,"An array of `employment_record` scores. Each score provides an insight into employability and income generation potential in a given period.
+
+> **Note 1**: This field is only available for links created with Mexico's IMSS. For other institutions, this field will return `null`.
+
+> **Note 2**: This field will return `null` for employment records retrieved before 16-04-2024. For employment records generated before 16-04-2024, you'll need to make a new POST request to retrieve employment records to calculate the scores.
+","[{""score"": 722, ""period"": 3, ""version"": ""1.0.0""}, {""score"": 612, ""period"": 6, ""version"": ""1.0.0""}, {""score"": 570, ""period"": 12, ""version"": ""1.0.0""}]",array,,No,Yes,,
+employment_scores[].score,"A score between 300 and 900 that provides an insight into employability and income generation potential.
+
+- A low score (closer to 300) could indicate lower predicted employability and income generation potential, suggesting potential challenges in securing employment or achieving higher income levels in the future.
+- A high score (closer to 900) could suggest a greater likelihood of securing employment and generating higher income levels.
+
+The score can return `null` if the individual has no employment history.
+",612,integer,,No,Yes,,
+employment_scores[].period,"The number of months (in the future) that the score is calculated for.
+
+For example, a period of `6` indicates that the score is calculated for the next `6` months.
+
+> **Note**: At present Belvo calculates the score for 3, 6, and 12 months.
+",6,integer,,No,No,,
+employment_scores[].version,The version of our employment score model used to perform the calculation.,1.0.0,string,,No,No,,
+files,Additional PDF binary files relating to the individual's employment.,,array,,No,Yes,,
+files[].type,"The title of the document.
+",ReporteSemanasCotizadas_190123,string,,No,No,,
+files[].value,"The PDF binary of the file (as a string).
+
+> **Note**: In our sandbox environment, this field will return `null`.
+",=PDF_BINARY=,string,,No,Yes,,

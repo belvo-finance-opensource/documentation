@@ -6,7 +6,7 @@ belvo_institution_name,Nome da instituição de open finance da Belvo à qual o 
 expired_at,"O timestamp ISO-8601 quando o consentimento irá expirar. No caso de `undefined_consent_expiration` ser `true`, este campo será `null`.",2021-02-27T13:01:41.941Z,string,date-time,No,No,,
 undefined_consent_expiration,"Indique se o consentimento é por um período indefinido, ou seja, se não há expiração para o consentimento.",False,boolean,,No,No,,
 created_at,O carimbo de data e hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
-status,"O status do consentimento na rede de open finance pode ser:
+status,"O status do consentimento na rede de open finance. Pode ser:
 
   - `AUTHORISED`: O consentimento ainda é válido para uso até a data de `expired_at`.
   - `AWAITING_AUTHORISATION_CONFIRMATION`: O usuário deve confirmar dentro da sua instituição.

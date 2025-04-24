@@ -1,0 +1,38 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
+link,El `link.id` al que pertenecen los datos.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
+internal_identification,El identificador interno de la institución para el propietario.,7e5838e4,string,,Yes,Yes,,
+collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+created_at,La marca de tiempo ISO-8601 de cuando se creó el punto de datos en la base de datos de Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+display_name,"El nombre completo del propietario, tal como lo proporciona el banco.",John Doe,string,,Yes,Yes,,
+email,La dirección de correo electrónico registrada del propietario de la cuenta.,johndoe@belvo.com,string,email,Yes,Yes,,
+phone_number,El número de teléfono registrado del propietario de la cuenta.,+52-XXX-XXX-XXXX,string,,Yes,Yes,,
+address,La dirección registrada del propietario de las cuentas.,"Carrer de la Llacuna, 162, 08018 Barcelona",string,,Yes,Yes,,
+document_id,Información sobre el documento de identificación que el propietario proporcionó al banco.,,object,,No,Yes,,
+document_id.document_type,"El tipo de documento que el propietario proporcionó a la institución para abrir la cuenta. Los tipos de documentos comunes son:
+
+🇧🇷 Brasil
+- `CPF` (*Cadastro de Pessoas Físicas*)
+- `CNPJ` (*Cadastro Nacional de Pessoas Jurídicas*)
+
+🇨🇴 Colombia
+- `CC` (*Cédula de Ciudadanía*)
+- `NIT` (*Número de Identificación Tributaria*)
+
+🇲🇽 México
+- `CURP` (*Clave Única de Registro de Población*)
+- `NSS` (*Número de Seguridad Social*)
+- `RFC` (*Registro Federal de Contribuyentes*)",CPF,string,,Yes,Yes,,
+document_id.document_number,El número de identificación del documento.,235578435-S,string,,Yes,Yes,,
+business_name,"*Este campo ha quedado obsoleto. Para obtener más información sobre Belvo y la obsolescencia, consulta nuestra explicación de campos obsoletos.*
+
+*El nombre del negocio.*",,string,,No,Yes,,
+first_name,"*Este campo ha quedado obsoleto. Para obtener más información sobre Belvo y la obsolescencia, consulte nuestra explicación de campos obsoletos.*
+
+*El nombre del propietario de la cuenta.*",,string,,No,Yes,,
+last_name,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulta nuestra explicación de campos desaprobados.*
+
+*El apellido del titular de la cuenta.*",,string,,No,Yes,,
+second_last_name,"*Este campo ha sido desaprobado. Para obtener más información sobre Belvo y la desaprobación, consulta nuestra explicación de campos desaprobados.*
+
+*El segundo apellido del titular de la cuenta.*",,string,,No,Yes,,

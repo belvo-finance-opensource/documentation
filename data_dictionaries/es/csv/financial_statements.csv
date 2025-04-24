@@ -5,9 +5,9 @@ collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,
 created_at,La marca de tiempo ISO-8601 de cuando se creó el punto de datos en la base de datos de Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
 error,"En casos donde surjan problemas durante la extracción de estados financieros de la institución fiscal, se pueden proporcionar los siguientes mensajes de error para explicar los problemas encontrados:
 
-  - `Unable to validate if the usuario has an available financial statement for the specified year.`
-  - `No available financial statement found for the usuario for the specified year, preventing data extraction.`
-  - `Unable to verify if the usuario has *conceptos vigentes* for the specified year.`
+  - `Unable to validate if the user has an available financial statement for the specified year.`
+  - `No available financial statement found for the user for the specified year, preventing data extraction.`
+  - `Unable to verify if the user has *conceptos vigentes* for the specified year.`
   - `The fiscal institution provided the financial statement in an unrecognized format.`",,string,,Yes,Yes,,
 year,El año del estado financiero.,2020,string,,Yes,No,,^\d{4}$
 currency,La moneda del estado financiero.,MXN,string,,Yes,No,,

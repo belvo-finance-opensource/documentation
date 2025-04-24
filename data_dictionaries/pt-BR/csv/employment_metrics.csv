@@ -16,9 +16,9 @@ current_status,"Indica o status de emprego do indivíduo. Retornamos uma das seg
 - `null`",EMPLOYED,string,,Yes,No,"EMPLOYED, RETIRED, UNEMPLOYED, null",
 current_employer_count,O número de empregadores que o indivíduo tem no momento.,1,integer,int32,Yes,Yes,,
 base_salary_last,"O salário base mais recente do usuário. Se `current_status` for `EMPLOYED`, este é o salário base atual do usuário.",42.17,number,float,Yes,Yes,,
-weeks_employed_last_job,"O número de semanas que o usuário esteve empregado em seu último emprego. Se `current_status` for `EMPLOYED`, então este campo indica o número de semanas que o usuário está empregado em seu emprego atual.",327.1429,number,float,Yes,Yes,,
+weeks_employed_last_job,"O número de semanas em que o usuário esteve empregado em seu último emprego. Se `current_status` for `EMPLOYED`, então este campo indica o número de semanas em que o usuário está empregado em seu emprego atual.",327.1429,number,float,Yes,Yes,,
 weeks_since_last_job,"O número de semanas desde o último emprego. Se o valor deste campo for `0`, isso indica que o usuário está atualmente empregado.",0,number,float,Yes,Yes,,
-weeks_employed_total,"O número total de semanas que o usuário esteve empregado, de acordo com a instituição.
+weeks_employed_total,"O número total de semanas em que o usuário esteve empregado, de acordo com a instituição.
 
 > **Nota:**
 >
@@ -41,7 +41,7 @@ increases_last_job,"O número total de aumentos salariais que o usuário teve em
 
 > **Nota:**
 >
-> Para todos os aumentos ou diminuições salariais, consideramos apenas aqueles em que a mudança no salário é superior a 2%.",0,integer,int32,Yes,Yes,,
+> Para todos os aumentos ou reduções salariais, consideramos apenas aqueles em que a mudança no salário é superior a 2%.",0,integer,int32,Yes,Yes,,
 decreases_last_job,"O número total de aumentos salariais que o usuário teve em seu último emprego. Se `current_status` for `EMPLOYED`, isso se refere ao emprego atual do usuário.",0,integer,int32,Yes,Yes,,
 increases_after_change,O número total de aumentos salariais entre o penúltimo emprego do indivíduo e o último (ou atual) emprego.,0,integer,int32,Yes,Yes,,
 decreases_after_change,O número total de reduções salariais entre o penúltimo emprego do indivíduo e o último (ou atual) emprego.,0,integer,int32,Yes,Yes,,

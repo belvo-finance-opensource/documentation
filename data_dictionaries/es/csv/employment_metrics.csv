@@ -22,10 +22,10 @@ weeks_employed_total,"El número total de semanas que el usuario ha estado emple
 
 > **Nota:**
 >
-> En el caso de que el usuario esté empleado en dos o más lugares al mismo tiempo, seguimos calculando esas semanas como una semana. Por ejemplo, si un usuario tiene tres trabajos concurrentes durante un mes, esto se calcula como 4 semanas.",148.2,number,float,Yes,Yes,,
+> En el caso de que el usuario esté empleado en dos o más lugares al mismo tiempo, seguimos calculando esas semanas como una semana. Por ejemplo, si un usuario tiene tres trabajos simultáneos durante un mes, esto se calcula como 4 semanas.",148.2,number,float,Yes,Yes,,
 weeks_with_multiple_employers,El número de semanas que el individuo ha tenido más de un empleador al mismo tiempo.,0,number,float,Yes,Yes,,
 employer_count,El número total de empleadores que el usuario ha tenido. Útil para indicar la estabilidad laboral a lo largo de su vida.,14,integer,int32,Yes,Yes,,
-unique_employer_count,"El número de empleadores únicos que ha tenido el individuo.
+unique_employer_count,"El número de empleadores únicos que ha tenido la persona.
 
 > **Nota:**
 >
@@ -41,7 +41,7 @@ increases_last_job,"El número total de aumentos salariales que el usuario tuvo 
 
 > **Nota:**
 >
-> Para todos los aumentos o disminuciones salariales, solo tomamos en cuenta aquellos donde el cambio en el salario es mayor al 2%.",0,integer,int32,Yes,Yes,,
+> Para todos los aumentos o disminuciones salariales, solo tomamos en cuenta aquellos donde el cambio en el salario es superior al 2%.",0,integer,int32,Yes,Yes,,
 decreases_last_job,"El número total de aumentos salariales que el usuario tuvo en su último trabajo. Si `current_status` es `EMPLOYED`, esto se refiere al trabajo actual del usuario.",0,integer,int32,Yes,Yes,,
 increases_after_change,El número total de aumentos salariales entre el penúltimo trabajo del individuo y el último (o actual) trabajo.,0,integer,int32,Yes,Yes,,
 decreases_after_change,El número total de disminuciones salariales entre el penúltimo trabajo del individuo y el último (o actual) trabajo.,0,integer,int32,Yes,Yes,,

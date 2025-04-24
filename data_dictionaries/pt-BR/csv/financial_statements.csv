@@ -5,9 +5,9 @@ collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletad
 created_at,O carimbo de data e hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
 error,"Em casos onde surgem problemas durante a extração de demonstrações financeiras da instituição fiscal, as seguintes mensagens de erro podem ser fornecidas para explicar os problemas encontrados:
 
-- `Unable to validate if the usuário has an available financial statement for the specified year.`
-- `No available financial statement found for the usuário for the specified year, preventing data extraction.`
-- `Unable to verify if the usuário has *conceptos vigentes* for the specified year.`
+- `Unable to validate if the user has an available financial statement for the specified year.`
+- `No available financial statement found for the user for the specified year, preventing data extraction.`
+- `Unable to verify if the user has *conceptos vigentes* for the specified year.`
 - `The fiscal institution provided the financial statement in an unrecognized format.`",,string,,Yes,Yes,,
 year,O ano da demonstração financeira.,2020,string,,Yes,No,,^\d{4}$
 currency,A moeda da demonstração financeira.,MXN,string,,Yes,No,,

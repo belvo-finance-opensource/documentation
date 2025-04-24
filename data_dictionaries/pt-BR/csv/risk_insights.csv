@@ -23,7 +23,7 @@ Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
 [].credit_cards_metrics.credit_card_limit_utilization,A porcentagem do limite do cartão de crédito utilizado.,0.95,number,float,Yes,Yes,,
 [].loans_metrics,"Métricas agregadas calculadas com base nas contas de empréstimo do usuário e contas correntes que possuem cheque especial.
 
-> As métricas de empréstimo ajudam a entender o comportamento de empréstimo e reembolso de um cliente, o que pode ajudar a avaliar sua capacidade de assumir crédito adicional e os riscos potenciais de inadimplência.",,object,,Yes,Yes,,
+> As métricas de empréstimo ajudam a entender o comportamento de empréstimo e reembolso de um cliente, o que pode ajudar a avaliar sua capacidade de assumir crédito adicional e os potenciais riscos de inadimplência.",,object,,Yes,Yes,,
 [].loans_metrics.num_accounts,O número de contas de empréstimo associadas ao usuário.,1,integer,int32,Yes,No,,
 [].loans_metrics.sum_loans_principal,Soma total do principal para todas as contas de empréstimo do usuário.,5000,number,float,Yes,Yes,,
 [].loans_metrics.sum_loans_outstanding_principal,Soma total do principal pendente para todas as contas de empréstimo do usuário.,2000,number,float,Yes,Yes,,
@@ -82,11 +82,11 @@ Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
 [].balances_metrics.days_balance_below_x_6m,O número de dias em que o saldo total da conta é menor ou igual ao valor especificado em `balance_threshold_x` nos últimos seis meses.,0,integer,int32,Yes,Yes,,
 [].balances_metrics.days_balance_below_x_12m,O número de dias em que o saldo total da conta é menor ou igual ao valor especificado em `balance_threshold_x` nos últimos doze meses.,0,integer,int32,Yes,Yes,,
 [].balances_metrics.balance_threshold_x,"O limite usado para calcular `days_balance_below_x_period`. Por favor, note que este valor é específico para cada país (tanto em termos de quantia quanto de moeda).",1000,number,float,Yes,No,,
-[].transactions_metrics,"Métricas agregadas calculadas com base nas transações do usuário em contas corrente, poupança, cartão de crédito e empréstimo.
+[].transactions_metrics,"Métricas agregadas calculadas com base nas transações do usuário em contas correntes, poupança, cartão de crédito e empréstimo.
 
 > ℹ️ **Nota**
 >
-> Se não houver dados transacionais suficientes para um determinado período, retornamos `null` para campos calculados e `0` para campos baseados em contagem. Por exemplo, se a conta foi aberta há apenas cinco dias (ou você forneceu dados apenas para cinco dias), retornamos valores para `_3d`, `_1w` e `_1m`, no entanto:
+> Se não houver dados transacionais suficientes para um determinado período, retornamos `null` para campos calculados e `0` para campos baseados em contagem. Por exemplo, se a conta foi aberta há apenas cinco dias (ou se você forneceu dados apenas para cinco dias), retornamos valores para `_3d`, `_1w` e `_1m`, no entanto:
 > 
 > - `mean_num_transactions_3m` retornará `null`, pois não há dados para os meses dois e três (campo calculado).
 > - `num_transactions_3m` retornará `0`, pois não há dados para os meses dois e três (campo baseado em contagem).",,object,,Yes,Yes,,
@@ -192,9 +192,9 @@ Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
 [].transactions_metrics.days_history,O número de dias entre a solicitação de insight de risco e a primeira transação.,365,integer,int32,Yes,No,,
 [].cashflow_metrics,"Métricas agregadas calculadas com base nas transações do usuário em contas correntes, poupança, de crédito e de empréstimo. No entanto, transferências internas (transferências entre contas pertencentes ao mesmo link) não são usadas no cálculo.
 
-> ℹ️ **Nota**
->
-> Se não houver dados transacionais suficientes para um determinado período, retornamos `null`. Por exemplo, se a conta foi aberta há apenas 15 dias (ou você forneceu dados apenas para 15 dias), retornamos valores para `_3d`, `_1w` e `_1m`, no entanto, para `_3m` retornaremos `null`, pois não há dados para os meses dois e três.",,object,,Yes,Yes,,
+{% admonition type=""info"" %}
+  Se não houver dados transacionais suficientes para um determinado período, retornamos `null`. Por exemplo, se a conta foi aberta há apenas 15 dias (ou você forneceu dados apenas para 15 dias), retornamos valores para `_3d`, `_1w` e `_1m`, no entanto, para `_3m` retornaremos `null`, pois não há dados para os meses dois e três.
+{% /admonition %}",,object,,Yes,Yes,,
 [].cashflow_metrics.max_positive_3d,O maior valor de transações de fluxo de caixa positivo nos últimos três dias.,1850.12,number,float,Yes,Yes,,
 [].cashflow_metrics.max_positive_1w,O maior valor de transações de fluxo de caixa positivo na semana passada.,3808.99,number,float,Yes,Yes,,
 [].cashflow_metrics.max_positive_1m,O maior valor de transações de fluxo de caixa positivo no mês passado.,4012.61,number,float,Yes,Yes,,
@@ -255,7 +255,7 @@ Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
 **Nota**: No caso de não haver transações de saída, o valor será `null`.",0.9,number,float,Yes,Yes,,
 [].cashflow_metrics.positive_to_negative_ratio_1m,"A razão entre sum_positive / sum_negative no último mês.
 
-ℹ️ Se a razão for maior que `1`, isso significa que o usuário tem mais entradas do que saídas, indicando que ele gasta menos do que ganha.
+ℹ️ Se a razão for maior que `1`, isso significa que o usuário tem mais receitas do que despesas, indicando que ele gasta menos do que ganha.
 
 **Nota**: No caso de não haver transações de saída, o valor será `null`.",0.96,number,float,Yes,Yes,,
 [].cashflow_metrics.positive_to_negative_ratio_3m,"A razão entre sum_positive / sum_negative nos últimos três meses.
@@ -270,7 +270,7 @@ Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
 **Nota**: No caso de não haver transações de saída, o valor será `null`.",1.13,number,float,Yes,Yes,,
 [].cashflow_metrics.positive_to_negative_ratio_12m,"A razão entre sum_positive / sum_negative nos últimos doze meses.
 
-ℹ️ Se a razão for maior que `1`, isso significa que o usuário tem mais entradas do que saídas, indicando que ele gasta menos do que ganha.
+ℹ️ Se a razão for maior que `1`, isso significa que o usuário tem mais receitas do que despesas, indicando que ele gasta menos do que ganha.
 
 **Nota**: No caso de não haver transações de saída, o valor será `null`.",1.3,number,float,Yes,Yes,,
 [].cashflow_metrics.net_cashflow_3d,O fluxo de caixa líquido nos últimos três dias.,-1104.79,number,float,Yes,Yes,,
