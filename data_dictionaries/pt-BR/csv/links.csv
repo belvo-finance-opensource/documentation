@@ -13,7 +13,7 @@ institution_user_id,"> 📘 Info
 
 Uma string única de 44 caracteres que pode ser usada para identificar um usuário em uma determinada instituição.
 
-📚 Confira nosso artigo no DevPortal <a href=""https://developers.belvo.com/docs/link-creation-best-practices#avoiding-duplicated-links"" target=""_blank"">Evitando links duplicados</a> para mais informações e dicas sobre como usá-la.",sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=,string,,No,No,,[A-Za-z0-9\-=_]{44}
+📚 Confira nosso artigo no <a href=""https://developers.belvo.com/docs/link-creation-best-practices#avoiding-duplicated-links"" target=""_blank"">DevPortal sobre como evitar links duplicados</a> para mais informações e dicas sobre como usá-la.",sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=,string,,No,No,,[A-Za-z0-9\-=_]{44}
 status,"O status atual do link. Para mais informações, consulte nosso artigo sobre <a href=""https://developers.belvo.com/docs/links-and-institutions#links"" target=""_blank"">Link</a> no devportal.  
 Retornamos um dos seguintes valores:  
   - `valid`  
@@ -43,7 +43,7 @@ Para mais informações, confira a seção <a href=""https://developers.belvo.co
 fetch_resources,Um array de recursos para o qual você receberá uma atualização histórica.,"[""ACCOUNTS"", ""TRANSACTIONS""]",array,,No,No,,
 stale_in,"Indica por quanto tempo qualquer dado derivado do usuário deve ser armazenado no banco de dados da Belvo para o link (tanto único quanto recorrente). Por exemplo, se você enviar `90d`, a Belvo removerá qualquer dado relacionado ao usuário de seu banco de dados após 90 dias. Para mais informações, confira a seção <a href=""https://developers.belvo.com/docs/data-retention-controls#stale_in"" target=""_blank"">stale_in</a> do nosso artigo sobre controles de retenção de dados.
 
-> 📘 Info
+> 📘 Informação
 >
 > A Belvo removerá dados apenas para links que não foram atualizados no período que você fornecer em `stale_in`. A Belvo removerá dados apenas para links que não foram atualizados no período que você fornecer em `stale_in`.
 

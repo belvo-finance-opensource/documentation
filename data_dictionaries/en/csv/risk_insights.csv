@@ -1,0 +1,654 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+[].id,"Belvo's unique identifier for the current item.
+",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
+[].link,The `link.id` the data belongs to.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
+[].created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+[].accounts,"An array of Belvo-generated account numbers (UUIDs) that were used during the risk insights analysis. If no accounts were found, we return an empty array.","[""0d3ffb69-f83b-456e-ad8e-208d0998d71d"", ""00293c8e-1152-440b-9892-3c071fb88672"", ""cf638fba-ef45-4c10-bc6f-adecc4b2bf4e"", ""3861a5da-ae9b-4f20-a632-a9294489d5ac"", ""1f60315b-236d-498e-be7a-92bc613d329b"", ""a2c8da63-ed51-41e6-891a-4ae7e784463a""]",array,,Yes,Yes,,
+[].assets_metrics,"Aggregate details regarding the assets used in the risk insight analysis. For asset metrics, we only consider checking and savings accounts.
+
+
+> Asset metrics can provide a snapshot of your user's wealth and liquid assets, indicating how they manage their wealth and their current financial status.
+",,object,,Yes,Yes,,
+[].assets_metrics.institutions,"An array of institutions from which account information was retrieved for the user. 
+
+> **Note**: For most use cases, this array will only return one item.
+","[""erebor_mx_retail""]",array,,Yes,Yes,,
+[].assets_metrics.num_assets_accounts,"The total number of accounts found for the user.
+",1,integer,int32,No,Yes,,
+[].assets_metrics.num_checking_accounts,"The total number of checking accounts found for the user.
+",1,integer,int32,Yes,Yes,,
+[].assets_metrics.num_savings_accounts,"The total number of savings accounts found for the user.
+",1,integer,int32,Yes,Yes,,
+[].assets_metrics.checking_accounts_balance,"The total closing balance of all checking accounts.
+",35901.46,number,float,Yes,Yes,,
+[].assets_metrics.savings_accounts_balance,"The total closing balance of all savings accounts.
+",300.02,number,float,Yes,Yes,,
+[].credit_cards_metrics,"Aggregated metrics calculated based on the user's credit card accounts.
+
+> Credit card metrics illustrate a customer's credit card habits, revealing how many credit card accounts a customer has, their total credit limit, how much of that limit they're using, and the rate of their credit card limit utilization.
+",,object,,Yes,Yes,,
+[].credit_cards_metrics.num_accounts,"Number of credit cards accounts associated to the user.
+",2,integer,int32,Yes,No,,
+[].credit_cards_metrics.sum_credit_limit,"Sum total of all credit cards' limits.
+",106560,number,float,Yes,Yes,,
+[].credit_cards_metrics.sum_credit_used,"Sum total of all credit used.
+",101020.14,number,float,Yes,Yes,,
+[].credit_cards_metrics.credit_card_limit_utilization,"The percentage of the credit card limit used.
+",0.95,number,float,Yes,Yes,,
+[].loans_metrics,"Aggregated metrics calculated based on the user's loan accounts and checking accounts that have an overdraft.
+
+> Loan metrics help in understanding a customer's borrowing and repayment behavior, which can help in assessing their ability to take on additional credit and potential default risks.
+",,object,,Yes,Yes,,
+[].loans_metrics.num_accounts,"The number of loan accounts associated with the user.
+",1,integer,int32,Yes,No,,
+[].loans_metrics.sum_loans_principal,"Sum total of the principal for all of the user's loan accounts.
+",5000,number,float,Yes,Yes,,
+[].loans_metrics.sum_loans_outstanding_principal,"Sum total of the outstanding principal for all the user's loan accounts.
+",2000,number,float,Yes,Yes,,
+[].loans_metrics.sum_loans_monthly_payment,"Sum total of the monthly payments for all the user's loan accounts.
+",400,number,float,Yes,Yes,,
+[].loans_metrics.loan_limit_utilization,"The percentage of the loan limit used.
+",0.3,number,float,Yes,Yes,,
+[].loans_metrics.overdraft_limit,"The total overdraft limit of all checking and savings accounts.
+",900,number,float,Yes,Yes,,
+[].loans_metrics.overdraft_limit_utilization,"The percentage of the overdraft limit used.
+",0.4,number,float,Yes,Yes,,
+[].balances_metrics,Balance metrics calculated based on the user's balances from checking and savings accounts.,,object,,Yes,Yes,,
+[].balances_metrics.closing_balance,"The balance of all the accounts at the `collected_at` time.
+",35901.46,number,float,Yes,Yes,,
+[].balances_metrics.min_balance_3d,"The minimum balance in the last three days.
+",35417.68,number,float,Yes,Yes,,
+[].balances_metrics.min_balance_1w,"The minimum balance in the last week).
+",34150.5,number,float,Yes,Yes,,
+[].balances_metrics.min_balance_1m,"The minimum balance in the last month.
+",33990.59,number,float,Yes,Yes,,
+[].balances_metrics.min_balance_3m,"The minimum balance in the last three months.
+",33990.59,number,float,Yes,Yes,,
+[].balances_metrics.min_balance_6m,"The minimum balance in the six last months.
+",33990.59,number,float,Yes,Yes,,
+[].balances_metrics.min_balance_12m,"The minimum balance in the last twelve months.
+",33990.59,number,float,Yes,Yes,,
+[].balances_metrics.mean_balance_3d,"The mean balance in the last three days.
+",35659.57,number,float,Yes,Yes,,
+[].balances_metrics.mean_balance_1w,"The mean balance in the last week.
+",35077.1,number,float,Yes,Yes,,
+[].balances_metrics.mean_balance_1m,"The mean balance in the last month.
+",34816.08,number,float,Yes,Yes,,
+[].balances_metrics.mean_balance_3m,"The mean balance in the last three months.
+",34816.08,number,float,Yes,Yes,,
+[].balances_metrics.mean_balance_6m,"The mean balance in the last six months.
+",34816.08,number,float,Yes,Yes,,
+[].balances_metrics.mean_balance_12m,"The mean balance in the last twelve months.
+",34816.08,number,float,Yes,Yes,,
+[].balances_metrics.max_balance_3d,"The maximum balance in the last three days.
+",35901.46,number,float,Yes,Yes,,
+[].balances_metrics.max_balance_1w,"The maximum balance in the last week.
+",35901.46,number,float,Yes,Yes,,
+[].balances_metrics.max_balance_1m,"The maximum balance in the last month.
+",35901.46,number,float,Yes,Yes,,
+[].balances_metrics.max_balance_3m,"The maximum balance in the last three months.
+",35901.46,number,float,Yes,Yes,,
+[].balances_metrics.max_balance_6m,"The maximum balance in the last six months.
+",35901.46,number,float,Yes,Yes,,
+[].balances_metrics.max_balance_12m,"The maximum balance in the last twelve months.
+",35901.46,number,float,Yes,Yes,,
+[].balances_metrics.std_balance_3d,"The balance standard deviation in the last three days.
+",279.31,number,float,Yes,Yes,,
+[].balances_metrics.std_balance_1w,"The balance standard deviation in the last week.
+",764.03,number,float,Yes,Yes,,
+[].balances_metrics.std_balance_1m,"The balance standard deviation in the last month.
+",586.55,number,float,Yes,Yes,,
+[].balances_metrics.std_balance_3m,"The balance standard deviation in the last three months.
+",586.55,number,float,Yes,Yes,,
+[].balances_metrics.std_balance_6m,"The balance standard deviation in the last six months.
+",586.55,number,float,Yes,Yes,,
+[].balances_metrics.std_balance_12m,"The balance standard deviation in the last twelve months.
+",586.55,number,float,Yes,Yes,,
+[].balances_metrics.balance_trend_3d,"The balance trend of the user in the last three days.
+",193.51,number,float,Yes,Yes,,
+[].balances_metrics.balance_trend_1w,"The balance trend of the user in the last week.
+",290.18,number,float,Yes,Yes,,
+[].balances_metrics.balance_trend_1m,"The balance trend of the user in the last month.
+",22.6,number,float,Yes,Yes,,
+[].balances_metrics.balance_trend_3m,"The balance trend of the user in the last three months.
+",22.6,number,float,Yes,Yes,,
+[].balances_metrics.balance_trend_6m,"The balance trend of the user in the last six months.
+",22.6,number,float,Yes,Yes,,
+[].balances_metrics.balance_trend_12m,"The balance trend of the user in the last twelve months.
+",22.6,number,float,Yes,Yes,,
+[].balances_metrics.days_balance_below_0_3d,"The number of days that the total balance of the account is less than or equal to 0 in the last three days.
+",0,integer,int32,Yes,Yes,,
+[].balances_metrics.days_balance_below_0_1w,"The number of days that the total balance of the account is less than or equal to 0 in the last week.
+",0,integer,int32,Yes,Yes,,
+[].balances_metrics.days_balance_below_0_1m,"The number of days that the total balance of the account is less than or equal to 0 in the last month.
+",0,integer,int32,Yes,Yes,,
+[].balances_metrics.days_balance_below_0_3m,"The number of days that the total balance of the account is less than or equal to 0 in the last three months.
+",0,integer,int32,Yes,Yes,,
+[].balances_metrics.days_balance_below_0_6m,"The number of days that the total balance of the account is less than or equal to 0 in the last six months.
+",0,integer,int32,Yes,Yes,,
+[].balances_metrics.days_balance_below_0_12m,"The number of days that the total balance of the account is less than or equal to 0 in the last twelve months.
+",0,integer,int32,Yes,Yes,,
+[].balances_metrics.days_balance_below_mean_3d,"The number of days that the mean balance of the account is less than or equal to the amount specified in `mean_daily_balance_3d`.
+",2,integer,int32,Yes,Yes,,
+[].balances_metrics.days_balance_below_mean_1w,"The number of days that the mean balance of the account is less than or equal to the amount specified in `mean_daily_balance_1w`.
+",3,integer,int32,Yes,Yes,,
+[].balances_metrics.days_balance_below_mean_1m,"The number of days that the mean balance of the account is less than or equal to the amount specified in `mean_daily_balance_1m`.
+",17,integer,int32,Yes,Yes,,
+[].balances_metrics.days_balance_below_mean_3m,"The number of days that the mean balance of the account is less than or equal to the amount specified in `mean_daily_balance_3m`.
+",17,integer,int32,Yes,Yes,,
+[].balances_metrics.days_balance_below_mean_6m,"The number of days that the mean balance of the account is less than or equal to the amount specified in `mean_daily_balance_6m`.
+",17,integer,int32,Yes,Yes,,
+[].balances_metrics.days_balance_below_mean_12m,"The number of days that the mean balance of the account is less than or equal to the amount specified in `mean_daily_balance_12m`.
+",17,integer,int32,Yes,Yes,,
+[].balances_metrics.days_balance_below_x_3d,"The number of days that the total balance of the account is less than or equal to the amount specified in `balance_threshold_x` in the last three days.
+",0,integer,int32,Yes,Yes,,
+[].balances_metrics.days_balance_below_x_1w,"The number of days that the total balance of the account is less than or equal to the amount specified in `balance_threshold_x` in the last week.
+",0,integer,int32,Yes,Yes,,
+[].balances_metrics.days_balance_below_x_1m,"The number of days that the total balance of the account is less than or equal to the amount specified in `balance_threshold_x` in the last month.
+",0,integer,int32,Yes,Yes,,
+[].balances_metrics.days_balance_below_x_3m,"The number of days that the total balance of the account is less than or equal to the amount specified in `balance_threshold_x` in the last three months.
+",0,integer,int32,Yes,Yes,,
+[].balances_metrics.days_balance_below_x_6m,"The number of days that the total balance of the account is less than or equal to the amount specified in `balance_threshold_x` in the last six months.
+",0,integer,int32,Yes,Yes,,
+[].balances_metrics.days_balance_below_x_12m,"The number of days that the total balance of the account is less than or equal to the amount specified in `balance_threshold_x` in the last twelve months.
+",0,integer,int32,Yes,Yes,,
+[].balances_metrics.balance_threshold_x,"The threshold used to compute `days_balance_below_x_period`. Please note, this is value is country specific (both in terms of the amount and the currency).
+",1000,number,float,Yes,No,,
+[].transactions_metrics,"Aggregated metrics calculated based on the user's transactions from checking, savings, credit card, and loan accounts.
+
+
+> ℹ️ **Note**
+>
+> If there is not enough transactional data for a given period, we return `null` for calculated fields and `0` for 'count-based' fields. For example, if the account has only been open for five days (or you have provided data just for five days), we return values for `_3d`, `_1w`, and `_1m`, however:
+> 
+> - `mean_num_transactions_3m` will return `null` as there is no data for months two and three (calculated field).
+> - `num_transactions_3m` will return `0` as there is no data for months two and three ('count-based' field)
+",,object,,Yes,Yes,,
+[].transactions_metrics.num_transactions_3d,"The total number of transactions analyzed to determine the risk insights for the last three days (incoming and outgoing).
+",26,integer,int32,Yes,No,,
+[].transactions_metrics.num_transactions_1w,"The total number of transactions analyzed to determine the risk insights for the last week (incoming and outgoing).
+",46,integer,int32,Yes,No,,
+[].transactions_metrics.num_transactions_1m,"The total number of transactions analyzed to determine the risk insights for the last month (incoming and outgoing).
+",168,integer,int32,Yes,No,,
+[].transactions_metrics.num_transactions_3m,"The total number of transactions analyzed to determine the risk insights for the last three months (incoming and outgoing).
+",460,integer,int32,Yes,No,,
+[].transactions_metrics.num_transactions_6m,"The total number of transactions analyzed to determine the risk insights for the last six months (incoming and outgoing).
+",472,integer,int32,Yes,No,,
+[].transactions_metrics.num_transactions_12m,"The total number of transactions analyzed to determine the risk insights for the last twelve months (incoming and outgoing).
+",496,integer,int32,Yes,No,,
+[].transactions_metrics.max_num_transactions_3d,"The maximum number of transactions for the last three days.
+",10,integer,int32,Yes,No,,
+[].transactions_metrics.max_num_transactions_1w,"The maximum number of transactions for the last week.
+",10,integer,int32,Yes,No,,
+[].transactions_metrics.max_num_transactions_1m,"The maximum number of transactions for the last month.
+",18,integer,int32,Yes,No,,
+[].transactions_metrics.max_num_transactions_3m,"The maximum number of transactions for the last three months.
+",18,integer,int32,Yes,No,,
+[].transactions_metrics.max_num_transactions_6m,"The maximum number of transactions for the last six months.
+",18,integer,int32,Yes,No,,
+[].transactions_metrics.max_num_transactions_12m,"The maximum number of transactions for the last twelve months.
+",18,integer,int32,Yes,No,,
+[].transactions_metrics.mean_num_transactions_3d,"The mean number of transactions for the last three days.
+",6.5,number,float,Yes,No,,
+[].transactions_metrics.mean_num_transactions_1w,"The mean number of transactions for the last week.
+",5.75,number,float,Yes,No,,
+[].transactions_metrics.mean_num_transactions_1m,"The mean number of transactions for the last month.
+",5.42,number,float,Yes,No,,
+[].transactions_metrics.mean_num_transactions_3m,"The mean number of transactions for the last three months.
+",5.05,number,float,Yes,No,,
+[].transactions_metrics.mean_num_transactions_6m,"The mean number of transactions for the last six months.
+",2.61,number,float,Yes,No,,
+[].transactions_metrics.mean_num_transactions_12m,"The mean number of transactions for the last twelve months.
+",1.37,number,float,Yes,No,,
+[].transactions_metrics.num_incoming_transactions_3d,"The total number of inflow transactions for the last three days.
+",12,integer,int32,Yes,No,,
+[].transactions_metrics.num_incoming_transactions_1w,"The total number of inflow transactions for the last week.
+",21,integer,int32,Yes,No,,
+[].transactions_metrics.num_incoming_transactions_1m,"The total number of inflow transactions for the last month.
+",80,integer,int32,Yes,No,,
+[].transactions_metrics.num_incoming_transactions_3m,"The total number of inflow transactions for the last three months.
+",229,integer,int32,Yes,No,,
+[].transactions_metrics.num_incoming_transactions_6m,"The total number of inflow transactions for the last six months.
+",238,integer,int32,Yes,No,,
+[].transactions_metrics.num_incoming_transactions_12m,"The total number of inflow transactions for the last twelve months.
+",256,integer,int32,Yes,No,,
+[].transactions_metrics.max_num_incoming_transactions_3d,"The maximum number of inflow transactions for the last three days.
+",6,integer,int32,Yes,No,,
+[].transactions_metrics.max_num_incoming_transactions_1w,"The maximum number of inflow transactions for the last week.
+",6,integer,int32,Yes,No,,
+[].transactions_metrics.max_num_incoming_transactions_1m,"The maximum number of inflow transactions for the last month.
+",10,integer,int32,Yes,No,,
+[].transactions_metrics.max_num_incoming_transactions_3m,"The maximum number of inflow transactions for the last three months.
+",10,integer,int32,Yes,No,,
+[].transactions_metrics.max_num_incoming_transactions_6m,"The maximum number of inflow transactions for the last six months.
+",10,integer,int32,Yes,No,,
+[].transactions_metrics.max_num_incoming_transactions_12m,"The maximum number of inflow transactions for the last twelve months.
+",10,integer,int32,Yes,No,,
+[].transactions_metrics.mean_num_incoming_transactions_3d,"The mean number of inflow transactions for the last three days.
+",3,number,float,Yes,No,,
+[].transactions_metrics.mean_num_incoming_transactions_1w,"The mean number of inflow transactions for the last week.
+",2.62,number,float,Yes,No,,
+[].transactions_metrics.mean_num_incoming_transactions_1m,"The mean number of inflow transactions for the last month.
+",2.58,number,float,Yes,No,,
+[].transactions_metrics.mean_num_incoming_transactions_3m,"The mean number of inflow transactions for the last three months.
+",2.52,number,float,Yes,No,,
+[].transactions_metrics.mean_num_incoming_transactions_6m,"The mean number of inflow transactions for the last six months.
+",1.31,number,float,Yes,No,,
+[].transactions_metrics.mean_num_incoming_transactions_12m,"The mean number of inflow transactions for the last twelve months.
+",0.71,number,float,Yes,No,,
+[].transactions_metrics.sum_incoming_amount_3d,"The total sum of all inflow transactions for the last three days.
+",17142.16,number,float,Yes,Yes,,
+[].transactions_metrics.sum_incoming_amount_1w,"The total sum of all inflow transactions for the last week.
+",24825.92,number,float,Yes,Yes,,
+[].transactions_metrics.sum_incoming_amount_1m,"The total sum of all inflow transactions for the last month.
+",75993.36,number,float,Yes,Yes,,
+[].transactions_metrics.sum_incoming_amount_3m,"The total sum of all inflow transactions for the last three months.
+",198197.28,number,float,Yes,Yes,,
+[].transactions_metrics.sum_incoming_amount_6m,"The total sum of all inflow transactions for the last six months.
+",223697.28,number,float,Yes,Yes,,
+[].transactions_metrics.sum_incoming_amount_12m,"The total sum of all inflow transactions for the last twelve months.
+",274697.28,number,float,Yes,Yes,,
+[].transactions_metrics.max_incoming_amount_3d,"The highest value inflow transaction in the last three days.
+",3000,number,float,Yes,Yes,,
+[].transactions_metrics.max_incoming_amount_1w,"The highest value inflow transaction in the last week.
+",3000,number,float,Yes,Yes,,
+[].transactions_metrics.max_incoming_amount_1m,"The highest value inflow transaction in the last month.
+",3000,number,float,Yes,Yes,,
+[].transactions_metrics.max_incoming_amount_3m,"The highest value inflow transaction in the last three months.
+",3000,number,float,Yes,Yes,,
+[].transactions_metrics.max_incoming_amount_6m,"The highest value inflow transaction in the last six months.
+",3000,number,float,Yes,Yes,,
+[].transactions_metrics.max_incoming_amount_12m,"The highest value inflow transaction in the last twelve months.
+",3000,number,float,Yes,Yes,,
+[].transactions_metrics.mean_incoming_amount_3d,"The mean incoming value of all transactions in the last three days.
+",1428.51,number,float,Yes,Yes,,
+[].transactions_metrics.mean_incoming_amount_1w,"The mean incoming value of all transactions in the last week.
+",1182.19,number,float,Yes,Yes,,
+[].transactions_metrics.mean_incoming_amount_1m,"The mean incoming value of all transactions in the last month.
+",949.92,number,float,Yes,Yes,,
+[].transactions_metrics.mean_incoming_amount_3m,"The mean incoming value of all transactions in the last three months.
+",865.49,number,float,Yes,Yes,,
+[].transactions_metrics.mean_incoming_amount_6m,"The mean incoming value of all transactions in the last six months.
+",939.9,number,float,Yes,Yes,,
+[].transactions_metrics.mean_incoming_amount_12m,"The mean incoming value of all transactions in the last twelve months.
+",1073.04,number,float,Yes,Yes,,
+[].transactions_metrics.num_outgoing_transactions_3d,"To total number of outflow transactions in the last three days.
+",14,integer,int32,Yes,No,,
+[].transactions_metrics.num_outgoing_transactions_1w,"To total number of outflow transactions in the last week.
+",25,integer,int32,Yes,No,,
+[].transactions_metrics.num_outgoing_transactions_1m,"To total number of outflow transactions in the last month.
+",88,integer,int32,Yes,No,,
+[].transactions_metrics.num_outgoing_transactions_3m,"To total number of outflow transactions in the last three months.
+",231,integer,int32,Yes,No,,
+[].transactions_metrics.num_outgoing_transactions_6m,"To total number of outflow transactions in the last six months.
+",234,integer,int32,Yes,No,,
+[].transactions_metrics.num_outgoing_transactions_12m,"To total number of outflow transactions in the last twelve months.
+",240,integer,int32,Yes,No,,
+[].transactions_metrics.max_num_outgoing_transactions_3d,"The maximum number of outflow transactions for the last three days.
+",6,integer,int32,Yes,No,,
+[].transactions_metrics.max_num_outgoing_transactions_1w,"The maximum number of outflow transactions for the last week.
+",6,integer,int32,Yes,No,,
+[].transactions_metrics.max_num_outgoing_transactions_1m,"The maximum number of outflow transactions for the last month.
+",8,integer,int32,Yes,No,,
+[].transactions_metrics.max_num_outgoing_transactions_3m,"The maximum number of outflow transactions for the last three months.
+",9,integer,int32,Yes,No,,
+[].transactions_metrics.max_num_outgoing_transactions_6m,"The maximum number of outflow transactions for the last six months.
+",9,integer,int32,Yes,No,,
+[].transactions_metrics.max_num_outgoing_transactions_12m,"The maximum number of outflow transactions for the last twelve months.
+",9,integer,int32,Yes,No,,
+[].transactions_metrics.mean_num_outgoing_transactions_3d,"The mean number of outflow transactions for the last three days.
+",3.5,number,float,Yes,No,,
+[].transactions_metrics.mean_num_outgoing_transactions_1w,"The mean number of outflow transactions for the last week.
+",3.12,number,float,Yes,No,,
+[].transactions_metrics.mean_num_outgoing_transactions_1m,"The mean number of outflow transactions for the last month.
+",2.84,number,float,Yes,No,,
+[].transactions_metrics.mean_num_outgoing_transactions_3m,"The mean number of outflow transactions for the last three months.
+",2.54,number,float,Yes,No,,
+[].transactions_metrics.mean_num_outgoing_transactions_6m,"The mean number of outflow transactions for the last six months.
+",1.29,number,float,Yes,No,,
+[].transactions_metrics.mean_num_outgoing_transactions_12m,"The mean number of outflow transactions for the last twelve months.
+",0.66,number,float,Yes,No,,
+[].transactions_metrics.sum_outgoing_amount_3d,"The total sum of all outflow transactions for the last three days.
+",18246.95,number,float,Yes,Yes,,
+[].transactions_metrics.sum_outgoing_amount_1w,"The total sum of all outflow transactions for the last week.
+",26362.25,number,float,Yes,Yes,,
+[].transactions_metrics.sum_outgoing_amount_1m,"The total sum of all outflow transactions for the last month.
+",78243.82,number,float,Yes,Yes,,
+[].transactions_metrics.sum_outgoing_amount_3m,"The total sum of all outflow transactions for the last three months.
+",192608.77,number,float,Yes,Yes,,
+[].transactions_metrics.sum_outgoing_amount_6m,"The total sum of all outflow transactions for the last six months.
+",201608.77,number,float,Yes,Yes,,
+[].transactions_metrics.sum_outgoing_amount_12m,"The total sum of all outflow transactions for the last twelve months.
+",219608.77,number,float,Yes,Yes,,
+[].transactions_metrics.max_outgoing_amount_3d,"The highest value outflow transaction in the last three days.
+",3000,number,float,Yes,Yes,,
+[].transactions_metrics.max_outgoing_amount_1w,"The highest value outflow transaction in the last week.
+",3000,number,float,Yes,Yes,,
+[].transactions_metrics.max_outgoing_amount_1m,"The highest value outflow transaction in the last month.
+",3000,number,float,Yes,Yes,,
+[].transactions_metrics.max_outgoing_amount_3m,"The highest value outflow transaction in the last three months.
+",3000,number,float,Yes,Yes,,
+[].transactions_metrics.max_outgoing_amount_6m,"The highest value outflow transaction in the last six months.
+",3000,number,float,Yes,Yes,,
+[].transactions_metrics.max_outgoing_amount_12m,"The highest value outflow transaction in the last twelve months.
+",3000,number,float,Yes,Yes,,
+[].transactions_metrics.mean_outgoing_amount_3d,"The mean outgoing value of all transaction in the last three days.
+",1303.35,number,float,Yes,Yes,,
+[].transactions_metrics.mean_outgoing_amount_1w,"The mean outgoing value of all transaction in the last week.
+",1054.49,number,float,Yes,Yes,,
+[].transactions_metrics.mean_outgoing_amount_1m,"The mean outgoing value of all transaction in the last month.
+",889.13,number,float,Yes,Yes,,
+[].transactions_metrics.mean_outgoing_amount_3m,"The mean outgoing value of all transaction in the last three months.
+",833.8,number,float,Yes,Yes,,
+[].transactions_metrics.mean_outgoing_amount_6m,"The mean outgoing value of all transaction in the last six months.
+",861.58,number,float,Yes,Yes,,
+[].transactions_metrics.mean_outgoing_amount_12m,"The mean outgoing value of all transaction in the last twelve months.
+",915.04,number,float,Yes,Yes,,
+[].transactions_metrics.days_without_transactions_3d,"The number of days that no transactions occurred within the last three days.
+",0,integer,int32,Yes,No,,
+[].transactions_metrics.days_without_transactions_1w,"The number of days that no transactions occurred within the last week.
+",0,integer,int32,Yes,No,,
+[].transactions_metrics.days_without_transactions_1m,"The number of days that no transactions occurred within the last month.
+",0,integer,int32,Yes,No,,
+[].transactions_metrics.days_without_transactions_3m,"The number of days that no transactions occurred within the last three months.
+",0,integer,int32,Yes,No,,
+[].transactions_metrics.days_without_transactions_6m,"The number of days that no transactions occurred within the last six months.
+",87,integer,int32,Yes,No,,
+[].transactions_metrics.days_without_transactions_12m,"The number of days that no transactions occurred within the last twelve months.
+",261,integer,int32,Yes,No,,
+[].transactions_metrics.days_since_last_transaction,"The number of days since the last transaction occurred.
+",0,integer,int32,Yes,No,,
+[].transactions_metrics.days_since_last_incoming_transaction,"The number of days since the last inflow transaction occurred.
+",0,integer,int32,Yes,No,,
+[].transactions_metrics.days_since_last_outgoing_transaction,"The number of days since the last outflow transaction occurred.
+",0,integer,int32,Yes,No,,
+[].transactions_metrics.days_history,"The number of days between when the risk insight request was made and the first transaction.
+",365,integer,int32,Yes,No,,
+[].cashflow_metrics,"Aggregate metrics calculated based on the user's transactions from checking, savings, credit, and loan accounts. However, internal transfers (transfers between accounts belonging to the same link) are not used in the calculation.
+
+{% admonition type=""info"" %}
+  If there is not enough transactional data for a given period, we return `null`. For example, if the account has only been open for 15 days (or you have only provided data for just 15 days), we return values for `_3d`, `_1w`, and `_1m`, however for `_3m` we will return `null` as there is no data for months two and three.
+{% /admonition %}
+",,object,,Yes,Yes,,
+[].cashflow_metrics.max_positive_3d,"The highest value of positive cash flow transactions in the last three days.
+",1850.12,number,float,Yes,Yes,,
+[].cashflow_metrics.max_positive_1w,"The highest value of positive cash flow transactions the last week.
+",3808.99,number,float,Yes,Yes,,
+[].cashflow_metrics.max_positive_1m,"The highest value of positive cash flow transactions the last month.
+",4012.61,number,float,Yes,Yes,,
+[].cashflow_metrics.max_positive_3m,"The highest value of positive cash flow transactions the last three months.
+",5001.08,number,float,Yes,Yes,,
+[].cashflow_metrics.max_positive_6m,"The highest value of positive cash flow transactions the last six months.
+",8500,number,float,Yes,Yes,,
+[].cashflow_metrics.max_positive_12m,"The highest value of positive cash flow transactions the last twelve months.
+",8500,number,float,Yes,Yes,,
+[].cashflow_metrics.max_negative_3d,"The highest value of negative cash flow transactions in the last three days.
+",3375.43,number,float,Yes,Yes,,
+[].cashflow_metrics.max_negative_1w,"The highest value of negative cash flow transactions in the last week.
+",3375.43,number,float,Yes,Yes,,
+[].cashflow_metrics.max_negative_1m,"The highest value of negative cash flow transactions in the last month.
+",5305.92,number,float,Yes,Yes,,
+[].cashflow_metrics.max_negative_3m,"The highest value of negative cash flow transactions in the last three months.
+",7535.85,number,float,Yes,Yes,,
+[].cashflow_metrics.max_negative_6m,"The highest value of negative cash flow transactions in the last six months.
+",7535.85,number,float,Yes,Yes,,
+[].cashflow_metrics.max_negative_12m,"The highest value of negative cash flow transactions in the last twelve months.
+",7535.85,number,float,Yes,Yes,,
+[].cashflow_metrics.mean_positive_3d,"The mean value of the positive cash flow transactions in the last three days.
+",1410.54,number,float,Yes,Yes,,
+[].cashflow_metrics.mean_positive_1w,"The mean value of the positive cash flow transactions in the last week.
+",1665.74,number,float,Yes,Yes,,
+[].cashflow_metrics.mean_positive_1m,"The mean value of the positive cash flow transactions in the last month.
+",1827.36,number,float,Yes,Yes,,
+[].cashflow_metrics.mean_positive_3m,"The mean value of the positive cash flow transactions in the last three months.
+",1881.58,number,float,Yes,Yes,,
+[].cashflow_metrics.mean_positive_6m,"The mean value of the positive cash flow transactions in the last six months.
+",2102.19,number,float,Yes,Yes,,
+[].cashflow_metrics.mean_positive_12m,"The mean value of the positive cash flow transactions in the last twelve months.
+",2502.06,number,float,Yes,Yes,,
+[].cashflow_metrics.mean_negative_3d,"The mean value of the negative cash flow transactions in the last three days.
+",3373.48,number,float,Yes,Yes,,
+[].cashflow_metrics.mean_negative_1w,"The mean value of the negative cash flow transactions in the last week.
+",2477.04,number,float,Yes,Yes,,
+[].cashflow_metrics.mean_negative_1m,"The mean value of the negative cash flow transactions in the last month.
+",1904.96,number,float,Yes,Yes,,
+[].cashflow_metrics.mean_negative_3m,"The mean value of the negative cash flow transactions in the last three months.
+",1838.47,number,float,Yes,Yes,,
+[].cashflow_metrics.mean_negative_6m,"The mean value of the negative cash flow transactions in the last six months.
+",1877.63,number,float,Yes,Yes,,
+[].cashflow_metrics.mean_negative_12m,"The mean value of the negative cash flow transactions in the last twelve months.
+",1948.51,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_positive_3d,"The sum total of all transactions leading to a positive cash flow in the last three days.
+",5642.16,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_positive_1w,"The sum total of all transactions leading to a positive cash flow in the last week.
+",13325.92,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_positive_1m,"The sum total of all transactions leading to a positive cash flow in the last month.
+",52993.36,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_positive_3m,"The sum total of all transactions leading to a positive cash flow in the last three months.
+",163697.28,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_positive_6m,"The sum total of all transactions leading to a positive cash flow in the last six months.
+",189197.28,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_positive_12m,"The sum total of all transactions leading to a positive cash flow in the last twelve months.
+",240197.28,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_positive_trend_3d,"The positive cash flow trend based on the sum of all positive transactions in the last three days.
+",98.902,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_positive_trend_1w,"The positive cash flow trend based on the sum of all positive transactions in the last week.
+",-84.0393,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_positive_trend_1m,"The positive cash flow trend based on the sum of all positive transactions in the last month.
+",22.7315,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_positive_trend_3m,"The positive cash flow trend based on the sum of all positive transactions in the last three months.
+",1.8398,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_positive_trend_6m,"The positive cash flow trend based on the sum of all positive transactions in the last six months.
+",-17.1869,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_positive_trend_12m,"The positive cash flow trend based on the sum of all positive transactions in the last twelve months.
+",-25.9856,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_negative_3d,"The sum total of all transactions leading to a negative cash flow in the last three days.
+",6746.95,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_negative_1w,"The sum total of all transactions leading to a negative cash flow in the last week.
+",14862.25,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_negative_1m,"The sum total of all transactions leading to a negative cash flow in the last month.
+",55243.82,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_negative_3m,"The sum total of all transactions leading to a negative cash flow in the last three months.
+",158108.77,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_negative_6m,"The sum total of all transactions leading to a negative cash flow in the last six months.
+",167108.77,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_negative_12m,"The sum total of all transactions leading to a negative cash flow in the last twelve months.
+",185108.77,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_negative_trend_3d,"The negative cash flow trend based on the sum of all negative transactions in the last three days.
+",-3.91,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_negative_trend_1w,"The negative cash flow trend based on the sum of all negative transactions in the last week.
+",254.2517,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_negative_trend_1m,"The negative cash flow trend based on the sum of all negative transactions in the last month.
+",58.376,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_negative_trend_3m,"The negative cash flow trend based on the sum of all negative transactions in the last three months.
+",2.5895,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_negative_trend_6m,"The negative cash flow trend based on the sum of all negative transactions in the last six months.
+",-1.4824,number,float,Yes,Yes,,
+[].cashflow_metrics.sum_negative_trend_12m,"The negative cash flow trend based on the sum of all negative transactions in the last twelve months.
+",-4.2394,number,float,Yes,Yes,,
+[].cashflow_metrics.positive_to_negative_ratio_3d,"The ratio between sum_positive / sum_negative  in the last three days.
+
+ℹ️ If the ratio is greater than `1`, it means that the user has more income than outgoing, indicating that they spend less than they earn.
+
+**Note**: In the case that there have been no outgoing transactions, the value will be `null`.
+",0.84,number,float,Yes,Yes,,
+[].cashflow_metrics.positive_to_negative_ratio_1w,"The ratio between sum_positive / sum_negative  in the last week.
+
+ℹ️ If the ratio is greater than `1`, it means that the user has more income than outgoing, indicating that they spend less than they earn.
+
+**Note**: In the case that there have been no outgoing transactions, the value will be `null`.
+",0.9,number,float,Yes,Yes,,
+[].cashflow_metrics.positive_to_negative_ratio_1m,"The ratio between sum_positive / sum_negative  in the last month.
+
+ℹ️ If the ratio is greater than `1`, it means that the user has more income than outgoing, indicating that they spend less than they earn.
+
+**Note**: In the case that there have been no outgoing transactions, the value will be `null`.
+",0.96,number,float,Yes,Yes,,
+[].cashflow_metrics.positive_to_negative_ratio_3m,"The ratio between sum_positive / sum_negative  in the last three months.
+
+ℹ️ If the ratio is greater than `1`, it means that the user has more income than outgoing, indicating that they spend less than they earn.
+
+**Note**: In the case that there have been no outgoing transactions, the value will be `null`.
+",1.04,number,float,Yes,Yes,,
+[].cashflow_metrics.positive_to_negative_ratio_6m,"The ratio between sum_positive / sum_negative  in the last six months.
+
+ℹ️ If the ratio is greater than `1`, it means that the user has more income than outgoing, indicating that they spend less than they earn.
+
+**Note**: In the case that there have been no outgoing transactions, the value will be `null`.
+",1.13,number,float,Yes,Yes,,
+[].cashflow_metrics.positive_to_negative_ratio_12m,"The ratio between sum_positive / sum_negative  in the last twelve months.
+
+ℹ️ If the ratio is greater than `1`, it means that the user has more income than outgoing, indicating that they spend less than they earn.
+
+**Note**: In the case that there have been no outgoing transactions, the value will be `null`.
+",1.3,number,float,Yes,Yes,,
+[].cashflow_metrics.net_cashflow_3d,"The net cash flow in the last three days.
+",-1104.79,number,float,Yes,Yes,,
+[].cashflow_metrics.net_cashflow_1w,"The net cash flow in the last week.
+",-1536.33,number,float,Yes,Yes,,
+[].cashflow_metrics.net_cashflow_1m,"The net cash flow in the last month.
+",-2250.46,number,float,Yes,Yes,,
+[].cashflow_metrics.net_cashflow_3m,"The net cash flow in the last three months.
+",5588.51,number,float,Yes,Yes,,
+[].cashflow_metrics.net_cashflow_6m,"The net cash flow in the last six months.
+",22088.51,number,float,Yes,Yes,,
+[].cashflow_metrics.net_cashflow_12m,"The net cash flow in the last twelve months.
+",55088.51,number,float,Yes,Yes,,
+[].cashflow_metrics.net_cashflow_trend_3d,"The net cash flow trend in the last three days months.
+",1448.683,number,float,Yes,Yes,,
+[].cashflow_metrics.net_cashflow_trend_1w,"The net cash flow trend in the last week.
+",163.8856,number,float,Yes,Yes,,
+[].cashflow_metrics.net_cashflow_trend_1m,"The net cash flow trend in the last month.
+",1.3034,number,float,Yes,Yes,,
+[].cashflow_metrics.net_cashflow_trend_3m,"The net cash flow trend in the last three months.
+",-0.472,number,float,Yes,Yes,,
+[].cashflow_metrics.net_cashflow_trend_6m,"The net cash flow trend in the last six months.
+",-15.1286,number,float,Yes,Yes,,
+[].cashflow_metrics.net_cashflow_trend_12m,"The net cash flow trend in the last twelve months.
+",-21.5511,number,float,Yes,Yes,,
+[].category_metrics,"An array of aggregate metrics regarding the transaction categories and subcategories that Belvo has identified within the user's transaction history.
+
+In the array, Belvo only returns categories that have been identified.
+",,array,,Yes,No,,
+[].category_metrics[].category,"The name of the transaction category.
+
+> **Get transaction categorization**
+With <a href=""https://developers.belvo.com/docs/banking#categorizing-transactions"" target=""_blank"">Transaction categorization</a>, we clean and categorize transactions for you, turning raw data into actionable insights. To enable this feature, just <a href=""https://belvo.com/contact/?utm_source=documentation"" target=""_blank"">reach out</a> to us, and we'll get right to it.
+
+We return one of the following enum values:
+
+  - `Bills & Utilities`
+  - `Credits & Loans`
+  - `Deposits`
+  - `Fees & Charges`
+  - `Food & Groceries`
+  - `Home & Life`
+  - `Income & Payments`
+  - `Insurance`
+  - `Investments & Savings`
+  - `Online Platforms & Leisure`
+  - `Personal Shopping`
+  - `Taxes`
+  - `Transfers`
+  - `Transport & Travel`
+  - `Unknown`*
+  - `Withdrawal & ATM`
+  - `null`
+
+
+  \* For clients not using our Transaction Categorization product, we return `null` instead.
+",Income & Payments,string,,No,Yes,"Bills & Utilities, Credits & Loans, Deposits, Fees & Charges, Food & Groceries, Home & Life, Income & Payments, Insurance, Investments & Savings, Online Platforms & Leisure, Personal Shopping, Taxes, Transfers, Transport & Travel, Unknown, Withdrawal & ATM, None",
+[].category_metrics[].subcategory,"The transaction subcategory.
+
+  > **Get transaction categorization**
+  For clients not using our <a href=""https://developers.belvo.com/docs/banking#categorizing-transactions"" target=""_blank"">Transaction categorization</a>, we return `null` instead. To enable this feature, just <a href=""https://belvo.com/contact/?utm_source=documentation"" target=""_blank"">reach out</a> to us, and we'll get right to it.
+
+
+We return one of the following enum values:
+
+  - `Electricity & Energy`
+  - `Rent`
+  - `Telecommunications`
+  - `Water`
+  - `Auto`
+  - `Credit Card`
+  - `Instalment`
+  - `Interest & Charges`
+  - `Mortgage`
+  - `Pay Advance`
+  - `Personal`
+  - `Adjustments`
+  - `Bank Fees`
+  - `Chargeback`
+  - `Refund`
+  - `Blocked Balances`
+  - `Alimony`
+  - `Alcohol & Tobacco`
+  - `Bakery & Coffee`
+  - `Bars & Nightclubs`
+  - `Convenience Store`
+  - `Delivery`
+  - `Groceries`
+  - `Restaurants`
+  - `Education`
+  - `Gyms & Fitness`
+  - `Hair & Beauty`
+  - `Health`
+  - `Home Decor & Appliances`
+  - `Laundry & Dry Cleaning`
+  - `Pharmacies`
+  - `Professional Services`
+  - `Veterinary Services`
+  - `Freelance`
+  - `Interest`
+  - `Retirement`
+  - `Salary`
+  - `Government`
+  - `Home Insurance`
+  - `Auto Insurance`
+  - `Health & Life Insurance`
+  - `Savings`
+  - `Fixed income`
+  - `Equity`
+  - `Investment Funds`
+  - `Derivatives`
+  - `Cryptocurrencies`
+  - `Apps, Software and Cloud Services`
+  - `Events, Parks and Museums`
+  - `Gambling`
+  - `Gaming`
+  - `Lottery`
+  - `Movie & Audio`
+  - `Books & News`
+  - `Clothing & Accessories`
+  - `Department Store`
+  - `Electronics`
+  - `E-commerce`
+  - `Gifts`
+  - `Office Supplies`
+  - `Pet Supplies`
+  - `Auto Tax & Fees`
+  - `Donation`
+  - `Government Fees`
+  - `Income Tax`
+  - `Real Estate Tax & Fees`
+  - `Tax Return`
+  - `Accommodation`
+  - `Auto Expenses`
+  - `Auto Rental`
+  - `Flights`
+  - `Gas`
+  - `Mileage Programs`
+  - `Parking & Tolls`
+  - `Public Transit`
+  - `Taxis & Rideshares`
+  - `Other`
+  - `null`
+",Freelance,string,,No,Yes,"Electricity & Energy, Rent, Telecommunications, Water, Auto, Credit Card, Instalment, Interest & Charges, Mortgage, Pay Advance, Personal, Adjustments, Bank Fees, Chargeback, Refund, Blocked Balances, Alimony, Alcohol & Tobacco, Bakery & Coffee, Bars & Nightclubs, Convenience Store, Delivery, Groceries, Restaurants, Education, Gyms & Fitness, Hair & Beauty, Health, Home Decor & Appliances, Laundry & Dry Cleaning, Pharmacies, Professional Services, Veterinary Services, Freelance, Interest, Retirement, Salary, Government, Home Insurance, Auto Insurance, Health & Life Insurance, Savings, Fixed income, Equity, Investment Funds, Derivatives, Cryptocurrencies, Apps, Software and Cloud Services, Events, Parks and Museums, Gambling, Gaming, Lottery, Movie & Audio, Books & News, Clothing & Accessories, Department Store, Electronics, E-commerce, Gifts, Office Supplies, Pet Supplies, Auto Tax & Fees, Donation, Government Fees, Income Tax, Real Estate Tax & Fees, Tax Return, Accommodation, Auto Expenses, Auto Rental, Flights, Gas, Mileage Programs, Parking & Tolls, Public Transit, Taxis & Rideshares, Other, None",
+[].category_metrics[].net_amount_3m,The net amount of the transactions for this category in the last three months (calculated as the total incoming - total outgoing transactions for this category).,642.76,number,float,No,Yes,,
+[].category_metrics[].category_inflow_ratio_3m,"The ratio of `net_amount_3m` divided by the sum of all incoming categorized transactions (including the current category) for the same period.
+
+Note: If there are no inflow transactions for the period, this value will return `null`.
+",1,number,float,No,Yes,,
+[].category_metrics[].trend_3m,The net category transaction trend (incoming - outgoing transactions for the category) for the period.,0,number,float,No,Yes,,

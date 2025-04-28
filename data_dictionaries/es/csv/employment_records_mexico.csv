@@ -43,7 +43,7 @@ employment_records[].employer_id,"El ID oficial del empleador, según el país.
 
 >**Nota**: Para ISSSTE México, este valor devolverá `null`.",780-BAT-88769-CDMX,string,,No,Yes,,
 employment_records[].start_date,"Fecha de inicio del empleo, en formato `YYYY-MM-DD`.",2019-10-10,string,date,No,No,,
-employment_records[].end_date,"Fecha de finalización del empleo, en formato `YYYY-MM-DD`.
+employment_records[].end_date,"Fecha en que finalizó el empleo, en formato `YYYY-MM-DD`.
 
 >**Nota**: Este campo devolverá `null` para el empleo actual del usuario.",2019-12-31,string,date,No,Yes,,
 employment_records[].weeks_employed,Número de semanas que el individuo estuvo empleado.,12,integer,int32,No,No,,

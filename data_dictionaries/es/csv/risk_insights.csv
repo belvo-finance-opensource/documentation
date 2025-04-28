@@ -14,24 +14,24 @@ Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
 [].assets_metrics.num_savings_accounts,El número total de cuentas de ahorro encontradas para el usuario.,1,integer,int32,Yes,Yes,,
 [].assets_metrics.checking_accounts_balance,El saldo total de cierre de todas las cuentas corrientes.,35901.46,number,float,Yes,Yes,,
 [].assets_metrics.savings_accounts_balance,El saldo total de cierre de todas las cuentas de ahorro.,300.02,number,float,Yes,Yes,,
-[].credit_cards_metrics,"Métricas agregadas calculadas basadas en las cuentas de tarjetas de crédito del usuario.
+[].credit_cards_metrics,"Métricas agregadas calculadas en base a las cuentas de tarjetas de crédito del usuario.
 
 > Las métricas de tarjetas de crédito ilustran los hábitos de un cliente con sus tarjetas de crédito, revelando cuántas cuentas de tarjetas de crédito tiene un cliente, su límite de crédito total, cuánto de ese límite está utilizando y la tasa de utilización de su límite de crédito.",,object,,Yes,Yes,,
 [].credit_cards_metrics.num_accounts,Número de cuentas de tarjetas de crédito asociadas al usuario.,2,integer,int32,Yes,No,,
 [].credit_cards_metrics.sum_credit_limit,Suma total de los límites de todas las tarjetas de crédito.,106560,number,float,Yes,Yes,,
 [].credit_cards_metrics.sum_credit_used,Suma total de todo el crédito utilizado.,101020.14,number,float,Yes,Yes,,
 [].credit_cards_metrics.credit_card_limit_utilization,El porcentaje del límite de la tarjeta de crédito utilizado.,0.95,number,float,Yes,Yes,,
-[].loans_metrics,"Métricas agregadas calculadas basadas en las cuentas de préstamo del usuario y las cuentas corrientes que tienen sobregiro.
+[].loans_metrics,"Métricas agregadas calculadas en base a las cuentas de préstamo del usuario y las cuentas corrientes que tienen sobregiro.
 
 > Las métricas de préstamos ayudan a comprender el comportamiento de préstamo y reembolso de un cliente, lo que puede ayudar a evaluar su capacidad para asumir crédito adicional y los posibles riesgos de incumplimiento.",,object,,Yes,Yes,,
 [].loans_metrics.num_accounts,El número de cuentas de préstamo asociadas con el usuario.,1,integer,int32,Yes,No,,
-[].loans_metrics.sum_loans_principal,Suma total del principal para todas las cuentas de préstamo del usuario.,5000,number,float,Yes,Yes,,
+[].loans_metrics.sum_loans_principal,Suma total del principal de todas las cuentas de préstamo del usuario.,5000,number,float,Yes,Yes,,
 [].loans_metrics.sum_loans_outstanding_principal,Suma total del principal pendiente para todas las cuentas de préstamo del usuario.,2000,number,float,Yes,Yes,,
-[].loans_metrics.sum_loans_monthly_payment,Suma total de los pagos mensuales para todas las cuentas de préstamo del usuario.,400,number,float,Yes,Yes,,
+[].loans_metrics.sum_loans_monthly_payment,Suma total de los pagos mensuales de todas las cuentas de préstamo del usuario.,400,number,float,Yes,Yes,,
 [].loans_metrics.loan_limit_utilization,El porcentaje del límite del préstamo utilizado.,0.3,number,float,Yes,Yes,,
 [].loans_metrics.overdraft_limit,El límite total de sobregiro de todas las cuentas corrientes y de ahorro.,900,number,float,Yes,Yes,,
 [].loans_metrics.overdraft_limit_utilization,El porcentaje del límite de sobregiro utilizado.,0.4,number,float,Yes,Yes,,
-[].balances_metrics,Métricas de balance calculadas basadas en los balances del usuario de las cuentas corrientes y de ahorros.,,object,,Yes,Yes,,
+[].balances_metrics,Métricas de balance calculadas en base a los saldos del usuario de las cuentas corrientes y de ahorros.,,object,,Yes,Yes,,
 [].balances_metrics.closing_balance,El saldo de todas las cuentas en el momento `collected_at`.,35901.46,number,float,Yes,Yes,,
 [].balances_metrics.min_balance_3d,El saldo mínimo en los últimos tres días.,35417.68,number,float,Yes,Yes,,
 [].balances_metrics.min_balance_1w,El saldo mínimo en la última semana).,34150.5,number,float,Yes,Yes,,
@@ -57,12 +57,12 @@ Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
 [].balances_metrics.std_balance_3m,La desviación estándar del balance en los últimos tres meses.,586.55,number,float,Yes,Yes,,
 [].balances_metrics.std_balance_6m,La desviación estándar del saldo en los últimos seis meses.,586.55,number,float,Yes,Yes,,
 [].balances_metrics.std_balance_12m,La desviación estándar del saldo en los últimos doce meses.,586.55,number,float,Yes,Yes,,
-[].balances_metrics.balance_trend_3d,La tendencia de balance del usuario en los últimos tres días.,193.51,number,float,Yes,Yes,,
-[].balances_metrics.balance_trend_1w,La tendencia del balance del usuario en la última semana.,290.18,number,float,Yes,Yes,,
-[].balances_metrics.balance_trend_1m,La tendencia de balance del usuario en el último mes.,22.6,number,float,Yes,Yes,,
-[].balances_metrics.balance_trend_3m,La tendencia de saldo del usuario en los últimos tres meses.,22.6,number,float,Yes,Yes,,
-[].balances_metrics.balance_trend_6m,La tendencia de saldo del usuario en los últimos seis meses.,22.6,number,float,Yes,Yes,,
-[].balances_metrics.balance_trend_12m,La tendencia del balance del usuario en los últimos doce meses.,22.6,number,float,Yes,Yes,,
+[].balances_metrics.balance_trend_3d,La tendencia del saldo del usuario en los últimos tres días.,193.51,number,float,Yes,Yes,,
+[].balances_metrics.balance_trend_1w,La tendencia del saldo del usuario en la última semana.,290.18,number,float,Yes,Yes,,
+[].balances_metrics.balance_trend_1m,La tendencia del saldo del usuario en el último mes.,22.6,number,float,Yes,Yes,,
+[].balances_metrics.balance_trend_3m,La tendencia del saldo del usuario en los últimos tres meses.,22.6,number,float,Yes,Yes,,
+[].balances_metrics.balance_trend_6m,La tendencia del saldo del usuario en los últimos seis meses.,22.6,number,float,Yes,Yes,,
+[].balances_metrics.balance_trend_12m,La tendencia del saldo del usuario en los últimos doce meses.,22.6,number,float,Yes,Yes,,
 [].balances_metrics.days_balance_below_0_3d,El número de días en los que el saldo total de la cuenta es menor o igual a 0 en los últimos tres días.,0,integer,int32,Yes,Yes,,
 [].balances_metrics.days_balance_below_0_1w,El número de días en los que el saldo total de la cuenta es menor o igual a 0 en la última semana.,0,integer,int32,Yes,Yes,,
 [].balances_metrics.days_balance_below_0_1m,El número de días en que el saldo total de la cuenta es menor o igual a 0 en el último mes.,0,integer,int32,Yes,Yes,,
@@ -82,14 +82,14 @@ Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
 [].balances_metrics.days_balance_below_x_6m,El número de días en los que el saldo total de la cuenta es menor o igual a la cantidad especificada en `balance_threshold_x` en los últimos seis meses.,0,integer,int32,Yes,Yes,,
 [].balances_metrics.days_balance_below_x_12m,El número de días en los que el saldo total de la cuenta es menor o igual a la cantidad especificada en `balance_threshold_x` en los últimos doce meses.,0,integer,int32,Yes,Yes,,
 [].balances_metrics.balance_threshold_x,El umbral utilizado para calcular `days_balance_below_x_period`. Tenga en cuenta que este valor es específico del país (tanto en términos de la cantidad como de la moneda).,1000,number,float,Yes,No,,
-[].transactions_metrics,"Métricas agregadas calculadas basadas en las transacciones del usuario de cuentas corrientes, de ahorros, de tarjeta de crédito y de préstamos.
+[].transactions_metrics,"Métricas agregadas calculadas basadas en las transacciones del usuario de cuentas corrientes, de ahorros, de tarjetas de crédito y de préstamos.
 
 > ℹ️ **Nota**
 >
-> Si no hay suficientes datos transaccionales para un período dado, devolvemos `null` para los campos calculados y `0` para los campos basados en 'conteo'. Por ejemplo, si la cuenta solo ha estado abierta durante cinco días (o has proporcionado datos solo para cinco días), devolvemos valores para `_3d`, `_1w` y `_1m`, sin embargo:
+> Si no hay suficientes datos transaccionales para un período dado, devolvemos `null` para los campos calculados y `0` para los campos basados en conteo. Por ejemplo, si la cuenta solo ha estado abierta durante cinco días (o si has proporcionado datos solo para cinco días), devolvemos valores para `_3d`, `_1w` y `_1m`, sin embargo:
 > 
 > - `mean_num_transactions_3m` devolverá `null` ya que no hay datos para los meses dos y tres (campo calculado).
-> - `num_transactions_3m` devolverá `0` ya que no hay datos para los meses dos y tres (campo basado en 'conteo').",,object,,Yes,Yes,,
+> - `num_transactions_3m` devolverá `0` ya que no hay datos para los meses dos y tres (campo basado en conteo).",,object,,Yes,Yes,,
 [].transactions_metrics.num_transactions_3d,El número total de transacciones analizadas para determinar las perspectivas de riesgo durante los últimos tres días (entrantes y salientes).,26,integer,int32,Yes,No,,
 [].transactions_metrics.num_transactions_1w,El número total de transacciones analizadas para determinar las perspectivas de riesgo de la última semana (entrantes y salientes).,46,integer,int32,Yes,No,,
 [].transactions_metrics.num_transactions_1m,El número total de transacciones analizadas para determinar las perspectivas de riesgo del último mes (entrantes y salientes).,168,integer,int32,Yes,No,,
@@ -192,9 +192,9 @@ Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
 [].transactions_metrics.days_history,El número de días entre cuando se realizó la solicitud de información de riesgo y la primera transacción.,365,integer,int32,Yes,No,,
 [].cashflow_metrics,"Métricas agregadas calculadas basadas en las transacciones del usuario de cuentas corrientes, de ahorros, de crédito y de préstamos. Sin embargo, las transferencias internas (transferencias entre cuentas pertenecientes al mismo enlace) no se utilizan en el cálculo.
 
-> ℹ️ **Nota**
->
-> Si no hay suficientes datos transaccionales para un período dado, devolvemos `null`. Por ejemplo, si la cuenta solo ha estado abierta durante 15 días (o solo has proporcionado datos para solo 15 días), devolvemos valores para `_3d`, `_1w` y `_1m`, sin embargo, para `_3m` devolveremos `null` ya que no hay datos para los meses dos y tres.",,object,,Yes,Yes,,
+{% admonition type=""info"" %}
+  Si no hay suficientes datos transaccionales para un período dado, devolvemos `null`. Por ejemplo, si la cuenta solo ha estado abierta durante 15 días (o solo has proporcionado datos para solo 15 días), devolvemos valores para `_3d`, `_1w` y `_1m`, sin embargo, para `_3m` devolveremos `null` ya que no hay datos para los meses dos y tres.
+{% /admonition %}",,object,,Yes,Yes,,
 [].cashflow_metrics.max_positive_3d,El valor más alto de las transacciones de flujo de caja positivo en los últimos tres días.,1850.12,number,float,Yes,Yes,,
 [].cashflow_metrics.max_positive_1w,El valor más alto de las transacciones de flujo de caja positivo de la última semana.,3808.99,number,float,Yes,Yes,,
 [].cashflow_metrics.max_positive_1m,El valor más alto de las transacciones de flujo de caja positivo del mes pasado.,4012.61,number,float,Yes,Yes,,
@@ -252,27 +252,27 @@ Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
 
 ℹ️ Si la relación es mayor que `1`, significa que el usuario tiene más ingresos que egresos, lo que indica que gasta menos de lo que gana.
 
-**Nota**: En el caso de que no haya habido transacciones de egreso, el valor será `null`.",0.9,number,float,Yes,Yes,,
+**Nota**: En el caso de que no haya habido transacciones de egresos, el valor será `null`.",0.9,number,float,Yes,Yes,,
 [].cashflow_metrics.positive_to_negative_ratio_1m,"La relación entre sum_positive / sum_negative en el último mes.
 
 ℹ️ Si la relación es mayor que `1`, significa que el usuario tiene más ingresos que egresos, lo que indica que gasta menos de lo que gana.
 
-**Nota**: En el caso de que no haya habido transacciones de egreso, el valor será `null`.",0.96,number,float,Yes,Yes,,
+**Nota**: En el caso de que no haya habido transacciones de egresos, el valor será `null`.",0.96,number,float,Yes,Yes,,
 [].cashflow_metrics.positive_to_negative_ratio_3m,"La relación entre sum_positive / sum_negative en los últimos tres meses.
 
-ℹ️ Si la relación es mayor que `1`, significa que el usuario tiene más ingresos que egresos, lo que indica que gastan menos de lo que ganan.
+ℹ️ Si la relación es mayor que `1`, significa que el usuario tiene más ingresos que egresos, lo que indica que gasta menos de lo que gana.
 
-**Nota**: En el caso de que no haya habido transacciones de egreso, el valor será `null`.",1.04,number,float,Yes,Yes,,
+**Nota**: En el caso de que no haya habido transacciones de egresos, el valor será `null`.",1.04,number,float,Yes,Yes,,
 [].cashflow_metrics.positive_to_negative_ratio_6m,"La relación entre sum_positive / sum_negative en los últimos seis meses.
 
 ℹ️ Si la relación es mayor que `1`, significa que el usuario tiene más ingresos que egresos, lo que indica que gasta menos de lo que gana.
 
-**Nota**: En el caso de que no haya habido transacciones de egresos, el valor será `null`.",1.13,number,float,Yes,Yes,,
+**Nota**: En el caso de que no haya habido transacciones de egreso, el valor será `null`.",1.13,number,float,Yes,Yes,,
 [].cashflow_metrics.positive_to_negative_ratio_12m,"La relación entre sum_positive / sum_negative en los últimos doce meses.
 
 ℹ️ Si la relación es mayor que `1`, significa que el usuario tiene más ingresos que egresos, lo que indica que gasta menos de lo que gana.
 
-**Nota**: En el caso de que no haya habido transacciones de egreso, el valor será `null`.",1.3,number,float,Yes,Yes,,
+**Nota**: En el caso de que no haya habido transacciones de egresos, el valor será `null`.",1.3,number,float,Yes,Yes,,
 [].cashflow_metrics.net_cashflow_3d,El flujo de caja neto en los últimos tres días.,-1104.79,number,float,Yes,Yes,,
 [].cashflow_metrics.net_cashflow_1w,El flujo de caja neto en la última semana.,-1536.33,number,float,Yes,Yes,,
 [].cashflow_metrics.net_cashflow_1m,El flujo de caja neto en el último mes.,-2250.46,number,float,Yes,Yes,,

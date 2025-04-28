@@ -8,11 +8,11 @@ undefined_consent_expiration,"Indique si el consentimiento es por un período in
 created_at,La marca de tiempo ISO-8601 de cuando se creó el punto de datos en la base de datos de Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
 status,"El estado del consentimiento en la red de finanzas abiertas. Puede ser:
 
-  - `AUTHORISED`: El consentimiento sigue siendo válido para su uso hasta la fecha `expired_at`.
+  - `AUTHORISED`: El consentimiento sigue siendo válido para su uso hasta la fecha de `expired_at`.
   - `AWAITING_AUTHORISATION_CONFIRMATION`: El usuario debe confirmar dentro de su institución.
   - `AWAITING_AUTHORISATION`: El usuario ha sido redirigido a su institución para otorgar consentimiento.
   - `REJECTED`: El usuario no ha otorgado consentimiento dentro de su institución.
-  - `EXPIRED`: El consentimiento ha expirado a partir de la fecha `expired_at`.
+  - `EXPIRED`: El consentimiento ha expirado a partir de la fecha de `expired_at`.
   - `null`",AUTHORISED,string,,No,Yes,"AUTHORISED, AWAITING_AUTHORISATION_CONFIRMATION, AWAITING_AUTHORISATION, REJECTED, EXPIRED, None",
 permissions,Detalles sobre los permisos adjuntos al consentimiento.,,object,,No,No,,
 permissions.ACCOUNTS,Una lista de permisos de banca abierta relacionados con el acceso a la información de la cuenta.,"[""ACCOUNTS_OVERDRAFT_LIMITS_READ"", ""ACCOUNTS_READ"", ""ACCOUNTS_TRANSACTIONS_READ"", ""ACCOUNTS_BALANCES_READ""]",array,,No,No,,

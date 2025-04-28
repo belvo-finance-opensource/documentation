@@ -1,0 +1,84 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+id,"Belvo's unique identifier for the current item.
+",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
+link,The `link.id` the data belongs to.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
+created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+total_amount,"The total amount of the invoice, including VAT and other taxes or charges.",3272500.02,number,float,No,No,,"^\d{1,15}\.\d{2,4}$"
+net_amount,The total invoice amount after VAT and other taxes.,2750000.02,number,float,No,No,,"^\d{1,15}\.\d{2,4}$"
+vat_amount,The total VAT amount of the invoice.,522500.02,number,float,No,No,,"^\d{1,15}\.\d{2,4}$"
+currency,The three-letter currency code (ISO-4217) of the invoice.,CLP,string,,No,No,,^[A-Z]{3}$
+issue_date,"The date that the invoice was issued, in `YYYY-MM-DD` format.",2024-09-23,string,date,No,No,,^\d{4}-\d{2}-\d{2}$
+received_at,The ISO-8601 timestamp of when the invoice was received.,2024-09-02T15:23:47-03:00,string,date-time,No,No,,
+acknowledged_at,The ISO-8601 timestamp of when the invoice was acknowledged as received.,2024-09-02T15:23:47-03:00,string,date-time,No,No,,
+claim_date,"The date when a claim or dispute was raised about the invoice, in `YYYY-MM-DD` format.",,string,date,No,Yes,,^\d{4}-\d{2}-\d{2}$
+status,"The status of the invoice. Can be either:
+  
+  - `REGISTERED`
+  - `PENDING`
+  - `REJECTED`
+  - `CANCELLED`
+  
+",REGISTERED,string,,No,No,,
+document_code,"A code that indicates whether the document is a invoice, a credit or debit note, and so on.",33,integer,,No,No,,
+category,"The category of the invoice, according to the institution.",Del Giro,string,,No,No,,
+folio,The institution's unique code for the invoice.,23559723,string,,No,No,,
+sender_id,"The identification number of the sender. For SII Chile, this is the RUT.",59324768-2,string,,No,No,,
+sender_name,The registered name of the sender.,Cafe del Sur,string,,No,No,,
+receiver_id,"The identification number of the receiver. For SII Chile, this is the RUT.",82136549-6,string,,No,No,,
+receiver_name,The registered name of the receiver.,Alejandra Gonzalez,string,,No,No,,
+type,Indicates whether the invoice is an INFLOW or OUTFLOW.,INFLOW,string,,No,No,"INFLOW, OUTFLOW",
+purchase_invoice_details,"Details regarding the purchase invoice. If the invoice is a sales invoice (`type` = `OUTFLOW`), this field will return `null`.",,object,,No,Yes,,
+purchase_invoice_details.vat_refundable_amount,The amount of VAT paid that is eligible to be claimed back as a tax credit.,300.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+purchase_invoice_details.vat_non_refundable_amount,The amount of VAT paid that cannot be claimed back as a tax credit.,20.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+purchase_invoice_details.vat_non_refundable_code,A code that identifies the reason why the VAT is not recoverable.,90,integer,int32,No,Yes,,
+purchase_invoice_details.net_amount_fixed_assets,The net value of the purchased fixed assets.,8000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+purchase_invoice_details.vat_fixed_assets,The VAT value on the purchase of fixed assets.,80.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+purchase_invoice_details.vat_common_use,The VAT that applies to purchases used for both taxable and non-taxable purposes.,129.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+purchase_invoice_details.tax_non_credit_amount,The tax amount that cannot be claimed as a credit.,5.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+purchase_invoice_details.vat_non_withheld,The VAT amount that was not withheld by the purchaser.,8.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+purchase_invoice_details.tax_exempt_amount,The portion of the purchase that is exempt from VAT.,33.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+purchase_invoice_details.credit_or_debit_note_on_purchase,Indicates whether the invoice is linked with a credit or debit note.,False,boolean,,No,Yes,,
+purchase_invoice_details.tax_cigarettes_amount,The total tax amount applied on cigarettes.,50.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+purchase_invoice_details.tax_cigar_amount,The total tax amount applied on cigars.,51.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+purchase_invoice_details.tax_processed_tobacco_amount,The total tax amount applied on processed tobacco.,49.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+purchase_invoice_details.additional_tax_amount,The total tax amount of the additional tax.,1005.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+purchase_invoice_details.additional_tax_rate,The tax rate of the additional tax.,2.1,string,,No,Yes,,
+purchase_invoice_details.additional_tax_code,The tax code for the additional tax.,50993,integer,int32,No,Yes,,
+sales_invoice_details,"Details regarding the sales invoice. If the invoice is a purchase invoice (`type` = `INFLOW`), this field will return `null`.",,object,,No,Yes,,
+sales_invoice_details.construction_sector_tax_credit,The amount of tax credit applicable for construction companies.,50000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+sales_invoice_details.tax_free_trade_zone_amount,Tax applicable for transactions in free trade zones.,38490.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+sales_invoice_details.container_deposit_guarantee,"Refers to deposits or guarantees on containers, if applicable.",0.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+sales_invoice_details.is_free_of_charge,"Indicated whether or not this sale was made at no cost (for example, the invoice is for promotional material, periodic free-of-charge resupplies, and similar).",False,boolean,,No,Yes,,
+sales_invoice_details.periodic_billing_type,Marks if the invoice is for periodic services.,False,boolean,,No,Yes,,
+sales_invoice_details.non_billable_amount,The portion of the transaction that is not billable.,40.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+sales_invoice_details.total_amount_for_period,"The total amount for a specific period, often used for periodic billing.",,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+sales_invoice_details.domestic_transportation_amount,The total amount spent on domestic transportation.,67.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+sales_invoice_details.international_transportation_amount,The total amount spent on international transportation.,56.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+sales_invoice_details.branch_code,The code of the fiscal branch where the sales invoice was issued.,76129014,integer,int32,No,Yes,,
+sales_invoice_details.tax_exempt_amount,The portion of the sale that is exempt from VAT.,4000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+sales_invoice_details.credit_or_debit_note_on_purchase,Indicates whether the invoice is linked with a credit or debit note.,False,boolean,,No,Yes,,
+sales_invoice_details.additional_tax_code,The tax code for the additional tax.,50993,integer,,No,Yes,,
+sales_invoice_details.additional_tax_rate,The tax rate of the additional tax.,2.1,string,,No,Yes,,
+sales_invoice_details.additional_tax_amount,The total tax amount of the additional tax.,1005.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+sales_invoice_details.vat_total_withheld,The total VAT withheld.,33.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+sales_invoice_details.vat_partially_withheld,The amount of VAT partially withheld.,30.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+sales_invoice_details.vat_non_withheld,The amount of VAT that was not withheld.,40.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+sales_invoice_details.vat_sales,The VAT amount corresponding to the seller's own sales.,100.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+sales_invoice_details.vat_third_party,VAT amount related to third-party sales if acting as an intermediary.,1000.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+sales_invoice_details.vat_past_due,VAT that is accounted for or paid after the due date.,31.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+sales_invoice_details.invoice_settlement_sender_id,The RUT of the entity that issued the settlement for the invoice.,55524768-7,string,,No,Yes,,
+sales_invoice_details.invoice_settlement_net_commission,The net amount of commission in the invoice settlement.,54.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+sales_invoice_details.invoice_settlement_exempt_commission,The portion of the commission in the invoice settlement that is exempt from tax.,16.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+sales_invoice_details.invoice_settlement_vat_commission,VAT charged on the commission amount in the invoice settlement.,78.02,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+sales_invoice_details.reference_document_type,Indicates the type of document that this invoice refers to or is linked with.,,string,,No,Yes,,
+sales_invoice_details.reference_document_folio,The folio number of the document referred to.,,string,,No,Yes,,
+sales_invoice_details.foreign_recipient_id,The identification number of a foreign individual.,JANM-7820234,string,,No,Yes,,
+sales_invoice_details.foreign_recipient_nationality,The nationality of the foreign individual.,Peru,string,,No,Yes,,
+summary_invoice_details,Details regarding the summary of `BOLETA_ELECTRONICA` or `COMPROBANTE_PAGO` invoices.,,object,,No,No,,
+summary_invoice_details.month,"The year and month of the invoices, in `YYYY-MM` format.",2024-08,string,,No,No,,^\d{4}-\d{2}$
+summary_invoice_details.updated_at,The ISO-8601 timestamp of when the list of invoices was last updated.,2024-09-02T15:23:47-03:00,string,date-time,No,No,,
+summary_invoice_details.total_documents,The total number of invoices in the summary.,23,integer,int32,No,No,,
+summary_invoice_details.tax_exempt_amount,The total invoice value (from all invoices in the summary) that is exempt from VAT.,4000.02,number,float,No,No,,"^\d{1,15}\.\d{2,4}$"

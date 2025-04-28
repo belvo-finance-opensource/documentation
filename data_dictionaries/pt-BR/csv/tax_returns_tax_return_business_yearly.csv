@@ -1,0 +1,40 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+cifras_cierre_ejercicio,Details regarding key numbers at the end of the fiscal exercise.,,object,,Yes,Yes,,
+collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+conciliacion_entre_resultado_contable_fiscal,"Details regarding the accounting reconciliation.
+
+> **Note**: For tax returns submitted for the 2022 tax year and later, this field will return null as it is no longer a required field when submitting your tax return.
+",,object,,Yes,Yes,,
+created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+datos_adicionales,Additional data regarding the tax return.,,object,,Yes,Yes,,
+deducciones_autorizadas,Details regarding the legal entity's deductions.,,object,,Yes,Yes,,
+detalle_pago_r1_isr_personas_morales,Details of the tax payment.,,object,,Yes,Yes,,
+determinacion,"> **Note**: Only applicable for tax return filed on or after 2022. For tax returns filed before 2022, this field will return `null`.
+
+Details regarding the tax due or tax credit.
+",,object,,No,Yes,,
+determinacion_del_impuesto_sobre_la_renta,Details regarding the final tax return.,,object,,Yes,Yes,,
+dividendos_o_utilidades_distribuidos,Details regarding distributed dividends.,,object,,Yes,Yes,,
+estado_posicion_financiera_balance,"Details regarding balance sheet of the legal entity.
+
+> **Note**: For tax returns submitted for the 2022 tax year and later, this field will return null as it is no longer a required field when submitting your tax return.
+",,object,,Yes,Yes,,
+estado_resultados,"Detailed information about the legal entity's yearly profit and loss.
+
+> **Note**: For tax returns submitted for the 2022 tax year and later, this field will return null as it is no longer a required field when submitting your tax return.
+",,object,,Yes,Yes,,
+id,"Belvo's unique identifier for the current item.
+",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
+informacion_general,"General information regarding the tax return (year, RFC, return type,
+person/company name, and so on).
+",,object,,Yes,Yes,,
+ingressos,"> **Note**: Only applicable for tax return filed on or after 2022. For tax returns filed before 2022, this field will return `null`.
+
+Details regarding the total amounts earned in the fiscal year.
+",,object,,No,Yes,,
+pdf,Tax return PDF as a binary.,=PDF-STRING=,string,binary,Yes,Yes,,
+receipt_pdf,"The acknowledgement receipt from the fiscal institution confirming that
+they received the tax return.
+",=PDF-STRING=,string,binary,Yes,Yes,,

@@ -47,7 +47,7 @@ number,"O número da conta, conforme designado pela instituição.",405706811518
 agency,O código da agência onde o produto foi aberto.,6272,string,,Yes,Yes,,"^\d{1,4}$"
 check_digit,"O dígito verificador do número do produto, se aplicável.",7,string,,Yes,Yes,,[\w\W\s]*
 balance,Detalhes sobre os saldos atual e disponível para a conta.,,object,,Yes,No,,
-balance.current,"O saldo atual é calculado de forma diferente de acordo com o tipo de conta.
+balance.current,"O saldo atual é calculado de maneira diferente de acordo com o tipo de conta.
 
 - **💰 Contas correntes e poupança**:
 
@@ -55,12 +55,12 @@ O saldo da conta do usuário no timestamp `collected_at`.
 
 - **💳 Cartões de crédito**:
 
-O valor que o usuário gastou no período de faturamento atual do cartão (consulte `credit_data.cutting_date` para obter informações sobre quando o período de faturamento atual termina).
+O valor que o usuário gastou no período de faturamento atual do cartão (consulte `credit_data.cutting_date` para informações sobre quando o período de faturamento atual termina).
 
 - **🏡 Contas de empréstimo**:
 
 O valor restante a pagar no empréstimo do usuário.",5874.13,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
-balance.available,"O saldo que o proprietário da conta pode usar.
+balance.available,"O saldo que o titular da conta pode usar.
 
 - **💰 Contas correntes e poupança**:
 

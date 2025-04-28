@@ -52,7 +52,7 @@ account.number,"O número da conta, conforme designado pela instituição.",4057
 account.agency,O código da agência onde o produto foi aberto.,6272,string,,Yes,Yes,,"^\d{1,4}$"
 account.check_digit,"O dígito verificador do número do produto, se aplicável.",7,string,,Yes,Yes,,[\w\W\s]*
 account.balance,Detalhes sobre os saldos atual e disponível para a conta.,,object,,Yes,No,,
-account.balance.current,"O saldo atual é calculado de forma diferente de acordo com o tipo de conta.
+account.balance.current,"O saldo atual é calculado de maneira diferente de acordo com o tipo de conta.
 
 - **💰 Contas correntes e poupança**:
 
@@ -60,12 +60,12 @@ O saldo da conta do usuário no timestamp `collected_at`.
 
 - **💳 Cartões de crédito**:
 
-O valor que o usuário gastou no período de faturamento atual do cartão (consulte `credit_data.cutting_date` para obter informações sobre quando o período de faturamento atual termina).
+O valor que o usuário gastou no período de faturamento atual do cartão (consulte `credit_data.cutting_date` para informações sobre quando o período de faturamento atual termina).
 
 - **🏡 Contas de empréstimo**:
 
 O valor restante a pagar no empréstimo do usuário.",5874.13,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
-account.balance.available,"O saldo que o proprietário da conta pode usar.
+account.balance.available,"O saldo que o titular da conta pode usar.
 
 - **💰 Contas correntes e poupança**:
 
@@ -360,9 +360,9 @@ local_currency_amount,"O valor da transação na moeda local.
 > **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil para **transações de cartão de crédito**.",7623.64,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
 balance,**Nota:** Este campo não se aplica ao OF Brasil e retornará null.,,number,float,Yes,Yes,,
 currency,O código de moeda de três letras (ISO-4217).,BRL,string,,Yes,Yes,,^[A-Z]{3}$
-description,"A descrição da transação fornecida pela instituição. Normalmente, este é o texto que o usuário final vê na plataforma online.
+description,"A descrição da transação fornecida pela instituição. Geralmente, este é o texto que o usuário final vê na plataforma online.
 
-> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",SEVEN BUDDHAS RFC:XXXXXXXXXX,string,,Yes,Yes,,
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",SEVEN BUDDHAS RFC:XXXXXXXXXX,string,,Yes,Yes,,
 observations,**Nota:** Este campo não se aplica ao OF Brasil e retornará null.,,string,,Yes,Yes,,
 merchant,"Dados adicionais sobre o comerciante envolvido na transação.
 Nós só retornamos informações do comerciante para novas transações feitas a partir de contas *corrente* ou *cartão de crédito*.

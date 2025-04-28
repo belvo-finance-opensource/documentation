@@ -4,7 +4,7 @@ link,O `link.id` ao qual os dados pertencem.,30cb4806-6e00-48a4-91c9-ca55968576c
 created_at,O carimbo de data e hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
 collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
 report_date,"A data em que o relatório de registro de emprego foi gerado, no formato `YYYY-MM-DD`.",2023-01-19,string,date,No,No,,
-internal_identification,"ID único para usuário de acordo com a instituição. Para IMSS e ISSSTE México, este é o CURP.",BLPM951331IONVGR54,string,,No,No,,
+internal_identification,"ID único para o usuário de acordo com a instituição. Para IMSS e ISSSTE México, este é o CURP.",BLPM951331IONVGR54,string,,No,No,,
 personal_data,Detalhes sobre as informações pessoais do indivíduo.,,object,,No,No,,
 personal_data.official_name,O nome legal do indivíduo.,Bruce Banner del Torro,string,,No,Yes,,
 personal_data.first_name,O primeiro nome do indivíduo.,Bruce,string,,No,Yes,,

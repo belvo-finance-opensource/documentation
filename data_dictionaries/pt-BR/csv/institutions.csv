@@ -65,6 +65,6 @@ resources,"Uma lista de recursos do Belvo que você pode usar com a instituiçã
   - `TAX_STATUS`","[""ACCOUNTS"", ""BALANCES"", ""INCOMES"", ""OWNERS"", ""RECURRING_EXPENSES"", ""RISK_INSIGHTS"", ""TRANSACTIONS""]",array,,No,No,,
 integration_type,"O tipo de tecnologia usada para acessar a instituição. Retornamos um dos seguintes valores:
 
-- `credentials`: Usa a tecnologia de scraping da Belvo, combinada com as credenciais do usuário, para realizar solicitações.
+- `credentials`: Usa a tecnologia de scraping da Belvo, combinada com credenciais do usuário, para realizar solicitações.
 - `openfinance`: Usa a API de open finance do banco para realizar solicitações.",credentials,string,,No,No,"credentials, openfinance",
 status,Indica se a integração da Belvo com a instituição está atualmente ativa (`healthy`) ou em manutenção (`down`).,healthy,string,,No,No,"healthy, down",
