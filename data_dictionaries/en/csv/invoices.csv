@@ -25,7 +25,21 @@ type,"The direction of the invoice (from the perspective of the Link owner).
 - `OUTFLOW` indicates a sent invoice.
 - `INFLOW` indicates a received invoice.
 ",INFLOW,string,,Yes,Yes,"OUTFLOW, INFLOW, None",
+tax_details,General information about the taxes of the invoice.,,object,,No,No,,
+tax_details.total_tax_retained,Total amount of retained taxes.,194.27,number,float,No,No,,
+tax_details.total_tax_transferred,Total amount of transferred taxes.,150.4,number,float,No,No,,
+tax_details.retained_taxes,List of retained taxes.,,array,,No,No,,
+tax_details.retained_taxes[].tax,"The type of retained tax (for example, ISR, IVA or IEPS).",ISR,string,,No,No,,
+tax_details.retained_taxes[].tax_percentage,The percentage of tax retained.,,number,float,No,Yes,,
+tax_details.retained_taxes[].pre_tax_amount,The amount before tax.,,number,float,No,Yes,,
+tax_details.retained_taxes[].tax_amount,The amount of retained tax.,94,number,float,No,No,,
+tax_details.transferred_taxes,List of transferred taxes.,,array,,No,No,,
+tax_details.transferred_taxes[].tax,"The type of transferred tax (for example, ISR, IVA or IEPS).",IVA,string,,No,No,,
+tax_details.transferred_taxes[].tax_percentage,The percentage of tax transferred.,16,number,float,No,No,,
+tax_details.transferred_taxes[].pre_tax_amount,The amount before tax.,940,number,float,No,No,,
+tax_details.transferred_taxes[].tax_amount,The amount of transferred tax.,150.4,number,float,No,No,,
 sender_id,The fiscal ID of the invoice sender,AAA111111AA11,string,,Yes,Yes,,
+sender_fiscal_regime,"The tax regime of the sender, as defined by the legal entity in the country.",601,string,,No,Yes,,
 sender_name,The name of the invoice sender.,ACME CORP,string,,Yes,Yes,,
 sender_tax_fraud_status,"Indicates whether or not the sender is on SAT's tax fraud list for having submitted incorrect data, having outstanding payments, or having conducted business that is in violation of the fiscal institution's regulations.<br><br>
 
@@ -52,6 +66,8 @@ The fiscal institution has reassessed a previously confirmed taxpayer and, based
 The receiver or sender is not found in the list (in other words, they are complying with the fiscal institution's regulations).
 ",NO_TAX_FRAUD_STATUS,string,,No,Yes,,
 receiver_id,The fiscal ID of the invoice receiver.,BBB222222BB22,string,,Yes,Yes,,
+receiver_postal_code,The postal code of the receiver.,11560,string,,No,No,,
+receiver_fiscal_regime,"The tax regime of the receiver, as defined by the legal entity in the country.",601,string,,No,Yes,,
 receiver_name,The name of the invoice receiver.,BELVO CORP,string,,Yes,Yes,,
 receiver_tax_fraud_status,"Indicates whether or not the receiver is on SAT's tax fraud list for having submitted incorrect data, having outstanding payments, or having conducted business that is in violation of the fiscal institution's regulations.<br><br>
 
@@ -109,6 +125,8 @@ place_of_issue,"The postcode of where the invoice was issued.
 ",01165,string,,No,Yes,,
 invoice_details,"A list of descriptions for each item (purchased product or service provided) in the invoice.
 ",,array,,Yes,No,,
+invoice_details[].collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
 invoice_details[].description,"The description of the invoice item (an invoice can have one or more items).
 ",December 2019 accounting fees,string,,Yes,Yes,,
 invoice_details[].product_identification,"The identification code of the product or the service, as defined by the legal entity in the country.\n- \U0001F1F2\U0001F1FD <a href=""http://200.57.3.89/Pys/catPyS.aspx"" target=""_blank"">Mexico</a>.",84101600,string,,Yes,Yes,,
@@ -127,13 +145,15 @@ invoice_details[].total_amount,The total price for this invoice item (`pre_tax_a
 invoice_details[].retained_taxes,The retained tax on the invoice item.,,array,,No,No,,
 invoice_details[].retained_taxes[].collected_at,"The ISO-8601 timestamp when the data point was collected.
 ",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
-invoice_details[].retained_taxes[].tax_type,"The item's tax type.
-",,string,,No,Yes,,
 invoice_details[].retained_taxes[].tax,"The type of retained tax (for example, ISR, IVA or IEPS).",ISR,string,,Yes,Yes,,
 invoice_details[].retained_taxes[].tax_percentage,The percentage of tax retained.,10,number,float,Yes,Yes,,
 invoice_details[].retained_taxes[].retained_tax_amount,The amount of retained tax.,209.79,number,float,Yes,Yes,,
-invoice_details[].collected_at,"The ISO-8601 timestamp when the data point was collected.
+invoice_details[].transferred_taxes,The transferred taxes related to the invoice.,,array,,No,No,,
+invoice_details[].transferred_taxes[].collected_at,"The ISO-8601 timestamp when the data point was collected.
 ",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+invoice_details[].transferred_taxes[].tax,"The type of transferred tax (for example, ISR, IVA or IEPS).",IVA,string,,Yes,Yes,,
+invoice_details[].transferred_taxes[].tax_percentage,The percentage of tax transferred.,10,number,float,Yes,Yes,,
+invoice_details[].transferred_taxes[].transferred_tax_amount,The amount of transferred tax.,209.79,number,float,Yes,Yes,,
 currency,"The currency of the invoice. For example:
  
  - 🇧🇷 BRL (Brazilian Real)
@@ -151,6 +171,9 @@ discount_amount,"The total amount discounted in this invoice.
 ",10,number,float,Yes,Yes,,
 total_amount,"The total amount of the invoice (`subtotal_amount` + `tax_amount` - `discount_amount`)
 ",454,number,float,Yes,Yes,,
+related_invoices,A list of related invoices.,,array,,No,No,,
+related_invoices[].relationship_type,"The type of relationship between this invoice and the related invoice, as defined by the legal entity in the country. For more information, see our <a href=""https://developers.belvo.com/docs/sat-catalogs#related-invoices"" target=""_blank"">SAT catalog reference article</a>.",01,string,,No,Yes,,
+related_invoices[].related_invoice_identification,The SAT ID of the related invoice.,INV-123456,string,,No,Yes,,
 payments,"A list detailing all the invoice payments.
 ",,array,,Yes,No,,
 payments[].date,"ISO-8601 timestamp when the payment was made.
@@ -263,6 +286,7 @@ payroll.other_payments[].amount,"The amount of the other payment.
 ",1505,number,float,No,No,,
 folio,"The internal control number that the taxpayer assigns to the invoice.
 ",26,string,,No,Yes,,
+export_type,"The export type of the invoice, as defined by the legal entity in the country. For more information, see our <a href=""https://developers.belvo.com/docs/sat-catalogs#export-type"" target=""_blank"">SAT catalog reference article</a>.",01,string,,No,Yes,,
 xml,"XML of the invoice document.
 ",,string,,No,Yes,,
 warnings,"Object containing information about any warnings related to this invoice.

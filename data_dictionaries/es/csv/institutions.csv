@@ -1,8 +1,6 @@
 Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
 id,El ID de la institución según lo designado por Belvo.,1003,integer,int32,No,No,,
-name,"El nombre de la institución, según lo designado por Belvo.
-
-Por favor, consulta nuestro artículo del <a href=""https://developers.belvo.com/docs/institution"" target=""_blank"">DevPortal sobre Instituciones</a> para obtener una lista detallada de nombres de instituciones.",erebor_mx_retail,string,,No,No,,
+name,"El nombre de la institución, según lo designado por Belvo.",erebor_mx_retail,string,,No,No,,
 type,"El tipo de institución. Devolvemos uno de los siguientes valores:
 
   - `bank`
