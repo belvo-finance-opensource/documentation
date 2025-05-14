@@ -18,7 +18,21 @@ Para el SAT de México, devolvemos uno de los siguientes valores:
 type,"La dirección de la factura (desde la perspectiva del propietario del Link).
 - `OUTFLOW` indica una factura enviada.
 - `INFLOW` indica una factura recibida.",INFLOW,string,,Yes,Yes,"OUTFLOW, INFLOW, None",
+tax_details,Información general sobre los impuestos de la factura.,,object,,No,No,,
+tax_details.total_tax_retained,Monto total de impuestos retenidos.,194.27,number,float,No,No,,
+tax_details.total_tax_transferred,Monto total de impuestos transferidos.,150.4,number,float,No,No,,
+tax_details.retained_taxes,Lista de impuestos retenidos.,,array,,No,No,,
+tax_details.retained_taxes[].tax,"El tipo de impuesto retenido (por ejemplo, ISR, IVA o IEPS).",ISR,string,,No,No,,
+tax_details.retained_taxes[].tax_percentage,El porcentaje de impuesto retenido.,,number,float,No,Yes,,
+tax_details.retained_taxes[].pre_tax_amount,El monto antes de impuestos.,,number,float,No,Yes,,
+tax_details.retained_taxes[].tax_amount,El monto del impuesto retenido.,94,number,float,No,No,,
+tax_details.transferred_taxes,Lista de impuestos transferidos.,,array,,No,No,,
+tax_details.transferred_taxes[].tax,"El tipo de impuesto transferido (por ejemplo, ISR, IVA o IEPS).",IVA,string,,No,No,,
+tax_details.transferred_taxes[].tax_percentage,El porcentaje de impuesto transferido.,16,number,float,No,No,,
+tax_details.transferred_taxes[].pre_tax_amount,El monto antes de impuestos.,940,number,float,No,No,,
+tax_details.transferred_taxes[].tax_amount,El monto del impuesto transferido.,150.4,number,float,No,No,,
 sender_id,El ID fiscal del remitente de la factura,AAA111111AA11,string,,Yes,Yes,,
+sender_fiscal_regime,"El régimen fiscal del remitente, según lo definido por la entidad legal en el país.",601,string,,No,Yes,,
 sender_name,El nombre del remitente de la factura.,ACME CORP,string,,Yes,Yes,,
 sender_tax_fraud_status,"Indica si el remitente está o no en la lista de fraude fiscal del SAT por haber presentado datos incorrectos, tener pagos pendientes o haber realizado negocios que violan las regulaciones de la institución fiscal.<br><br>
 
@@ -44,6 +58,8 @@ La institución fiscal ha reevaluado a un contribuyente previamente confirmado y
 - `NO_TAX_FRAUD_STATUS` <br>
 El receptor o remitente no se encuentra en la lista (en otras palabras, están cumpliendo con las regulaciones de la institución fiscal).",NO_TAX_FRAUD_STATUS,string,,No,Yes,,
 receiver_id,El ID fiscal del receptor de la factura.,BBB222222BB22,string,,Yes,Yes,,
+receiver_postal_code,El código postal del receptor.,11560,string,,No,No,,
+receiver_fiscal_regime,"El régimen fiscal del receptor, según lo definido por la entidad legal en el país.",601,string,,No,Yes,,
 receiver_name,El nombre del receptor de la factura.,BELVO CORP,string,,Yes,Yes,,
 receiver_tax_fraud_status,"Indica si el receptor está o no en la lista de fraude fiscal del SAT por haber presentado datos incorrectos, tener pagos pendientes o haber realizado negocios que violan las regulaciones de la institución fiscal.<br><br>
 
@@ -88,6 +104,7 @@ usage,"El código de uso de la factura, tal como lo define la entidad legal del 
 version,La versión CFDI de la factura.,3.3,string,,No,Yes,,
 place_of_issue,El código postal de donde se emitió la factura.,01165,string,,No,Yes,,
 invoice_details,Una lista de descripciones para cada artículo (producto comprado o servicio prestado) en la factura.,,array,,Yes,No,,
+invoice_details[].collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
 invoice_details[].description,La descripción del artículo de la factura (una factura puede tener uno o más artículos).,December 2019 accounting fees,string,,Yes,Yes,,
 invoice_details[].product_identification,"El código de identificación del producto o del servicio, tal como lo define la entidad legal en el país.\n- \U0001F1F2\U0001F1FD <a href=""http://200.57.3.89/Pys/catPyS.aspx"" target=""_blank"">México</a>.",84101600,string,,Yes,Yes,,
 invoice_details[].quantity,La cantidad de este artículo de factura.,10,number,float,Yes,Yes,,
@@ -101,11 +118,14 @@ invoice_details[].tax_amount,El monto del impuesto para este artículo de factur
 invoice_details[].total_amount,El precio total para este artículo de factura (`pre_tax_amount` + `tax_amount`).,464,number,float,Yes,Yes,,
 invoice_details[].retained_taxes,El impuesto retenido en el artículo de la factura.,,array,,No,No,,
 invoice_details[].retained_taxes[].collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
-invoice_details[].retained_taxes[].tax_type,El tipo de impuesto del artículo.,,string,,No,Yes,,
 invoice_details[].retained_taxes[].tax,"El tipo de impuesto retenido (por ejemplo, ISR, IVA o IEPS).",ISR,string,,Yes,Yes,,
 invoice_details[].retained_taxes[].tax_percentage,El porcentaje de impuesto retenido.,10,number,float,Yes,Yes,,
 invoice_details[].retained_taxes[].retained_tax_amount,El monto del impuesto retenido.,209.79,number,float,Yes,Yes,,
-invoice_details[].collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+invoice_details[].transferred_taxes,Los impuestos transferidos relacionados con la factura.,,array,,No,No,,
+invoice_details[].transferred_taxes[].collected_at,La marca de tiempo ISO-8601 cuando se recopiló el punto de datos.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+invoice_details[].transferred_taxes[].tax,"El tipo de impuesto transferido (por ejemplo, ISR, IVA o IEPS).",IVA,string,,Yes,Yes,,
+invoice_details[].transferred_taxes[].tax_percentage,El porcentaje de impuesto transferido.,10,number,float,Yes,Yes,,
+invoice_details[].transferred_taxes[].transferred_tax_amount,El monto del impuesto transferido.,209.79,number,float,Yes,Yes,,
 currency,"La moneda de la factura. Por ejemplo:
 
 - 🇧🇷 BRL (Real Brasileño)
@@ -117,6 +137,9 @@ exchange_rate,El tipo de cambio utilizado en esta factura para la moneda.,0.052,
 tax_amount,El monto del impuesto para esta factura (suma del `tax_amount` de cada artículo).,64,number,float,Yes,Yes,,
 discount_amount,El monto total descontado en esta factura.,10,number,float,Yes,Yes,,
 total_amount,El monto total de la factura (`subtotal_amount` + `tax_amount` - `discount_amount`),454,number,float,Yes,Yes,,
+related_invoices,Una lista de facturas relacionadas.,,array,,No,No,,
+related_invoices[].relationship_type,"El tipo de relación entre esta factura y la factura relacionada, según lo definido por la entidad legal en el país. Para obtener más información, consulta nuestro <a href=""https://developers.belvo.com/docs/sat-catalogs#related-invoices"" target=""_blank"">artículo de referencia del catálogo SAT</a>.",01,string,,No,Yes,,
+related_invoices[].related_invoice_identification,El SAT ID de la factura relacionada.,INV-123456,string,,No,Yes,,
 payments,Una lista que detalla todos los pagos de facturas.,,array,,Yes,No,,
 payments[].date,Marca de tiempo ISO-8601 cuando se realizó el pago.,2020-03-17T12:00:00.000Z,string,date-time,Yes,Yes,,
 payments[].payment_type,"Código de tipo de pago utilizado para esta factura, según lo definido por la entidad legal del país.
@@ -188,6 +211,7 @@ payroll.other_payments,Un desglose de otros pagos para la nómina.,,array,,No,Ye
 payroll.other_payments[].type,"El tipo de otro pago. Para ver una lista completa de los valores posibles, consulte la <a href=""https://developers.belvo.com/docs/sat-catalogs#payroll-other-payments-type"" target=""_blank"">tabla de tipos de otros pagos de nómina</a>.",EMPLOYMENT_SUBSIDY,string,,No,Yes,,
 payroll.other_payments[].amount,El monto del otro pago.,1505,number,float,No,No,,
 folio,El número de control interno que el contribuyente asigna a la factura.,26,string,,No,Yes,,
+export_type,"El tipo de exportación de la factura, según lo definido por la entidad legal en el país. Para más información, consulta nuestro <a href=""https://developers.belvo.com/docs/sat-catalogs#export-type"" target=""_blank"">artículo de referencia del catálogo SAT</a>.",01,string,,No,Yes,,
 xml,XML del documento de factura.,,string,,No,Yes,,
 warnings,Objeto que contiene información sobre cualquier advertencia relacionada con esta factura.,,object,,No,Yes,,
 warnings.code,"El código de advertencia. Puede ser uno de:

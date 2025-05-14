@@ -7,9 +7,7 @@ account,Detalles sobre la cuenta.,,object,,Yes,Yes,,
 account.id,Identificador único de Belvo para el elemento actual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
 account.link,El `link.id` al que pertenecen los datos.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
 account.institution,Detalles sobre la institución.,,object,,Yes,No,,
-account.institution.name,"El nombre de la institución, según lo designado por Belvo.
-
-Por favor, consulta nuestro artículo del <a href=""https://developers.belvo.com/docs/institution"" target=""_blank"">DevPortal sobre Instituciones</a> para obtener una lista detallada de nombres de instituciones.",erebor_mx_retail,string,,No,No,,
+account.institution.name,"El nombre de la institución, según lo designado por Belvo.",erebor_mx_retail,string,,No,No,,
 account.institution.type,"El tipo de institución. Devolvemos uno de los siguientes valores:
 
   - `bank`

@@ -3,10 +3,7 @@ id,"Belvo's unique identifier for the current item.
 ",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
 link,The `link.id` the data belongs to.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
 institution,Details regarding the institution.,,object,,Yes,No,,
-institution.name,"The name of the institution, as designated by Belvo.
-
-Please see our <a href=""https://developers.belvo.com/docs/institution"" target=""_blank"">Institutions</a> DevPortal article for a detailed list of institution names.
-",erebor_mx_retail,string,,No,No,,
+institution.name,"The name of the institution, as designated by Belvo.",erebor_mx_retail,string,,No,No,,
 institution.type,"The type of institution. We return one of the following values:
 
   - `bank`

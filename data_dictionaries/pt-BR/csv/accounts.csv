@@ -2,9 +2,7 @@ Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
 id,Identificador único da Belvo para o item atual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
 link,O `link.id` ao qual os dados pertencem.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
 institution,Detalhes sobre a instituição.,,object,,Yes,No,,
-institution.name,"O nome da instituição, conforme designado pela Belvo.
-
-Consulte nosso artigo <a href=""https://developers.belvo.com/docs/institution"" target=""_blank"">Instituições</a> no DevPortal para uma lista detalhada de nomes de instituições.",erebor_mx_retail,string,,No,No,,
+institution.name,"O nome da instituição, conforme designado pela Belvo.",erebor_mx_retail,string,,No,No,,
 institution.type,"O tipo de instituição. Retornamos um dos seguintes valores:
 
   - `bank`
