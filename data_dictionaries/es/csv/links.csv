@@ -38,7 +38,7 @@ credentials_storage,"Indica si se deben almacenar las credenciales (y la duraci�
 - Para enlaces recurrentes, esto se establece en `store` por defecto (y no se puede cambiar).
 - Para enlaces únicos, esto se establece en `365d` por defecto.
 
-Elige una de las siguientes opciones:
+Puede ser:
   - `store` para almacenar credenciales (hasta que se elimine el enlace)
   - `nostore` para no almacenar credenciales
   - Cualquier valor entre `1d` y `365d` para indicar el número de días que deseas que se almacenen las credenciales.
