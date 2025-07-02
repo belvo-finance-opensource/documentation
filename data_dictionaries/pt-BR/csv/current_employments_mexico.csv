@@ -1,0 +1,28 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+id,Identificador único da Belvo para o item atual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
+link,O `link.id` ao qual os dados pertencem.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
+created_at,O carimbo de data e hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+month,"O mês para o qual o status atual de emprego é reportado, no formato `YYYY-MM`. Se o `status` for `UNEMPLOYED`, este campo é `null`.",2023-01,string,,No,Yes,,^\d{4}-\d{2}$
+internal_identification,"ID único para o usuário de acordo com a instituição. Para IMSS e ISSSTE México, este é o CURP. Se `status` for `UNEMPLOYED`, este campo é `null`.",BLPM230130IONVGR54,string,,No,Yes,,
+personal_data,Detalhes sobre as informações pessoais do indivíduo.,,object,,Yes,No,,
+personal_data.official_name,O nome legal do indivíduo.,Bruce Banner del Torro,string,,No,Yes,,
+personal_data.first_name,O primeiro nome do indivíduo.,Bruce,string,,No,Yes,,
+personal_data.last_name,O sobrenome do indivíduo.,Banner del Torro,string,,No,Yes,,
+personal_data.birth_date,"A data de nascimento do indivíduo, no formato `YYYY-MM-DD`.",1990-02-09,string,date,No,Yes,,
+personal_data.document_ids,Detalhes sobre os documentos de identificação do indivíduo.,,array,,No,No,,
+personal_data.document_ids[].document_type,"O tipo de documento relacionado ao indivíduo. Retornamos um dos seguintes valores:
+
+  - `NSS`
+  - `CURP`
+  - `RFC`",NSS,string,,No,Yes,"NSS, CURP, RFC",
+personal_data.document_ids[].document_number,O número do documento de identidade (como uma string).,10277663582,string,,No,Yes,,
+status,O status atual de emprego do indivíduo.,EMPLOYED,string,,Yes,No,"EMPLOYED, UNEMPLOYED",
+current_employment_records,"Detalhes sobre o emprego atual do indivíduo. Se `status` for `UNEMPLOYED`, este campo será `null`.",,array,,No,Yes,,
+current_employment_records[].employer,O nome oficial do empregador.,Batman Enterprises CDMX,string,,Yes,No,,
+current_employment_records[].employer_id,"O ID oficial do empregador, de acordo com o país.",123456789010,string,,Yes,No,,
+current_employment_records[].employer_rfc,O RFC do empregador (número de identificação fiscal).,RFC123456,string,,Yes,No,,
+current_employment_records[].state,O estado geográfico onde o emprego está localizado.,CDMX,string,,Yes,No,,
+current_employment_records[].days_employed,O número de dias que o indivíduo esteve empregado com este empregador.,365,integer,,Yes,No,,
+current_employment_records[].base_salary,O salário base do indivíduo.,10000,number,float,Yes,No,,
+current_employment_records[].monthly_salary,"O salário mensal do indivíduo, incluindo quaisquer benefícios adicionais.",304166.67,number,float,Yes,No,,
