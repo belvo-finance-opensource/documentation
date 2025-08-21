@@ -51,7 +51,7 @@ credentials_storage,"Indicates whether or not to store credentials (and the dura
 - For recurrent links, this is set to `store` by default (and cannot be changed). 
 - For single links, this is set to `365d` by default.
 
-Choose either:
+Can be either:
   - `store` to store credentials (until the link is deleted)
   - `nostore` to not store credentials
   -  Any value between `1d` and `365d` to indicate the number of days you want the credentials to be stored.
