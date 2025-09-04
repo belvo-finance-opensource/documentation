@@ -13,7 +13,7 @@ country_codes,"Los códigos de país donde la institución está disponible, por
 - 🇨🇴 CO (Colombia)
 - 🇲🇽 MX (México)",,array,,No,No,,
 primary_color,El color primario en el sitio web de la institución.,#056dae,string,,No,No,,
-logo,La URL del logotipo de la institución.,https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.png,string,,No,Yes,,
+logo,La URL del logotipo de la institución.,https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.svg,string,,No,Yes,,
 icon_logo,La URL del logotipo del icono de la institución.,https://statics.belvo.io/widget/images/institutions/erebor.svg,string,,No,Yes,,
 text_logo,La URL del logotipo de texto de la institución.,https://statics.belvo.io/widget/images/institutions/erebor.svg,string,,No,Yes,,
 form_fields,,,array,,No,No,,
@@ -66,3 +66,7 @@ integration_type,"El tipo de tecnología utilizada para acceder a la institució
 - `credentials`: Utiliza la tecnología de scraping de Belvo, combinada con las credenciales del usuario, para realizar solicitudes.
 - `openfinance`: Utiliza la API de open finance del banco para realizar solicitudes.",credentials,string,,No,No,"credentials, openfinance",
 status,Indica si la integración de Belvo con la institución está actualmente activa (`healthy`) o en mantenimiento (`down`).,healthy,string,,No,No,"healthy, down",
+openbanking_information,Información sobre la institución en el entorno de Open Finance.,,object,,No,Yes,,
+openbanking_information.description,Una breve descripción de la institución en el entorno de Open Finance. Extraído del listado de instituciones reguladas por Open Finance.,"A 1ss Bank é uma fintech fundada em janeiro de 2020, com a missão de ajudar empresas com grandes ecossistemas a se tornarem fintechs, integrando e automatizando seus processos financeiros através de APIs e plataforma white-label.",string,,No,Yes,,
+openbanking_information.participants,Lista de servidores de marcas disponibles de la institución en Open Finance. Extraído de la lista de instituciones reguladas por Open Finance.,"[""1ss Bank""]",array,,No,Yes,,
+openbanking_information.authorization_server_id,El ID del servidor de autorización (UUID) de la institución en el Entorno de Finanzas Abiertas.,aa18fcd3-2f0b-40b1-87db-8930b10b78b1,string,uuid,No,Yes,,

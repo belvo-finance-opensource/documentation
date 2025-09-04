@@ -34,7 +34,7 @@ credentials_storage,"Indica se as credenciais devem ou não ser armazenadas (e a
 - Para links recorrentes, isso é definido como `store` por padrão (e não pode ser alterado).
 - Para links únicos, isso é definido como `365d` por padrão.
 
-Escolha uma das opções:
+Pode ser:
   - `store` para armazenar credenciais (até que o link seja excluído)
   - `nostore` para não armazenar credenciais
   - Qualquer valor entre `1d` e `365d` para indicar o número de dias que você deseja que as credenciais sejam armazenadas.

@@ -84,7 +84,7 @@ employment_records[].monthly_salary,"The monthly salary of the individual, inclu
 
 - For IMSS Mexico, this value is calculated including the perks that the individual is entitled to throughout the year.
 - For ISSSTE Mexico, this value is calculated excluding perks.
-",,number,float,No,No,,
+",23193.925,number,float,No,No,,
 employment_records[].currency,"The three-letter currency code in which the salary is paid.
 ",MXN,string,,No,No,,
 employment_records[].employment_status_updates,Details regarding any employment changes of the individual.,,array,,No,Yes,,

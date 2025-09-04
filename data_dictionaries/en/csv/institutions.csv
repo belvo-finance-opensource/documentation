@@ -15,7 +15,7 @@ country_codes,"The country codes where the institution is available, for example
 - 🇲🇽 MX (Mexico)  
 ",,array,,No,No,,
 primary_color,The primary color on the institution's website.,#056dae,string,,No,No,,
-logo,The URL of the institution's logo.,https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.png,string,,No,Yes,,
+logo,The URL of the institution's logo.,https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.svg,string,,No,Yes,,
 icon_logo,The URL of the institution's icon logo.,https://statics.belvo.io/widget/images/institutions/erebor.svg,string,,No,Yes,,
 text_logo,The URL of the institution's text logo.,https://statics.belvo.io/widget/images/institutions/erebor.svg,string,,No,Yes,,
 form_fields,,,array,,No,No,,
@@ -76,3 +76,7 @@ integration_type,"The type of technology used to access the institution. We retu
 ",credentials,string,,No,No,"credentials, openfinance",
 status,"Indicates whether Belvo's integration with the institution is currently active (`healthy`) or undergoing maintenance (`down`).
 ",healthy,string,,No,No,"healthy, down",
+openbanking_information,Information about the institution on the Open Finance environment.,,object,,No,Yes,,
+openbanking_information.description,A short description of the institution on the Open Finance environment. Extracted from Open Finance regulated institutions listing.,"A 1ss Bank é uma fintech fundada em janeiro de 2020, com a missão de ajudar empresas com grandes ecossistemas a se tornarem fintechs, integrando e automatizando seus processos financeiros através de APIs e plataforma white-label.",string,,No,Yes,,
+openbanking_information.participants,List of brands' servers available from the institution in Open Finance. Extracted from Open Finance regulated institutions listing.,"[""1ss Bank""]",array,,No,Yes,,
+openbanking_information.authorization_server_id,The authorization server ID (UUID) of the institution on the Open Finance Environment.,aa18fcd3-2f0b-40b1-87db-8930b10b78b1,string,uuid,No,Yes,,

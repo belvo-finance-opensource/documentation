@@ -57,7 +57,7 @@ employment_records[].most_recent_base_salary,"O salário base mais recente que o
 employment_records[].monthly_salary,"O salário mensal do indivíduo, incluindo quaisquer benefícios adicionais.
 
 - Para o IMSS México, este valor é calculado incluindo os benefícios aos quais o indivíduo tem direito ao longo do ano.
-- Para o ISSSTE México, este valor é calculado excluindo os benefícios.",,number,float,No,No,,
+- Para o ISSSTE México, este valor é calculado excluindo os benefícios.",23193.925,number,float,No,No,,
 employment_records[].currency,O código de moeda de três letras em que o salário é pago.,MXN,string,,No,No,,
 employment_records[].employment_status_updates,Detalhes sobre quaisquer mudanças de emprego do indivíduo.,,array,,No,Yes,,
 employment_records[].employment_status_updates[].event,"Para o IMSS México, este é o evento que causou a mudança no status de emprego ou salário. Retornamos um dos seguintes valores:
