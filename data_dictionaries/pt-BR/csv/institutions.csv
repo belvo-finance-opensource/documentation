@@ -13,7 +13,7 @@ country_codes,"Os códigos de país onde a instituição está disponível, por 
 - 🇨🇴 CO (Colômbia)
 - 🇲🇽 MX (México)",,array,,No,No,,
 primary_color,A cor primária no site da instituição.,#056dae,string,,No,No,,
-logo,A URL do logotipo da instituição.,https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.png,string,,No,Yes,,
+logo,A URL do logotipo da instituição.,https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.svg,string,,No,Yes,,
 icon_logo,A URL do logotipo do ícone da instituição.,https://statics.belvo.io/widget/images/institutions/erebor.svg,string,,No,Yes,,
 text_logo,A URL do logotipo de texto da instituição.,https://statics.belvo.io/widget/images/institutions/erebor.svg,string,,No,Yes,,
 form_fields,,,array,,No,No,,
@@ -66,3 +66,7 @@ integration_type,"O tipo de tecnologia usada para acessar a instituição. Retor
 - `credentials`: Usa a tecnologia de scraping da Belvo, combinada com credenciais do usuário, para realizar solicitações.
 - `openfinance`: Usa a API de open finance do banco para realizar solicitações.",credentials,string,,No,No,"credentials, openfinance",
 status,Indica se a integração da Belvo com a instituição está atualmente ativa (`healthy`) ou em manutenção (`down`).,healthy,string,,No,No,"healthy, down",
+openbanking_information,Informações sobre a instituição no ambiente Open Finance.,,object,,No,Yes,,
+openbanking_information.description,Uma breve descrição da instituição no ambiente Open Finance. Extraído da lista de instituições regulamentadas pelo Open Finance.,"A 1ss Bank é uma fintech fundada em janeiro de 2020, com a missão de ajudar empresas com grandes ecossistemas a se tornarem fintechs, integrando e automatizando seus processos financeiros através de APIs e plataforma white-label.",string,,No,Yes,,
+openbanking_information.participants,Lista de servidores de marcas disponíveis pela instituição no Open Finance. Extraído da lista de instituições reguladas pelo Open Finance.,"[""1ss Bank""]",array,,No,Yes,,
+openbanking_information.authorization_server_id,O ID do servidor de autorização (UUID) da instituição no Ambiente de Open Finance.,aa18fcd3-2f0b-40b1-87db-8930b10b78b1,string,uuid,No,Yes,,
