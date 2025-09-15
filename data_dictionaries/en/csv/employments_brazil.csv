@@ -31,7 +31,9 @@ salaries[].type,"The type of salary.
 We return one of the following values:
   - `REGULAR`
   - `THIRTEENTH`
+  - `VOLUNTARY`
+  - `RETIREMENT`
   - `null`
-",REGULAR,string,,No,Yes,"REGULAR, THIRTEENTH, None",
+",VOLUNTARY,string,,No,Yes,"REGULAR, THIRTEENTH, VOLUNTARY, RETIREMENT, None",
 salaries[].month,"The month that the employee received their salary, in `YYYY-MM` format.",2022-01,string,,Yes,No,,^\d{4}-\d{2}$
 salaries[].currency,The three-letter currency code (ISO-4217).,BRL,string,,Yes,No,,^[A-Z]{3}$

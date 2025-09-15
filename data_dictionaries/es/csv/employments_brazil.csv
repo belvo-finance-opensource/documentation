@@ -27,6 +27,8 @@ salaries[].type,"El tipo de salario.
 Devolvemos uno de los siguientes valores:
   - `REGULAR`
   - `THIRTEENTH`
-  - `null`",REGULAR,string,,No,Yes,"REGULAR, THIRTEENTH, None",
+  - `VOLUNTARY`
+  - `RETIREMENT`
+  - `null`",VOLUNTARY,string,,No,Yes,"REGULAR, THIRTEENTH, VOLUNTARY, RETIREMENT, None",
 salaries[].month,"El mes en que el empleado recibió su salario, en formato `YYYY-MM`.",2022-01,string,,Yes,No,,^\d{4}-\d{2}$
 salaries[].currency,El código de moneda de tres letras (ISO-4217).,BRL,string,,Yes,No,,^[A-Z]{3}$
