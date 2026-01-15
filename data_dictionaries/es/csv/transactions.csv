@@ -172,13 +172,13 @@ account.loan_data.interest_rates,"Desglose del interés aplicado al préstamo. C
 > **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",,array,,Yes,No,,
 account.loan_data.interest_rates[].name,"El nombre del tipo de tasa de interés aplicada al préstamo.
 
-**Nota:** Para OFDA Brasil, recomendamos usar el parámetro `interest_date_data.tax_type`.",NOMINAL,string,,Yes,Yes,,
+**Nota:** Para OFDA Brasil, recomendamos usar el parámetro `interest_rate_data.tax_type`.",NOMINAL,string,,Yes,Yes,,
 account.loan_data.interest_rates[].type,"El período durante el cual se aplica el interés al préstamo.
 
 > **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",MONTHLY,string,,Yes,No,"MONTHLY, YEARLY",
 account.loan_data.interest_rates[].value,"La tasa de interés (en porcentaje o valor monetario).
 
-**Nota:** Para OFDA Brasil, recomendamos usar el parámetro `interest_date_data.pre_fixed_rate` y `interest_date_data.post_fixed_rate`.",7.85,number,float,Yes,Yes,,
+**Nota:** Para OFDA Brasil, recomendamos que utilice el parámetro `interest_rate_data.pre_fixed_rate` y `interest_rate_data.post_fixed_rate`.",7.85,number,float,Yes,Yes,,
 account.loan_data.interest_rates[].interest_rate_data,Información detallada sobre la tasa de interés.,,object,,Yes,Yes,,
 account.loan_data.interest_rates[].interest_rate_data.tax_type,"El tipo de impuesto sobre la tasa de interés. Devolvemos uno de los siguientes valores:
 
@@ -567,7 +567,7 @@ loan_data,"Información sobre los datos transaccionales del préstamo, si corres
 loan_data.is_detached,"Boolean para indicar si este pago de préstamo fue parte del calendario de pagos original.
 
 > **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",True,boolean,,Yes,No,,
-loan_data.installment_id,El ID único de la institución para esta cuota de pago.,WGx0aExYcEJMVm93TFRsZFcyRXRla0V0V2pBdE9Wd3RYWH,string,,No,Yes,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
+loan_data.installment_id,El ID único de la institución para esta cuota de pago.,WGx0aExYcEJMVm93TFRsZFcyRXRla0V0V2pBdE9Wd3RYWH,string,,Yes,Yes,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
 loan_data.fees,Detalles relacionados con las tarifas asociadas con este pago. Solo aplicable cuando `is_detached` = `true`.,,array,,Yes,No,,
 loan_data.fees[].name,"El nombre de la tarifa.
 
