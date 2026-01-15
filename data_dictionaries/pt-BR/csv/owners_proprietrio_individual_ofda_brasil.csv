@@ -173,12 +173,12 @@ filiations[].civil_name,"O nome completo da pessoa.
 filiations[].social_name,O nome social da pessoa.,The Dark Knight,string,,Yes,Yes,,"^[\w\W\s]{0,70}$"
 financial_profile,Informações sobre o perfil financeiro do indivíduo.,,object,,Yes,Yes,,
 financial_profile.company_id,O identificador da empresa onde o indivíduo está empregado.,50685362000135,string,,Yes,Yes,,^\d{14}$
-financial_profile.occuptation_code,"A área de emprego do indivíduo. Retornamos um dos seguintes valores:
+financial_profile.occupation_code,"A área de emprego do indivíduo. Retornamos um dos seguintes valores:
 
   - `BRAZIL_PUBLIC_OFFICE`
   - `BRAZIL_OCCUPATION_CODE`
   - `OTHER`
-  - `null`",BRAZIL_OCCUPATION_CODE,string,,No,Yes,"BRAZIL_PUBLIC_OFFICE, BRAZIL_OCCUPATION_CODE, OTHER, None",
+  - `null`",BRAZIL_OCCUPATION_CODE,string,,Yes,Yes,"BRAZIL_PUBLIC_OFFICE, BRAZIL_OCCUPATION_CODE, OTHER, None",
 financial_profile.occupation_description,Informações sobre a ocupação do indivíduo.,01,string,,Yes,Yes,,[\w\W\s]*
 financial_profile.informed_income,"Informações sobre a renda declarada do indivíduo.
 

@@ -172,13 +172,13 @@ account.loan_data.interest_rates,"Detalhamento dos juros aplicados ao empréstim
 > **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",,array,,Yes,No,,
 account.loan_data.interest_rates[].name,"O nome do tipo de taxa de juros aplicada ao empréstimo.
 
-**Nota:** Para OFDA Brasil, recomendamos que você use o parâmetro `interest_date_data.tax_type`.",NOMINAL,string,,Yes,Yes,,
+**Nota:** Para OFDA Brasil, recomendamos que você use o parâmetro `interest_rate_data.tax_type`.",NOMINAL,string,,Yes,Yes,,
 account.loan_data.interest_rates[].type,"O período em que o juro é aplicado ao empréstimo.
 
 > **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",MONTHLY,string,,Yes,No,"MONTHLY, YEARLY",
 account.loan_data.interest_rates[].value,"A taxa de juros (em porcentagem ou valor monetário).
 
-**Nota:** Para OFDA Brasil, recomendamos que você use os parâmetros `interest_date_data.pre_fixed_rate` e `interest_date_data.post_fixed_rate`.",7.85,number,float,Yes,Yes,,
+**Nota:** Para OFDA Brasil, recomendamos que você use os parâmetros `interest_rate_data.pre_fixed_rate` e `interest_rate_data.post_fixed_rate`.",7.85,number,float,Yes,Yes,,
 account.loan_data.interest_rates[].interest_rate_data,Informações detalhadas sobre a taxa de juros.,,object,,Yes,Yes,,
 account.loan_data.interest_rates[].interest_rate_data.tax_type,"O tipo de imposto sobre a taxa de juros. Retornamos um dos seguintes valores:
 
@@ -567,7 +567,7 @@ loan_data,"Informações sobre os dados transacionais de empréstimos, se aplic�
 loan_data.is_detached,"Boolean para indicar se este pagamento de empréstimo fazia parte do cronograma de pagamento original.
 
 > **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",True,boolean,,Yes,No,,
-loan_data.installment_id,O ID único da instituição para esta parcela de pagamento.,WGx0aExYcEJMVm93TFRsZFcyRXRla0V0V2pBdE9Wd3RYWH,string,,No,Yes,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
+loan_data.installment_id,O ID único da instituição para esta parcela de pagamento.,WGx0aExYcEJMVm93TFRsZFcyRXRla0V0V2pBdE9Wd3RYWH,string,,Yes,Yes,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
 loan_data.fees,Detalhes sobre as taxas associadas a este pagamento. Aplicável apenas quando `is_detached` = `true`.,,array,,Yes,No,,
 loan_data.fees[].name,"O nome da taxa.
 
