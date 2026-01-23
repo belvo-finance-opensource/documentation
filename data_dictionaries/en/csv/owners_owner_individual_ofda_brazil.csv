@@ -240,13 +240,13 @@ filiations[].social_name,"The person's social name.
 financial_profile,Information regarding the financial profile of the individual.,,object,,Yes,Yes,,
 financial_profile.company_id,"The identifier of the company where the individual is employed.
 ",50685362000135,string,,Yes,Yes,,^\d{14}$
-financial_profile.occuptation_code,"The area of employment of the individual. We return one of the following values:
+financial_profile.occupation_code,"The area of employment of the individual. We return one of the following values:
 
   - `BRAZIL_PUBLIC_OFFICE`
   - `BRAZIL_OCCUPATION_CODE`
   - `OTHER`
   - `null`
-",BRAZIL_OCCUPATION_CODE,string,,No,Yes,"BRAZIL_PUBLIC_OFFICE, BRAZIL_OCCUPATION_CODE, OTHER, None",
+",BRAZIL_OCCUPATION_CODE,string,,Yes,Yes,"BRAZIL_PUBLIC_OFFICE, BRAZIL_OCCUPATION_CODE, OTHER, None",
 financial_profile.occupation_description,"Information regarding the individual's occupation.
 ",01,string,,Yes,Yes,,[\w\W\s]*
 financial_profile.informed_income,"Information regarding the individual's reported income.

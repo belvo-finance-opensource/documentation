@@ -226,7 +226,7 @@ financial_profile.informed_revenue.frequency_additional_info,"Additional informa
 financial_profile.informed_revenue.amount,"The reported revenue of the business.
 
 > **Non-nullable:** A value must be returned by Brazil's open finance network if the `informed_revenue` field is available.
-",45391.89,number,,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+",45391.89,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
 financial_profile.informed_revenue.currency,"The three-letter currency code (ISO-4217).
 
 > **Non-nullable:** A value must be returned by Brazil's open finance network if the `informed_revenue` field is available.
@@ -234,7 +234,7 @@ financial_profile.informed_revenue.currency,"The three-letter currency code (ISO
 financial_profile.informed_revenue.year,"The year when revenue was last declared.
 
 > **Non-nullable:** A value must be returned by Brazil's open finance network if the `informed_revenue` field is available.
-",2022,integer,,Yes,No,,
+",2022,integer,int32,Yes,No,,
 financial_profile.patrimony,Information regarding the individual's reported assets.,,object,,Yes,Yes,,
 financial_profile.patrimony.amount,"The reported assets of the business.
 

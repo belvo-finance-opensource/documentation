@@ -1,0 +1,139 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+id,Identificador único da Belvo para o item atual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
+link,O `link.id` ao qual os dados pertencem.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
+created_at,O carimbo de data e hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+operation_identifier,O identificador único da rede para a operação de troca.,92792126019929240,string,,Yes,No,,"^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$"
+operation_number,O número de registro da operação de 12 dígitos do Banco Central do Brasil (Bacen). Isso pode ser `null` se a operação ainda não tiver sido registrada.,393874649456,string,,No,Yes,,^\d{12}$
+operation_type,"O tipo de operação de câmbio.
+
+Retornamos um dos seguintes valores do enum:
+  - `COMPRA` - Compra (o cliente está comprando moeda estrangeira)
+  - `VENDA` - Venda (o cliente está vendendo moeda estrangeira)",COMPRA,string,,Yes,No,"COMPRA, VENDA",
+operation_requested_at,O carimbo de data e hora ISO-8601 quando a operação de câmbio foi contratada.,2023-03-07T08:30:00Z,string,date-time,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
+authorized_institution_identifier,O CNPJ da instituição autorizada a realizar a operação.,11225860000140,integer,int64,Yes,No,,
+authorized_institution_name,O nome da instituição autorizada.,AGENCIA CORRETORA,string,,Yes,No,,
+intermediary_institution_identifier,"O CNPJ da instituição intermediária, se uma foi utilizada.",11225860000140,integer,int64,No,Yes,,
+intermediary_institution_name,O nome da instituição intermediária. Deve estar presente se `intermediary_institution_identifier` estiver disponível.,AGENCIA CORRETORA,string,,No,Yes,,
+operation_due_date,"A data de liquidação atualmente agendada para a operação, no formato `YYYY-MM-DD`.
+
+> **Nota**: Este campo é atualizado se houver alterações na operação de câmbio.",2018-02-15,string,date,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+local_operation_tax_amount,A taxa de câmbio aplicada à operação.,1.3,number,float,Yes,No,,"^\d{1,15}\.\d{1,15}$"
+local_operation_tax_currency,O código de moeda de três letras (ISO-4217) para a taxa de câmbio.,BRL,string,,Yes,No,,^[A-Z]{3}$
+local_operation_value_amount,O valor total da operação em moeda local.,1000.04,number,float,Yes,No,,"^\d{1,17}\.\d{2}$"
+local_operation_value_currency,O código de moeda de três letras (ISO-4217) para a moeda local.,BRL,string,,Yes,No,,^[A-Z]{3}$
+foreign_operation_value_amount,O valor total da operação na moeda estrangeira.,1000.04,number,float,Yes,No,,"^\d{1,17}\.\d{2}$"
+foreign_operation_value_currency,O código de moeda de três letras (ISO-4217) para a moeda estrangeira.,USD,string,,Yes,No,,^[A-Z]{3}$
+operation_outstanding_balance_amount,"O saldo pendente a ser liquidado, na moeda estrangeira. No caso de a operação de câmbio estar programada para ser liquidada dentro de dois dias a partir de `operation_requested_at`, esse valor pode ser `null`.",1000.04,number,float,No,Yes,,"^\d{1,17}\.\d{2}$"
+operation_outstanding_balance_currency,A moeda do saldo devedor. Obrigatório se `operation_outstanding_balance_amount` não for `null`.,USD,string,,No,Yes,,^[A-Z]{3}$
+tev_amount_amount,"O ""All-in Rate"" (Valor Efetivo Total/Custo Efetivo Total), que representa o custo total da operação. Obrigatório quando a operação está programada para ser liquidada dentro de dois dias a partir de `operation_requested_at` e não excede $100,000 USD.",1000.000004,number,float,No,Yes,,"^\d{1,15}\.\d{1,15}$"
+tev_amount_currency,A moeda do VET (sempre BRL). Obrigatório se `tev_amount_amount` não for `null`.,BRL,string,,No,Yes,,^[A-Z]{3}$
+local_currency_advance_percentage,"A porcentagem do valor em moeda estrangeira que foi concedida ao cliente antecipadamente. No caso de a operação de câmbio estar programada para ser liquidada dentro de dois dias a partir de `operation_requested_at`, esse valor pode ser `null`.",0.12,number,float,No,Yes,,"^\d{1}\.\d{1,6}$"
+settlement_method,"O método de entrega para a moeda estrangeira.
+
+Retornamos um dos seguintes valores do enum:
+  - `CARTA_CREDITO_A_VISTA` (Código 10) - Carta de crédito à vista
+  - `CARTA_CREDITO_A_PRAZO` (Código 15) - Carta de crédito a prazo
+  - `CONTA_DEPOSITO` (Código 20) - Conta de depósito
+  - `CONTA_DEPOSITO_MOEDA_ESTRANGEIRA_PAIS` (Código 21) - Conta de depósito em moeda estrangeira no país
+  - `CONTA_DEPOSITO_EXPORTADOR_MANTIDA_NO_EXTERIOR` (Código 22) - Conta de depósito do exportador mantida no exterior
+  - `CONTA_DEPOSITO_OU_PAGAMENTO_EXPORTADOR_INSTITUICAO_EXTERIOR` (Código 23) - Conta de depósito ou pagamento ao exportador em instituição no exterior
+  - `CONVENIO_PAGAMENTOS_E_CREDITOS_RECIPROCOS` (Código 25) - Convênio de pagamentos e créditos recíprocos
+  - `CHEQUE` (Código 30) - Cheque
+  - `ESPECIE_CHEQUES_VIAGEM` (Código 50) - Espécie ou cheques de viagem
+  - `CARTAO_PREPAGO` (Código 55) - Cartão pré-pago
+  - `TELETRANSMISSAO` (Código 65) - Transferência eletrônica
+  - `TITULOS_VALORES` (Código 75) - Títulos/valores mobiliários
+  - `SIMBOLICA` (Código 90) - Simbólica
+  - `SEM_MOVIMENTACAO_VALORES` (Código 91) - Sem movimentação de valores
+  - `DEMAIS` (Código 99) - Outros
+  - `OUTRO_NAO_MAPEADO_OFB` - Outro não mapeado pelo Open Finance Brasil
+  - `null`",CARTA_CREDITO_A_PRAZO,string,,Yes,Yes,"CONTA_DEPOSITO_MOEDA_ESTRANGEIRA_PAIS, CONTA_DEPOSITO_OU_PAGAMENTO_EXPORTADOR_INSTITUICAO_EXTERIOR, ESPECIE_CHEQUES_VIAGEM, CARTAO_PREPAGO, TELETRANSMISSAO, SEM_MOVIMENTACAO_VALORES, DEMAIS, CARTA_CREDITO_A_VISTA, CARTA_CREDITO_A_PRAZO, CONTA_DEPOSITO, CHEQUE, TITULOS_VALORES, SIMBOLICA, CONTA_DEPOSITO_EXPORTADOR_MANTIDA_NO_EXTERIOR, CONVENIO_PAGAMENTOS_E_CREDITOS_RECIPROCOS, OUTRO_NAO_MAPEADO_OFB, None",
+operation_category_code,"O código de 5 dígitos do Banco Central que classifica a ""natureza"" da operação.
+
+Este código deve estar em conformidade com os códigos de natureza referenciados na Resolução 277 ou na Circular 3690, conforme aplicável ao contrato de câmbio.",90302,string,,Yes,No,,^\d{5}$
+results,Um array de objetos de histórico de troca.,,array,,No,No,,
+results[].id,Identificador único da Belvo para o item atual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
+results[].link,O `link.id` ao qual os dados pertencem.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
+results[].exchange_id,O identificador único gerado pela Belvo para a operação de câmbio original.,c4bfecf9-4eb6-4920-9f9f-e1f1e60ef321,string,uuid,Yes,No,,
+results[].created_at,O carimbo de data e hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+results[].collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+results[].operation_identifier,O identificador único da rede para a operação de troca.,92792126019929240,string,,Yes,No,,"^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$"
+results[].event_sequence_number,O número de sequência do registro do evento no Banco Central (Bacen).,493874649457,string,,Yes,No,,^\d{12}$
+results[].event_type,"O tipo de evento que ocorreu para a operação de câmbio.
+
+Retornamos um dos seguintes valores do enum:
+  - `1` - Contrato no mercado primário
+  - `2` - Modificação de operação de câmbio no mercado primário
+  - `3` - Cancelamento de operação de câmbio no mercado primário
+  - `4` - Liquidação de operação de câmbio no mercado primário
+  - `5` - Baixa de valor pendente a liquidar no mercado primário
+  - `6` - Restabelecimento de valor pendente baixado no mercado primário
+  - `9` - Anulação de operação de câmbio no mercado primário (usado, por exemplo, na anulação de um evento de liquidação/cancelamento)
+
+> **Nota**: Os códigos seguem o layout de mensagens enviadas pelas instituições ao Banco Central do Brasil.",2,integer,,Yes,No,"1, 2, 3, 4, 5, 6, 9",
+results[].event_created_at,O carimbo de data e hora ISO-8601 quando o evento ocorreu.,2023-03-10T14:00:00Z,string,date-time,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
+results[].operation_due_date,"A data em que a operação (compra ou venda), após o evento, está programada para ser liquidada, no formato `YYYY-MM-DD`.",2023-03-20,string,date,No,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+results[].local_operation_tax_amount,A taxa de câmbio aplicada à operação após o evento.,1.4,number,float,No,Yes,,"^\d{1,15}\.\d{1,15}$"
+results[].local_operation_tax_currency,O código de moeda de três letras (ISO-4217) para a taxa de câmbio.,BRL,string,,No,Yes,,^[A-Z]{3}$
+results[].local_operation_value_amount,O valor total da operação em moeda local após o evento.,950,number,float,No,Yes,,"^\d{1,17}\.\d{2}$"
+results[].local_operation_value_currency,O código de moeda de três letras (ISO-4217) para a moeda local.,BRL,string,,No,Yes,,^[A-Z]{3}$
+results[].foreign_operation_value_amount,O valor total da operação em moeda estrangeira após o evento.,678.57,number,float,No,Yes,,"^\d{1,17}\.\d{2}$"
+results[].foreign_operation_value_currency,O código de moeda de três letras (ISO-4217) para a moeda estrangeira.,USD,string,,No,Yes,,^[A-Z]{3}$
+results[].operation_outstanding_balance_amount,"O saldo pendente a ser liquidado em moeda estrangeira após o evento.
+
+Este campo é obrigatório para eventos criados (`event_created_at`) a partir de 15 de abril de 2024, em casos de operações de câmbio com liquidação futura.",678.57,number,float,No,Yes,,"^\d{1,17}\.\d{2}$"
+results[].operation_outstanding_balance_currency,A moeda do saldo devedor. Obrigatório se `operation_outstanding_balance_amount` não for `null`.,USD,string,,No,Yes,,^[A-Z]{3}$
+results[].tev_amount_amount,"O ""All-in Rate"" (Valor Efetivo Total/Total Effective Cost), que representa o custo total da operação após o evento.
+
+Este campo é obrigatório para operações de câmbio à vista que atingem até o limite de $100.000 USD ou equivalente em outras moedas.",1002,number,float,No,Yes,,"^\d{1,15}\.\d{1,15}$"
+results[].tev_amount_currency,A moeda do VET (sempre BRL). Obrigatório se `tev_amount_amount` não for `null`.,BRL,string,,No,Yes,,^[A-Z]{3}$
+results[].local_currency_advance_percentage,"A porcentagem do valor em moeda estrangeira que foi concedida ao cliente antecipadamente após o evento.
+
+Este campo é obrigatório em casos de operações de câmbio com liquidação futura.",0.12,number,float,No,Yes,,"^\d{1}\.\d{1,6}$"
+results[].settlement_method,"O método de entrega para a moeda estrangeira.
+
+Retornamos um dos seguintes valores do enum:
+  - `CARTA_CREDITO_A_VISTA` (Código 10) - Carta de crédito à vista
+  - `CARTA_CREDITO_A_PRAZO` (Código 15) - Carta de crédito a prazo
+  - `CONTA_DEPOSITO` (Código 20) - Conta de depósito
+  - `CONTA_DEPOSITO_MOEDA_ESTRANGEIRA_PAIS` (Código 21) - Conta de depósito em moeda estrangeira no país
+  - `CONTA_DEPOSITO_EXPORTADOR_MANTIDA_NO_EXTERIOR` (Código 22) - Conta de depósito do exportador mantida no exterior
+  - `CONTA_DEPOSITO_OU_PAGAMENTO_EXPORTADOR_INSTITUICAO_EXTERIOR` (Código 23) - Conta de depósito ou pagamento ao exportador em instituição no exterior
+  - `CONVENIO_PAGAMENTOS_E_CREDITOS_RECIPROCOS` (Código 25) - Convênio de pagamentos e créditos recíprocos
+  - `CHEQUE` (Código 30) - Cheque
+  - `ESPECIE_CHEQUES_VIAGEM` (Código 50) - Espécie ou cheques de viagem
+  - `CARTAO_PREPAGO` (Código 55) - Cartão pré-pago
+  - `TELETRANSMISSAO` (Código 65) - Transferência eletrônica
+  - `TITULOS_VALORES` (Código 75) - Títulos/valores mobiliários
+  - `SIMBOLICA` (Código 90) - Simbólica
+  - `SEM_MOVIMENTACAO_VALORES` (Código 91) - Sem movimentação de valores
+  - `DEMAIS` (Código 99) - Outros
+  - `OUTRO_NAO_MAPEADO_OFB` - Outro não mapeado pelo Open Finance Brasil
+  - `null`",CARTA_CREDITO_A_PRAZO,string,,No,Yes,"CONTA_DEPOSITO_MOEDA_ESTRANGEIRA_PAIS, CONTA_DEPOSITO_OU_PAGAMENTO_EXPORTADOR_INSTITUICAO_EXTERIOR, ESPECIE_CHEQUES_VIAGEM, CARTAO_PREPAGO, TELETRANSMISSAO, SEM_MOVIMENTACAO_VALORES, DEMAIS, CARTA_CREDITO_A_VISTA, CARTA_CREDITO_A_PRAZO, CONTA_DEPOSITO, CHEQUE, TITULOS_VALORES, SIMBOLICA, CONTA_DEPOSITO_EXPORTADOR_MANTIDA_NO_EXTERIOR, CONVENIO_PAGAMENTOS_E_CREDITOS_RECIPROCOS, OUTRO_NAO_MAPEADO_OFB, None",
+results[].operation_category_code,"O código de 5 dígitos do Banco Central que classifica a ""natureza"" da operação.
+
+Este código deve estar em conformidade com os códigos de natureza referenciados na Resolução 277 ou na Circular 3690, conforme aplicável ao contrato de câmbio.",90302,string,,No,Yes,,^\d{5}$
+results[].foreign_partie_relationship_code,"O código que indica a relação entre o cliente e o pagador/recebedor estrangeiro.
+
+Este código deve estar em conformidade com os códigos de relacionamento referenciados na Resolução 277 ou na Circular 3690, conforme aplicável ao contrato de câmbio.
+
+> **Nota**: Este campo é opcional quando:
+> - O campo `settlement_method` é `ESPECIE_CHEQUES_VIAGEM` ou `CARTAO_PREPAGO`.
+> - O campo `event_type` é diferente de `4` (Liquidação de operação de câmbio no mercado primário).
+>
+> Se a instituição possuir esta informação, é obrigatório enviá-la. Se a informação for atualizada após a contratação, deve ser enviada por meio de eventos.",50,string,,No,Yes,,^\d{2}$
+results[].foreign_partie_name,"O nome do pagador ou recebedor estrangeiro.
+
+> **Nota**: Este campo é opcional quando:
+> - O campo `settlement_method` é `ESPECIE_CHEQUES_VIAGEM` ou `CARTAO_PREPAGO`.
+> - O campo `event_type` é diferente de `4` (Liquidação de operação de câmbio no mercado primário).
+>
+> Se a instituição possuir esta informação, é obrigatório enviá-la. Se a informação for atualizada após a contratação, deve ser enviada por meio de eventos.",Global Tech Imports LLC,string,,No,Yes,,[\w\W\s]*
+results[].foreign_partie_country_code,"O código do país do pagador ou recebedor estrangeiro, conforme o padrão ISO 3166-1.
+
+> **Nota**: Este campo é opcional quando:
+> - O campo `settlement_method` é `ESPECIE_CHEQUES_VIAGEM` ou `CARTAO_PREPAGO`.
+> - O campo `event_type` é diferente de `4` (Liquidação de operação de câmbio no mercado primário).
+>
+> Se a instituição possuir esta informação, é obrigatório enviá-la. Se a informação for atualizada após a contratação, deve ser enviada por meio de eventos.",US,string,,No,Yes,,^[A-Z]{2}$

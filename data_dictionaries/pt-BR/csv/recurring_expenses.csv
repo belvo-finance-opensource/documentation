@@ -1,11 +1,9 @@
 Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
 [].id,Identificador único da Belvo para o item atual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
-[].account,"Detalhes sobre a conta.
-
-**Nota**: Para o nosso recurso de despesas recorrentes, esta conta está relacionada à conta que foi analisada para gerar o relatório de despesas recorrentes.",,object,,Yes,Yes,,
-[].account.id,Identificador único da Belvo para o item atual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,No,No,,
-[].account.link,O `link.id` ao qual os dados pertencem.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,No,Yes,,
-[].account.institution,Detalhes sobre a instituição.,,object,,No,No,,
+[].account,Detalhes sobre a conta.,,object,,Yes,Yes,,
+[].account.id,Identificador único da Belvo para o item atual.,0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
+[].account.link,O `link.id` ao qual os dados pertencem.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
+[].account.institution,Detalhes sobre a instituição.,,object,,Yes,No,,
 [].account.institution.name,"O nome da instituição, conforme designado pela Belvo.",erebor_mx_retail,string,,No,No,,
 [].account.institution.type,"O tipo de instituição. Retornamos um dos seguintes valores:
 
@@ -13,21 +11,41 @@ Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
   - `fiscal`
   - `employment`",,string,,No,No,"bank, fiscal, employment",
 [].account.collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
-[].account.created_at,O carimbo de data e hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
+[].account.created_at,O carimbo de data e hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+[].account.last_accessed_at,O timestamp ISO-8601 do acesso mais recente e bem-sucedido da Belvo à instituição para o link fornecido.,2021-03-09T10:28:40.000Z,string,date-time,Yes,Yes,,
 [].account.category,"O tipo de conta.  
 Retornamos um dos seguintes valores do enum:  
+  - `ADVANCE_DEPOSIT_ACCOUNT`
   - `CHECKING_ACCOUNT`
   - `CREDIT_CARD`
+  - `FINANCING_ACCOUNT`
   - `INVESTMENT_ACCOUNT`
+  - `INVOICE_FINANCING_ACCOUNT`
   - `LOAN_ACCOUNT`
   - `PENSION_FUND_ACCOUNT`
   - `SAVINGS_ACCOUNT`
-  - `UNCATEGORIZED`
-  - `null`",CHECKING_ACCOUNT,string,,Yes,Yes,"CHECKING_ACCOUNT, CREDIT_CARD, INVESTMENT_ACCOUNT, LOAN_ACCOUNT, PENSION_FUND_ACCOUNT, SAVINGS_ACCOUNT, UNCATEGORIZED, None",
+  - `UNCATEGORIZED`",CHECKING_ACCOUNT,string,,Yes,Yes,"ADVANCE_DEPOSIT_ACCOUNT, CHECKING_ACCOUNT, CREDIT_CARD, FINANCING_ACCOUNT, INVESTMENT_ACCOUNT, INVOICE_FINANCING_ACCOUNT, LOAN_ACCOUNT, PENSION_FUND_ACCOUNT, SAVINGS_ACCOUNT, UNCATEGORIZED",
 [].account.balance_type,"Indica se esta conta é um `ASSET` ou um `LIABILITY`. Você pode considerar o saldo de um `ASSET` como positivo, enquanto o saldo de um `LIABILITY` como negativo.",ASSET,string,,Yes,Yes,,
-[].account.type,"O tipo de conta, conforme designado pela instituição.",Cuentas de efectivo,string,,Yes,Yes,,
+[].account.overdraft,,,object,,No,Yes,,
+[].account.overdraft.arranged,"O limite de cheque especial acordado entre o titular da conta e a instituição.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `overdraft` estiver disponível.",5000.5,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+[].account.overdraft.used,"O valor do cheque especial utilizado.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `overdraft` estiver disponível.",1000.5,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+[].account.overdraft.unarranged,"O cheque especial utilizado que não foi acordado entre o titular da conta e a instituição.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `overdraft` estiver disponível.",300.1,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+[].account.type,"O tipo de conta, conforme designado pela instituição.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",STANDARD_NACIONAL,string,,Yes,No,,
+[].account.subtype,"O subtipo de conta, conforme designado pela instituição.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",FINANCIAMENTO_HABITACIONAL_SFH,string,,Yes,No,,
 [].account.name,"O nome da conta, conforme fornecido pela instituição.",Cuenta Perfiles- M.N. - MXN-666,string,,Yes,Yes,,
 [].account.number,"O número da conta, conforme designado pela instituição.",4057068115181,string,,Yes,Yes,,
+[].account.agency,O código da agência onde o produto foi aberto.,6272,string,,Yes,Yes,,"^\d{1,4}$"
+[].account.check_digit,"O dígito verificador do número do produto, se aplicável.",7,string,,Yes,Yes,,[\w\W\s]*
 [].account.balance,Detalhes sobre os saldos atual e disponível para a conta.,,object,,Yes,No,,
 [].account.balance.current,"O saldo atual é calculado de maneira diferente de acordo com o tipo de conta.
 
@@ -41,8 +59,8 @@ O valor que o usuário gastou no período de faturamento atual do cartão (consu
 
 - **🏡 Contas de empréstimo**:
 
-O valor restante a pagar no empréstimo do usuário.",5874.13,number,float,Yes,Yes,,
-[].account.balance.available,"O saldo que o proprietário da conta pode usar.
+O valor restante a pagar no empréstimo do usuário.",5874.13,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
+[].account.balance.available,"O saldo que o titular da conta pode usar.
 
 - **💰 Contas correntes e poupança**:
 
@@ -50,113 +68,268 @@ O saldo disponível pode ser diferente do saldo `current` devido a transações 
 
 - **💳 Cartões de crédito**:
 
-O valor de crédito que o usuário ainda tem disponível para o período atual. O saldo `available` pode ser diferente do saldo `current` devido a transações pendentes ou parcelas futuras.
+O valor de crédito que o usuário ainda tem disponível para o período atual. O valor é calculado como `credit_data.credit_limit` menos `balance.current`.
 
 - **🏡 Contas de empréstimo**:
 
 O valor presente necessário para quitar o empréstimo, conforme fornecido pela instituição.
 
-**Nota:** Se a instituição não fornecer este valor, retornamos `null`.",5621.12,number,float,No,Yes,,
-[].account.currency,"A moeda da conta. Por exemplo:
-- 🇧🇷 BRL (Real Brasileiro)
-- 🇨🇴 COP (Peso Colombiano)
-- 🇲🇽 MXN (Peso Mexicano)
+**Nota:** Se a instituição não fornecer esse valor, retornamos `null`.",5621.12,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+[].account.balance.blocked,"O valor que está atualmente bloqueado devido a transações pendentes.
 
-Por favor, note que outras moedas além das listadas acima podem ser retornadas.",MXN,string,,Yes,Yes,,
-[].account.public_identification_name,"O nome público para o tipo de identificação. Por exemplo: `""CLABE""`.
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `balances` estiver disponível.",60.32,number,float,No,No,,"^\d{1,15}\.\d{2,4}$"
+[].account.balance.automatically_invested,"O valor que é automaticamente investido (conforme acordado com a instituição).
 
-ℹ️ Para contas de poupança e corrente 🇧🇷 brasileiras, este campo será `AGENCY/ACCOUNT`.",CLABE,string,,Yes,Yes,,
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `balances` estiver disponível.",131.5,number,float,No,No,,"^\d{1,15}\.\d{2,4}$"
+[].account.currency,"O código de moeda de três letras (ISO-4217).
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `balances` estiver disponível.",BRL,string,,Yes,No,,^[A-Z]{3}$
+[].account.public_identification_name,"O nome público para o tipo de identificação. Para contas de poupança e corrente brasileiras 🇧🇷, este campo será `AGENCY/ACCOUNT`.",AGENCY/ACCOUNT,string,,Yes,Yes,,
 [].account.public_identification_value,"O valor para o `public_identification_name`.
 
-ℹ️ Para contas de poupança e corrente brasileiras, este campo será o número da agência e da conta bancária, separados por uma barra. Por exemplo: `0444/45722-0`.",150194683119900273,string,,Yes,Yes,,
-[].account.last_accessed_at,O timestamp ISO-8601 do acesso mais recente e bem-sucedido da Belvo à instituição para o link fornecido.,2021-03-09T10:28:40.000Z,string,date-time,Yes,Yes,,
-[].account.credit_data,As opções de crédito associadas a esta conta.,,object,,Yes,Yes,,
-[].account.credit_data.credit_limit,O valor máximo de crédito que o proprietário pode receber.,192000,number,float,Yes,Yes,,
+Para contas de poupança e corrente 🇧🇷 OFDA brasileiras, este campo será o número da agência e da conta bancária, separados por uma barra. Por exemplo: `0444/45722-0`.
+
+Para contas de cartão de crédito 🇧🇷 OFDA brasileiras, retornaremos uma string de números de cartão de crédito concatenados associados à conta. Por exemplo: ""8763,9076,5522""",0444/45722-0,string,,Yes,Yes,,
+[].account.internal_identification,"A identificação interna da instituição para a conta.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `balances` estiver disponível.",92792126019929279212650822221989319252576,string,,Yes,No,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
+[].account.credit_data,Detalhes sobre os cartões de crédito associados a esta conta.,,object,,Yes,Yes,,
 [].account.credit_data.collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
-[].account.credit_data.cutting_date,"A data de encerramento do período de crédito, no formato `YYYY-MM-DD`.",2019-12-11,string,,Yes,Yes,,
-[].account.credit_data.next_payment_date,"A data de vencimento para o próximo pagamento, no formato `YYYY-MM-DD`.",2019-12-13,string,,Yes,No,,
-[].account.credit_data.minimum_payment,O valor mínimo a ser pago na `next_payment_date`.,2400.3,number,float,Yes,Yes,,
-[].account.credit_data.no_interest_payment,O valor mínimo necessário para pagar para evitar a geração de juros.,2690.83,number,float,Yes,Yes,,
-[].account.credit_data.interest_rate,A taxa de juros anualizada do crédito.,4,number,float,Yes,Yes,,
-[].account.credit_data.monthly_payment,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
+[].account.credit_data.credit_limit,"O limite de crédito superior do cartão.
 
-*O pagamento mensal recorrente, se aplicável.*",,number,,No,Yes,,
-[].account.credit_data.last_payment_date,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",192000.9,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
+[].account.credit_data.limits,,,array,,No,No,,
+[].account.credit_data.limits[].identification_number,"O número do cartão de crédito.
 
-*A data em que o último pagamento de crédito foi realizado, no formato `YYYY-MM-DD`.*",,string,,No,Yes,,
-[].account.credit_data.last_period_balance,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
+**Nota:** Frequentemente, são apenas os últimos quatro dígitos do cartão de crédito.
 
-*O saldo restante após o `last_payment_date`.*",,string,,No,Yes,,
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",4453,string,,Yes,Yes,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
+[].account.credit_data.limits[].credit_limit,O limite do cartão de crédito.,1000.04,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
+[].account.credit_data.limits[].used_amount,A quantidade utilizada.,400.04,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
+[].account.credit_data.limits[].available_amount,"O valor ainda disponível.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",600,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+[].account.credit_data.limits[].is_limit_flexible,"Boolean para indicar se o `credit_limit` é flexível.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",False,boolean,,Yes,No,,
+[].account.credit_data.limits[].type,"O tipo de limite. Retornamos um dos seguintes valores:
+
+  - `TOTAL_LIMIT`
+  - `MODAL_LIMIT`
+
+  > **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",TOTAL_LIMIT,string,,Yes,No,"TOTAL_LIMIT, MODAL_LIMIT",
+[].account.credit_data.limits[].consolidation_type,"Indica se o limite de crédito é consolidado ou individual.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",INDIVIDUAL,string,,Yes,No,,
+[].account.credit_data.limits[].line_name,O nome da linha de limite de crédito.,CREDITO_A_VISTA,string,,Yes,Yes,,
+[].account.credit_data.limits[].line_name_additional_info,Informações adicionais sobre o nome da linha.,Informações adicionais e complementares,string,,Yes,Yes,,[\w\W\s]*
+[].account.credit_data.cutting_date,A data de vencimento da fatura do cartão de crédito.,2019-12-11,string,date,No,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+[].account.credit_data.minimum_payment,O valor mínimo que o proprietário da conta precisa pagar no período de crédito atual.,2400.3,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+[].account.credit_data.network,"A rede de crédito à qual o cartão está associado. Retornamos um dos seguintes valores:
+
+  - `VISA`
+  - `MASTERCARD`
+  - `AMERICAN_EXPRESS`
+  - `DINERS_CLUB`
+  - `HIPERCARD`
+  - `BANDEIRA_PROPRIA`
+  - `CHEQUE_ELETRONICO`
+  - `ELO`
+  - `OTHER`
+
+  > **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",MASTERCARD,string,,No,No,"VISA, MASTERCARD, AMERICAN_EXPRESS, DINERS_CLUB, HIPERCARD, BANDEIRA_PROPRIA, CHEQUE_ELETRONICO, ELO, OTHER",
+[].account.credit_data.network_additional_info,Informações adicionais sobre a rede de cartão de crédito.,It's an orange card.,string,,No,Yes,,[\w\W\s]*
+[].account.credit_data.cards,Detalhes sobre os cartões associados à conta.,,array,,No,No,,
+[].account.credit_data.cards[].is_multiple,"Boolean para indicar se esta conta possui múltiplos cartões de crédito.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",False,boolean,,Yes,No,,
+[].account.credit_data.cards[].identification_number,"O número do cartão de crédito.
+
+**Nota:** Frequentemente, são apenas os últimos quatro dígitos do cartão de crédito.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",4453,string,,Yes,No,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
+[].account.credit_data.next_payment_date,**Nota:** Este campo não se aplica ao OF Brasil e retornará null.,,string,,No,Yes,,
+[].account.credit_data.no_interest_payment,**Nota:** Este campo não se aplica ao OF Brasil e retornará null.,,number,float,No,Yes,,
+[].account.credit_data.interest_rate,**Nota:** Este campo não se aplica ao OF Brasil e retornará null.,,number,float,No,Yes,,
+[].account.credit_data.monthly_payment,**Nota:** Este campo não se aplica ao OF Brasil e retornará null.,,number,,No,Yes,,
+[].account.credit_data.last_payment_date,**Nota:** Este campo não se aplica ao OF Brasil e retornará null.,,string,,No,Yes,,
 [].account.loan_data,As opções de empréstimo associadas a esta conta.,,object,,Yes,Yes,,
 [].account.loan_data.collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
-[].account.loan_data.contract_amount,"O valor total inicial do empréstimo, calculado pela instituição, quando o contrato foi assinado. Este valor inclui o principal + juros + impostos + taxas.",202000,number,float,No,Yes,,
-[].account.loan_data.principal,Valor total do empréstimo (o valor que o usuário recebe).,192000,number,float,Yes,Yes,,
-[].account.loan_data.loan_type,"O tipo do empréstimo, de acordo com a instituição.",Consignado,string,,No,Yes,,
-[].account.loan_data.payment_day,O dia do mês em que o proprietário precisa pagar o empréstimo (`DD`).,27,string,,No,Yes,,
-[].account.loan_data.outstanding_principal,"Montante pendente do empréstimo, ou seja, quanto resta a pagar sobre o principal (não incluindo juros).",142023,number,float,No,Yes,,
-[].account.loan_data.outstanding_balance,"O valor restante a pagar no total, incluindo juros.",182000,number,float,Yes,Yes,,
-[].account.loan_data.monthly_payment,"O pagamento mensal recorrente, se aplicável.",1000,number,float,Yes,Yes,,
-[].account.loan_data.interest_rates,Detalhamento dos juros aplicados ao empréstimo.,,array,,Yes,Yes,,
-[].account.loan_data.interest_rates[].name,O nome do tipo de taxa de juros aplicada ao empréstimo.,jurosEfetivo,string,,Yes,Yes,,
-[].account.loan_data.interest_rates[].type,"O período em que o juro é aplicado ao empréstimo. Retornamos um dos seguintes valores:
+[].account.loan_data.loan_code,"O número de contrato padronizado específico do país.
 
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",92792126019929279212650822221989319252576,string,,Yes,No,,"^\d{22,67}$"
+[].account.loan_data.contract_amount,"O valor total inicial do empréstimo quando o contrato foi assinado, calculado pela instituição. Este valor inclui o principal + juros + impostos + taxas.",202000,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
+[].account.loan_data.total_effective_cost,O custo efetivo total inicial do empréstimo.,209000,number,float,No,Yes,,"^\d{1,15}\.\d{2,4}$"
+[].account.loan_data.loan_type,"O tipo do empréstimo, de acordo com a instituição.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",HOME_EQUITY,string,,Yes,No,,
+[].account.loan_data.outstanding_balance,"O valor restante a pagar no total, incluindo juros.",182000,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
+[].account.loan_data.interest_rates,"Detalhamento dos juros aplicados ao empréstimo. Com o OF Brasil, recomendamos fortemente o uso das informações em `interest_rate_data` para obter informações detalhadas.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",,array,,Yes,No,,
+[].account.loan_data.interest_rates[].name,"O nome do tipo de taxa de juros aplicada ao empréstimo.
+
+**Nota:** Para OFDA Brasil, recomendamos que você use o parâmetro `interest_rate_data.tax_type`.",NOMINAL,string,,Yes,Yes,,
+[].account.loan_data.interest_rates[].type,"O período em que o juro é aplicado ao empréstimo.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",MONTHLY,string,,Yes,No,"MONTHLY, YEARLY",
+[].account.loan_data.interest_rates[].value,"A taxa de juros (em porcentagem ou valor monetário).
+
+**Nota:** Para OFDA Brasil, recomendamos que você use os parâmetros `interest_rate_data.pre_fixed_rate` e `interest_rate_data.post_fixed_rate`.",7.85,number,float,Yes,Yes,,
+[].account.loan_data.interest_rates[].interest_rate_data,Informações detalhadas sobre a taxa de juros.,,object,,Yes,Yes,,
+[].account.loan_data.interest_rates[].interest_rate_data.tax_type,"O tipo de imposto sobre a taxa de juros. Retornamos um dos seguintes valores:
+
+  - `NOMINAL`
+  - `EFFECTIVE`
+  
+  > **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",NOMINAL,string,,Yes,No,"NOMINAL, EFFECTIVE",
+[].account.loan_data.interest_rates[].interest_rate_data.rate_type,"O tipo de taxa de juros. Retornamos um dos seguintes valores:
+
+  - `SIMPLE`
+  - `COMPOUND`
+
+  > **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",SIMPLE,string,,Yes,No,"SIMPLE, COMPOUND",
+[].account.loan_data.interest_rates[].interest_rate_data.type,"O período em que o juro é aplicado ao empréstimo.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",MONTHLY,string,,No,No,"MONTHLY, YEARLY",
+[].account.loan_data.interest_rates[].interest_rate_data.calculation_base,"O cálculo base para a taxa de juros.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",30/360,string,,Yes,No,,^[0-9]{2}\/[0-9]{3}$
+[].account.loan_data.interest_rates[].interest_rate_data.reference_index_type,"A taxa de índice de referência. Retornamos um dos seguintes valores:
+
+  - `WITHOUT_INDEX_TYPE`
+  - `PRE_FIXED`
+  - `POST_FIXED`
+  - `FLOATING`
+  - `INDEXED_PRICE`
+  - `RURAL_CREDIT`
+  - `OTHER_INDEX`
+
+  > **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",FLOATING,string,,Yes,No,"WITHOUT_INDEX_TYPE, PRE_FIXED, POST_FIXED, FLOATING, INDEXED_PRICE, RURAL_CREDIT, OTHER_INDEX",
+[].account.loan_data.interest_rates[].interest_rate_data.reference_index_subtype,O subtipo da taxa de índice de referência.,TR_TBF,string,,Yes,Yes,,
+[].account.loan_data.interest_rates[].interest_rate_data.reference_index_info,Informações adicionais sobre a taxa de índice de referência.,Additional information,string,,Yes,Yes,,"^[\w\W\s]{0,140}$"
+[].account.loan_data.interest_rates[].interest_rate_data.pre_fixed_rate,"A taxa de juros com percentual prefixado.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",0.062,number,float,Yes,No,,^[01]\.\d{6}$
+[].account.loan_data.interest_rates[].interest_rate_data.post_fixed_rate,"A taxa de juros com percentual pós-fixado.
+
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",0.062,number,float,Yes,No,,^[01]\.\d{6}$
+[].account.loan_data.interest_rates[].interest_rate_data.additional_info,Informações adicionais sobre a taxa de juros.,Additional information,string,,Yes,Yes,,[\w\W\s]*
+[].account.loan_data.fees,Detalhamento das taxas aplicadas ao empréstimo.,,array,,Yes,Yes,,
+[].account.loan_data.fees[].type,**Nota:** Este campo não se aplica ao OF Brasil e retornará null.,,string,,Yes,Yes,"OPERATION_FEE, INSURANCE_FEE, OTHERS, None",
+[].account.loan_data.fees[].value,O valor total da taxa. Mesma moeda do empréstimo.,5.6,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
+[].account.loan_data.fees[].name,"O nome da taxa.
+
+ > **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `fees` estiver disponível.",Renovação de cadastro,string,,Yes,No,,"^[\w\W\s]{0,140}$"
+[].account.loan_data.fees[].code,"O código de tarifa.
+
+ > **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `fees` estiver disponível.",CADASTRO,string,,Yes,No,,"^[\w\W\s]{0,140}$"
+[].account.loan_data.fees[].fee_charge_type,"Indica o tipo de cobrança. Retornamos um dos seguintes valores:
+
+  - `SINGLE`
+  - `PER_INSTALLMENT`
+
+   > **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `fees` estiver disponível.",SINGLE,string,,Yes,No,"SINGLE, PER_INSTALLMENT",
+[].account.loan_data.fees[].fee_charge,"Método de cobrança, conforme acordado com a instituição. Retornamos um dos seguintes valores:
+
+  - `MINIMUM`
+  - `MAXIMUM`
+  - `FIXED`
+  - `PERCENTAGE`
+
+   > **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `fees` estiver disponível.",FIXED,string,,Yes,No,"MINIMUM, MAXIMUM, FIXED, PERCENTAGE",
+[].account.loan_data.fees[].rate,A taxa percentual da tarifa. Necessária quando `fee_charge` está definido como `PERCENTAGE`.,0.062,number,float,Yes,Yes,,^[01]\.\d{6}$
+[].account.loan_data.contracted_charges,"Parece que você não forneceu nenhum texto para tradução. Por favor, envie o texto que deseja que eu traduza do inglês para o português (Brasil).",,array,,No,Yes,,
+[].account.loan_data.contracted_charges[].type,"O tipo de cobrança contratada. Retornamos um dos seguintes valores:
+
+  - `LATE_PAYMENT_INTEREST_FEE`
+  - `LATE_PAYMENT_PENALTY_FEE`
+  - `DEFAULT_INTEREST_FEE`
+  - `LOAN_CONTRACT_TAX`
+  - `LATE_PAYMENT_TAX`
+  - `NO_CHARGE`
+  - `OTHER`
+
+  > **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `contracted_charges` estiver disponível.",LATE_PAYMENT_INTEREST_FEE,string,,No,No,"LATE_PAYMENT_INTEREST_FEE, LATE_PAYMENT_PENALTY_FEE, DEFAULT_INTEREST_FEE, LOAN_CONTRACT_TAX, LATE_PAYMENT_TAX, NO_CHARGE, OTHER",
+[].account.loan_data.contracted_charges[].info,Informações adicionais sobre a cobrança contratada.,Late fee,string,,No,Yes,,"^[\w\W\s]{0,140}$"
+[].account.loan_data.contracted_charges[].rate,"A taxa percentual da cobrança, calculada com base no valor do empréstimo.",0.062,number,float,No,Yes,,^[01]\.\d{6}$
+[].account.loan_data.collaterals,Detalhes sobre quaisquer garantias de empréstimo que o indivíduo ou empresa forneceu.,,array,,Yes,Yes,,
+[].account.loan_data.collaterals[].type,"O tipo de garantia, conforme definido pela instituição.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `collaterals` estiver disponível.",OPERACOES_GARANTIDAS_PELO_GOVERNO,string,,Yes,No,,
+[].account.loan_data.collaterals[].subtype,"O subtipo da garantia, conforme definido pela instituição.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `collaterals` estiver disponível.",CCR_CONVENIO_CREDITOS_RECIPROCOS,string,,Yes,No,,
+[].account.loan_data.collaterals[].currency,"O código de moeda de três letras (ISO-4217).
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `collaterals` estiver disponível.",BRL,string,,Yes,No,,^[A-Z]{3}$
+[].account.loan_data.collaterals[].amount,"O valor total da fatura.
+
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `collaterals` estiver disponível.",45391.89,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+[].account.loan_data.balloon_payments,"Informações detalhadas sobre quaisquer pagamentos de balloon para o empréstimo, se aplicável.",,array,,Yes,Yes,,
+[].account.loan_data.balloon_payments[].due_date,"A data em que o pagamento do balloon deve ser efetuado, no formato `YYYY-MM-DD`.",2021-09-06,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+[].account.loan_data.balloon_payments[].currency,O código de moeda de três letras (ISO-4217).,BRL,string,,Yes,Yes,,^[A-Z]{3}$
+[].account.loan_data.balloon_payments[].amount,O valor total do pagamento final.,45391.89,number,float,Yes,Yes,,"^\d{1,15}\.\d{2,4}$"
+[].account.loan_data.installments_contract_term_frequency,"A frequência dos pagamentos parcelados contratados, conforme definido quando o contrato foi assinado pela primeira vez. Retornamos um dos seguintes:
+
+  - `DAY`
+  - `WEEK`
+  - `MONTH`
+  - `YEAR`
+  - `NO_DEADLINE_REMAINING`
+  - `null`",MONTH,string,,Yes,Yes,"DAY, WEEK, MONTH, YEAR, NO_DEADLINE_REMAINING, None",
+[].account.loan_data.installment_frequency,"A frequência com que as parcelas são pagas. Retornamos um dos seguintes valores:
+
+  - `IRREGULAR`
+  - `WEEKLY`
+  - `FORTNIGHTLY`
   - `MONTHLY`
-  - `YEARLY`",MONTHLY,string,,Yes,Yes,"MONTHLY, YEARLY",
-[].account.loan_data.interest_rates[].value,A taxa de juros (em porcentagem ou valor monetário).,7.85,number,float,Yes,Yes,,
-[].account.loan_data.fees,Detalhamento das taxas aplicadas ao empréstimo.,,array,,No,Yes,,
-[].account.loan_data.fees[].type,"O tipo de taxa. Retornamos um dos seguintes valores:
+  - `BIMONTHLY`
+  - `QUARTERLY`
+  - `BIANNUALLY`
+  - `ANNUALLY`
+  - `OTHER`
 
-  - `OPERATION_FEE`
-  - `INSURANCE_FEE`
-  - `OTHERS`",OPERATION_FEE,string,,Yes,No,"OPERATION_FEE, INSURANCE_FEE, OTHERS",
-[].account.loan_data.fees[].value,O valor total da taxa. Mesma moeda do Empréstimo.,5.6,number,float,Yes,No,,
-[].account.loan_data.number_of_installments_total,O número total de parcelas necessárias para pagar o empréstimo.,60,integer,int32,No,Yes,,
-[].account.loan_data.number_of_installments_outstanding,O número de parcelas restantes para pagar.,48,integer,int32,No,Yes,,
-[].account.loan_data.contract_start_date,"A data em que o contrato de empréstimo foi assinado, no formato `YYYY-MM-DD`.",2020-03-01,string,,No,Yes,,
-[].account.loan_data.contract_end_date,"A data em que se espera que o empréstimo seja concluído, no formato `YYYY-MM-DD`.",2027-10-01,string,date,No,No,,
-[].account.loan_data.contract_number,"O número do contrato do empréstimo, conforme fornecido pela instituição.",890ASLDJF87SD00,string,,No,Yes,,
-[].account.loan_data.credit_limit,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
+  > **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",MONTHLY,string,,Yes,No,"IRREGULAR, WEEKLY, FORTNIGHTLY, MONTHLY, BIMONTHLY, QUARTERLY, BIANNUALLY, ANNUALLY, OTHER",
+[].account.loan_data.installment_frequency_info,Informações adicionais sobre o `installment_frequency`.,Both the term and requency are the same.,string,,Yes,Yes,,"^[\w\W\s]{0,99}$$"
+[].account.loan_data.first_installment_due_date,"A data em que a primeira parcela do empréstimo deve ser paga, no formato `YYYY-MM-DD`.",2020-03-01,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+[].account.loan_data.number_of_installments_total,O número total de parcelas necessárias para quitar o empréstimo.,60,integer,int32,Yes,Yes,,
+[].account.loan_data.number_of_installments_outstanding,O número de parcelas restantes a pagar.,48,integer,int32,Yes,Yes,,
+[].account.loan_data.number_of_installments_paid,O número de parcelas já pagas.,32,integer,int32,Yes,Yes,,
+[].account.loan_data.number_of_installments_past_due,O número de parcelas que estão em atraso.,2,integer,int32,Yes,Yes,,
+[].account.loan_data.disbursement_dates,Um array de datas em que o empréstimo foi desembolsado.,,array,,Yes,Yes,,
+[].account.loan_data.settlement_date,"A data em que o empréstimo foi liquidado, no formato `YYYY-MM-DD`.",2021-09-23,string,,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+[].account.loan_data.contract_start_date,"A data em que o contrato de empréstimo foi assinado, no formato `YYYY-MM-DD`.
 
-Por favor, consulte `principal` em vez disso.",,number,,No,Yes,,
-[].account.loan_data.last_period_balance,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",2020-03-01,string,date,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+[].account.loan_data.contract_end_date,"A data em que se espera que o empréstimo seja concluído, no formato `YYYY-MM-DD`.",2027-10-01,string,date,Yes,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+[].account.loan_data.contract_remaining_frequency,"A frequência dos pagamentos das parcelas restantes contratadas, conforme definido quando o contrato foi assinado pela primeira vez. Retornamos um dos seguintes valores:
+- `DAY`
+- `WEEK`
+- `MONTH`
+- `YEAR`
+- `NO_DEADLINE_REMAINING`
+- `null`",MONTH,string,,Yes,Yes,"DAY, WEEK, MONTH, YEAR, NO_DEADLINE_REMAINING, None",
+[].account.loan_data.contract_remaining_total,O número total de parcelas restantes no empréstimo.,20,integer,int32,Yes,Yes,,
+[].account.loan_data.amortization_schedule,"O cronograma de amortização do empréstimo.
 
-Por favor, consulte `outstanding_balance` em vez disso.",,number,,No,Yes,,
-[].account.loan_data.interest_rate,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
-
-Por favor, consulte o objeto `interest_rates`.",,number,,No,Yes,,
-[].account.loan_data.limit_day,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
-
-Consulte `payment_day` em vez disso.",,string,,No,Yes,,
-[].account.loan_data.cutting_day,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre campos descontinuados.*
-
-O dia de fechamento do mês para o empréstimo.",,string,,No,Yes,,
-[].account.loan_data.cutting_date,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
-
-A data de encerramento do período do empréstimo, no formato `YYYY-MM-DD`.",,string,,No,Yes,,
-[].account.loan_data.last_payment_date,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
-
-A data em que o último pagamento do empréstimo foi realizado, no formato `YYYY-MM-DD`.",,string,,No,Yes,,
-[].account.loan_data.next_payment_date,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
-
-Por favor, use `payment_day` em vez disso, no formato `YYYY-MM-DD`.",,string,,No,Yes,,
-[].account.loan_data.no_interest_payment,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
-
-O valor mínimo necessário para pagar e evitar a geração de juros.",,number,,No,Yes,,
-[].account.funds_data,Um ou mais fundos que contribuem para a conta de pensão.,,array,,No,Yes,,
-[].account.funds_data[].collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
-[].account.funds_data[].name,O nome do fundo de pensão.,FIX X,string,,No,Yes,,
-[].account.funds_data[].type,Tipo de fundo de pensão.,CNPJ,string,,No,Yes,,
-[].account.funds_data[].public_identifications,Os IDs públicos do fundo.,,array,,No,Yes,,
-[].account.funds_data[].public_identifications[].name,O tipo de número de identificação para o fundo.,CNPJ,string,,Yes,No,,
-[].account.funds_data[].public_identifications[].value,O número de identificação do fundo.,05.954.445/0221-68,string,,Yes,Yes,,
-[].account.funds_data[].balance,O montante no fundo.,88427.94,number,float,No,Yes,,
-[].account.funds_data[].percentage,"Quanto este fundo, em porcentagem, contribui para o total da conta de pensão.",100,number,float,No,Yes,,
-[].account.bank_product_id,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuações, consulte nossa explicação sobre Campos descontinuados.*
-
-*O ID de produto da instituição para o tipo de conta.*",,string,,No,Yes,,
-[].account.internal_identification,"*Este campo foi descontinuado. Para mais informações sobre a Belvo e descontinuação, consulte nossa explicação sobre Campos descontinuados.*
-
-*Identificação interna da instituição para a conta.*",,string,,No,Yes,,
+> **Non-nullable:** Um valor deve ser retornado pela rede de open finance do Brasil.",SEM_SISTEMA_AMORTIZACAO,string,,Yes,No,,
+[].account.loan_data.amortization_schedule_info,Informações adicionais sobre o `amortization_schedule`.,No need for a schedule.,string,,Yes,Yes,,[\w\W\s]*
+[].account.loan_data.consignee_id,O ID do consignatário do empréstimo.,60500998000135,string,,Yes,Yes,,^\d{14}$
+[].account.loan_data.contract_number,"O número do contrato do empréstimo, conforme fornecido pela instituição.",1324926521496,string,,Yes,Yes,,"^\d{1,100}$"
+[].account.loan_data.monthly_payment,**Nota:** Este campo não se aplica ao OF Brasil e retornará null.,,number,float,Yes,Yes,,
+[].account.loan_data.principal,**Nota:** Este campo não se aplica ao OF Brasil e retornará null.,,number,float,Yes,Yes,,
+[].account.loan_data.payment_day,**Nota:** Este campo não se aplica ao OF Brasil e retornará null.,,string,,Yes,Yes,,
+[].account.loan_data.outstanding_principal,**Nota:** Este campo não se aplica ao OF Brasil e retornará null.,,number,float,Yes,Yes,,
+[].account.loan_data.credit_limit,**Nota:** Este campo não se aplica ao OF Brasil e retornará null.,,number,,Yes,Yes,,
+[].account.loan_data.last_period_balance,**Nota:** Este campo não se aplica ao OF Brasil e retornará null.,,number,,Yes,Yes,,
+[].account.loan_data.interest_rate,**Nota:** Este campo não se aplica ao OF Brasil e retornará null.,,number,,Yes,Yes,,
+[].account.loan_data.limit_day,**Nota:** Este campo não se aplica ao OF Brasil e retornará null.,,string,,Yes,Yes,,
+[].account.loan_data.cutting_day,**Nota:** Este campo não se aplica ao OF Brasil e retornará null.,,string,,Yes,Yes,,
+[].account.loan_data.cutting_date,**Nota:** Este campo não se aplica ao OF Brasil e retornará null.,,string,,Yes,Yes,,
+[].account.loan_data.last_payment_date,**Nota:** Este campo não se aplica ao OF Brasil e retornará null.,,string,,Yes,Yes,,
+[].account.loan_data.no_interest_payment,**Nota:** Este campo não se aplica ao OF Brasil e retornará null.,,number,,Yes,Yes,,
+[].account.funds_data,**Nota:** Este campo não se aplica ao OF Brasil e retornará null.,,string,,Yes,Yes,,
 [].name,"O nome para a despesa recorrente.
 
 ℹ️ **Nota**: Esta informação é retirada da seção de descrição de uma transação e, em seguida, normalizada para fornecer um nome de fácil leitura. Assim, às vezes o nome refletirá o comerciante para o qual o pagamento é feito (por exemplo, Netflix.com), enquanto para outras despesas recorrentes, isso pode ser algo como ""Pagamento mensal para John"".",Netflix,string,,Yes,Yes,,
