@@ -1,0 +1,163 @@
+Name,Description,Example,Type,Format,Required,Nullable,Enum,Pattern
+id,"Belvo's unique identifier for the current item.
+",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
+link,The `link.id` the data belongs to.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
+created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+operation_identifier,The network's unique identifier for the exchange operation.,92792126019929240,string,,Yes,No,,"^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$"
+operation_number,"The 12-digit operation registration number from the Brazil Central Bank (Bacen). This can be `null` if the operation has not yet been registered.
+",393874649456,string,,No,Yes,,^\d{12}$
+operation_type,"The type of exchange operation.
+
+We return one of the following enum values:
+  - `COMPRA` - Buy (client is buying foreign currency)
+  - `VENDA` - Sell (client is selling foreign currency)
+",COMPRA,string,,Yes,No,"COMPRA, VENDA",
+operation_requested_at,The ISO-8601 timestamp when the exchange operation was contracted.,2023-03-07T08:30:00Z,string,date-time,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
+authorized_institution_identifier,The CNPJ of the institution authorized to conduct the operation.,11225860000140,integer,int64,Yes,No,,
+authorized_institution_name,The name of the authorized institution.,AGENCIA CORRETORA,string,,Yes,No,,
+intermediary_institution_identifier,"The CNPJ of the intermediary institution, if one was used.",11225860000140,integer,int64,No,Yes,,
+intermediary_institution_name,The name of the intermediary institution. Must be present if `intermediary_institution_identifier` is available.,AGENCIA CORRETORA,string,,No,Yes,,
+operation_due_date,"The currently scheduled settlement date for the operation, in `YYYY-MM-DD` format. 
+
+> **Note**: This field is updated if any changes are made to the exchange operation.
+",2018-02-15,string,date,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+local_operation_tax_amount,The exchange rate applied to the operation.,1.3,number,float,Yes,No,,"^\d{1,15}\.\d{1,15}$"
+local_operation_tax_currency,The three-letter currency code (ISO-4217) for the exchange rate.,BRL,string,,Yes,No,,^[A-Z]{3}$
+local_operation_value_amount,The total value of the operation in local currency.,1000.04,number,float,Yes,No,,"^\d{1,17}\.\d{2}$"
+local_operation_value_currency,The three-letter currency code (ISO-4217) for the local currency.,BRL,string,,Yes,No,,^[A-Z]{3}$
+foreign_operation_value_amount,The total value of the operation in the foreign currency.,1000.04,number,float,Yes,No,,"^\d{1,17}\.\d{2}$"
+foreign_operation_value_currency,The three-letter currency code (ISO-4217) for the foreign currency.,USD,string,,Yes,No,,^[A-Z]{3}$
+operation_outstanding_balance_amount,"The outstanding balance to be settled, in the foreign currency. In the case that the exchange operation is scheduled to be settled within two days of the `operation_requested_at`, this value can be `null`.
+",1000.04,number,float,No,Yes,,"^\d{1,17}\.\d{2}$"
+operation_outstanding_balance_currency,The currency of the outstanding balance. Required if `operation_outstanding_balance_amount` is not `null`.,USD,string,,No,Yes,,^[A-Z]{3}$
+tev_amount_amount,"The ""All-in Rate"" (Valor Efetivo Total/Total Effective Cost), representing the total cost of the operation. Required when the operation is scheduled to be settled within two days of the `operation_requested_at` and does not exceed $100,000 USD.
+",1000.000004,number,float,No,Yes,,"^\d{1,15}\.\d{1,15}$"
+tev_amount_currency,The currency of the VET (always BRL). Required if `tev_amount_amount` is not `null`.,BRL,string,,No,Yes,,^[A-Z]{3}$
+local_currency_advance_percentage,"The percentage of the foreign currency value that was granted to the client in advance. In the case that the exchange operation is scheduled to be settled within two days of the `operation_requested_at`, this value can be `null`.
+",0.12,number,float,No,Yes,,"^\d{1}\.\d{1,6}$"
+settlement_method,"The method of delivery for the foreign currency.
+
+We return one of the following enum values:
+  - `CARTA_CREDITO_A_VISTA` (Code 10) - Sight letter of credit
+  - `CARTA_CREDITO_A_PRAZO` (Code 15) - Term letter of credit
+  - `CONTA_DEPOSITO` (Code 20) - Deposit account
+  - `CONTA_DEPOSITO_MOEDA_ESTRANGEIRA_PAIS` (Code 21) - Foreign currency deposit account in country
+  - `CONTA_DEPOSITO_EXPORTADOR_MANTIDA_NO_EXTERIOR` (Code 22) - Exporter's deposit account maintained abroad
+  - `CONTA_DEPOSITO_OU_PAGAMENTO_EXPORTADOR_INSTITUICAO_EXTERIOR` (Code 23) - Deposit account or payment to exporter at foreign institution
+  - `CONVENIO_PAGAMENTOS_E_CREDITOS_RECIPROCOS` (Code 25) - Reciprocal payments and credits agreement
+  - `CHEQUE` (Code 30) - Check
+  - `ESPECIE_CHEQUES_VIAGEM` (Code 50) - Cash or traveler's checks
+  - `CARTAO_PREPAGO` (Code 55) - Prepaid card
+  - `TELETRANSMISSAO` (Code 65) - Wire transfer
+  - `TITULOS_VALORES` (Code 75) - Securities/bonds
+  - `SIMBOLICA` (Code 90) - Symbolic
+  - `SEM_MOVIMENTACAO_VALORES` (Code 91) - No movement of funds
+  - `DEMAIS` (Code 99) - Others
+  - `OUTRO_NAO_MAPEADO_OFB` - Other not mapped by Open Finance Brazil
+  - `null`
+",CARTA_CREDITO_A_PRAZO,string,,Yes,Yes,"CONTA_DEPOSITO_MOEDA_ESTRANGEIRA_PAIS, CONTA_DEPOSITO_OU_PAGAMENTO_EXPORTADOR_INSTITUICAO_EXTERIOR, ESPECIE_CHEQUES_VIAGEM, CARTAO_PREPAGO, TELETRANSMISSAO, SEM_MOVIMENTACAO_VALORES, DEMAIS, CARTA_CREDITO_A_VISTA, CARTA_CREDITO_A_PRAZO, CONTA_DEPOSITO, CHEQUE, TITULOS_VALORES, SIMBOLICA, CONTA_DEPOSITO_EXPORTADOR_MANTIDA_NO_EXTERIOR, CONVENIO_PAGAMENTOS_E_CREDITOS_RECIPROCOS, OUTRO_NAO_MAPEADO_OFB, None",
+operation_category_code,"The 5-digit Central Bank code that classifies the ""nature"" of the operation.
+
+This code must comply with the nature codes referenced in Resolution 277 or Circular 3690, as applicable to the exchange contract.
+",90302,string,,Yes,No,,^\d{5}$
+results,An array of exchange history objects.,,array,,No,No,,
+results[].id,"Belvo's unique identifier for the current item.
+",0d3ffb69-f83b-456e-ad8e-208d0998d71d,string,uuid,Yes,No,,
+results[].link,The `link.id` the data belongs to.,30cb4806-6e00-48a4-91c9-ca55968576c8,string,uuid,Yes,Yes,,
+results[].exchange_id,The Belvo-generated unique identifier for the original exchange operation.,c4bfecf9-4eb6-4920-9f9f-e1f1e60ef321,string,uuid,Yes,No,,
+results[].created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+results[].collected_at,"The ISO-8601 timestamp when the data point was collected.
+",2022-02-09T08:45:50.406032Z,string,date-time,Yes,No,,
+results[].operation_identifier,The network's unique identifier for the exchange operation.,92792126019929240,string,,Yes,No,,"^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$"
+results[].event_sequence_number,The sequence number of the event record at the Central Bank (Bacen).,493874649457,string,,Yes,No,,^\d{12}$
+results[].event_type,"The type of event that occurred for the exchange operation.
+
+We return one of the following enum values:
+  - `1` - Contract in the primary market
+  - `2` - Modification of exchange operation in the primary market
+  - `3` - Cancellation of exchange operation in the primary market
+  - `4` - Settlement of exchange operation in the primary market
+  - `5` - Write-off of outstanding amount to be settled in the primary market
+  - `6` - Reinstatement of written-off outstanding amount in the primary market
+  - `9` - Nullification of exchange operation in the primary market (used, for example, in the nullification of a settlement/cancellation event)
+
+> **Note**: Codes follow the messaging layout sent by institutions to the Central Bank of Brazil.
+",2,integer,,Yes,No,"1, 2, 3, 4, 5, 6, 9",
+results[].event_created_at,The ISO-8601 timestamp when the event occurred.,2023-03-10T14:00:00Z,string,date-time,Yes,No,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
+results[].operation_due_date,"The date when the operation (buy or sell), after the event, is scheduled to be settled, in `YYYY-MM-DD` format.
+",2023-03-20,string,date,No,Yes,,^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+results[].local_operation_tax_amount,The exchange rate applied to the operation after the event.,1.4,number,float,No,Yes,,"^\d{1,15}\.\d{1,15}$"
+results[].local_operation_tax_currency,The three-letter currency code (ISO-4217) for the exchange rate.,BRL,string,,No,Yes,,^[A-Z]{3}$
+results[].local_operation_value_amount,The total value of the operation in local currency after the event.,950,number,float,No,Yes,,"^\d{1,17}\.\d{2}$"
+results[].local_operation_value_currency,The three-letter currency code (ISO-4217) for the local currency.,BRL,string,,No,Yes,,^[A-Z]{3}$
+results[].foreign_operation_value_amount,The total value of the operation in foreign currency after the event.,678.57,number,float,No,Yes,,"^\d{1,17}\.\d{2}$"
+results[].foreign_operation_value_currency,The three-letter currency code (ISO-4217) for the foreign currency.,USD,string,,No,Yes,,^[A-Z]{3}$
+results[].operation_outstanding_balance_amount,"The outstanding balance to be settled in foreign currency after the event.
+
+This field is mandatory for events created (`event_created_at`) from April 15, 2024 onwards, in cases of exchange operations with future settlement.
+",678.57,number,float,No,Yes,,"^\d{1,17}\.\d{2}$"
+results[].operation_outstanding_balance_currency,The currency of the outstanding balance. Required if `operation_outstanding_balance_amount` is not `null`.,USD,string,,No,Yes,,^[A-Z]{3}$
+results[].tev_amount_amount,"The ""All-in Rate"" (Valor Efetivo Total/Total Effective Cost), representing the total cost of the operation after the event. 
+
+This field is required for spot exchange operations that reach up to the limit of $100,000 USD or equivalent in other currencies.
+",1002,number,float,No,Yes,,"^\d{1,15}\.\d{1,15}$"
+results[].tev_amount_currency,The currency of the VET (always BRL). Required if `tev_amount_amount` is not `null`.,BRL,string,,No,Yes,,^[A-Z]{3}$
+results[].local_currency_advance_percentage,"The percentage of the foreign currency value that was granted to the client in advance after the event.
+
+This field is mandatory in cases of exchange operations with future settlement.
+",0.12,number,float,No,Yes,,"^\d{1}\.\d{1,6}$"
+results[].settlement_method,"The method of delivery for the foreign currency.
+
+We return one of the following enum values:
+  - `CARTA_CREDITO_A_VISTA` (Code 10) - Sight letter of credit
+  - `CARTA_CREDITO_A_PRAZO` (Code 15) - Term letter of credit
+  - `CONTA_DEPOSITO` (Code 20) - Deposit account
+  - `CONTA_DEPOSITO_MOEDA_ESTRANGEIRA_PAIS` (Code 21) - Foreign currency deposit account in country
+  - `CONTA_DEPOSITO_EXPORTADOR_MANTIDA_NO_EXTERIOR` (Code 22) - Exporter's deposit account maintained abroad
+  - `CONTA_DEPOSITO_OU_PAGAMENTO_EXPORTADOR_INSTITUICAO_EXTERIOR` (Code 23) - Deposit account or payment to exporter at foreign institution
+  - `CONVENIO_PAGAMENTOS_E_CREDITOS_RECIPROCOS` (Code 25) - Reciprocal payments and credits agreement
+  - `CHEQUE` (Code 30) - Check
+  - `ESPECIE_CHEQUES_VIAGEM` (Code 50) - Cash or traveler's checks
+  - `CARTAO_PREPAGO` (Code 55) - Prepaid card
+  - `TELETRANSMISSAO` (Code 65) - Wire transfer
+  - `TITULOS_VALORES` (Code 75) - Securities/bonds
+  - `SIMBOLICA` (Code 90) - Symbolic
+  - `SEM_MOVIMENTACAO_VALORES` (Code 91) - No movement of funds
+  - `DEMAIS` (Code 99) - Others
+  - `OUTRO_NAO_MAPEADO_OFB` - Other not mapped by Open Finance Brazil
+  - `null`
+",CARTA_CREDITO_A_PRAZO,string,,No,Yes,"CONTA_DEPOSITO_MOEDA_ESTRANGEIRA_PAIS, CONTA_DEPOSITO_OU_PAGAMENTO_EXPORTADOR_INSTITUICAO_EXTERIOR, ESPECIE_CHEQUES_VIAGEM, CARTAO_PREPAGO, TELETRANSMISSAO, SEM_MOVIMENTACAO_VALORES, DEMAIS, CARTA_CREDITO_A_VISTA, CARTA_CREDITO_A_PRAZO, CONTA_DEPOSITO, CHEQUE, TITULOS_VALORES, SIMBOLICA, CONTA_DEPOSITO_EXPORTADOR_MANTIDA_NO_EXTERIOR, CONVENIO_PAGAMENTOS_E_CREDITOS_RECIPROCOS, OUTRO_NAO_MAPEADO_OFB, None",
+results[].operation_category_code,"The 5-digit Central Bank code that classifies the ""nature"" of the operation.
+
+This code must comply with the nature codes referenced in Resolution 277 or Circular 3690, as applicable to the exchange contract.
+",90302,string,,No,Yes,,^\d{5}$
+results[].foreign_partie_relationship_code,"The code indicating the relationship between the customer and the foreign payer/receiver.
+
+This code must comply with the relationship codes referenced in Resolution 277 or Circular 3690, as applicable to the exchange contract.
+
+> **Note**: This field is optional when:
+> - The `settlement_method` field is `ESPECIE_CHEQUES_VIAGEM` or `CARTAO_PREPAGO`.
+> - The `event_type` field is different from `4` (Settlement of exchange operation in the primary market).
+>
+> If the institution has this information, it is mandatory to send it. If the information is updated after contracting, it must be sent through events.
+",50,string,,No,Yes,,^\d{2}$
+results[].foreign_partie_name,"The name of the foreign payer or receiver.
+
+> **Note**: This field is optional when:
+> - The `settlement_method` field is `ESPECIE_CHEQUES_VIAGEM` or `CARTAO_PREPAGO`.
+> - The `event_type` field is different from `4` (Settlement of exchange operation in the primary market).
+>
+> If the institution has this information, it is mandatory to send it. If the information is updated after contracting, it must be sent through events.
+",Global Tech Imports LLC,string,,No,Yes,,[\w\W\s]*
+results[].foreign_partie_country_code,"The country code of the foreign payer or receiver, following the ISO 3166-1 standard.
+
+> **Note**: This field is optional when:
+> - The `settlement_method` field is `ESPECIE_CHEQUES_VIAGEM` or `CARTAO_PREPAGO`.
+> - The `event_type` field is different from `4` (Settlement of exchange operation in the primary market).
+>
+> If the institution has this information, it is mandatory to send it. If the information is updated after contracting, it must be sent through events.
+",US,string,,No,Yes,,^[A-Z]{2}$

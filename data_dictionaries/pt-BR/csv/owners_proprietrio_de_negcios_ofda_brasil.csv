@@ -164,13 +164,13 @@ financial_profile.informed_revenue.frequency,"Indica com que frequência a empre
 financial_profile.informed_revenue.frequency_additional_info,Informações adicionais sobre a frequência.,Recently switched from weekly to monthly.,string,,Yes,Yes,,[\w\W\s]*
 financial_profile.informed_revenue.amount,"A receita reportada do negócio.
 
-> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `informed_revenue` estiver disponível.",45391.89,number,,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `informed_revenue` estiver disponível.",45391.89,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
 financial_profile.informed_revenue.currency,"O código de moeda de três letras (ISO-4217).
 
 > **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `informed_revenue` estiver disponível.",BRL,string,,Yes,No,,^[A-Z]{3}$
 financial_profile.informed_revenue.year,"O ano em que a receita foi declarada pela última vez.
 
-> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `informed_revenue` estiver disponível.",2022,integer,,Yes,No,,
+> **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil se o campo `informed_revenue` estiver disponível.",2022,integer,int32,Yes,No,,
 financial_profile.patrimony,Informações sobre os ativos relatados do indivíduo.,,object,,Yes,Yes,,
 financial_profile.patrimony.amount,"Os ativos relatados do negócio.
 

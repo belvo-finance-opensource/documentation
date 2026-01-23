@@ -164,13 +164,13 @@ financial_profile.informed_revenue.frequency,"Indica con qué frecuencia la empr
 financial_profile.informed_revenue.frequency_additional_info,Información adicional sobre la frecuencia.,Recently switched from weekly to monthly.,string,,Yes,Yes,,[\w\W\s]*
 financial_profile.informed_revenue.amount,"Los ingresos reportados del negocio.
 
-> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `informed_revenue` está disponible.",45391.89,number,,Yes,No,,"^\d{1,15}\.\d{2,4}$"
+> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `informed_revenue` está disponible.",45391.89,number,float,Yes,No,,"^\d{1,15}\.\d{2,4}$"
 financial_profile.informed_revenue.currency,"El código de moneda de tres letras (ISO-4217).
 
 > **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `informed_revenue` está disponible.",BRL,string,,Yes,No,,^[A-Z]{3}$
 financial_profile.informed_revenue.year,"El año en que se declaró por última vez el ingreso.
 
-> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `informed_revenue` está disponible.",2022,integer,,Yes,No,,
+> **No anulable:** Se debe devolver un valor por la red de finanzas abiertas de Brasil si el campo `informed_revenue` está disponible.",2022,integer,int32,Yes,No,,
 financial_profile.patrimony,Información sobre los activos reportados del individuo.,,object,,Yes,Yes,,
 financial_profile.patrimony.amount,"Los activos reportados del negocio.
 

@@ -235,7 +235,7 @@ account.loan_data.interest_rates,"Breakdown of the interest applied to the loan.
 ",,array,,Yes,No,,
 account.loan_data.interest_rates[].name,"The name of the type of interest rate applied to the loan.
 
-**Note:** For OFDA Brazil, we recommend you use the `interest_date_data.tax_type` parameter.
+**Note:** For OFDA Brazil, we recommend you use the `interest_rate_data.tax_type` parameter.
 ",NOMINAL,string,,Yes,Yes,,
 account.loan_data.interest_rates[].type,"The period that the interest is applied to the loan.
 
@@ -243,7 +243,7 @@ account.loan_data.interest_rates[].type,"The period that the interest is applied
 ",MONTHLY,string,,Yes,No,"MONTHLY, YEARLY",
 account.loan_data.interest_rates[].value,"The interest rate (in percent or currency value).
 
-**Note:** For OFDA Brazil, we recommend you use the `interest_date_data.pre_fixed_rate` and `interest_date_data.post_fixed_rate`parameter.
+**Note:** For OFDA Brazil, we recommend you use the `interest_rate_data.pre_fixed_rate` and `interest_rate_data.post_fixed_rate`parameter.
 ",7.85,number,float,Yes,Yes,,
 account.loan_data.interest_rates[].interest_rate_data,Detailed information regarding the interest rate.,,object,,Yes,Yes,,
 account.loan_data.interest_rates[].interest_rate_data.tax_type,"The type of interest rate tax. We return one of the following values:
@@ -738,7 +738,7 @@ loan_data.is_detached,"Boolean to indicate whether or not this loan payment was 
 > **Non-nullable:** A value must be returned by Brazil's open finance network.
 ",True,boolean,,Yes,No,,
 loan_data.installment_id,"The institution's unique ID for this payment installment.
-",WGx0aExYcEJMVm93TFRsZFcyRXRla0V0V2pBdE9Wd3RYWH,string,,No,Yes,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
+",WGx0aExYcEJMVm93TFRsZFcyRXRla0V0V2pBdE9Wd3RYWH,string,,Yes,Yes,,"^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$"
 loan_data.fees,Details regarding the fees associated with this payment. Only applicable when `is_detached` = `true`.,,array,,Yes,No,,
 loan_data.fees[].name,"The name of the fee.
 
