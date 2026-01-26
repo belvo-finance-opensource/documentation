@@ -227,7 +227,7 @@ loan_data.interest_rates,"Breakdown of the interest applied to the loan. With OF
 ",,array,,Yes,No,,
 loan_data.interest_rates[].name,"The name of the type of interest rate applied to the loan.
 
-**Note:** For OFDA Brazil, we recommend you use the `interest_date_data.tax_type` parameter.
+**Note:** For OFDA Brazil, we recommend you use the `interest_rate_data.tax_type` parameter.
 ",NOMINAL,string,,Yes,Yes,,
 loan_data.interest_rates[].type,"The period that the interest is applied to the loan.
 
@@ -235,7 +235,7 @@ loan_data.interest_rates[].type,"The period that the interest is applied to the 
 ",MONTHLY,string,,Yes,No,"MONTHLY, YEARLY",
 loan_data.interest_rates[].value,"The interest rate (in percent or currency value).
 
-**Note:** For OFDA Brazil, we recommend you use the `interest_date_data.pre_fixed_rate` and `interest_date_data.post_fixed_rate`parameter.
+**Note:** For OFDA Brazil, we recommend you use the `interest_rate_data.pre_fixed_rate` and `interest_rate_data.post_fixed_rate`parameter.
 ",7.85,number,float,Yes,Yes,,
 loan_data.interest_rates[].interest_rate_data,Detailed information regarding the interest rate.,,object,,Yes,Yes,,
 loan_data.interest_rates[].interest_rate_data.tax_type,"The type of interest rate tax. We return one of the following values:
