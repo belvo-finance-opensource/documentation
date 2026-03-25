@@ -171,13 +171,13 @@ account.loan_data.interest_rates,"Desglose del interés aplicado al préstamo. C
 > **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",,array,,Yes,No,,
 account.loan_data.interest_rates[].name,"El nombre del tipo de tasa de interés aplicada al préstamo.
 
-**Nota:** Para OFDA Brasil, recomendamos usar el parámetro `interest_date_data.tax_type`.",NOMINAL,string,,Yes,Yes,,
+**Nota:** Para OFDA Brasil, recomendamos usar el parámetro `interest_rate_data.tax_type`.",NOMINAL,string,,Yes,Yes,,
 account.loan_data.interest_rates[].type,"El período durante el cual se aplica el interés al préstamo.
 
 > **No anulable:** La red de finanzas abiertas de Brasil debe devolver un valor.",MONTHLY,string,,Yes,No,"MONTHLY, YEARLY",
 account.loan_data.interest_rates[].value,"La tasa de interés (en porcentaje o valor monetario).
 
-**Nota:** Para OFDA Brasil, recomendamos usar el parámetro `interest_date_data.pre_fixed_rate` y `interest_date_data.post_fixed_rate`.",7.85,number,float,Yes,Yes,,
+**Nota:** Para OFDA Brasil, recomendamos que utilice el parámetro `interest_rate_data.pre_fixed_rate` y `interest_rate_data.post_fixed_rate`.",7.85,number,float,Yes,Yes,,
 account.loan_data.interest_rates[].interest_rate_data,Información detallada sobre la tasa de interés.,,object,,Yes,Yes,,
 account.loan_data.interest_rates[].interest_rate_data.tax_type,"El tipo de impuesto sobre la tasa de interés. Devolvemos uno de los siguientes valores:
 

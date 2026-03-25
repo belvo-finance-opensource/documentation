@@ -171,13 +171,13 @@ account.loan_data.interest_rates,"Detalhamento dos juros aplicados ao empréstim
 > **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",,array,,Yes,No,,
 account.loan_data.interest_rates[].name,"O nome do tipo de taxa de juros aplicada ao empréstimo.
 
-**Nota:** Para OFDA Brasil, recomendamos que você use o parâmetro `interest_date_data.tax_type`.",NOMINAL,string,,Yes,Yes,,
+**Nota:** Para OFDA Brasil, recomendamos que você use o parâmetro `interest_rate_data.tax_type`.",NOMINAL,string,,Yes,Yes,,
 account.loan_data.interest_rates[].type,"O período em que o juro é aplicado ao empréstimo.
 
 > **Não anulável:** Um valor deve ser retornado pela rede de open finance do Brasil.",MONTHLY,string,,Yes,No,"MONTHLY, YEARLY",
 account.loan_data.interest_rates[].value,"A taxa de juros (em porcentagem ou valor monetário).
 
-**Nota:** Para OFDA Brasil, recomendamos que você use os parâmetros `interest_date_data.pre_fixed_rate` e `interest_date_data.post_fixed_rate`.",7.85,number,float,Yes,Yes,,
+**Nota:** Para OFDA Brasil, recomendamos que você use os parâmetros `interest_rate_data.pre_fixed_rate` e `interest_rate_data.post_fixed_rate`.",7.85,number,float,Yes,Yes,,
 account.loan_data.interest_rates[].interest_rate_data,Informações detalhadas sobre a taxa de juros.,,object,,Yes,Yes,,
 account.loan_data.interest_rates[].interest_rate_data.tax_type,"O tipo de imposto sobre a taxa de juros. Retornamos um dos seguintes valores:
 
