@@ -7,8 +7,26 @@ document_number,"The document number (CPF) of the individual.
 ",76109277673,string,,No,No,,
 belvo_institution_name,"Belvo's name for the open finance institution that the consent is related to.
 ",ofmockbank_br_retail,string,,No,No,,
+institution_display_name,"The display name of the banking institution that the consent is related to.
+",Mock Bank,string,,No,No,,
+institution_icon_logo,"The URL to the banking institution's logo.
+",https://assets.belvo.io/institutions/mockbank/logo.svg,string,,No,No,,
+belvo_organization_name,"The name registered in Belvo of the organization that created the link.
+",ACME Corporation,string,,No,No,,
+link_id,"The Belvo link ID that the consent belongs to.
+",2e5d2c5e-6b3a-4b5c-8d1e-9f0a1b2c3d4e,string,uuid,No,No,,
+user_name,"The name provided in `consent.identification_info.name` during the initial Widget Access Token Request.
+",Jack White,string,,No,Yes,,
 expired_at,"The ISO-8601 timestamp when the consent will expire. In the case that `undefined_consent_expiration` is `true`, this field will be `null`.",2021-02-27T13:01:41.941Z,string,date-time,No,No,,
 undefined_consent_expiration,"Indicated whether the consent is for an undefined period, that is, that there is no expiration for the consent.",False,boolean,,No,No,,
+consent_duration,"The duration of the consent in days. In the case that `undefined_consent_expiration` is `true`, this field will be `null`.
+
+Possible values:
+- `92` (3 months)
+- `183` (6 months)
+- `275` (9 months)
+- `366` (12 months)
+",366,integer,,No,Yes,,
 created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's database.
 ",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
 status,"The status of the consent in the open finance network. Can be either:
@@ -26,3 +44,4 @@ permissions.CREDIT_CARDS,A list of of open banking permissions relating to acces
 permissions.CREDIT_OPERATIONS,A list of of open banking permissions relating to accessing credit product information.,"[""LOANS_READ"", ""LOANS_WARRANTIES_READ"", ""LOANS_SCHEDULED_INSTALMENTS_READ"", ""LOANS_PAYMENTS_READ"", ""FINANCINGS_READ"", ""FINANCINGS_WARRANTIES_READ"", ""FINANCINGS_SCHEDULED_INSTALMENTS_READ"", ""FINANCINGS_PAYMENTS_READ"", ""UNARRANGED_ACCOUNTS_OVERDRAFT_READ"", ""UNARRANGED_ACCOUNTS_OVERDRAFT_WARRANTIES_READ"", ""UNARRANGED_ACCOUNTS_OVERDRAFT_SCHEDULED_INSTALMENTS_READ"", ""UNARRANGED_ACCOUNTS_OVERDRAFT_PAYMENTS_READ"", ""INVOICE_FINANCINGS_READ"", ""INVOICE_FINANCINGS_WARRANTIES_READ"", ""INVOICE_FINANCINGS_SCHEDULED_INSTALMENTS_READ"", ""INVOICE_FINANCINGS_PAYMENTS_READ""]",array,,No,No,,
 permissions.REGISTER,A list of of open banking permissions relating to accessing personal information.,"[""CUSTOMERS_PERSONAL_IDENTIFICATIONS_READ"", ""CUSTOMERS_PERSONAL_ADITTIONALINFO_READ""]",array,,No,No,,
 permissions.RESOURCES,A list of functional permissions required to interact with the permissions.,"[""RESOURCES_READ""]",array,,No,No,,
+permissions.INVESTMENTS,A list of open banking permissions relating to accessing investment information.,"[""BANK_FIXED_INCOMES_READ"", ""CREDIT_FIXED_INCOMES_READ"", ""FUNDS_READ"", ""VARIABLE_INCOMES_READ"", ""TREASURE_TITLES_READ""]",array,,No,No,,

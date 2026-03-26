@@ -16,6 +16,7 @@ primary_color,El color primario en el sitio web de la institución.,#056dae,stri
 logo,La URL del logotipo de la institución.,https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.svg,string,,No,Yes,,
 icon_logo,La URL del logotipo del icono de la institución.,https://statics.belvo.io/widget/images/institutions/erebor.svg,string,,No,Yes,,
 text_logo,La URL del logotipo de texto de la institución.,https://statics.belvo.io/widget/images/institutions/erebor.svg,string,,No,Yes,,
+code,"Este campo está **obsoleto** y se eliminará en una versión futura. Por favor, utilice el campo `id` en su lugar, que es el identificador único para la institución.",,string,,No,Yes,,
 form_fields,,,array,,No,No,,
 form_fields[].name,"El campo de nombre de usuario, contraseña o tipo de nombre de usuario.",username,string,,No,No,,
 form_fields[].type,"El tipo de entrada para el campo del formulario. Por ejemplo, string.",text,string,,No,No,,
