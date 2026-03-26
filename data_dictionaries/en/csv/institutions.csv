@@ -18,6 +18,7 @@ primary_color,The primary color on the institution's website.,#056dae,string,,No
 logo,The URL of the institution's logo.,https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.svg,string,,No,Yes,,
 icon_logo,The URL of the institution's icon logo.,https://statics.belvo.io/widget/images/institutions/erebor.svg,string,,No,Yes,,
 text_logo,The URL of the institution's text logo.,https://statics.belvo.io/widget/images/institutions/erebor.svg,string,,No,Yes,,
+code,"This field is **deprecated** and will be removed in a future release. Please use the `id` field instead, which is the unique identifier for the institution.",,string,,No,Yes,,
 form_fields,,,array,,No,No,,
 form_fields[].name,"The username, password, or username type field.",username,string,,No,No,,
 form_fields[].type,"The input type for the form field. For example, string.",text,string,,No,No,,
