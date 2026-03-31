@@ -4,6 +4,7 @@ link,O `link.id` ao qual os dados pertencem.,30cb4806-6e00-48a4-91c9-ca55968576c
 created_at,O carimbo de data e hora ISO-8601 de quando o ponto de dados foi criado no banco de dados da Belvo.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
 collected_at,O carimbo de data/hora ISO-8601 quando o ponto de dados foi coletado.,2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
 report_date,"A data em que o relatório de registro de emprego foi gerado, no formato `YYYY-MM-DD`.",2023-01-19,string,date,No,No,,
+days_since_extraction,O número de dias que se passaram desde que os dados de emprego foram originalmente extraídos da instituição.,42,integer,,No,No,,
 internal_identification,"ID único para o usuário de acordo com a instituição. Para IMSS e ISSSTE México, este é o CURP.",BLPM951331IONVGR54,string,,No,No,,
 personal_data,Detalhes sobre as informações pessoais do indivíduo.,,object,,No,No,,
 personal_data.official_name,O nome legal do indivíduo.,Bruce Banner del Torro,string,,No,Yes,,
@@ -96,6 +97,12 @@ Por exemplo, um período de `6` indica que a pontuação é calculada para os pr
 
 > **Nota**: Atualmente, a Belvo calcula a pontuação para 3, 6 e 12 meses.",6,integer,,No,No,,
 employment_scores[].version,A versão do nosso modelo de pontuação de emprego usada para realizar o cálculo.,1.0.0,string,,No,No,,
+salary_estimation,"Fornece uma estimativa modelada do salário base atual do usuário e do status de emprego.
+
+> **Nota**: Este campo está disponível apenas para links criados com o IMSS do México. Para outras instituições (como ISSSTE), este campo retornará `null`.",,object,,No,Yes,,
+salary_estimation.employment_status_estimate,"Status atual de emprego estimado usando um registro de emprego com uma data de relatório passada. Retorna `""EMPLOYED""` (se o `base_salary_estimate` for maior que 0) ou `""UNEMPLOYED""`.",EMPLOYED,string,,Yes,Yes,,
+salary_estimation.base_salary_estimate,Salário base atual (valor diário) estimado usando um registro de emprego com uma data de relatório anterior.,1000,number,float,Yes,Yes,,
+salary_estimation.currency,"O código de moeda de três letras (ISO-4217). Por exemplo, `""MXN""`.",MXN,string,,Yes,No,,
 files,Arquivos binários PDF adicionais relacionados ao emprego do indivíduo.,,array,,No,Yes,,
 files[].type,O título do documento.,ReporteSemanasCotizadas_190123,string,,No,No,,
 files[].value,"O binário PDF do arquivo (como uma string).

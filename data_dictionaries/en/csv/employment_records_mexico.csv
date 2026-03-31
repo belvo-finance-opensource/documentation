@@ -7,6 +7,7 @@ created_at,"The ISO-8601 timestamp of when the data point was created in Belvo's
 collected_at,"The ISO-8601 timestamp when the data point was collected.
 ",2022-02-09T08:45:50.406032Z,string,date-time,No,No,,
 report_date,"The date when the employment record report was generated, in `YYYY-MM-DD` format.",2023-01-19,string,date,No,No,,
+days_since_extraction,The number of days that have passed since the employment data was originally extracted from the institution.,42,integer,,No,No,,
 internal_identification,"Unique ID for user according to the institution. For IMSS and ISSSTE Mexico, this is the CURP.",BLPM951331IONVGR54,string,,No,No,,
 personal_data,Details regarding the personal information of the individual.,,object,,No,No,,
 personal_data.official_name,"The legal name of the individual.
@@ -131,6 +132,13 @@ For example, a period of `6` indicates that the score is calculated for the next
 > **Note**: At present Belvo calculates the score for 3, 6, and 12 months.
 ",6,integer,,No,No,,
 employment_scores[].version,The version of our employment score model used to perform the calculation.,1.0.0,string,,No,No,,
+salary_estimation,"Provides a modeled estimation of the user's current base salary and employment status. 
+
+> **Note**: This field is only available for links created with Mexico's IMSS. For other institutions (such as ISSSTE), this field will return `null`.
+",,object,,No,Yes,,
+salary_estimation.employment_status_estimate,"Current employment status estimated using an employment record with a past report date. Returns `""EMPLOYED""` (if the `base_salary_estimate` is greater than 0) or `""UNEMPLOYED""`.",EMPLOYED,string,,Yes,Yes,,
+salary_estimation.base_salary_estimate,Current base salary (daily amount) estimated using an employment record with a past report date.,1000,number,float,Yes,Yes,,
+salary_estimation.currency,"The three-letter currency code (ISO-4217). For example, `""MXN""`.",MXN,string,,Yes,No,,
 files,Additional PDF binary files relating to the individual's employment.,,array,,No,Yes,,
 files[].type,"The title of the document.
 ",ReporteSemanasCotizadas_190123,string,,No,No,,
