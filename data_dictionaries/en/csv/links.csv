@@ -28,7 +28,7 @@ A unique 44-character string that can be used to identify a user at a given inst
 
 
 📚 Check out our <a href=""https://developers.belvo.com/docs/link-creation-best-practices#avoiding-duplicated-links"" target=""_blank"">Avoiding duplicated links</a> DevPortal article for more information and tips on how to use it.
-",sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=,string,,No,No,,[A-Za-z0-9\-=_]{44}
+",test_institution_user_id_1234567890abcdef123,string,,No,No,,[A-Za-z0-9\-=_]{44}
 status,"The current status of the link. For more information, see our <a href=""https://developers.belvo.com/docs/links-and-institutions#links"" target=""_blank"">Link</a> article in the devportal.
 We return one of the following values:
   - `valid`

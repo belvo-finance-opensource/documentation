@@ -18,7 +18,7 @@ institution_user_id,"> 📘 Información
 
 Una cadena única de 44 caracteres que se puede usar para identificar a un usuario en una institución determinada.
 
-📚 Consulta nuestro artículo del DevPortal <a href=""https://developers.belvo.com/docs/link-creation-best-practices#avoiding-duplicated-links"" target=""_blank"">Evitar enlaces duplicados</a> para obtener más información y consejos sobre cómo usarlo.",sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=,string,,No,No,,[A-Za-z0-9\-=_]{44}
+📚 Consulta nuestro artículo del DevPortal <a href=""https://developers.belvo.com/docs/link-creation-best-practices#avoiding-duplicated-links"" target=""_blank"">Evitar enlaces duplicados</a> para obtener más información y consejos sobre cómo usarlo.",test_institution_user_id_1234567890abcdef123,string,,No,No,,[A-Za-z0-9\-=_]{44}
 status,"El estado actual del enlace. Para más información, consulta nuestro artículo de <a href=""https://developers.belvo.com/docs/links-and-institutions#links"" target=""_blank"">Link</a> en el devportal. Devolvemos uno de los siguientes valores:
   - `valid`
   - `invalid`
